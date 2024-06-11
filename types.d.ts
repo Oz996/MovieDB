@@ -1,4 +1,4 @@
-export interface Results {
+export interface Result {
   adult: boolean;
   backdrop_path: string;
   first_air_date: string;
@@ -20,7 +20,7 @@ export interface Results {
 
 export interface ResultObject {
   page: number;
-  results: Results;
+  results: Result[];
   total_pages: number;
   total_results: number;
 }

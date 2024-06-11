@@ -1,7 +1,7 @@
-import { ResultObject } from "@/types";
+import { Result, ResultObject } from "@/types";
 
 interface props {
-  searchResults: ResultObject;
+  searchResults: Result[];
 }
 
 export default function SearchResults({ searchResults }: props) {

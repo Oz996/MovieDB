@@ -1,18 +1,18 @@
 "use client";
 import { useEffect, useState } from "react";
 import SearchResultsBar from "./components/SearchResultsBar";
-import { getMultiSearch } from "@/services/search";
+import { getSearchResults } from "@/services/search";
 import SearchResults from "./components/SearchResults";
-import { ResultObject } from "@/types";
+import { Result, ResultObject } from "@/types";
 
 export default function Search({ params }: { params: { query: string } }) {
-  const [searchResults, setSearchResults] = useState<ResultObject>();
+  const [searchResults, setSearchResults] = useState<Result[]>();
   console.log("params", params);
 
   console.log("searchResults", searchResults);
   useEffect(() => {
     const fetchData = async () => {
-      const res = await getMultiSearch(params.query);
+      const res = await getSearchResults(params.query);
       setSearchResults(res);
     };
     fetchData();
