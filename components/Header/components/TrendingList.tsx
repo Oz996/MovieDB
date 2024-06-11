@@ -1,14 +1,13 @@
+import { Result } from "@/types";
 import classNames from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
 import { Search, TrendingUp } from "lucide-react";
 
 interface props {
-  trending: [];
+  trending: Result[];
 }
 
 export default function TrendingList({ trending }: props) {
-  const trendingList = trending?.results;
-
   return (
     <AnimatePresence>
       <motion.div
@@ -28,7 +27,7 @@ export default function TrendingList({ trending }: props) {
           animate={{ height: "auto" }}
           transition={{ duration: 0.4 }}
         >
-          {trendingList?.map((item, index) => (
+          {trending?.map((item, index) => (
             <motion.li
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

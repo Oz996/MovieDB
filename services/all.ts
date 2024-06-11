@@ -15,8 +15,9 @@ export const getAllTrending = async () => {
       options
     );
     const data = await res.json();
-    console.log(data);
-    return data;
+    const results = data.results;
+    console.log(results);
+    return results;
   } catch (error: any) {
     console.error(error.message);
   }
