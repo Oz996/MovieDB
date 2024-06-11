@@ -1,10 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
-import SearchResults from "./components/SearchResults";
+import SearchResultsBar from "./components/SearchResultsBar";
 import { getMultiSearch } from "@/services/search";
+import SearchResults from "./components/SearchResults";
+import { ResultObject } from "@/types";
 
 export default function Search({ params }: { params: { query: string } }) {
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState<ResultObject>();
   console.log("params", params);
 
   console.log("searchResults", searchResults);
@@ -18,7 +20,8 @@ export default function Search({ params }: { params: { query: string } }) {
 
   return (
     <section className="w-screen h-screen pt-24">
-      <SearchResults />
+      <SearchResultsBar searchResults={searchResults!} />
+      <SearchResults searchResults={searchResults!} />
     </section>
   );
 }
