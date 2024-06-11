@@ -12,14 +12,14 @@ export default function Search({ params }: { params: { query: string } }) {
   console.log("searchResults", searchResults);
   useEffect(() => {
     const fetchData = async () => {
-      const res = await getSearchResults(params.query);
-      setSearchResults(res);
+      const results = await getSearchResults(params.query);
+      setSearchResults(results);
     };
     fetchData();
   }, [params.query]);
 
   return (
-    <section className="w-screen h-screen pt-24">
+    <section className="pt-24 grid grid-cols-3">
       <SearchResultsBar searchResults={searchResults!} />
       <SearchResults searchResults={searchResults!} />
     </section>
