@@ -24,7 +24,7 @@ export default function Searchbar() {
     }
   }, [showInput]);
 
-  // resetting these values so that the caching logic works
+  // resetting these states so that the caching logic works
   useEffect(() => {
     setCached(false);
     setType(null);
@@ -49,7 +49,7 @@ export default function Searchbar() {
   const handleFetchTrending = async () => {
     const data = await getAllTrending();
     setTrending(data);
-    // console.log("trending", trending);
+    console.log("trending", trending);
   };
 
   const handleMultiSearch = (e: FormEvent) => {
@@ -69,7 +69,7 @@ export default function Searchbar() {
               initial={{ width: "0%" }}
               animate={{ width: "90%" }}
               exit={{ width: "0%" }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.3 }}
               className="h-9 flex items-center"
             >
               <Input
