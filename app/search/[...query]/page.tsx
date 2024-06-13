@@ -5,14 +5,16 @@ import { getSearchResults } from "@/services/search";
 import SearchResults from "./components/SearchResults";
 import { Result } from "@/types";
 import { useSearchParams } from "next/navigation";
+import { useSearch } from "@/hooks/useSearch";
 
 export default function Search({ params }: { params: { query: string } }) {
-  const [type, setType] = useState<string | null>(null);
+  const { type, setQuery } = useSearch();
   const [searchResults, setSearchResults] = useState<Result[]>();
   console.log("params", params);
 
   const searchParams = useSearchParams();
   const query = searchParams.get("search");
+  setQuery(query!);
 
   console.log("search", query);
   console.log("searchResults", searchResults);
@@ -28,8 +30,6 @@ export default function Search({ params }: { params: { query: string } }) {
   return (
     <section className="pt-24 grid grid-cols-3">
       <SearchResultsBar
-        query={query!}
-        setType={setType}
         searchResults={searchResults!}
         setSearchResults={setSearchResults}
       />

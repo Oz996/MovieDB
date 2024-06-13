@@ -1,21 +1,18 @@
+import { useSearch } from "@/hooks/useSearch";
 import { getSearchResults } from "@/services/search";
-import { Result, ResultObject } from "@/types";
-import { useRouter } from "next/navigation";
+import { Result } from "@/types";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 interface props {
-  query: string;
-  setType: Dispatch<SetStateAction<string>>;
   searchResults: Result[];
   setSearchResults: Dispatch<SetStateAction<Result[] | undefined>>;
 }
 
 export default function SearchResultsBar({
-  query,
-  setType,
   searchResults,
   setSearchResults,
 }: props) {
+  const { query, cached, setType, setCached } = useSearch();
   const [mediaCounts, setMediaCounts] = useState({
     movies: 0,
     tvShows: 0,
@@ -35,7 +32,7 @@ export default function SearchResultsBar({
   ];
 
   useEffect(() => {
-    if (searchResults) {
+    if (searchResults && cached === false) {
       const movies = searchResults.filter(
         (result) => result.media_type === "movie"
       ).length;
@@ -46,11 +43,12 @@ export default function SearchResultsBar({
         (result) => result.media_type === "person"
       ).length;
 
+      setCached(true);
       setMediaCounts({ movies, tvShows, people });
     }
-  }, [searchResults]);
+  }, [searchResults, cached]);
 
-  const router = useRouter();
+  console.log("cached", cached);
 
   const handleTypeClick = async (type: mediaType) => {
     const searchType = type.value;

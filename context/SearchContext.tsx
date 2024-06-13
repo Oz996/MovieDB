@@ -9,8 +9,8 @@ import {
 } from "react";
 
 interface SearchContextInterface {
-  type: string;
-  setType: Dispatch<SetStateAction<string>>;
+  type: string | null;
+  setType: Dispatch<SetStateAction<string | null>>;
   query: string;
   setQuery: Dispatch<SetStateAction<string>>;
   page: string;
@@ -26,7 +26,7 @@ export const SearchContextProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const [type, setType] = useState("");
+  const [type, setType] = useState<string | null>(null);
   const [query, setQuery] = useState("");
   const [page, setPage] = useState("");
   const [cached, setCached] = useState(false);

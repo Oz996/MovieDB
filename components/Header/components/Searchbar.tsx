@@ -7,11 +7,13 @@ import { Search, X } from "lucide-react";
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import TrendingList from "./TrendingList";
 import { useRouter } from "next/navigation";
+import { useSearch } from "@/hooks/useSearch";
 
 export default function Searchbar() {
   const [showInput, setShowInput] = useState(false);
   const [trending, setTrending] = useState([]);
-  const [query, setQuery] = useState("");
+
+  const { query, setQuery, setCached } = useSearch();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -45,6 +47,7 @@ export default function Searchbar() {
 
   const handleMultiSearch = (e: FormEvent) => {
     e.preventDefault();
+    setCached(false);
     router.push(`/search/query?search=${query}`);
   };
 
