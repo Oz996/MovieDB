@@ -14,7 +14,7 @@ export default function Searchbar() {
   const [showInput, setShowInput] = useState(false);
   const [trending, setTrending] = useState([]);
 
-  const { query, cached, setQuery, setCached } = useSearch();
+  const { query, setQuery, setCached, setType } = useSearch();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -24,8 +24,10 @@ export default function Searchbar() {
     }
   }, [showInput]);
 
+  // resetting these values so that the caching logic works
   useEffect(() => {
     setCached(false);
+    setType(null);
   }, [value]);
 
   const router = useRouter();

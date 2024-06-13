@@ -17,6 +17,7 @@ export default function Search({ params }: { params: { query: string } }) {
 
   // console.log("search", query);
   console.log("searchResults", searchResults);
+  console.log("type", type);
 
   useEffect(() => {
     const fetchData = async () => {
