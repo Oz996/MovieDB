@@ -6,9 +6,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Search, X } from "lucide-react";
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import SearchList from "./SearchList";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useSearch } from "@/hooks/useSearch";
 import { getSearchResults } from "@/services/search";
+import { useDebounce } from "@uidotdev/usehooks";
 
 export default function Searchbar() {
   const [value, setValue] = useState("");
@@ -18,14 +19,21 @@ export default function Searchbar() {
   const [trending, setTrending] = useState(true);
 
   const { query, setQuery, setCached, setType } = useSearch();
+  const pathname = usePathname();
+  const indexPage = pathname === "/";
 
   const inputRef = useRef<HTMLInputElement>(null);
-
+  // using debounce to add a delay when user types in the input, less api calls made
+  const debouncedValue = useDebounce(value, 300);
   useEffect(() => {
     if (showInput && inputRef.current) {
       inputRef.current.focus();
     }
   }, [showInput]);
+
+  useEffect(() => {
+    if (indexPage) setShowInput(false);
+  }, [indexPage]);
 
   // resetting these states so that the caching logic works
   useEffect(() => {
@@ -34,7 +42,7 @@ export default function Searchbar() {
   }, [value]);
 
   useEffect(() => {
-    if (value.length > 1) {
+    if (debouncedValue.length > 1) {
       const searchValue = async () => {
         try {
           setIsLoading(true);
@@ -49,7 +57,7 @@ export default function Searchbar() {
       };
       searchValue();
     }
-  }, [value]);
+  }, [debouncedValue]);
 
   const router = useRouter();
 
