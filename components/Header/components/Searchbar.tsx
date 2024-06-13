@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 export default function Searchbar() {
   const [showInput, setShowInput] = useState(false);
   const [trending, setTrending] = useState([]);
-  const [value, setValue] = useState("");
+  const [query, setQuery] = useState("");
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -30,11 +30,11 @@ export default function Searchbar() {
 
   const handleCloseInput = () => {
     setShowInput(false);
-    setValue("");
+    setQuery("");
   };
 
   const handleValueChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+    setQuery(e.target.value);
   };
 
   const handleFetchTrending = async () => {
@@ -45,7 +45,7 @@ export default function Searchbar() {
 
   const handleMultiSearch = (e: FormEvent) => {
     e.preventDefault();
-    router.push(`/search/${value}`);
+    router.push(`/search/query?search=${query}`);
   };
 
   return (
@@ -64,7 +64,7 @@ export default function Searchbar() {
             >
               <Input
                 ref={inputRef}
-                value={value}
+                value={query}
                 onChange={handleValueChange}
                 type="text"
                 className="h-full w-full focus-visible:ring-0 text-black"
@@ -88,7 +88,7 @@ export default function Searchbar() {
           </motion.div>
         )}
       </AnimatePresence>
-      {showInput && value === "" && <TrendingList trending={trending} />}
+      {showInput && query === "" && <TrendingList trending={trending} />}
     </div>
     // // value !== "" && value.length > 1 &&
   );

@@ -17,19 +17,21 @@ export default function SearchResults({ searchResults }: props) {
           : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png";
         return (
           <div key={item.id} className="flex gap-3 rounded-lg border">
-            <Image
-              className="rounded-l-lg"
-              src={image}
-              width={100}
-              height={100}
-              alt=""
-            />
+            <Link href="" className="w-28 h-40 flex-shrink-0">
+              <Image
+                className="rounded-l-lg object-cover w-full h-full"
+                src={image}
+                width={100}
+                height={100}
+                alt=""
+              />
+            </Link>
             <div className="flex flex-col justify-center gap-4 px-1">
-              <div>
+              <div className="w-full">
                 <Link href="">
                   <h2 className="text-xl font-semibold">{title}</h2>
                 </Link>
-                <p className="text-gray-500">{date}</p>
+                <p className="text-lg text-gray-400">{date}</p>
               </div>
               <p className="line-clamp-2">{item.overview}</p>
             </div>
