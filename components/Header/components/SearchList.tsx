@@ -5,15 +5,16 @@ import { Search, TrendingUp } from "lucide-react";
 import Image from "next/image";
 
 interface props {
-  trending: Result[];
+  searchList: Result[];
+  trending: boolean;
 }
 
-export default function TrendingList({ trending }: props) {
+export default function SearchList({ searchList, trending }: props) {
   return (
     <AnimatePresence>
       <motion.div
         key="trending-container"
-        className="absolute border border-black w-[60rem] max-h-[calc(100vh-4rem)] top-[3.1rem] z-10 bg-white text-black overflow-auto"
+        className="absolute border border-black w-[60rem] max-h-[calc(100vh-4rem)] top-[3.1rem] z-10 bg-white text-black overflow-auto duration-200"
         initial={{ height: 0 }}
         animate={{ height: "auto" }}
         exit={{ height: 0 }}
@@ -29,7 +30,7 @@ export default function TrendingList({ trending }: props) {
           animate={{ height: "auto" }}
           transition={{ duration: 0.4 }}
         >
-          {trending?.map((item, index) => {
+          {searchList?.map((item, index) => {
             const image = item.poster_path
               ? `https://image.tmdb.org/t/p/w92/${item.poster_path}`
               : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png";

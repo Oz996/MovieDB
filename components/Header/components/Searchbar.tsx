@@ -5,14 +5,17 @@ import { getAllTrending } from "@/services/all";
 import { AnimatePresence, motion } from "framer-motion";
 import { Search, X } from "lucide-react";
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
-import TrendingList from "./TrendingList";
+import SearchList from "./SearchList";
 import { useRouter } from "next/navigation";
 import { useSearch } from "@/hooks/useSearch";
+import { getSearchResults } from "@/services/search";
 
 export default function Searchbar() {
   const [value, setValue] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [showInput, setShowInput] = useState(false);
-  const [trending, setTrending] = useState([]);
+  const [searchList, setSearchList] = useState([]);
+  const [trending, setTrending] = useState(true);
 
   const { query, setQuery, setCached, setType } = useSearch();
 
@@ -28,6 +31,24 @@ export default function Searchbar() {
   useEffect(() => {
     setCached(false);
     setType(null);
+  }, [value]);
+
+  useEffect(() => {
+    if (value.length > 1) {
+      const searchValue = async () => {
+        try {
+          setIsLoading(true);
+          const results = await getSearchResults(value);
+          setSearchList(results);
+          setTrending(false);
+        } catch (error: any) {
+          console.error(error.message);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+      searchValue();
+    }
   }, [value]);
 
   const router = useRouter();
@@ -48,8 +69,9 @@ export default function Searchbar() {
 
   const handleFetchTrending = async () => {
     const data = await getAllTrending();
-    setTrending(data);
-    console.log("trending", trending);
+    setSearchList(data);
+    setTrending(true);
+    console.log("searchList", searchList);
   };
 
   const handleMultiSearch = (e: FormEvent) => {
@@ -98,7 +120,9 @@ export default function Searchbar() {
           </motion.div>
         )}
       </AnimatePresence>
-      {showInput && query === "" && <TrendingList trending={trending} />}
+      {showInput && query === "" && (
+        <SearchList searchList={searchList} trending={trending} />
+      )}
     </div>
     // // value !== "" && value.length > 1 &&
   );
