@@ -46,7 +46,7 @@ export default function SearchResultsBar({
       setCached(true);
       setMediaCounts({ movies, tvShows, people });
     }
-  }, [searchResults, cached]);
+  }, [searchResults]);
 
   console.log("cached", cached);
 

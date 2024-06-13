@@ -10,13 +10,12 @@ import { useSearch } from "@/hooks/useSearch";
 export default function Search({ params }: { params: { query: string } }) {
   const { type, setQuery } = useSearch();
   const [searchResults, setSearchResults] = useState<Result[]>();
-  console.log("params", params);
 
   const searchParams = useSearchParams();
   const query = searchParams.get("search");
   setQuery(query!);
 
-  console.log("search", query);
+  // console.log("search", query);
   console.log("searchResults", searchResults);
 
   useEffect(() => {

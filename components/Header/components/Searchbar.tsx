@@ -10,10 +10,11 @@ import { useRouter } from "next/navigation";
 import { useSearch } from "@/hooks/useSearch";
 
 export default function Searchbar() {
+  const [value, setValue] = useState("");
   const [showInput, setShowInput] = useState(false);
   const [trending, setTrending] = useState([]);
 
-  const { query, setQuery, setCached } = useSearch();
+  const { query, cached, setQuery, setCached } = useSearch();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -22,6 +23,10 @@ export default function Searchbar() {
       inputRef.current.focus();
     }
   }, [showInput]);
+
+  useEffect(() => {
+    setCached(false);
+  }, [value]);
 
   const router = useRouter();
 
@@ -32,23 +37,23 @@ export default function Searchbar() {
 
   const handleCloseInput = () => {
     setShowInput(false);
-    setQuery("");
+    setValue("");
   };
 
-  const handleValueChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value);
+  const handleQueryChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
   };
 
   const handleFetchTrending = async () => {
     const data = await getAllTrending();
     setTrending(data);
-    console.log("trending", trending);
+    // console.log("trending", trending);
   };
 
   const handleMultiSearch = (e: FormEvent) => {
     e.preventDefault();
-    setCached(false);
-    router.push(`/search/query?search=${query}`);
+    setQuery(value);
+    router.push(`/search/query?search=${value}`);
   };
 
   return (
@@ -67,8 +72,8 @@ export default function Searchbar() {
             >
               <Input
                 ref={inputRef}
-                value={query}
-                onChange={handleValueChange}
+                value={value}
+                onChange={handleQueryChange}
                 type="text"
                 className="h-full w-full focus-visible:ring-0 text-black"
               />
