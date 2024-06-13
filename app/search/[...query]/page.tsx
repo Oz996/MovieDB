@@ -7,6 +7,7 @@ import { Result } from "@/types";
 import { useSearchParams } from "next/navigation";
 
 export default function Search({ params }: { params: { query: string } }) {
+  const [type, setType] = useState<string | null>(null);
   const [searchResults, setSearchResults] = useState<Result[]>();
   console.log("params", params);
 
@@ -18,16 +19,17 @@ export default function Search({ params }: { params: { query: string } }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const results = await getSearchResults(query!);
+      const results = await getSearchResults(query!, type ?? "multi");
       setSearchResults(results);
     };
     fetchData();
-  }, [params.query, query]);
+  }, [query, type]);
 
   return (
     <section className="pt-24 grid grid-cols-3">
       <SearchResultsBar
-        query={params.query}
+        query={query!}
+        setType={setType}
         searchResults={searchResults!}
         setSearchResults={setSearchResults}
       />
