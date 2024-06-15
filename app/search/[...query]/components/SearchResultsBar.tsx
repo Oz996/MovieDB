@@ -53,7 +53,8 @@ export default function SearchResultsBar({
   const handleTypeClick = async (type: mediaType) => {
     const searchType = type.value;
     setType(searchType);
-    const results = await getSearchResults(query, searchType);
+    const data = await getSearchResults(query, searchType);
+    const results = data?.results;
     setSearchResults(results);
   };
 

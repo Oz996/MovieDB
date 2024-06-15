@@ -8,32 +8,45 @@ import { useSearchParams } from "next/navigation";
 import { useSearch } from "@/hooks/useSearch";
 
 export default function Search({ params }: { params: { query: string } }) {
-  const { type, setQuery } = useSearch();
+  const { type, setQuery, page, setPageAmount } = useSearch();
   const [searchResults, setSearchResults] = useState<Result[]>();
 
   const searchParams = useSearchParams();
   const query = searchParams.get("search");
+  const pageParam = searchParams.get("page");
   setQuery(query!);
 
-  // console.log("search", query);
+  console.log("search", query);
   console.log("searchResults", searchResults);
   console.log("type", type);
 
+  const currentPage = pageParam ? parseInt(pageParam, 10) : 1;
+  console.log("page", currentPage);
+
   useEffect(() => {
     const fetchData = async () => {
-      const results = await getSearchResults(query!, type ?? "multi");
+      const data = await getSearchResults(query!, type ?? "multi", currentPage);
+      // console.log("fetched Data", data);
+      const results = data?.results;
+      const pageAmount = data?.total_pages;
+      console.log("current results", results);
       setSearchResults(results);
+      setPageAmount(pageAmount);
     };
     fetchData();
-  }, [query, type]);
+  }, [query, type, currentPage]);
 
   return (
-    <section className="pt-24 grid grid-cols-3">
+    <section className="pt-28 grid grid-cols-3">
       <SearchResultsBar
         searchResults={searchResults!}
         setSearchResults={setSearchResults}
       />
-      <SearchResults searchResults={searchResults!} />
+      <SearchResults
+        currentPage={currentPage}
+        searchResults={searchResults!}
+        setSearchResults={setSearchResults}
+      />
     </section>
   );
 }

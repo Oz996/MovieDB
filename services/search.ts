@@ -12,8 +12,8 @@ export const getSearchResults = async (
     );
     const data = await res.json();
     const results = data.results;
-    console.log("search", results);
-    return results;
+    console.log("search", data);
+    return data;
   } catch (error: any) {
     console.error(error.message);
   }

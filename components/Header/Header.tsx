@@ -7,6 +7,7 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
+  NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
 import Searchbar from "./components/Searchbar";
 import { useEffect } from "react";
@@ -24,7 +25,7 @@ export default function Header() {
       </Link>
       <NavigationMenu className="flex gap-10 z-20">
         <NavigationMenuList className="flex items-center gap-5 font-semibold">
-          <NavigationMenuItem>
+          <NavigationMenuItem className="">
             <NavigationMenuTrigger>Movies</NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="flex flex-col w-[10rem]">

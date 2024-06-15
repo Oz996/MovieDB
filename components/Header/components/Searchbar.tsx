@@ -19,10 +19,11 @@ export default function Searchbar() {
   const [trending, setTrending] = useState(true);
 
   const { query, setQuery, setCached, setType } = useSearch();
+
   const pathname = usePathname();
   const indexPage = pathname === "/";
-
   const inputRef = useRef<HTMLInputElement>(null);
+
   // using debounce to add a delay when user types in the input, less api calls made
   const debouncedValue = useDebounce(value, 300);
   useEffect(() => {
@@ -46,7 +47,8 @@ export default function Searchbar() {
       const searchValue = async () => {
         try {
           setIsLoading(true);
-          const results = await getSearchResults(value);
+          const data = await getSearchResults(value);
+          const results = data?.results;
           setSearchList(results);
           setTrending(false);
         } catch (error: any) {
