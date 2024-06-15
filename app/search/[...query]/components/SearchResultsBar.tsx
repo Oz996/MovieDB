@@ -63,7 +63,7 @@ export default function SearchResultsBar({
   };
 
   return (
-    <div className="w-[20rem] rounded-lg border">
+    <div className="w-[20rem] rounded-lg border h-[14rem]">
       <h2 className="p-6 text-xl font-semibold text-white bg-black rounded-t-lg">
         Search Results
       </h2>

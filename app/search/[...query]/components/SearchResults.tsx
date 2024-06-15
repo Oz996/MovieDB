@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
   Pagination,
   PaginationContent,
@@ -66,7 +67,12 @@ export default function SearchResults({ currentPage, searchResults }: props) {
       <Pagination className="py-10">
         <PaginationContent>
           <PaginationItem>
-            <PaginationPrevious href={paginationLink(currentPage - 1)} />
+            <Button
+              className="p-0 bg-white text-black hover:bg-white duration-0"
+              disabled={currentPage === 1}
+            >
+              <PaginationPrevious href={paginationLink(currentPage - 1)} />
+            </Button>
           </PaginationItem>
           {currentPage > 2 && (
             <PaginationItem>
@@ -118,7 +124,12 @@ export default function SearchResults({ currentPage, searchResults }: props) {
             </PaginationItem>
           )}
           <PaginationItem>
-            <PaginationNext href={paginationLink(currentPage + 1)} />
+            <Button
+              className="p-0 bg-white text-black hover:bg-white duration-0"
+              disabled={currentPage === lastPage}
+            >
+              <PaginationNext href={paginationLink(currentPage + 1)} />
+            </Button>
           </PaginationItem>
         </PaginationContent>
       </Pagination>
