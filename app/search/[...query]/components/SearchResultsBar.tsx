@@ -1,6 +1,7 @@
 import { useSearch } from "@/hooks/useSearch";
 import { getSearchResults } from "@/services/search";
 import { Result } from "@/types";
+import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 interface props {
@@ -50,12 +51,15 @@ export default function SearchResultsBar({
 
   console.log("cached", cached);
 
+  const router = useRouter();
+
   const handleTypeClick = async (type: mediaType) => {
     const searchType = type.value;
     setType(searchType);
-    const data = await getSearchResults(query, searchType);
-    const results = data?.results;
-    setSearchResults(results);
+    // const data = await getSearchResults(query, searchType);
+    // const results = data?.results;
+    // setSearchResults(results);
+    router.push(`/search/query?search=${query}&type=${type.value}`);
   };
 
   return (

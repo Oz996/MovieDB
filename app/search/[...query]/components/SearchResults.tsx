@@ -11,23 +11,23 @@ import { useSearch } from "@/hooks/useSearch";
 import { Result } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
-import { Dispatch, SetStateAction } from "react";
 
 interface props {
   currentPage: number;
   searchResults: Result[];
-  setSearchResults: Dispatch<SetStateAction<Result[] | undefined>>;
 }
 
-export default function SearchResults({
-  currentPage,
-  searchResults,
-  setSearchResults,
-}: props) {
-  const { query, pageAmount, page } = useSearch();
+export default function SearchResults({ currentPage, searchResults }: props) {
+  const { query, pageAmount, type } = useSearch();
   const lastPage = pageAmount;
 
-  console.log("amount", pageAmount);
+  // console.log("amount", pageAmount);
+
+  const paginationLink = (page: number) => {
+    return `/search/query?search=${query}${
+      type ? `&type=${type}` : ""
+    }&page=${page}`;
+  };
 
   return (
     <section className="col-span-2 -ml-20 space-y-5">
@@ -66,24 +66,18 @@ export default function SearchResults({
       <Pagination className="py-10">
         <PaginationContent>
           <PaginationItem>
-            <PaginationPrevious
-              href={`/search/query?search=${query}&page=${currentPage - 1}`}
-            />
+            <PaginationPrevious href={paginationLink(currentPage - 1)} />
           </PaginationItem>
           {currentPage > 2 && (
             <PaginationItem>
-              <PaginationLink
-                href={`/search/query?search=${query}&page=${currentPage - 2}`}
-              >
+              <PaginationLink href={paginationLink(currentPage - 2)}>
                 {currentPage - 2}
               </PaginationLink>
             </PaginationItem>
           )}
           {currentPage > 1 && (
             <PaginationItem>
-              <PaginationLink
-                href={`/search/query?search=${query}&page=${currentPage - 1}`}
-              >
+              <PaginationLink href={paginationLink(currentPage - 1)}>
                 {currentPage - 1}
               </PaginationLink>
             </PaginationItem>
@@ -95,18 +89,14 @@ export default function SearchResults({
           </PaginationItem>
           {currentPage === lastPage ? null : (
             <PaginationItem>
-              <PaginationLink
-                href={`/search/query?search=${query}&page=${currentPage + 1}`}
-              >
+              <PaginationLink href={paginationLink(currentPage + 1)}>
                 {currentPage + 1}
               </PaginationLink>
             </PaginationItem>
           )}
           {currentPage === lastPage || currentPage === lastPage - 1 ? null : (
             <PaginationItem>
-              <PaginationLink
-                href={`/search/query?search=${query}&page=${currentPage + 2}`}
-              >
+              <PaginationLink href={paginationLink(currentPage + 2)}>
                 {currentPage + 2}
               </PaginationLink>
             </PaginationItem>
@@ -122,17 +112,13 @@ export default function SearchResults({
           currentPage + 1 === lastPage ||
           currentPage === lastPage ? null : (
             <PaginationItem>
-              <PaginationLink
-                href={`/search/query?search=${query}&page=${lastPage}`}
-              >
+              <PaginationLink href={paginationLink(lastPage)}>
                 {lastPage}
               </PaginationLink>
             </PaginationItem>
           )}
           <PaginationItem>
-            <PaginationNext
-              href={`/search/query?search=${query}&page=${currentPage + 1}`}
-            />
+            <PaginationNext href={paginationLink(currentPage + 1)} />
           </PaginationItem>
         </PaginationContent>
       </Pagination>
