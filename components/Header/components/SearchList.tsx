@@ -1,7 +1,7 @@
 import { Result } from "@/types";
 import classNames from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
-import { Search, TrendingUp } from "lucide-react";
+import { TrendingUp } from "lucide-react";
 import Image from "next/image";
 
 interface props {

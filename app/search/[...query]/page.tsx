@@ -44,7 +44,7 @@ export default function Search({ params }: { params: { query: string } }) {
   }, [query, type, currentPage, searchType]);
 
   return (
-    <section className="pt-28 grid grid-cols-3">
+    <section className="pt-20 lg:pt-28 grid grid-cols-1 lg:grid-cols-3">
       <SearchResultsBar
         searchResults={searchResults!}
         setSearchResults={setSearchResults}

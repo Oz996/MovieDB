@@ -72,7 +72,7 @@ export default function SearchResultsBar({
   };
 
   return (
-    <div className="w-[20rem] rounded-lg border h-[14rem]">
+    <div className="lg:w-[20rem] rounded-lg border lg:h-[14rem]">
       <div className="p-6 text-white bg-black rounded-t-lg flex gap-1 items-center justify-between">
         <h2 className="text-xl font-semibold">Search Results</h2>
         <TooltipProvider>

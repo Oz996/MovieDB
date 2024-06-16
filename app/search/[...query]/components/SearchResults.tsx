@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Pagination,
@@ -10,6 +11,7 @@ import {
 } from "@/components/ui/pagination";
 import { useSearch } from "@/hooks/useSearch";
 import { Result } from "@/types";
+import { useMediaQuery } from "@uidotdev/usehooks";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -20,6 +22,7 @@ interface props {
 
 export default function SearchResults({ currentPage, searchResults }: props) {
   const { query, pageAmount, type } = useSearch();
+  const isMobile = useMediaQuery("only screen and (max-width: 768px)");
   const lastPage = pageAmount;
 
   // console.log("amount", pageAmount);
@@ -31,7 +34,7 @@ export default function SearchResults({ currentPage, searchResults }: props) {
   };
 
   return (
-    <section className="col-span-2 -ml-20 space-y-5">
+    <section className="lg:col-span-2 lg:-ml-20 max-lg:pt-5 space-y-5">
       {searchResults?.length === 0 && (
         <p className="text-lg">There are no movies that matched your query.</p>
       )}
@@ -41,12 +44,12 @@ export default function SearchResults({ currentPage, searchResults }: props) {
         const title = item?.name || item?.title;
         const date = item?.first_air_date || item?.release_date;
         const image = item.poster_path
-          ? `https://image.tmdb.org/t/p/w185/${item.poster_path}`
+          ? `https://image.tmdb.org/t/p/w342/${item.poster_path}`
           : item.profile_path
-          ? `https://image.tmdb.org/t/p/w185/${item.profile_path}`
+          ? `https://image.tmdb.org/t/p/w342/${item.profile_path}`
           : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png";
 
-        // checking if the title or name is not an empty string before displaying it
+        // checking if the title or name has a value before displaying it
         const knownFor = () => {
           const knownForList = [
             item?.known_for?.[0]?.title || item?.known_for?.[0]?.name,
@@ -61,7 +64,10 @@ export default function SearchResults({ currentPage, searchResults }: props) {
 
         return (
           <div key={item.id} className="flex gap-3 rounded-lg border">
-            <Link href="" className="w-28 h-40 flex-shrink-0">
+            <Link
+              href=""
+              className="w-[5.5rem] h-32 lg:w-28 lg:h-40 flex-shrink-0"
+            >
               <Image
                 className="rounded-l-lg object-cover w-full h-full"
                 src={image}
@@ -136,14 +142,14 @@ export default function SearchResults({ currentPage, searchResults }: props) {
           {currentPage + 2 === lastPage ||
           currentPage + 1 === lastPage ||
           currentPage === lastPage ? null : (
-            <PaginationItem>
+            <PaginationItem className="max-sm:hidden">
               <PaginationEllipsis />
             </PaginationItem>
           )}
           {currentPage + 2 === lastPage ||
           currentPage + 1 === lastPage ||
           currentPage === lastPage ? null : (
-            <PaginationItem>
+            <PaginationItem className="max-sm:hidden">
               <Link href={paginationLink(lastPage)}>
                 <PaginationLink>{lastPage}</PaginationLink>
               </Link>
