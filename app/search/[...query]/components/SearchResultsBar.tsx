@@ -13,12 +13,17 @@ export default function SearchResultsBar({
   searchResults,
   setSearchResults,
 }: props) {
+  const storedMediaCounts = sessionStorage.getItem("cached");
+  const initalMediaState = storedMediaCounts
+    ? JSON.parse(storedMediaCounts)
+    : {
+        movies: 0,
+        tvShows: 0,
+        people: 0,
+      };
+
   const { query, cached, setType, setCached } = useSearch();
-  const [mediaCounts, setMediaCounts] = useState({
-    movies: 0,
-    tvShows: 0,
-    people: 0,
-  });
+  const [mediaCounts, setMediaCounts] = useState(initalMediaState);
 
   interface mediaType {
     name: string;
@@ -33,7 +38,7 @@ export default function SearchResultsBar({
   ];
 
   useEffect(() => {
-    if (searchResults && cached === false) {
+    if (searchResults && !storedMediaCounts) {
       const movies = searchResults.filter(
         (result) => result.media_type === "movie"
       ).length;
@@ -44,8 +49,9 @@ export default function SearchResultsBar({
         (result) => result.media_type === "person"
       ).length;
 
-      setCached(true);
-      setMediaCounts({ movies, tvShows, people });
+      const mediaCounts = { movies, tvShows, people };
+      setCached(mediaCounts);
+      setMediaCounts(mediaCounts);
     }
   }, [searchResults]);
 
@@ -56,9 +62,6 @@ export default function SearchResultsBar({
   const handleTypeClick = async (type: mediaType) => {
     const searchType = type.value;
     setType(searchType);
-    // const data = await getSearchResults(query, searchType);
-    // const results = data?.results;
-    // setSearchResults(results);
     router.push(`/search/query?search=${query}&type=${type.value}`);
   };
 

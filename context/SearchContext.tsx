@@ -1,10 +1,12 @@
 "use client";
 
+import { MediaCounts } from "@/types";
 import {
   Dispatch,
   ReactNode,
   SetStateAction,
   createContext,
+  useEffect,
   useState,
 } from "react";
 
@@ -15,8 +17,8 @@ interface SearchContextInterface {
   setQuery: Dispatch<SetStateAction<string>>;
   page: number;
   setPage: Dispatch<SetStateAction<number>>;
-  cached: boolean;
-  setCached: Dispatch<SetStateAction<boolean>>;
+  cached: MediaCounts;
+  setCached: Dispatch<SetStateAction<MediaCounts>>;
   pageAmount: number;
   setPageAmount: Dispatch<SetStateAction<number>>;
 }
@@ -28,11 +30,25 @@ export const SearchContextProvider = ({
 }: {
   children: ReactNode;
 }) => {
+  const storedMediaCounts: any = sessionStorage.getItem("cached");
   const [type, setType] = useState<string | null>(null);
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
-  const [cached, setCached] = useState(false);
+  const [cached, setCached] = useState<MediaCounts>(
+    storedMediaCounts
+      ? JSON.parse(storedMediaCounts)
+      : { movies: 0, tvShows: 0, people: 0 } || {}
+  );
   const [pageAmount, setPageAmount] = useState(0);
+
+  useEffect(() => {
+    const hasValue = Object.values(cached).some((value) => value > 0);
+    console.log("hasValue", hasValue);
+    if (hasValue) {
+      sessionStorage.setItem("cached", JSON.stringify(cached));
+    }
+  }, [cached]);
+
   return (
     <SearchContext.Provider
       value={{

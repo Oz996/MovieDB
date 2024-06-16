@@ -38,7 +38,12 @@ export default function Searchbar() {
 
   // resetting these states so that the caching logic works
   useEffect(() => {
-    setCached(false);
+    setCached({
+      movies: 0,
+      tvShows: 0,
+      people: 0,
+    });
+    sessionStorage.removeItem("cached");
     setType(null);
   }, [value]);
 
