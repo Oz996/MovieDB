@@ -67,14 +67,14 @@ export default function SearchResults({ currentPage, searchResults }: props) {
       <Pagination className="py-10">
         <PaginationContent>
           <PaginationItem>
-            <Link href={paginationLink(currentPage - 1)}>
-              <Button
-                className="p-0 bg-white text-black hover:bg-white duration-0"
-                disabled={currentPage === 1}
-              >
+            <Button
+              className="p-0 bg-white text-black hover:bg-white duration-0"
+              disabled={currentPage === 1}
+            >
+              <Link href={paginationLink(currentPage - 1)}>
                 <PaginationPrevious />
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </PaginationItem>
           {currentPage > 2 && (
             <PaginationItem>
@@ -126,14 +126,14 @@ export default function SearchResults({ currentPage, searchResults }: props) {
             </PaginationItem>
           )}
           <PaginationItem>
-            <Link href={paginationLink(currentPage + 1)}>
-              <Button
-                className="p-0 bg-white text-black hover:bg-white duration-0"
-                disabled={currentPage === lastPage}
-              >
+            <Button
+              className="p-0 bg-white text-black hover:bg-white duration-0"
+              disabled={currentPage === lastPage}
+            >
+              <Link href={paginationLink(currentPage + 1)}>
                 <PaginationNext />
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </PaginationItem>
         </PaginationContent>
       </Pagination>

@@ -1,6 +1,13 @@
+import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { useSearch } from "@/hooks/useSearch";
-import { getSearchResults } from "@/services/search";
 import { Result } from "@/types";
+import { CircleHelp } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
@@ -67,9 +74,25 @@ export default function SearchResultsBar({
 
   return (
     <div className="w-[20rem] rounded-lg border h-[14rem]">
-      <h2 className="p-6 text-xl font-semibold text-white bg-black rounded-t-lg">
-        Search Results
-      </h2>
+      <div className="p-6 text-white bg-black rounded-t-lg flex gap-1 items-center justify-between">
+        <h2 className="text-xl font-semibold">Search Results</h2>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <CircleHelp
+                size={22}
+                className="hover:text-gray-400 duration-200"
+              />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>
+                Only displays the results of the first page in order to not make
+                too many API calls
+              </p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      </div>
       <ul className="pb-2">
         {TypesToDisplay.map((type) => (
           <li
