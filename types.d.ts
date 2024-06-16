@@ -18,6 +18,8 @@ export interface Result {
   profile_path?: string;
   vote_average: number;
   vote_count: number;
+  known_for_department?: string;
+  known_for: Overview[];
 }
 
 export interface ResultObject {
@@ -31,4 +33,22 @@ export interface MediaCounts {
   movies: number;
   tvShows: number;
   people: number;
+}
+
+export interface Overview {
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: number[];
+  id: number;
+  media_type: string;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  release_date: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
 }
