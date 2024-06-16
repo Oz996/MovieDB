@@ -40,7 +40,10 @@ export default function SearchResults({ currentPage, searchResults }: props) {
         const date = item?.first_air_date || item?.release_date;
         const image = item.poster_path
           ? `https://image.tmdb.org/t/p/w185/${item.poster_path}`
+          : item.profile_path
+          ? `https://image.tmdb.org/t/p/w185/${item.profile_path}`
           : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png";
+
         return (
           <div key={item.id} className="flex gap-3 rounded-lg border">
             <Link href="" className="w-28 h-40 flex-shrink-0">

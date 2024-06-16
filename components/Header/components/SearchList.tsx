@@ -32,7 +32,9 @@ export default function SearchList({ searchList, trending }: props) {
         >
           {searchList?.map((item, index) => {
             const image = item.poster_path
-              ? `https://image.tmdb.org/t/p/w92/${item.poster_path}`
+              ? `https://image.tmdb.org/t/p/w185/${item.poster_path}`
+              : item.profile_path
+              ? `https://image.tmdb.org/t/p/w185/${item.profile_path}`
               : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png";
             return (
               <motion.li
