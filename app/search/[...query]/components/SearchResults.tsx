@@ -67,44 +67,46 @@ export default function SearchResults({ currentPage, searchResults }: props) {
       <Pagination className="py-10">
         <PaginationContent>
           <PaginationItem>
-            <Button
-              className="p-0 bg-white text-black hover:bg-white duration-0"
-              disabled={currentPage === 1}
-            >
-              <PaginationPrevious href={paginationLink(currentPage - 1)} />
-            </Button>
+            <Link href={paginationLink(currentPage - 1)}>
+              <Button
+                className="p-0 bg-white text-black hover:bg-white duration-0"
+                disabled={currentPage === 1}
+              >
+                <PaginationPrevious />
+              </Button>
+            </Link>
           </PaginationItem>
           {currentPage > 2 && (
             <PaginationItem>
-              <PaginationLink href={paginationLink(currentPage - 2)}>
-                {currentPage - 2}
-              </PaginationLink>
+              <Link href={paginationLink(currentPage - 2)}>
+                <PaginationLink>{currentPage - 2}</PaginationLink>
+              </Link>
             </PaginationItem>
           )}
           {currentPage > 1 && (
             <PaginationItem>
-              <PaginationLink href={paginationLink(currentPage - 1)}>
-                {currentPage - 1}
-              </PaginationLink>
+              <Link href={paginationLink(currentPage - 1)}>
+                <PaginationLink>{currentPage - 1}</PaginationLink>
+              </Link>
             </PaginationItem>
           )}
           <PaginationItem>
-            <PaginationLink className="bg-slate-200" href="#">
+            <PaginationLink className="bg-slate-200">
               {currentPage}
             </PaginationLink>
           </PaginationItem>
           {currentPage === lastPage ? null : (
             <PaginationItem>
-              <PaginationLink href={paginationLink(currentPage + 1)}>
-                {currentPage + 1}
-              </PaginationLink>
+              <Link href={paginationLink(currentPage + 1)}>
+                <PaginationLink>{currentPage + 1}</PaginationLink>
+              </Link>
             </PaginationItem>
           )}
           {currentPage === lastPage || currentPage === lastPage - 1 ? null : (
             <PaginationItem>
-              <PaginationLink href={paginationLink(currentPage + 2)}>
-                {currentPage + 2}
-              </PaginationLink>
+              <Link href={paginationLink(currentPage + 2)}>
+                <PaginationLink>{currentPage + 2}</PaginationLink>
+              </Link>
             </PaginationItem>
           )}
           {currentPage + 2 === lastPage ||
@@ -118,18 +120,20 @@ export default function SearchResults({ currentPage, searchResults }: props) {
           currentPage + 1 === lastPage ||
           currentPage === lastPage ? null : (
             <PaginationItem>
-              <PaginationLink href={paginationLink(lastPage)}>
-                {lastPage}
-              </PaginationLink>
+              <Link href={paginationLink(lastPage)}>
+                <PaginationLink>{lastPage}</PaginationLink>
+              </Link>
             </PaginationItem>
           )}
           <PaginationItem>
-            <Button
-              className="p-0 bg-white text-black hover:bg-white duration-0"
-              disabled={currentPage === lastPage}
-            >
-              <PaginationNext href={paginationLink(currentPage + 1)} />
-            </Button>
+            <Link href={paginationLink(currentPage + 1)}>
+              <Button
+                className="p-0 bg-white text-black hover:bg-white duration-0"
+                disabled={currentPage === lastPage}
+              >
+                <PaginationNext />
+              </Button>
+            </Link>
           </PaginationItem>
         </PaginationContent>
       </Pagination>

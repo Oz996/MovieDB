@@ -19,10 +19,10 @@ export default function Searchbar() {
   const [trending, setTrending] = useState(true);
 
   const { query, setQuery, setCached, setType } = useSearch();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const pathname = usePathname();
   const indexPage = pathname === "/";
-  const inputRef = useRef<HTMLInputElement>(null);
 
   // using debounce to add a delay when user types in the input, less api calls made
   const debouncedValue = useDebounce(value, 300);
@@ -139,6 +139,5 @@ export default function Searchbar() {
         <SearchList searchList={searchList} trending={trending} />
       )}
     </div>
-    // // value !== "" && value.length > 1 &&
   );
 }
