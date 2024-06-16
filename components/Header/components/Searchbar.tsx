@@ -96,7 +96,7 @@ export default function Searchbar() {
   };
 
   return (
-    <div className="ml-auto flex gap-1 items-center w-full justify-end relative">
+    <div className="ml-auto flex gap-1 items-center w-full justify-end relative max-md:absolute max-md:left-0 max-md:right-0 max-md:top-[4.2rem]">
       <AnimatePresence>
         {showInput ? (
           <>
@@ -104,10 +104,10 @@ export default function Searchbar() {
               onSubmit={handleMultiSearch}
               key="search-input"
               initial={{ width: "0%" }}
-              animate={{ width: "90%" }}
+              animate={{ width: "100%" }}
               exit={{ width: "0%" }}
               transition={{ duration: 0.3 }}
-              className="h-9 flex items-center"
+              className="h-9 flex items-center max-md:px-1"
             >
               <Input
                 ref={inputRef}
@@ -120,7 +120,7 @@ export default function Searchbar() {
 
             <X
               size={28}
-              className="cursor-pointer"
+              className="cursor-pointer max-md:absolute max-md:-top-[3rem] max-md:right-4"
               onClick={handleCloseInput}
             />
           </>
@@ -131,7 +131,10 @@ export default function Searchbar() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <Search onClick={handleOpenInput} className="cursor-pointer" />
+            <Search
+              onClick={handleOpenInput}
+              className="cursor-pointer max-md:absolute max-md:-top-[3rem] max-md:right-4"
+            />
           </motion.div>
         )}
       </AnimatePresence>
