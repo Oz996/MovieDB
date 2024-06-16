@@ -35,8 +35,9 @@ export default function SearchResults({ currentPage, searchResults }: props) {
       {searchResults?.length === 0 && (
         <p className="text-lg">There are no movies that matched your query.</p>
       )}
-      {searchResults?.map((item) => {
-        const person = item?.media_type === "person";
+      {searchResults?.map((item, i) => {
+        // console.log(`item, ${i}`, item);
+        const person = item?.known_for_department;
         const title = item?.name || item?.title;
         const date = item?.first_air_date || item?.release_date;
         const image = item.poster_path
@@ -45,11 +46,18 @@ export default function SearchResults({ currentPage, searchResults }: props) {
           ? `https://image.tmdb.org/t/p/w185/${item.profile_path}`
           : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png";
 
-        const knownForList = [
-          item?.known_for?.[0]?.title,
-          item?.known_for?.[1]?.title,
-          item?.known_for?.[2]?.title,
-        ].join(", ");
+        // checking if the title or name is not an empty string before displaying it
+        const knownFor = () => {
+          const knownForList = [
+            item?.known_for?.[0]?.title || item?.known_for?.[0]?.name,
+            item?.known_for?.[1]?.title || item?.known_for?.[1]?.name,
+            item?.known_for?.[2]?.title || item?.known_for?.[2]?.name,
+          ];
+
+          const hasValue = knownForList.filter(Boolean);
+          const listedTitles = hasValue.join(", ");
+          return listedTitles;
+        };
 
         return (
           <div key={item.id} className="flex gap-3 rounded-lg border">
@@ -69,9 +77,9 @@ export default function SearchResults({ currentPage, searchResults }: props) {
                 </Link>
                 <p className="text-lg text-gray-500">{date}</p>
                 {person && (
-                  <div className="flex gap-2 items-center">
+                  <div className="flex gap-2 items-center truncate">
                     <p className="text-lg">{item?.known_for_department} •</p>
-                    <p className="text-gray-500">{knownForList}</p>
+                    <p className="text-gray-500">{knownFor()}</p>
                   </div>
                 )}
               </div>
