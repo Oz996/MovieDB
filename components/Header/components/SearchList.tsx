@@ -1,3 +1,4 @@
+import { Skeleton } from "@/components/ui/skeleton";
 import { Result } from "@/types";
 import classNames from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
@@ -5,11 +6,12 @@ import { TrendingUp } from "lucide-react";
 import Image from "next/image";
 
 interface props {
+  isLoading: boolean;
   searchList: Result[];
-  trending: boolean;
 }
 
-export default function SearchList({ searchList, trending }: props) {
+export default function SearchList({ searchList, isLoading }: props) {
+  console.log("isloading", isLoading);
   return (
     <AnimatePresence>
       <motion.div
@@ -36,6 +38,7 @@ export default function SearchList({ searchList, trending }: props) {
               : item.profile_path
               ? `https://image.tmdb.org/t/p/w185/${item.profile_path}`
               : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png";
+            const title = item?.name || item?.title;
             return (
               <motion.li
                 initial={{ opacity: 0 }}
@@ -48,12 +51,18 @@ export default function SearchList({ searchList, trending }: props) {
                   "bg-slate-200": index % 2 === 1,
                 })}
               >
-                {/* <Search className="text-slate-600" /> */}
-                <Image src={image} width={30} height={30} alt="" />
-                <div>
-                  <p>{item?.name}</p>
-                  <p>{item?.title}</p>
-                </div>
+                {isLoading ? (
+                  <Skeleton className="w-8 h-10" />
+                ) : (
+                  <Image src={image} width={30} height={30} alt="" />
+                )}
+                {isLoading ? (
+                  <Skeleton className="w-[20rem] h-[1.3rem]" />
+                ) : (
+                  <div>
+                    <p>{title}</p>
+                  </div>
+                )}
               </motion.li>
             );
           })}

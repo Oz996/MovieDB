@@ -16,7 +16,6 @@ export default function Searchbar() {
   const [isLoading, setIsLoading] = useState(false);
   const [showInput, setShowInput] = useState(false);
   const [searchList, setSearchList] = useState([]);
-  const [trending, setTrending] = useState(true);
 
   const { query, setQuery, setCached, setType } = useSearch();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -55,7 +54,6 @@ export default function Searchbar() {
           const data = await getSearchResults(value);
           const results = data?.results;
           setSearchList(results);
-          setTrending(false);
         } catch (error: any) {
           console.error(error.message);
         } finally {
@@ -85,7 +83,6 @@ export default function Searchbar() {
   const handleFetchTrending = async () => {
     const data = await getAllTrending();
     setSearchList(data);
-    setTrending(true);
     console.log("searchList", searchList);
   };
 
@@ -132,7 +129,7 @@ export default function Searchbar() {
         )}
       </AnimatePresence>
       {showInput && query === "" && (
-        <SearchList searchList={searchList} trending={trending} />
+        <SearchList isLoading={isLoading} searchList={searchList} />
       )}
     </div>
   );
