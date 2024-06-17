@@ -4,6 +4,7 @@ import classNames from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
 import { TrendingUp } from "lucide-react";
 import Image from "next/image";
+import SearchListCard from "./components/SearchListCard";
 
 interface props {
   isLoading: boolean;
@@ -37,40 +38,14 @@ export default function SearchList({ searchList, isLoading }: props) {
               There are no movies that matched your query.
             </p>
           )}
-          {searchList?.map((item, index) => {
-            const image = item.poster_path
-              ? `https://image.tmdb.org/t/p/w185/${item.poster_path}`
-              : item.profile_path
-              ? `https://image.tmdb.org/t/p/w185/${item.profile_path}`
-              : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png";
-            const title = item?.name || item?.title;
-            return (
-              <motion.li
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.4, delay: index * 0.03 }}
-                key={item.id}
-                className={classNames({
-                  "py-2 px-4 duration-200 cursor-pointer flex gap-3 items-center hover:text-slate-500":
-                    true,
-                  "bg-slate-200": index % 2 === 1,
-                })}
-              >
-                {isLoading ? (
-                  <Skeleton className="w-8 h-12" />
-                ) : (
-                  <Image src={image} width={30} height={30} alt="" />
-                )}
-                {isLoading ? (
-                  <Skeleton className="w-[20rem] h-[1.3rem]" />
-                ) : (
-                  <div>
-                    <p>{title}</p>
-                  </div>
-                )}
-              </motion.li>
-            );
-          })}
+          {searchList?.map((item, index) => (
+            <SearchListCard
+              key={item.id}
+              item={item}
+              index={index}
+              isLoading={isLoading}
+            />
+          ))}
         </motion.ul>
       </motion.div>
     </AnimatePresence>

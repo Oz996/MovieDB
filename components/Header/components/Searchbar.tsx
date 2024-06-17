@@ -5,7 +5,7 @@ import { getAllTrending } from "@/services/all";
 import { AnimatePresence, motion } from "framer-motion";
 import { Search, X } from "lucide-react";
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
-import SearchList from "./SearchList";
+import SearchList from "./SearchList/SearchList";
 import { usePathname, useRouter } from "next/navigation";
 import { useSearch } from "@/hooks/useSearch";
 import { getSearchResults } from "@/services/search";
