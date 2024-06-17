@@ -32,6 +32,11 @@ export default function SearchList({ searchList, isLoading }: props) {
           animate={{ height: "auto" }}
           transition={{ duration: 0.4 }}
         >
+          {searchList?.length === 0 && (
+            <p className="text-lg px-2 py-5">
+              There are no movies that matched your query.
+            </p>
+          )}
           {searchList?.map((item, index) => {
             const image = item.poster_path
               ? `https://image.tmdb.org/t/p/w185/${item.poster_path}`
@@ -52,7 +57,7 @@ export default function SearchList({ searchList, isLoading }: props) {
                 })}
               >
                 {isLoading ? (
-                  <Skeleton className="w-8 h-10" />
+                  <Skeleton className="w-8 h-12" />
                 ) : (
                   <Image src={image} width={30} height={30} alt="" />
                 )}
