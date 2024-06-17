@@ -125,17 +125,10 @@ export default function Searchbar() {
             />
           </>
         ) : (
-          <motion.div
-            key="icon"
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <Search
-              onClick={handleOpenInput}
-              className="cursor-pointer max-md:absolute max-md:-top-[3rem] max-md:right-4"
-            />
-          </motion.div>
+          <Search
+            onClick={handleOpenInput}
+            className="cursor-pointer max-md:absolute max-md:-top-[3rem] max-md:right-4"
+          />
         )}
       </AnimatePresence>
       {showInput && query === "" && (

@@ -11,7 +11,7 @@ import {
 import Searchbar from "./components/Searchbar";
 import { useEffect, useState } from "react";
 import { getAllTrending } from "@/services/all";
-import { Menu } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import classNames from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -107,11 +107,19 @@ export default function Header() {
 
       {/* tablet/mobile header */}
       <header className="absolute top-0 left-0 right-0 w-full h-[4rem] bg-black px-4 text-white flex items-center gap-5 md:hidden">
-        <Menu
-          size={25}
-          className="md:hidden shrink-0 cursor-pointer"
-          onClick={handleToggleNavbar}
-        />
+        {navbar ? (
+          <X
+            size={25}
+            className="md:hidden shrink-0 cursor-pointer"
+            onClick={handleToggleNavbar}
+          />
+        ) : (
+          <Menu
+            size={25}
+            className="md:hidden shrink-0 cursor-pointer"
+            onClick={handleToggleNavbar}
+          />
+        )}
         <Link href="/" className="text-3xl font-bold tracking-[2px]">
           MovieDB
         </Link>
