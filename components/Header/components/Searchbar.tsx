@@ -17,7 +17,7 @@ export default function Searchbar() {
   const [showInput, setShowInput] = useState(false);
   const [searchList, setSearchList] = useState([]);
 
-  const { query, setQuery, setCached, setType } = useSearch();
+  const { setQuery, setCached, setType } = useSearch();
   const inputRef = useRef<HTMLInputElement>(null);
 
   const pathname = usePathname();
