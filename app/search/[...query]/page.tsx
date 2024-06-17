@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import SearchResultsBar from "./components/SearchResultsBar";
+import SearchResultsBar from "./components/SearchResultsBar/SearchResultsBar";
 import { getSearchResults } from "@/services/search";
 import SearchResults from "./components/SearchResults";
 import { Result } from "@/types";

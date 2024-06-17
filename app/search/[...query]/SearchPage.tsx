@@ -1,4 +1,4 @@
-import SearchResults from "./components/SearchResultsBar";
+import SearchResults from "./components/SearchResultsBar/SearchResultsBar";
 
 interface props {
   query: string;

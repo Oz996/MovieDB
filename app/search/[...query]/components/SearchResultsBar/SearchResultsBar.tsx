@@ -10,11 +10,18 @@ import { Result } from "@/types";
 import { CircleHelp } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import SearchResultsCard from "./components/SearchResultsCard";
 
 interface props {
   isLoading: boolean;
   searchResults: Result[];
   setSearchResults: Dispatch<SetStateAction<Result[] | undefined>>;
+}
+
+export interface MediaType {
+  name: string;
+  value: string;
+  results: number;
 }
 
 export default function SearchResultsBar({
@@ -34,13 +41,7 @@ export default function SearchResultsBar({
   const { query, cached, setType, setCached } = useSearch();
   const [mediaCounts, setMediaCounts] = useState(initalMediaState);
 
-  interface mediaType {
-    name: string;
-    value: string;
-    results: number;
-  }
-
-  const TypesToDisplay: mediaType[] = [
+  const TypesToDisplay: MediaType[] = [
     { name: "Movies", value: "movie", results: mediaCounts.movies },
     { name: "TV Shows", value: "tv", results: mediaCounts.tvShows },
     { name: "People", value: "person", results: mediaCounts.people },
@@ -68,7 +69,7 @@ export default function SearchResultsBar({
 
   const router = useRouter();
 
-  const handleTypeClick = async (type: mediaType) => {
+  const handleTypeClick = async (type: MediaType) => {
     const searchType = type.value;
     setType(searchType);
     router.push(`/search/query?search=${query}&type=${type.value}`);
@@ -97,20 +98,12 @@ export default function SearchResultsBar({
       </div>
       <ul className="pb-2">
         {TypesToDisplay.map((type) => (
-          <li
-            onClick={() => handleTypeClick(type)}
-            key={type.name}
-            className="dropdown-list-item flex justify-between items-center"
-          >
-            <p>{type.name}</p>
-            {isLoading ? (
-              <Skeleton className="w-9 h-8" />
-            ) : (
-              <span className="bg-gray-200 p-1 px-4 rounded">
-                {type?.results}
-              </span>
-            )}
-          </li>
+          <SearchResultsCard
+            key={type.value}
+            type={type}
+            setType={setType}
+            isLoading={isLoading}
+          />
         ))}
       </ul>
     </div>
