@@ -1,3 +1,4 @@
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Tooltip,
   TooltipContent,
@@ -102,9 +103,13 @@ export default function SearchResultsBar({
             className="dropdown-list-item flex justify-between items-center"
           >
             <p>{type.name}</p>
-            <span className="bg-gray-200 p-1 px-4 rounded">
-              {type?.results}
-            </span>
+            {isLoading ? (
+              <Skeleton className="w-9 h-8" />
+            ) : (
+              <span className="bg-gray-200 p-1 px-4 rounded">
+                {type?.results}
+              </span>
+            )}
           </li>
         ))}
       </ul>
