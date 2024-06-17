@@ -11,11 +11,13 @@ import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 interface props {
+  isLoading: boolean;
   searchResults: Result[];
   setSearchResults: Dispatch<SetStateAction<Result[] | undefined>>;
 }
 
 export default function SearchResultsBar({
+  isLoading,
   searchResults,
   setSearchResults,
 }: props) {

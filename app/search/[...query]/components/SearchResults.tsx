@@ -1,4 +1,3 @@
-"use client";
 import { Button } from "@/components/ui/button";
 import {
   Pagination,
@@ -11,18 +10,22 @@ import {
 } from "@/components/ui/pagination";
 import { useSearch } from "@/hooks/useSearch";
 import { Result } from "@/types";
-import { useMediaQuery } from "@uidotdev/usehooks";
 import Image from "next/image";
 import Link from "next/link";
+import ResultSkeleton from "./ResultsSkeleton";
 
 interface props {
+  isLoading: boolean;
   currentPage: number;
   searchResults: Result[];
 }
 
-export default function SearchResults({ currentPage, searchResults }: props) {
+export default function SearchResults({
+  currentPage,
+  searchResults,
+  isLoading,
+}: props) {
   const { query, pageAmount, type } = useSearch();
-  const isMobile = useMediaQuery("only screen and (max-width: 768px)");
   const lastPage = pageAmount;
 
   // console.log("amount", pageAmount);
@@ -33,12 +36,14 @@ export default function SearchResults({ currentPage, searchResults }: props) {
     }&page=${page}`;
   };
 
+  if (isLoading) return <ResultSkeleton />;
+
   return (
     <section className="lg:col-span-2 lg:-ml-20 max-lg:pt-5 space-y-5">
       {searchResults?.length === 0 && (
         <p className="text-lg">There are no movies that matched your query.</p>
       )}
-      {searchResults?.map((item, i) => {
+      {searchResults?.map((item) => {
         // console.log(`item, ${i}`, item);
         const person = item?.known_for_department;
         const title = item?.name || item?.title;
@@ -79,9 +84,9 @@ export default function SearchResults({ currentPage, searchResults }: props) {
             <div className="flex flex-col justify-center gap-4 px-1">
               <div className="w-full">
                 <Link href="">
-                  <h2 className="text-xl font-semibold">{title}</h2>
+                  <h2 className="text-lg font-semibold">{title}</h2>
                 </Link>
-                <p className="text-lg text-gray-500">{date}</p>
+                <p className="text-gray-500">{date}</p>
                 {person && (
                   <div className="flex gap-2 items-center truncate">
                     <p className="text-lg">{item?.known_for_department} •</p>
@@ -94,7 +99,7 @@ export default function SearchResults({ currentPage, searchResults }: props) {
           </div>
         );
       })}
-      <Pagination className="py-10">
+      <Pagination hidden={isLoading} className="py-10">
         <PaginationContent>
           <PaginationItem>
             <Button
