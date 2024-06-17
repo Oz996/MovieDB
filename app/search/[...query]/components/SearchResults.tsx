@@ -41,7 +41,7 @@ export default function SearchResults({
   return (
     <section className="lg:col-span-2 lg:-ml-20 max-lg:pt-5 space-y-5">
       {searchResults?.length === 0 && (
-        <p className="text-lg">There are no movies that matched your query.</p>
+        <p className="text-lg">There are no results that matched your query.</p>
       )}
       {searchResults?.map((item) => {
         // console.log(`item, ${i}`, item);

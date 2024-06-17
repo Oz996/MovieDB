@@ -10,7 +10,7 @@ import { useSearch } from "@/hooks/useSearch";
 export default function Search({ params }: { params: { query: string } }) {
   const [searchResults, setSearchResults] = useState<Result[]>();
   const [isLoading, setIsLoading] = useState(false);
-  const { type, setQuery, setPageAmount, setType } = useSearch();
+  const { setQuery, setPageAmount, setType } = useSearch();
 
   const searchParams = useSearchParams();
   const query = searchParams.get("search");
@@ -37,7 +37,6 @@ export default function Search({ params }: { params: { query: string } }) {
           searchType ?? "multi",
           currentPage
         );
-        // console.log("fetched Data", data);
         const results = data?.results;
         const pageAmount = data?.total_pages;
         console.log("current results", results);
@@ -50,7 +49,7 @@ export default function Search({ params }: { params: { query: string } }) {
       }
     };
     fetchData();
-  }, [query, type, currentPage, searchType]);
+  }, [query, currentPage, searchType]);
 
   return (
     <section className="pt-28 grid grid-cols-1 lg:grid-cols-3">

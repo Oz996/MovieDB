@@ -35,7 +35,7 @@ export default function SearchList({ searchList, isLoading }: props) {
         >
           {searchList?.length === 0 && (
             <p className="text-lg px-2 py-5">
-              There are no movies that matched your query.
+              There are no results that matched your query.
             </p>
           )}
           {searchList?.map((item, index) => (
