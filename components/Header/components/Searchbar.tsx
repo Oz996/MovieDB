@@ -22,6 +22,7 @@ export default function Searchbar() {
 
   const pathname = usePathname();
   const indexPage = pathname === "/";
+  const searchPage = pathname.startsWith("/search");
 
   // using debounce to add a delay when user types in the input, less api calls made
   const debouncedValue = useDebounce(value, 300);
@@ -83,7 +84,6 @@ export default function Searchbar() {
   const handleFetchTrending = async () => {
     const data = await getAllTrending();
     setSearchList(data);
-    console.log("searchList", searchList);
   };
 
   const handleMultiSearch = (e: FormEvent) => {
@@ -128,7 +128,7 @@ export default function Searchbar() {
           />
         )}
       </AnimatePresence>
-      {showInput && query === "" && (
+      {showInput && !searchPage && (
         <SearchList isLoading={isLoading} searchList={searchList} />
       )}
     </div>

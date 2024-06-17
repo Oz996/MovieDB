@@ -12,7 +12,6 @@ import Searchbar from "./components/Searchbar";
 import { useEffect, useState } from "react";
 import { getAllTrending } from "@/services/all";
 import { Menu, X } from "lucide-react";
-import classNames from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
 
 export default function Header() {
@@ -28,16 +27,16 @@ export default function Header() {
   return (
     <>
       {/* desktop header */}
-      <header className="absolute top-0 left-0 right-0 w-full h-[4rem] bg-black px-[20rem] text-white flex items-center gap-5 max-md:hidden">
+      <header className="absolute top-0 left-0 right-0 w-full h-[4rem] bg-black px-[18rem] text-white flex items-center gap-5 max-md:hidden">
         <Link href="/" className="text-3xl font-bold tracking-[2px]">
           MovieDB
         </Link>
         <NavigationMenu className="flex gap-10 z-20">
           <NavigationMenuList className="flex items-center gap-5 font-semibold">
-            <NavigationMenuItem className="">
+            <NavigationMenuItem>
               <NavigationMenuTrigger>Movies</NavigationMenuTrigger>
               <NavigationMenuContent>
-                <ul className="flex flex-col w-[10rem]">
+                <ul className="flex flex-col w-[14rem]">
                   <li className="dropdown-list-item">
                     <NavigationMenuLink asChild>
                       <Link href="/">Popular</Link>
@@ -64,7 +63,7 @@ export default function Header() {
             <NavigationMenuItem>
               <NavigationMenuTrigger>Tv Shows</NavigationMenuTrigger>
               <NavigationMenuContent>
-                <ul className="flex flex-col w-[10rem]">
+                <ul className="flex flex-col w-[14rem]">
                   <li className="dropdown-list-item">
                     <NavigationMenuLink asChild>
                       <Link href="/">Popular</Link>
@@ -91,7 +90,7 @@ export default function Header() {
             <NavigationMenuItem>
               <NavigationMenuTrigger>People</NavigationMenuTrigger>
               <NavigationMenuContent>
-                <ul className="flex flex-col w-[10rem]">
+                <ul className="flex flex-col w-[14rem]">
                   <li className="dropdown-list-item">
                     <NavigationMenuLink asChild>
                       <Link href="/">Popular</Link>
