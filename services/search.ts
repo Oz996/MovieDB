@@ -18,29 +18,3 @@ export const getSearchResults = async (
     console.error(error.message);
   }
 };
-
-// export const getMultiSearch = async (query: string, maxPages = 3) => {
-//     let allResults = [];
-//     let currentPage = 1;
-//     let totalPages = 1;
-
-//     try {
-//       while (currentPage <= totalPages && currentPage <= maxPages) {
-//         const res = await fetch(
-//           `https://api.themoviedb.org/3/search/multi?query=${query}&page=${currentPage}`,
-//           options
-//         );
-//         const data = await res.json();
-//         if (currentPage === 1) {
-//           totalPages = data.total_pages;
-//         }
-//         allResults = [...allResults, ...data.results];
-//         currentPage++;
-//       }
-
-//       console.log("Search results (limited pages)", allResults);
-//       return allResults;
-//     } catch (error: any) {
-//       console.error(error.message);
-//     }
-//   };

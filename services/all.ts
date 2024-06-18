@@ -8,10 +8,10 @@ export const options = {
   },
 };
 
-export const getAllTrending = async () => {
+export const getAllTrending = async (time: string = "day") => {
   try {
     const res = await fetch(
-      "https://api.themoviedb.org/3/trending/all/day?language=en-US",
+      `https://api.themoviedb.org/3/trending/all/${time}?language=en-US`,
       options
     );
     const data = await res.json();
