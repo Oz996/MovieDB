@@ -16,7 +16,10 @@ export default function CarouselCard({ item }: props) {
     ? `https://image.tmdb.org/t/p/w342/${item.profile_path}`
     : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png";
   return (
-    <CarouselItem key={item.id} className="pl-1 md:basis-1/2 lg:basis-1/6">
+    <CarouselItem
+      key={item.id}
+      className="pl-1 sm:basis-1/3 md:basis-1/4 lg:basis-1/6"
+    >
       <motion.div
         className="p-1"
         initial={{ opacity: 0 }}
