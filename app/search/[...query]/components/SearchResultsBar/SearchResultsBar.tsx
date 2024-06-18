@@ -1,4 +1,3 @@
-import { Skeleton } from "@/components/ui/skeleton";
 import {
   Tooltip,
   TooltipContent,
@@ -8,7 +7,6 @@ import {
 import { useSearch } from "@/hooks/useSearch";
 import { Result } from "@/types";
 import { CircleHelp } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import SearchResultsCard from "./components/SearchResultsCard";
 
@@ -38,7 +36,7 @@ export default function SearchResultsBar({
         people: 0,
       };
 
-  const { query, cached, setType, setCached } = useSearch();
+  const { setType, setCached } = useSearch();
   const [mediaCounts, setMediaCounts] = useState(initalMediaState);
 
   const TypesToDisplay: MediaType[] = [
@@ -64,16 +62,6 @@ export default function SearchResultsBar({
       setMediaCounts(mediaCounts);
     }
   }, [searchResults]);
-
-  console.log("cached", cached);
-
-  const router = useRouter();
-
-  const handleTypeClick = async (type: MediaType) => {
-    const searchType = type.value;
-    setType(searchType);
-    router.push(`/search/query?search=${query}&type=${type.value}`);
-  };
 
   return (
     <div className="lg:w-[20rem] rounded-lg border lg:h-[14rem]">
