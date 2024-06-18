@@ -10,7 +10,10 @@ import {
 import { useEffect, useState } from "react";
 import { Result } from "@/types";
 import { getAllTrending } from "@/services/all";
+import { motion } from "framer-motion";
 import Image from "next/image";
+import { Progress } from "@/components/ui/progress";
+import CarouselCard from "@/components/CarouselCard";
 
 export default function Home() {
   const [trending, setTrending] = useState<Result[]>([]);
@@ -50,39 +53,9 @@ export default function Home() {
           <TabsContent value="today">
             <Carousel>
               <CarouselContent className="-ml-1">
-                {trending.map((item, index) => {
-                  const title = item?.name || item?.title;
-                  const date = item?.first_air_date || item?.release_date;
-                  const image = item.poster_path
-                    ? `https://image.tmdb.org/t/p/w342/${item.poster_path}`
-                    : item.profile_path
-                    ? `https://image.tmdb.org/t/p/w342/${item.profile_path}`
-                    : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png";
-                  return (
-                    <CarouselItem
-                      key={item.id}
-                      className="pl-1 md:basis-1/2 lg:basis-1/6"
-                    >
-                      <div className="p-1">
-                        <div className="space-y-5">
-                          <div className="flex items-centerjustify-center">
-                            <Image
-                              className="rounded-lg"
-                              src={image}
-                              width={150}
-                              height={150}
-                              alt=""
-                            />
-                          </div>
-                          <div>
-                            <p className="font-semibold">{title}</p>
-                            <p className="text-gray-500">{date}</p>
-                          </div>
-                        </div>
-                      </div>
-                    </CarouselItem>
-                  );
-                })}
+                {trending.map((item, index) => (
+                  <CarouselCard key={item.id} item={item} />
+                ))}
               </CarouselContent>
               <CarouselPrevious />
               <CarouselNext />
@@ -91,39 +64,9 @@ export default function Home() {
           <TabsContent value="week">
             <Carousel>
               <CarouselContent className="-ml-1">
-                {trending.map((item, index) => {
-                  const title = item?.name || item?.title;
-                  const date = item?.first_air_date || item?.release_date;
-                  const image = item.poster_path
-                    ? `https://image.tmdb.org/t/p/w342/${item.poster_path}`
-                    : item.profile_path
-                    ? `https://image.tmdb.org/t/p/w342/${item.profile_path}`
-                    : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png";
-                  return (
-                    <CarouselItem
-                      key={item.id}
-                      className="pl-1 md:basis-1/2 lg:basis-1/6"
-                    >
-                      <div className="p-1">
-                        <div className="space-y-5">
-                          <div className="flex items-centerjustify-center">
-                            <Image
-                              className="rounded-lg"
-                              src={image}
-                              width={150}
-                              height={150}
-                              alt=""
-                            />
-                          </div>
-                          <div>
-                            <p className="font-semibold">{title}</p>
-                            <p className="text-gray-500">{date}</p>
-                          </div>
-                        </div>
-                      </div>
-                    </CarouselItem>
-                  );
-                })}
+                {trending.map((item, index) => (
+                  <CarouselCard key={item.id} item={item} />
+                ))}
               </CarouselContent>
               <CarouselPrevious />
               <CarouselNext />
