@@ -10,12 +10,13 @@ import { usePathname, useRouter } from "next/navigation";
 import { useSearch } from "@/hooks/useSearch";
 import { getSearchResults } from "@/services/search";
 import { useDebounce } from "@uidotdev/usehooks";
+import { Result } from "@/types";
 
 export default function Searchbar() {
   const [value, setValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showInput, setShowInput] = useState(false);
-  const [searchList, setSearchList] = useState([]);
+  const [searchList, setSearchList] = useState<Result[] | undefined>([]);
 
   const { setQuery, setCached, setType } = useSearch();
   const inputRef = useRef<HTMLInputElement>(null);

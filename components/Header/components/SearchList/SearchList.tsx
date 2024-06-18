@@ -8,7 +8,7 @@ import SearchListCard from "./components/SearchListCard";
 
 interface props {
   isLoading: boolean;
-  searchList: Result[];
+  searchList: Result[] | undefined;
 }
 
 export default function SearchList({ searchList, isLoading }: props) {
