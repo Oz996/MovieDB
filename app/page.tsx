@@ -11,9 +11,10 @@ import { Result } from "@/types";
 import { getAllTrending, getBackgroundImages } from "@/services/all";
 import CarouselCard from "@/components/CarouselCard";
 import { getMovieList } from "@/services/movies";
-import Image from "next/image";
+import { useIntersectionObserver } from "@uidotdev/usehooks";
 
 export default function Home() {
+  const [hasRendered, setHasRendered] = useState(false);
   const [trending, setTrending] = useState<Result[] | undefined>([]);
   const [trendingTime, setTrendingTime] = useState("day");
 
@@ -22,8 +23,20 @@ export default function Home() {
 
   const [image, setImage] = useState([]);
 
+  const [popularRef, popularEntry] = useIntersectionObserver({
+    threshold: 0.5,
+    root: null,
+    rootMargin: "0px",
+  });
+
   console.log("popop", popular);
   console.log("trended", trending);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setHasRendered(true);
+    }, 500);
+  }, []);
 
   useEffect(() => {
     const fetchTrending = async () => {
@@ -34,12 +47,14 @@ export default function Home() {
   }, [trendingTime]);
 
   useEffect(() => {
-    const fetchPopular = async () => {
-      const data = await getMovieList(popularType);
-      setPopular(data);
-    };
-    fetchPopular();
-  }, [popularType]);
+    if (popularEntry?.isIntersecting && hasRendered) {
+      const fetchPopular = async () => {
+        const data = await getMovieList(popularType);
+        setPopular(data);
+      };
+      fetchPopular();
+    }
+  }, [popularType, popularEntry]);
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -48,6 +63,8 @@ export default function Home() {
     };
     fetchImages();
   }, []);
+
+  console.log("is yes yes", popularEntry);
 
   console.log("current image", image);
 
@@ -113,7 +130,7 @@ export default function Home() {
         </Tabs>
       </section>
 
-      <section className="pt-10 px-[5rem]">
+      <section className="pt-10 px-[5rem]" ref={popularRef}>
         <Tabs defaultValue="now_playing">
           <div className="w-full flex items-center gap-5">
             <h2 className="text-xl font-semibold">What's Popular</h2>
