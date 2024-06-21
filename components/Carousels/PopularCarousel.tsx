@@ -7,7 +7,6 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -19,18 +18,12 @@ import {
 } from "@/components/ui/carousel";
 import CarouselCard from "../CarouselCard";
 import { getMovieList } from "@/services/movies";
-import { useIntersectionObserver, useMediaQuery } from "@uidotdev/usehooks";
+import { useMediaQuery } from "@uidotdev/usehooks";
 
 export default function PopularCarousel() {
   const [popular, setPopular] = useState<Result[] | undefined>([]);
   const [popularType, setPopularType] = useState("now_playing");
   const isMobile = useMediaQuery("only screen and (max-width: 768px)");
-
-  const [popularRef, popularEntry] = useIntersectionObserver({
-    threshold: 0.5,
-    root: null,
-    rootMargin: "0px",
-  });
 
   useEffect(() => {
     const fetchPopular = async () => {
@@ -45,10 +38,10 @@ export default function PopularCarousel() {
   };
 
   return (
-    <section className="pt-12 px-5" ref={popularRef}>
+    <section className="pt-12 px-5">
       <Tabs defaultValue="now_playing">
         <div className="w-full flex max-sm:flex-col items-center gap-5">
-          <h2 className="text-xl font-semibold">What's Popular</h2>
+          <h2 className="text-xl font-semibold">What&apos;s Popular</h2>
           {isMobile ? (
             <Select value={popularType} onValueChange={handleSelectChange}>
               <SelectTrigger>

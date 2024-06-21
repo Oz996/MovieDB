@@ -7,7 +7,7 @@ import { Result } from "@/types";
 import { useSearchParams } from "next/navigation";
 import { useSearch } from "@/hooks/useSearch";
 
-export default function Search({ params }: { params: { query: string } }) {
+export default function Search() {
   const [searchResults, setSearchResults] = useState<Result[]>();
   const [isLoading, setIsLoading] = useState(false);
   const { setQuery, setPageAmount, setType } = useSearch();
