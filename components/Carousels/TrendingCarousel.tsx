@@ -46,8 +46,6 @@ export default function TrendingCarousel() {
     setTrendingTime(type);
   };
 
-  console.log("its loading", isLoading);
-
   if (isLoading) return <LoaderCarousel />;
   return (
     <section className="pt-12 px-5">

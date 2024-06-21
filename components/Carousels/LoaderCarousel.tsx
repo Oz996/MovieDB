@@ -6,6 +6,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Skeleton } from "../ui/skeleton";
+import { RefObject } from "react";
 
 export default function LoaderCarousel() {
   return (
