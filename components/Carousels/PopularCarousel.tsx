@@ -19,24 +19,34 @@ import {
 import CarouselCard from "../CarouselCard";
 import { getMovieList } from "@/services/movies";
 import { useMediaQuery } from "@uidotdev/usehooks";
+import LoaderCarousel from "./LoaderCarousel";
 
 export default function PopularCarousel() {
+  const [isLoading, setIsLoading] = useState(true);
+
   const [popular, setPopular] = useState<Result[] | undefined>([]);
   const [popularType, setPopularType] = useState("now_playing");
   const isMobile = useMediaQuery("only screen and (max-width: 768px)");
 
   useEffect(() => {
-    const fetchPopular = async () => {
-      const data = await getMovieList(popularType);
-      setPopular(data);
-    };
-    fetchPopular();
+    try {
+      const fetchPopular = async () => {
+        const data = await getMovieList(popularType);
+        setPopular(data);
+      };
+      fetchPopular();
+    } catch (error: any) {
+      console.error(error.message);
+    } finally {
+      setIsLoading(false);
+    }
   }, [popularType]);
 
   const handleSelectChange = (type: string) => {
     setPopularType(type);
   };
 
+  if (isLoading) return <LoaderCarousel />;
   return (
     <section className="pt-12 px-5">
       <Tabs defaultValue="now_playing">

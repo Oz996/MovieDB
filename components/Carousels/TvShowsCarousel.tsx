@@ -20,7 +20,9 @@ import {
 import CarouselCard from "../CarouselCard";
 import { useIntersectionObserver, useMediaQuery } from "@uidotdev/usehooks";
 import { getTvShows } from "@/services/tvShows";
+import LoaderCarousel from "./LoaderCarousel";
 export default function TvShowsCarousel() {
+  const [isLoading, setIsLoading] = useState(true);
   const [shows, setShows] = useState<Result[] | undefined>([]);
   const [showsType, setshowsType] = useState("free");
   const [hasRendered, setHasRendered] = useState(false);
@@ -40,11 +42,17 @@ export default function TvShowsCarousel() {
 
   useEffect(() => {
     if (showsEntry?.isIntersecting && hasRendered) {
-      const fetchShows = async () => {
-        const data = await getTvShows(showsType);
-        setShows(data);
-      };
-      fetchShows();
+      try {
+        const fetchShows = async () => {
+          const data = await getTvShows(showsType);
+          setShows(data);
+        };
+        fetchShows();
+      } catch (error: any) {
+        console.error(error.message);
+      } finally {
+        setIsLoading(false);
+      }
     }
   }, [showsType, showsEntry, hasRendered]);
 
@@ -52,6 +60,7 @@ export default function TvShowsCarousel() {
     setshowsType(type);
   };
 
+  if (isLoading) return <LoaderCarousel />;
   return (
     <section className="pt-12 px-5" ref={showsRef}>
       <Tabs defaultValue="free">

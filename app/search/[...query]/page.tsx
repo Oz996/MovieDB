@@ -30,8 +30,8 @@ export default function Search() {
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       try {
-        setIsLoading(true);
         const data = await getSearchResults(
           query!,
           searchType ?? "multi",

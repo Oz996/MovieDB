@@ -20,16 +20,24 @@ import {
 } from "@/components/ui/carousel";
 import CarouselCard from "../CarouselCard";
 import { useMediaQuery } from "@uidotdev/usehooks";
+import LoaderCarousel from "./LoaderCarousel";
 
 export default function TrendingCarousel() {
+  const [isLoading, setIsLoading] = useState(true);
   const [trending, setTrending] = useState<Result[] | undefined>([]);
   const [trendingTime, setTrendingTime] = useState("day");
   const isMobile = useMediaQuery("only screen and (max-width: 768px)");
 
   useEffect(() => {
     const fetchTrending = async () => {
-      const data = await getAllTrending(trendingTime);
-      setTrending(data);
+      try {
+        const data = await getAllTrending(trendingTime);
+        setTrending(data);
+      } catch (error: any) {
+        console.error(error.message);
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchTrending();
   }, [trendingTime]);
@@ -38,6 +46,9 @@ export default function TrendingCarousel() {
     setTrendingTime(type);
   };
 
+  console.log("its loading", isLoading);
+
+  if (isLoading) return <LoaderCarousel />;
   return (
     <section className="pt-12 px-5">
       <Tabs defaultValue="today">

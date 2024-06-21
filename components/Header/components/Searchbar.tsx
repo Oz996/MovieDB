@@ -51,8 +51,8 @@ export default function Searchbar() {
   useEffect(() => {
     if (debouncedValue.length > 1 && indexPage) {
       const searchValue = async () => {
+        setIsLoading(true);
         try {
-          setIsLoading(true);
           const data = await getSearchResults(value);
           const results = data?.results;
           setSearchList(results);
