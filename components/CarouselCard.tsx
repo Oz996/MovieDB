@@ -27,7 +27,7 @@ export default function CarouselCard({ item }: props) {
         transition={{ duration: 1 }}
       >
         <div className="space-y-5">
-          <div className="flex items-centerjustify-center">
+          <div className="flex">
             <Image
               className="rounded-lg"
               src={image}
@@ -36,8 +36,8 @@ export default function CarouselCard({ item }: props) {
               alt=""
             />
           </div>
-          <div>
-            <p className="font-semibold">{title}</p>
+          <div className="">
+            <p className="font-semibold max-w-[10rem] line-clamp-2">{title}</p>
             <p className="text-gray-500">{date}</p>
           </div>
         </div>
