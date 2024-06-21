@@ -8,10 +8,11 @@ import {
 } from "@/components/ui/carousel";
 import { useEffect, useState } from "react";
 import { Result } from "@/types";
-import { getAllTrending, getBackgroundImages } from "@/services/all";
+import { getAllTrending } from "@/services/all";
 import CarouselCard from "@/components/CarouselCard";
 import { getMovieList } from "@/services/movies";
 import { useIntersectionObserver } from "@uidotdev/usehooks";
+import { getTvShows } from "@/services/tvShows";
 
 export default function Home() {
   const [hasRendered, setHasRendered] = useState(false);
@@ -21,7 +22,8 @@ export default function Home() {
   const [popular, setPopular] = useState<Result[] | undefined>([]);
   const [popularType, setPopularType] = useState("now_playing");
 
-  const [image, setImage] = useState([]);
+  const [shows, setShows] = useState<Result[] | undefined>([]);
+  const [showsType, setshowsType] = useState("free");
 
   const [popularRef, popularEntry] = useIntersectionObserver({
     threshold: 0.5,
@@ -29,8 +31,11 @@ export default function Home() {
     rootMargin: "0px",
   });
 
-  console.log("popop", popular);
-  console.log("trended", trending);
+  const [showsRef, showsEntry] = useIntersectionObserver({
+    threshold: 0.5,
+    root: null,
+    rootMargin: "0px",
+  });
 
   useEffect(() => {
     setTimeout(() => {
@@ -47,36 +52,29 @@ export default function Home() {
   }, [trendingTime]);
 
   useEffect(() => {
-    if (popularEntry?.isIntersecting && hasRendered) {
-      const fetchPopular = async () => {
-        const data = await getMovieList(popularType);
-        setPopular(data);
-      };
-      fetchPopular();
-    }
-  }, [popularType, popularEntry]);
+    const fetchPopular = async () => {
+      const data = await getMovieList(popularType);
+      setPopular(data);
+    };
+    fetchPopular();
+  }, [popularType]);
 
   useEffect(() => {
-    const fetchImages = async () => {
-      const image = await getBackgroundImages();
-      setImage(image);
-    };
-    fetchImages();
-  }, []);
+    if (showsEntry?.isIntersecting && hasRendered) {
+      const fetchShows = async () => {
+        const data = await getTvShows(showsType);
+        setShows(data);
+      };
+      fetchShows();
+    }
+  }, [showsType, showsEntry, hasRendered]);
 
   console.log("is yes yes", popularEntry);
 
-  console.log("current image", image);
-
   return (
     <>
-      <section className="pt-24 px-[5rem]">
-        <div
-          style={{
-            backgroundImage: `url('https://image.tmdb.org/t/p/w780${image}')`,
-          }}
-          className="w-full h-[30rem] p-10 bg-black bg-opacity-40 text-white rounded bg-cover bg-blend-overlay"
-        >
+      <section className="pt-24">
+        <div className="w-full h-[8rem] p-10 bg-black flex flex-col justify-center text-white rounded">
           <h2 className="text-4xl">Welcome.</h2>
           <p className="text-2xl">
             Millions of movies, TV shows and people to discover. Explore now.
@@ -84,7 +82,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="pt-10 px-[5rem]">
+      <section className="pt-12 px-5">
         <Tabs defaultValue="today">
           <div className="w-full flex items-center gap-5">
             <h2 className="text-xl font-semibold">Trending</h2>
@@ -130,7 +128,7 @@ export default function Home() {
         </Tabs>
       </section>
 
-      <section className="pt-10 px-[5rem]" ref={popularRef}>
+      <section className="pt-12 px-5" ref={popularRef}>
         <Tabs defaultValue="now_playing">
           <div className="w-full flex items-center gap-5">
             <h2 className="text-xl font-semibold">What's Popular</h2>
@@ -184,6 +182,70 @@ export default function Home() {
             <Carousel>
               <CarouselContent className="-ml-1">
                 {popular?.map((item) => (
+                  <CarouselCard key={item.id} item={item} />
+                ))}
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+            </Carousel>
+          </TabsContent>
+        </Tabs>
+      </section>
+
+      <section className="pt-12 px-5" ref={showsRef}>
+        <Tabs defaultValue="free">
+          <div className="w-full flex items-center gap-5">
+            <h2 className="text-xl font-semibold">Discover Shows</h2>
+            <TabsList>
+              <TabsTrigger
+                value="free"
+                className="text-md"
+                onClick={() => setshowsType("free")}
+              >
+                Free
+              </TabsTrigger>
+              <TabsTrigger
+                value="rent"
+                className="text-md"
+                onClick={() => setshowsType("rent")}
+              >
+                Rent
+              </TabsTrigger>
+              <TabsTrigger
+                value="buy"
+                className="text-md"
+                onClick={() => setshowsType("buy")}
+              >
+                Buy
+              </TabsTrigger>
+            </TabsList>
+          </div>
+          <TabsContent value="free">
+            <Carousel>
+              <CarouselContent className="-ml-1">
+                {shows?.map((item) => (
+                  <CarouselCard key={item.id} item={item} />
+                ))}
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+            </Carousel>
+          </TabsContent>
+          <TabsContent value="rent">
+            <Carousel>
+              <CarouselContent className="-ml-1">
+                {shows?.map((item) => (
+                  <CarouselCard key={item.id} item={item} />
+                ))}
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+            </Carousel>
+          </TabsContent>
+          <TabsContent value="buy">
+            <Carousel>
+              <CarouselContent className="-ml-1">
+                {shows?.map((item) => (
                   <CarouselCard key={item.id} item={item} />
                 ))}
               </CarouselContent>
