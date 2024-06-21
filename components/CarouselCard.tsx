@@ -18,7 +18,7 @@ export default function CarouselCard({ item }: props) {
   return (
     <CarouselItem
       key={item.id}
-      className="pl-1 sm:basis-1/3 md:basis-1/4 lg:basis-1/6"
+      className="pl-1 basis-1/1 sm:basis-1/3 md:basis-1/3 lg:basis-1/6"
     >
       <motion.div
         className="p-1"
