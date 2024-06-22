@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import SearchResultsBar from "./components/SearchResultsBar/SearchResultsBar";
 import { getSearchResults } from "@/services/search";
-import SearchResults from "./components/SearchResults";
+import SearchResults from "./components/SearchResults/SearchResults";
 import { Result } from "@/types";
 import { useSearchParams } from "next/navigation";
 import { useSearch } from "@/hooks/useSearch";
