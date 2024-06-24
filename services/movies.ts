@@ -30,3 +30,20 @@ export const getMovieTrending = async (time: string = "week") => {
     console.error(error.message);
   }
 };
+
+export const getMovieDetails = async (id: string) => {
+  try {
+    const res = await fetch(
+      `https://api.themoviedb.org/3/movie/${id}`,
+
+      options
+    );
+    const data = await res.json();
+    console.log("moviedata", data);
+    // const results = data.results as Result[];
+    // console.log(results);
+    // return results;
+  } catch (error: any) {
+    console.error(error.message);
+  }
+};
