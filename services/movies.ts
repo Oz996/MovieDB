@@ -1,4 +1,4 @@
-import { Result } from "@/types";
+import { Movie, Result } from "@/types";
 import { options } from "./all";
 
 export const getMovieList = async (type: string = "now_playing") => {
@@ -38,11 +38,9 @@ export const getMovieDetails = async (id: string) => {
 
       options
     );
-    const data = await res.json();
-    console.log("moviedata", data);
-    // const results = data.results as Result[];
-    // console.log(results);
-    // return results;
+    const result = (await res.json()) as Movie;
+    console.log("moviedata", result);
+    return result;
   } catch (error: any) {
     console.error(error.message);
   }
