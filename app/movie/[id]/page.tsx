@@ -115,7 +115,7 @@ export default function Movie({ params }: { params: { id: string } }) {
               </p>
             </div>
             {rating !== 0 && (
-              <div className="size-20 pt-5">
+              <div className="size-28 pt-5 flex gap-2 items-center">
                 <CircularProgressbar
                   value={rating!}
                   text={`${rating}%`}
@@ -133,8 +133,16 @@ export default function Movie({ params }: { params: { id: string } }) {
                   }}
                   className="font-semibold"
                 />
+                <p className="font-semibold">
+                  User <br /> Score
+                </p>
               </div>
             )}
+            <div className="flex flex-col gap-1">
+              <p className="italic opacity-80">{movie?.tagline}</p>
+              <p className="text-xl">Overview</p>
+              <p>{movie?.overview}</p>
+            </div>
           </div>
         </div>
       </div>
