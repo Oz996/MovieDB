@@ -59,6 +59,10 @@ export interface Movie {
   backdrop_path: string;
   belongs_to_collection: BelongsTo;
   budget: number;
+  credits: {
+    cast: Credit[];
+    crew: Credit[];
+  };
   genres: Genre[];
   homepage: string;
   id: number;
@@ -81,6 +85,21 @@ export interface Movie {
   video: boolean;
   vote_average: number;
   vote_count: number;
+}
+
+export interface Credit {
+  adult: boolean;
+  cast_id: number;
+  character: string;
+  credit_id: string;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  order: number;
+  original_name: string;
+  popularity: number;
+  profile_path: string;
 }
 
 export interface SpokenLanguage {

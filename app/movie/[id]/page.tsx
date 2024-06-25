@@ -51,7 +51,7 @@ export default function Movie({ params }: { params: { id: string } }) {
     }
   };
 
-  const rating = movie?.vote_average! * 10;
+  const rating = Math.ceil(movie?.vote_average! * 10);
   const getColor = () => {
     if (rating) {
       if (rating >= 70) {
@@ -142,6 +142,9 @@ export default function Movie({ params }: { params: { id: string } }) {
               <p className="italic opacity-80">{movie?.tagline}</p>
               <p className="text-xl">Overview</p>
               <p>{movie?.overview}</p>
+              <div>
+                <p></p>
+              </div>
             </div>
           </div>
         </div>

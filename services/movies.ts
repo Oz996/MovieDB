@@ -32,8 +32,6 @@ export const getMovieTrending = async (time: string = "week") => {
 };
 
 export const getMovieDetails = async (id: string) => {
-  const apiKey = "be0221bc6d7421781ec7cf3a729d1e65";
-
   try {
     const res = await fetch(
       `https://api.themoviedb.org/3/movie/${id}?append_to_response=credits`,
