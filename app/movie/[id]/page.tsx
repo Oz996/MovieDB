@@ -3,6 +3,9 @@ import { getMovieDetails } from "@/services/movies";
 import { useEffect, useState } from "react";
 import { Movie } from "@/types";
 import Image from "next/image";
+import classNames from "classnames";
+import { CircularProgressbar } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
 export default function Movie({ params }: { params: { id: string } }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -37,15 +40,29 @@ export default function Movie({ params }: { params: { id: string } }) {
     }
   };
 
+  const time = movie?.runtime;
   const getRunTime = () => {
-    const time = movie?.runtime;
     if (time) {
       const hours = Math.floor(time / 60);
       const minutes = time % 60;
-      console.log(minutes);
       return `${hours}h ${minutes}m`;
     } else {
       return null;
+    }
+  };
+
+  const rating = movie?.vote_average! * 10;
+  const getColor = () => {
+    if (rating) {
+      if (rating >= 70) {
+        return "#21d07a";
+      } else if (rating >= 40) {
+        return "#d2d531";
+      } else {
+        return "#db2360";
+      }
+    } else {
+      return "#ccc";
     }
   };
 
@@ -56,7 +73,7 @@ export default function Movie({ params }: { params: { id: string } }) {
         style={{
           backgroundImage: `url("https://image.tmdb.org/t/p/w1280${movie?.backdrop_path}")`,
         }}
-        className="h-[32rem] flex items-center justify-center w-full relative before:bg-black/50 bg-no-repeat bg-cover before:absolute before:inset-0"
+        className="h-[32rem] flex items-center justify-center w-full relative before:bg-black/60 bg-no-repeat bg-cover before:absolute before:inset-0"
       >
         {/* image and other content */}
         <div className="z-20 flex gap-10 text-white">
@@ -74,7 +91,13 @@ export default function Movie({ params }: { params: { id: string } }) {
             </div>
             <div className="flex items-center gap-3">
               <p>{getReleaseDate()}</p>
-              <div className="pl-3 relative before:absolute before:content-['*'] before:left-0 flex gap-1">
+              <div
+                className={classNames({
+                  "pl-3 relative flex gap-1": true,
+                  "before:absolute before:content-['•'] before:left-0":
+                    genres?.length! > 0,
+                })}
+              >
                 {genres?.map((genre, i) => (
                   <p key={genre.id}>
                     {genre.name}
@@ -82,10 +105,36 @@ export default function Movie({ params }: { params: { id: string } }) {
                   </p>
                 ))}
               </div>
-              <p className="pl-3 relative before:absolute before:content-['*'] before:left-0">
+              <p
+                className={classNames({
+                  "pl-3 relative flex gap-1": true,
+                  "before:absolute before:content-['•'] before:left-0": time,
+                })}
+              >
                 {getRunTime()}
               </p>
             </div>
+            {rating !== 0 && (
+              <div className="size-20 pt-5">
+                <CircularProgressbar
+                  value={rating!}
+                  text={`${rating}%`}
+                  styles={{
+                    text: {
+                      fontSize: "2rem",
+                      fill: "white",
+                    },
+                    trail: {
+                      opacity: "40%",
+                    },
+                    path: {
+                      stroke: getColor(),
+                    },
+                  }}
+                  className="font-semibold"
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
