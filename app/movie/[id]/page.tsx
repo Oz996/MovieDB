@@ -91,7 +91,7 @@ export default function Movie({ params }: { params: { id: string } }) {
   };
 
   const trailers = movie?.videos.results;
-  const trailerTodisplay = trailers ? trailers[trailers.length - 1].key : null;
+  const trailerToDisplay = trailers ? trailers[trailers.length - 1].key : null;
   const handleShowTrailer = () => {
     setTrailer(true);
   };
@@ -208,15 +208,19 @@ export default function Movie({ params }: { params: { id: string } }) {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <div className="relative top-0 p-2 flex justify-between items-center w-full h-[4rem] text-white bg-black">
+            <div className="fixed inset-0 w-full h-full bg-black/80" />
+            <div className="relative top-0 p-2 flex justify-between items-center w-[1387px] h-[4rem] text-white bg-black z-50">
               <p className="text-lg">Play Trailer</p>
               <X className="cursor-pointer" onClick={handleCloseTrailer} />
             </div>
-            <iframe
-              width="1387"
-              height="780"
-              src={`https://www.youtube.com/embed/${trailerTodisplay}`}
-            ></iframe>
+            <div className="z-50">
+              <iframe
+                className="absolute inset-0"
+                width="1387"
+                height="780"
+                src={`https://www.youtube.com/embed/${trailerToDisplay}`}
+              ></iframe>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
