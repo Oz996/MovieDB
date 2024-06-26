@@ -60,8 +60,8 @@ export interface Movie {
   belongs_to_collection: BelongsTo;
   budget: number;
   credits: {
-    cast: Credit[];
-    crew: Credit[];
+    cast: Cast[];
+    crew: Crew[];
   };
   genres: Genre[];
   homepage: string;
@@ -90,16 +90,24 @@ export interface Movie {
 export interface Credit {
   adult: boolean;
   cast_id: number;
-  character: string;
   credit_id: string;
   gender: number;
   id: number;
   known_for_department: string;
   name: string;
-  order: number;
   original_name: string;
   popularity: number;
   profile_path: string;
+}
+
+export interface Crew extends Credit {
+  department: string;
+  job: string;
+}
+
+export interface Cast extends Credit {
+  character: string;
+  order: number;
 }
 
 export interface SpokenLanguage {

@@ -1,7 +1,7 @@
 "use client";
 import { getMovieDetails } from "@/services/movies";
 import { useEffect, useState } from "react";
-import { Movie } from "@/types";
+import { Crew, Movie } from "@/types";
 import Image from "next/image";
 import classNames from "classnames";
 import { CircularProgressbar } from "react-circular-progressbar";
@@ -32,37 +32,58 @@ export default function Movie({ params }: { params: { id: string } }) {
   const day = date.getDate().toString().padStart(2, "0");
   const year = date.getFullYear();
 
-  const getReleaseDate = () => {
-    if (year) {
-      return `${month}/${day}/${year}`;
-    } else {
-      return null;
+  const crewToList = ["Director", "Writer", "Screenplay", "Story"];
+
+  const crew = movie?.credits.crew.filter((crew) => {
+    if (typeof crew.job === "string") return crewToList.includes(crew.job);
+  });
+
+  // if same person has several roles we create an array of jobs connected to that person in order to not list duplicates of a person
+  const getCrewRoles = () => {
+    if (!crew) return null;
+    const nameMap = new Map();
+
+    for (const item of crew) {
+      if (nameMap.has(item.name)) {
+        nameMap.get(item.name).job.push(item.job);
+      } else {
+        nameMap.set(item.name, { ...item, job: [item.job] });
+      }
     }
+    const result: Crew[] = [];
+    for (const item of crew) {
+      const person = nameMap.get(item.name);
+      if (person && !result.some((p) => p.name === person.name)) {
+        result.push(person);
+      }
+    }
+    return result;
+  };
+
+  console.log("crew", getCrewRoles());
+
+  const getReleaseDate = () => {
+    if (!year) return null;
+    return `${month}/${day}/${year}`;
   };
 
   const time = movie?.runtime;
   const getRunTime = () => {
-    if (time) {
-      const hours = Math.floor(time / 60);
-      const minutes = time % 60;
-      return `${hours}h ${minutes}m`;
-    } else {
-      return null;
-    }
+    if (!time) return null;
+    const hours = Math.floor(time / 60);
+    const minutes = time % 60;
+    return `${hours}h ${minutes}m`;
   };
 
   const rating = Math.ceil(movie?.vote_average! * 10);
   const getColor = () => {
-    if (rating) {
-      if (rating >= 70) {
-        return "#21d07a";
-      } else if (rating >= 40) {
-        return "#d2d531";
-      } else {
-        return "#db2360";
-      }
+    if (!rating) return "#ccc";
+    if (rating >= 70) {
+      return "#21d07a";
+    } else if (rating >= 40) {
+      return "#d2d531";
     } else {
-      return "#ccc";
+      return "#db2360";
     }
   };
 
@@ -84,7 +105,7 @@ export default function Movie({ params }: { params: { id: string } }) {
             alt="Movie Poster"
             className="z-20 rounded-lg"
           />
-          <div className="flex flex-col">
+          <div className="flex flex-col pr-10">
             <div className="z-20 flex gap-2 text-4xl">
               <h2 className="font-bold">{movie?.title}</h2>
               <p className="opacity-80">({year})</p>
@@ -142,9 +163,18 @@ export default function Movie({ params }: { params: { id: string } }) {
               <p className="italic opacity-80">{movie?.tagline}</p>
               <p className="text-xl">Overview</p>
               <p>{movie?.overview}</p>
-              <div>
-                <p></p>
-              </div>
+              <ul className="grid grid-cols-3 pt-5">
+                {getCrewRoles()?.map((person) => (
+                  <li key={person.id}>
+                    <p className="font-semibold">{person.name}</p>
+                    <p>
+                      {Array.isArray(person.job)
+                        ? person.job.join(", ")
+                        : person.job}
+                    </p>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>

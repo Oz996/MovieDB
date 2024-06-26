@@ -21,7 +21,7 @@ export default function CarouselCard({ item }: props) {
       key={item.id}
       className="pl-1 basis-1/1 sm:basis-1/3 md:basis-1/3 lg:basis-1/6"
     >
-      <Link href={`http://localhost:3000/movie/${item.id}`}>
+      <Link href={`http://localhost:3000/${item.media_type}/${item.id}`}>
         <motion.div
           className="p-1"
           initial={{ opacity: 0 }}
