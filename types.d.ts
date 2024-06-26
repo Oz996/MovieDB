@@ -83,6 +83,9 @@ export interface Movie {
   tagline: string;
   title: string;
   video: boolean;
+  videos: {
+    results: Trailer[];
+  };
   vote_average: number;
   vote_count: number;
 }
@@ -100,9 +103,22 @@ export interface Credit {
   profile_path: string;
 }
 
+export interface Trailer {
+  id: string;
+  iso_639_1: string;
+  iso_3166_1: string;
+  key: string;
+  name: string;
+  official: true;
+  published_at: string;
+  site: string;
+  size: number;
+  type: string;
+}
+
 export interface Crew extends Credit {
   department: string;
-  job: string;
+  job: string | string[];
 }
 
 export interface Cast extends Credit {

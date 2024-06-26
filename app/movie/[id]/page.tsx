@@ -6,9 +6,12 @@ import Image from "next/image";
 import classNames from "classnames";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import { Play, X } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function Movie({ params }: { params: { id: string } }) {
   const [isLoading, setIsLoading] = useState(true);
+  const [trailer, setTrailer] = useState(false);
   const [movie, setMovie] = useState<Movie>();
 
   useEffect(() => {
@@ -87,6 +90,15 @@ export default function Movie({ params }: { params: { id: string } }) {
     }
   };
 
+  const trailers = movie?.videos.results;
+  const trailerTodisplay = trailers ? trailers[trailers.length - 1].key : null;
+  const handleShowTrailer = () => {
+    setTrailer(true);
+  };
+  const handleCloseTrailer = () => {
+    setTrailer(false);
+  };
+
   return (
     <section className="pt-24">
       {/* backdrop image */}
@@ -105,7 +117,7 @@ export default function Movie({ params }: { params: { id: string } }) {
             alt="Movie Poster"
             className="z-20 rounded-lg"
           />
-          <div className="flex flex-col pr-10">
+          <div className="flex flex-col justify-center pr-10">
             <div className="z-20 flex gap-2 text-4xl">
               <h2 className="font-bold">{movie?.title}</h2>
               <p className="opacity-80">({year})</p>
@@ -159,7 +171,14 @@ export default function Movie({ params }: { params: { id: string } }) {
                 </p>
               </div>
             )}
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-2">
+              <div
+                className="flex gap-1 cursor-pointer pt-2 pb-3"
+                onClick={handleShowTrailer}
+              >
+                <Play size={22} />
+                <p className="font-semibold">Play Trailer</p>
+              </div>
               <p className="italic opacity-80">{movie?.tagline}</p>
               <p className="text-xl">Overview</p>
               <p>{movie?.overview}</p>
@@ -179,6 +198,28 @@ export default function Movie({ params }: { params: { id: string } }) {
           </div>
         </div>
       </div>
+      <AnimatePresence>
+        {trailer && (
+          <motion.div
+            key="video-player"
+            className="absolute left-[20rem] top-[5rem] z-40"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="relative top-0 p-2 flex justify-between items-center w-full h-[4rem] text-white bg-black">
+              <p className="text-lg">Play Trailer</p>
+              <X className="cursor-pointer" onClick={handleCloseTrailer} />
+            </div>
+            <iframe
+              width="1387"
+              height="780"
+              src={`https://www.youtube.com/embed/${trailerTodisplay}`}
+            ></iframe>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
