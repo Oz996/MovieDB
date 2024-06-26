@@ -218,7 +218,8 @@ export default function Movie({ params }: { params: { id: string } }) {
                 className="absolute inset-0"
                 width="1387"
                 height="780"
-                src={`https://www.youtube.com/embed/${trailerToDisplay}`}
+                src={`https://www.youtube.com/embed/${trailerToDisplay}?autoplay=1`}
+                allow="autoplay"
               ></iframe>
             </div>
           </motion.div>
