@@ -56,7 +56,7 @@ export default function PersonCarousel({ movie }: props) {
           })}
         </CarouselContent>
         <CarouselPrevious />
-        <CarouselNext />
+        <CarouselNext className="mr-[4.5rem]" />
       </Carousel>
     </section>
   );
