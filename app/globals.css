@@ -79,4 +79,7 @@
   .dropdown-list-item {
     @apply py-2 px-4 hover:bg-slate-200 duration-200 cursor-pointer;
   }
+  .text-title {
+    @apply text-[22.5px];
+  }
 }

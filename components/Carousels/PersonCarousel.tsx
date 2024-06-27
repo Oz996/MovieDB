@@ -15,18 +15,14 @@ interface props {
 }
 
 export default function PersonCarousel({ movie }: props) {
-  const cast = movie?.credits.cast;
-  const getCastToDisplay = () => {
-    if (!cast) return null;
-    return cast.slice(0, 8);
-  };
+  const cast = movie?.credits.cast.slice(0, 8);
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold py-5">Top Billed Cast</h2>
+      <h2 className="text-title font-semibold py-5">Top Billed Cast</h2>
       <Carousel className="rounded-xl pl-2 pr-6">
         <CarouselContent className="-ml-1">
-          {getCastToDisplay()?.map((person) => {
+          {cast?.map((person) => {
             return (
               <CarouselItem
                 key={person.id}
