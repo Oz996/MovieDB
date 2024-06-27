@@ -1,14 +1,26 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Review } from "@/types";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
 import { FaStar } from "react-icons/fa6";
+import { Button } from "./ui/button";
 
 interface props {
   reviews: Review[];
 }
 
 export default function ReviewSection({ reviews }: props) {
+  const [expanded, setExpanded] = useState(false);
   const reviewToDisplay = reviews?.slice(0, 1);
+
+  const handleExpandCard = () => {
+    setExpanded(true);
+  };
+
+  const handleCloseCard = () => {
+    setExpanded(false);
+  };
 
   return (
     <section>
@@ -23,7 +35,7 @@ export default function ReviewSection({ reviews }: props) {
         });
 
         return (
-          <Card key={review.id}>
+          <Card key={review.id} className="mr-6">
             <CardHeader>
               <div className="flex gap-5">
                 <div>
@@ -55,7 +67,29 @@ export default function ReviewSection({ reviews }: props) {
               </div>
             </CardHeader>
             <CardContent>
-              <p className="">{review.content}</p>
+              {expanded ? (
+                <>
+                  <p>{review.content}</p>
+                  <Button
+                    onClick={handleCloseCard}
+                    className="bg-transparent border-none p-0 hover:bg-transparent text-black"
+                  >
+                    show less
+                    <ChevronUp size={20} />
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <p className="line-clamp-5">{review.content}</p>
+                  <Button
+                    onClick={handleExpandCard}
+                    className="bg-transparent border-none p-0 hover:bg-transparent text-black"
+                  >
+                    read the rest
+                    <ChevronDown size={20} />
+                  </Button>
+                </>
+              )}
             </CardContent>
           </Card>
         );
