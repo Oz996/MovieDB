@@ -79,6 +79,8 @@ export interface Movie {
   revenue: number;
   runtime: number;
   spoken_languages: SpokenLanguage[];
+  keywords: Keyword[];
+  external_ids: ExternalLinks;
   status: string;
   tagline: string;
   title: string;
@@ -88,6 +90,19 @@ export interface Movie {
   };
   vote_average: number;
   vote_count: number;
+}
+
+export interface ExternalLinks {
+  facebook_id: string | null;
+  imdb_id: string | null;
+  instagram_id: string | null;
+  twitter_id: string | null;
+  wikidata_id: string | null;
+}
+
+export interface Keyword {
+  id: number;
+  name: string;
 }
 
 export interface Credit {
