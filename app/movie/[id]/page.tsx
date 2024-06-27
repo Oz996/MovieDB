@@ -2,10 +2,11 @@
 import { getMovieDetails } from "@/services/movies";
 import { useEffect, useState } from "react";
 import { Movie as IMovie } from "@/types";
-import "react-circular-progressbar/dist/styles.css";
 import Banner from "@/components/Banner/Banner";
 import PersonCarousel from "@/components/Carousels/PersonCarousel";
 import SideContent from "@/components/SideContent";
+import "react-circular-progressbar/dist/styles.css";
+import ReviewSection from "@/components/ReviewSection";
 
 export default function Movie({ params }: { params: { id: string } }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -25,15 +26,18 @@ export default function Movie({ params }: { params: { id: string } }) {
     fetchMovieDetails();
   }, [params]);
 
-  // const linksToDisplay = ["facebook", "instagram", "twitter"];
-  // const getLinksToDisplay = () => {};
+  const reviews = movie?.reviews.results;
+
   return (
-    <>
+    <section className="flex flex-col">
       <Banner movie={movie!} />
-      <section className="flex">
-        <PersonCarousel movie={movie!} />
+      <section className="grid grid-cols-4">
+        <div className="col-span-3 space-y-5">
+          <PersonCarousel movie={movie!} />
+          <ReviewSection reviews={reviews!} />
+        </div>
         <SideContent movie={movie!} />
       </section>
-    </>
+    </section>
   );
 }

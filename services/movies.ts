@@ -34,7 +34,7 @@ export const getMovieTrending = async (time: string = "week") => {
 export const getMovieDetails = async (id: string) => {
   try {
     const res = await fetch(
-      `https://api.themoviedb.org/3/movie/${id}?append_to_response=credits,videos,keywords,external_ids`,
+      `https://api.themoviedb.org/3/movie/${id}?append_to_response=credits,videos,keywords,external_ids,reviews`,
       options
     );
     const result = (await res.json()) as Movie;

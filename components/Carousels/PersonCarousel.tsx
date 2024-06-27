@@ -22,7 +22,7 @@ export default function PersonCarousel({ movie }: props) {
   };
 
   return (
-    <section>
+    <div>
       <h2 className="text-2xl font-semibold py-5">Top Billed Cast</h2>
       <Carousel className="rounded-xl pl-2 pr-6">
         <CarouselContent className="-ml-1">
@@ -58,6 +58,6 @@ export default function PersonCarousel({ movie }: props) {
         <CarouselPrevious />
         <CarouselNext className="mr-[4.5rem]" />
       </Carousel>
-    </section>
+    </div>
   );
 }

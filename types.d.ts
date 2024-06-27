@@ -86,12 +86,35 @@ export interface Movie {
   status: string;
   tagline: string;
   title: string;
+  reviews: ReviewObject;
   video: boolean;
   videos: {
     results: Trailer[];
   };
   vote_average: number;
   vote_count: number;
+}
+
+export interface ReviewObject {
+  page: number;
+  results: Review[];
+  total_pages: number;
+  total_results: number;
+}
+
+export interface Review {
+  author: string;
+  author_details: {
+    avatar_path: string;
+    name: string;
+    rating: null | number;
+    username: string;
+  };
+  content: string;
+  created_at: string;
+  id: string;
+  updated_at: string;
+  url: string;
 }
 
 export interface ExternalLinks {
