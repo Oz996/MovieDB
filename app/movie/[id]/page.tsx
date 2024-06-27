@@ -34,7 +34,7 @@ export default function Movie({ params }: { params: { id: string } }) {
       <section className="flex">
         <PersonCarousel movie={movie!} />
         <div>
-          <div className="flex flex-col gap-4 pt-12">
+          <div className="flex flex-col gap-4 pt-12 w-[15rem]">
             <ExternalLinks movie={movie!} />
             <div className="flex flex-col gap-1">
               <p className="font-semibold">Status</p>
@@ -51,6 +51,19 @@ export default function Movie({ params }: { params: { id: string } }) {
             <div className="flex flex-col gap-1">
               <p className="font-semibold">Revenue</p>
               <p>{formatToDollars(movie?.revenue!)}</p>
+            </div>
+            <div className="flex flex-col gap-1">
+              <p className="font-semibold">Keywords</p>
+              <div className="flex flex-wrap gap-2 text-sm">
+                {movie?.keywords.keywords.map((keyword) => (
+                  <div
+                    key={keyword.id}
+                    className="rounded-lg py-1 px-3 bg-gray-200"
+                  >
+                    <p>{keyword.name}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

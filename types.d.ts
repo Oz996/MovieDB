@@ -79,7 +79,9 @@ export interface Movie {
   revenue: number;
   runtime: number;
   spoken_languages: SpokenLanguage[];
-  keywords: Keyword[];
+  keywords: {
+    keywords: Keyword[];
+  };
   external_ids: ExternalLinks;
   status: string;
   tagline: string;
