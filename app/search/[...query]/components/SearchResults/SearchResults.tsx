@@ -1,5 +1,3 @@
-import { Button } from "@/components/ui/button";
-import { useSearch } from "@/hooks/useSearch";
 import { Result } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,10 +15,6 @@ export default function SearchResults({
   searchResults,
   isLoading,
 }: props) {
-  const { query, pageAmount, type } = useSearch();
-
-  // console.log("amount", pageAmount);
-
   if (isLoading) return <ResultSkeleton />;
 
   return (
@@ -40,7 +34,7 @@ export default function SearchResults({
           : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png";
 
         // checking if the title or name has a value before displaying it
-        const knownFor = () => {
+        const personKnownFor = () => {
           const knownForList = [
             item?.known_for?.[0]?.title || item?.known_for?.[0]?.name,
             item?.known_for?.[1]?.title || item?.known_for?.[1]?.name,
@@ -48,8 +42,19 @@ export default function SearchResults({
           ];
 
           const hasValue = knownForList.filter(Boolean);
-          const listedTitles = hasValue.join(", ");
-          return listedTitles;
+          return hasValue;
+        };
+
+        const listKnownFor = () => {
+          const knownFor = personKnownFor();
+          return knownFor?.map((item, i) => (
+            <Link key={item} href={""}>
+              <p className="text-gray-500">
+                {item}
+                {i === knownFor.length - 1 ? "" : ","}
+              </p>
+            </Link>
+          ));
         };
 
         return (
@@ -71,11 +76,13 @@ export default function SearchResults({
                 <Link href="">
                   <h2 className="text-lg font-semibold">{title}</h2>
                 </Link>
-                <p className="text-gray-500">{date}</p>
+                <span className="text-gray-500">{date}</span>
                 {person && (
                   <div className="flex gap-2 items-center truncate">
-                    <p className="text-lg">{item?.known_for_department} •</p>
-                    <p className="text-gray-500">{knownFor()}</p>
+                    <span className="text-lg">
+                      {item?.known_for_department} •
+                    </span>
+                    <div className="flex gap-1">{listKnownFor()}</div>
                   </div>
                 )}
               </div>

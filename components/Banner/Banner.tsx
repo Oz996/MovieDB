@@ -15,11 +15,8 @@ export default function Banner({ movie }: props) {
   const [trailer, setTrailer] = useState(false);
 
   const date = new Date(movie?.release_date as string);
-  const genres = movie?.genres;
-
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const day = date.getDate().toString().padStart(2, "0");
   const year = date.getFullYear();
+  const genres = movie?.genres;
 
   const crewToList = ["Director", "Writer", "Screenplay", "Story"];
   const crew = movie?.credits.crew.filter((crew) => {
@@ -52,6 +49,7 @@ export default function Banner({ movie }: props) {
     }
   };
 
+  // making sure that no person gets duplicated and turning persons job property to an array of all jobs
   const getCrewRoles = () => {
     if (!crew) return null;
     const nameMap = new Map();
