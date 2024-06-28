@@ -18,7 +18,7 @@ export default function Banner({ movie }: props) {
   const year = date.getFullYear();
   const genres = movie?.genres;
 
-  const crewToList = ["Director", "Writer", "Screenplay", "Story"];
+  const crewToList = ["Director", "Writer", "Screenplay", "Story", "Creator"];
   const crew = movie?.credits.crew.filter((crew) => {
     if (typeof crew.job === "string") return crewToList.includes(crew.job);
   });
@@ -29,12 +29,18 @@ export default function Banner({ movie }: props) {
     year: "numeric",
   });
 
-  const time = movie?.runtime;
+  const runtime = movie?.runtime;
   const getRunTime = () => {
-    if (!time) return null;
-    const hours = Math.floor(time / 60);
-    const minutes = time % 60;
-    return `${hours}h ${minutes}m`;
+    if (!runtime) return null;
+    const hours = Math.floor(runtime / 60);
+    const minutes = runtime % 60;
+    if (hours > 0 && minutes > 0) {
+      return `${hours}h ${minutes}m`;
+    } else if (hours > 0) {
+      return `${hours}h`;
+    } else {
+      return `${minutes}m`;
+    }
   };
 
   const rating = Math.ceil(movie?.vote_average! * 10);
@@ -122,7 +128,7 @@ export default function Banner({ movie }: props) {
               <p
                 className={classNames({
                   "pl-3 relative flex gap-1": true,
-                  "before:absolute before:content-['•'] before:left-0": time,
+                  "before:absolute before:content-['•'] before:left-0": runtime,
                 })}
               >
                 {getRunTime()}
