@@ -1,4 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton";
+import { handleDisplayImage } from "@/lib/utils";
 import { Result } from "@/types";
 import classNames from "classnames";
 import { motion } from "framer-motion";
@@ -11,11 +12,7 @@ interface props {
 }
 
 export default function SearchListCard({ isLoading, item, index }: props) {
-  const image = item.poster_path
-    ? `https://image.tmdb.org/t/p/w185/${item.poster_path}`
-    : item.profile_path
-    ? `https://image.tmdb.org/t/p/w185/${item.profile_path}`
-    : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png";
+  const image = handleDisplayImage("w185", item);
   const title = item?.name || item?.title;
   return (
     <motion.li

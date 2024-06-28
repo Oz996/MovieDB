@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ResultSkeleton from "../ResultsSkeleton";
 import SearchPagination from "./components/SearchPagination";
+import { handleDisplayImage } from "@/lib/utils";
 
 interface props {
   isLoading: boolean;
@@ -27,11 +28,7 @@ export default function SearchResults({
         const person = item?.known_for_department;
         const title = item?.name || item?.title;
         const date = item?.first_air_date || item?.release_date;
-        const image = item.poster_path
-          ? `https://image.tmdb.org/t/p/w342/${item.poster_path}`
-          : item.profile_path
-          ? `https://image.tmdb.org/t/p/w342/${item.profile_path}`
-          : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png";
+        const image = handleDisplayImage("w342", item);
 
         // checking if the title or name has a value before displaying it
         const personKnownFor = () => {

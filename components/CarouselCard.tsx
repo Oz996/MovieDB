@@ -3,6 +3,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { CarouselItem } from "./ui/carousel";
 import Link from "next/link";
+import { handleDisplayImage } from "@/lib/utils";
 
 interface props {
   item: Result;
@@ -11,11 +12,7 @@ interface props {
 export default function CarouselCard({ item }: props) {
   const title = item?.name || item?.title;
   const date = item?.first_air_date || item?.release_date;
-  const image = item.poster_path
-    ? `https://image.tmdb.org/t/p/w342/${item.poster_path}`
-    : item.profile_path
-    ? `https://image.tmdb.org/t/p/w342/${item.profile_path}`
-    : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png";
+  const image = handleDisplayImage("w342", item);
   return (
     <CarouselItem
       key={item.id}
