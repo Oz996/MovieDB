@@ -6,6 +6,7 @@ import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { Play, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+import Link from "next/link";
 
 interface props {
   movie: Movie;
@@ -78,7 +79,8 @@ export default function Banner({ movie }: props) {
   };
 
   const trailers = movie?.videos.results;
-  const trailerToDisplay = trailers ? trailers[trailers.length - 1].key : null;
+  const trailerToDisplay = trailers && trailers[trailers.length - 1].key;
+
   const handleShowTrailer = () => {
     setTrailer(true);
   };
@@ -99,40 +101,42 @@ export default function Banner({ movie }: props) {
         <div className="z-20 flex gap-10 text-white">
           <Image
             width={300}
-            height={350}
+            height={300}
             src={`https://image.tmdb.org/t/p/w1280/${movie?.poster_path}`}
-            alt="Movie Poster"
+            alt="Movie poster"
             className="z-20 rounded-lg"
           />
           <div className="flex flex-col justify-center pr-10">
             <div className="z-20 flex gap-2 text-4xl">
               <h2 className="font-bold">{movie?.title}</h2>
-              <p className="opacity-80">({year})</p>
+              <span className="opacity-80">({year})</span>
             </div>
             <div className="flex items-center gap-3">
-              <p>{formattedDate}</p>
+              <span>{formattedDate}</span>
               <div
                 className={classNames({
                   "pl-3 relative flex gap-1": true,
                   "before:absolute before:content-['•'] before:left-0":
-                    genres?.length! > 0,
+                    genres?.length > 0,
                 })}
               >
                 {genres?.map((genre, i) => (
-                  <p key={genre.id}>
-                    {genre.name}
-                    {i === genres.length - 1 ? "" : ", "}
-                  </p>
+                  <Link key={genre.id} href="">
+                    <span>
+                      {genre.name}
+                      {i === genres.length - 1 ? "" : ", "}
+                    </span>
+                  </Link>
                 ))}
               </div>
-              <p
+              <span
                 className={classNames({
                   "pl-3 relative flex gap-1": true,
                   "before:absolute before:content-['•'] before:left-0": runtime,
                 })}
               >
                 {getRunTime()}
-              </p>
+              </span>
             </div>
             {rating !== 0 && (
               <div className="size-28 pt-5 flex gap-2 items-center">
@@ -164,10 +168,10 @@ export default function Banner({ movie }: props) {
                 onClick={handleShowTrailer}
               >
                 <Play size={22} />
-                <p className="font-semibold">Play Trailer</p>
+                <span className="font-semibold">Play Trailer</span>
               </div>
-              <p className="italic opacity-80">{movie?.tagline}</p>
-              <p className="text-xl">Overview</p>
+              <span className="italic opacity-80">{movie?.tagline}</span>
+              <span className="text-xl">Overview</span>
               <p>{movie?.overview}</p>
               <ul className="grid grid-cols-3 pt-5">
                 {getCrewRoles()?.map((person) => (
@@ -193,7 +197,7 @@ export default function Banner({ movie }: props) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.4 }}
           >
             <div className="fixed inset-0 w-full h-full bg-black/80" />
             <div className="relative top-0 py-2 px-4 flex justify-between items-center w-[1387px] h-[4rem] text-white bg-black z-50">
