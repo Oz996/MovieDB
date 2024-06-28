@@ -18,7 +18,7 @@ export default function PersonCarousel({ movie }: props) {
   const cast = movie?.credits.cast.slice(0, 8);
 
   return (
-    <div>
+    <section>
       <h2 className="text-title font-semibold py-5">Top Billed Cast</h2>
       <Carousel className="rounded-xl pl-2 pr-6">
         <CarouselContent className="-ml-1">
@@ -54,6 +54,6 @@ export default function PersonCarousel({ movie }: props) {
         <CarouselPrevious />
         <CarouselNext className="mr-[4.5rem]" />
       </Carousel>
-    </div>
+    </section>
   );
 }

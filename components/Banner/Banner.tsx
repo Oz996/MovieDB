@@ -26,10 +26,11 @@ export default function Banner({ movie }: props) {
     if (typeof crew.job === "string") return crewToList.includes(crew.job);
   });
 
-  const getReleaseDate = () => {
-    if (!year) return null;
-    return `${month}/${day}/${year}`;
-  };
+  const formattedDate = date.toLocaleString("en-US", {
+    month: "numeric",
+    day: "numeric",
+    year: "numeric",
+  });
 
   const time = movie?.runtime;
   const getRunTime = () => {
@@ -105,7 +106,7 @@ export default function Banner({ movie }: props) {
               <p className="opacity-80">({year})</p>
             </div>
             <div className="flex items-center gap-3">
-              <p>{getReleaseDate()}</p>
+              <p>{formattedDate}</p>
               <div
                 className={classNames({
                   "pl-3 relative flex gap-1": true,
