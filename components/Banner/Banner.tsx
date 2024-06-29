@@ -1,19 +1,21 @@
 import { useState } from "react";
-import { Crew, Movie } from "@/types";
+import { Crew, Movie, Trailer } from "@/types";
 import Image from "next/image";
 import classNames from "classnames";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { Play, X } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
+import { Play } from "lucide-react";
 import Link from "next/link";
+import { getMovieVideos } from "@/services/movies";
+import TrailerIframe from "../TrailerIframe";
 
 interface props {
   movie: Movie;
 }
 
 export default function Banner({ movie }: props) {
-  const [trailer, setTrailer] = useState(false);
+  const [playTrailer, setPlayTrailer] = useState(false);
+  const [videos, setVideos] = useState<Trailer[] | undefined>([]);
 
   const date = new Date(movie?.release_date as string);
   const year = date.getFullYear();
@@ -78,14 +80,26 @@ export default function Banner({ movie }: props) {
     return result;
   };
 
-  const trailers = movie?.videos.results;
-  const trailerToDisplay = trailers && trailers[trailers.length - 1].key;
+  // const trailers = movie?.videos?.results;
+  const trailerToDisplay = videos && videos[videos.length - 1]?.key;
+
+  const fetchVideos = async () => {
+    try {
+      const res = await getMovieVideos(movie?.id);
+      setVideos(res);
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  };
 
   const handleShowTrailer = () => {
-    setTrailer(true);
+    setPlayTrailer(true);
+    if (videos?.length === 0) {
+      fetchVideos();
+    }
   };
   const handleCloseTrailer = () => {
-    setTrailer(false);
+    setPlayTrailer(false);
   };
 
   return (
@@ -189,33 +203,11 @@ export default function Banner({ movie }: props) {
           </div>
         </div>
       </div>
-      <AnimatePresence>
-        {trailer && (
-          <motion.div
-            key="video-player"
-            className="absolute left-[20rem] top-[5rem] z-40"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
-          >
-            <div className="fixed inset-0 w-full h-full bg-black/80" />
-            <div className="relative top-0 py-2 px-4 flex justify-between items-center w-[1387px] h-[4rem] text-white bg-black z-50">
-              <p className="text-lg">Play Trailer</p>
-              <X className="cursor-pointer" onClick={handleCloseTrailer} />
-            </div>
-            <div className="z-50">
-              <iframe
-                className="absolute inset-0"
-                width="1387"
-                height="780"
-                src={`https://www.youtube.com/embed/${trailerToDisplay}?autoplay=1`}
-                allow="autoplay"
-              ></iframe>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <TrailerIframe
+        play={playTrailer}
+        trailer={trailerToDisplay!}
+        handleClose={handleCloseTrailer}
+      />
     </section>
   );
 }
