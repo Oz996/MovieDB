@@ -66,6 +66,7 @@ export interface Movie {
   genres: Genre[];
   homepage: string;
   id: number;
+  images: Image[];
   imdb_id: string;
   origin_country: string[];
   original_language: string;
@@ -93,6 +94,16 @@ export interface Movie {
   };
   vote_average: number;
   vote_count: number;
+}
+
+export interface Image {
+  aspect_ratio: number;
+  height: number;
+  iso_639_1: null;
+  file_path: string;
+  vote_average: number;
+  vote_count: number;
+  width: number;
 }
 
 export interface ReviewObject {

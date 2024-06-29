@@ -12,7 +12,7 @@ import TrailerIframe from "../TrailerIframe";
 interface props {
   movie: Movie;
   videos: Trailer[];
-  setVideos: Dispatch<SetStateAction<Trailer[] | undefined>>;
+  setVideos: Dispatch<SetStateAction<Trailer[]>>;
 }
 
 export default function Banner({ movie, videos, setVideos }: props) {
@@ -87,7 +87,7 @@ export default function Banner({ movie, videos, setVideos }: props) {
   const fetchVideos = async () => {
     try {
       const res = await getMovieVideos(movie?.id);
-      setVideos(res);
+      setVideos(res!);
     } catch (error: any) {
       console.error(error.message);
     }

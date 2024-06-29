@@ -1,4 +1,4 @@
-import { Movie, Result, Trailer } from "@/types";
+import { Image, Movie, Result, Trailer } from "@/types";
 import { options } from "./all";
 
 export const getMovieList = async (type: string = "now_playing") => {
@@ -9,7 +9,6 @@ export const getMovieList = async (type: string = "now_playing") => {
     );
     const data = await res.json();
     const results = data.results as Result[];
-    console.log(results);
     return results;
   } catch (error: any) {
     console.error(error.message);
@@ -24,7 +23,6 @@ export const getMovieTrending = async (time: string = "week") => {
     );
     const data = await res.json();
     const results = data.results as Result[];
-    console.log(results);
     return results;
   } catch (error: any) {
     console.error(error.message);
@@ -53,7 +51,21 @@ export const getMovieVideos = async (id: number) => {
     );
     const data = await res.json();
     const results = data.results as Trailer[];
-    console.log("videos", results);
+    return results;
+  } catch (error: any) {
+    console.error(error.message);
+  }
+};
+
+export const getMovieImages = async (id: number) => {
+  try {
+    const res = await fetch(
+      `https://api.themoviedb.org/3/movie/${id}/images`,
+      options
+    );
+    const data = await res.json();
+    const results = data.posters as Image[];
+    console.log("res res res", results);
     return results;
   } catch (error: any) {
     console.error(error.message);
