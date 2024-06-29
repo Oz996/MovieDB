@@ -76,7 +76,7 @@ export default function Movie({ params }: { params: { id: string } }) {
 
   return (
     <section className="flex flex-col">
-      <Banner movie={movie!} />
+      <Banner movie={movie!} videos={videos!} setVideos={setVideos} />
       <section className="grid grid-cols-4">
         <div className="col-span-3 space-y-5">
           <PersonCarousel movie={movie!} />

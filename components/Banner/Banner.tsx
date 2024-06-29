@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Crew, Movie, Trailer } from "@/types";
 import Image from "next/image";
 import classNames from "classnames";
@@ -11,11 +11,12 @@ import TrailerIframe from "../TrailerIframe";
 
 interface props {
   movie: Movie;
+  videos: Trailer[];
+  setVideos: Dispatch<SetStateAction<Trailer[] | undefined>>;
 }
 
-export default function Banner({ movie }: props) {
+export default function Banner({ movie, videos, setVideos }: props) {
   const [playTrailer, setPlayTrailer] = useState(false);
-  const [videos, setVideos] = useState<Trailer[] | undefined>([]);
 
   const date = new Date(movie?.release_date as string);
   const year = date.getFullYear();
