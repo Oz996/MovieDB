@@ -25,7 +25,6 @@ export default function Movie({ params }: { params: { id: string } }) {
   const [trailerToDisplay, setTrailerToDisplay] = useState("");
   const [movie, setMovie] = useState<IMovie>();
   const [videos, setVideos] = useState<Trailer[] | undefined>([]);
-  const [media, setMedia] = useState("videos");
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
@@ -85,7 +84,7 @@ export default function Movie({ params }: { params: { id: string } }) {
             <div className="flex gap-10">
               <div className="flex gap-5 font-semibold items-center">
                 <h2 className="text-title font-semibold py-5">Media</h2>
-                <Tabs>
+                <Tabs defaultValue="videos">
                   <TabsList className="grid w-full grid-cols-2">
                     <TabsTrigger value="videos">Videos</TabsTrigger>
                     <TabsTrigger value="images">Images</TabsTrigger>
@@ -97,7 +96,7 @@ export default function Movie({ params }: { params: { id: string } }) {
                           {videos?.map((video) => (
                             <CarouselItem
                               key={video.id}
-                              className="pl-1 md:basis-1/4 lg:basis-1/3"
+                              className="pr-6 md:basis-1/4 lg:basis-1/3"
                             >
                               <button
                                 className="w-full h-full"

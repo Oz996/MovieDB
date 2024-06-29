@@ -25,6 +25,7 @@ export default function ReviewSection({ reviews }: props) {
   return (
     <section>
       <h2 className="text-title font-semibold py-5">Reviews</h2>
+      {reviews?.length === 0 && <p>No reviews</p>}
       {reviewToDisplay?.map((review) => {
         const date = new Date(review.created_at);
 
