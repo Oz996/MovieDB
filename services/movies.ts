@@ -29,7 +29,7 @@ export const getMovieTrending = async (time: string = "week") => {
   }
 };
 
-export const getMovieDetails = async (id: string) => {
+export const getMovieDetails = async (id: string | number) => {
   try {
     const res = await fetch(
       `https://api.themoviedb.org/3/movie/${id}?append_to_response=credits,keywords,external_ids,reviews`,
@@ -43,7 +43,7 @@ export const getMovieDetails = async (id: string) => {
   }
 };
 
-export const getMovieVideos = async (id: string) => {
+export const getMovieVideos = async (id: string | number) => {
   try {
     const res = await fetch(
       `https://api.themoviedb.org/3/movie/${id}/videos`,
@@ -57,7 +57,7 @@ export const getMovieVideos = async (id: string) => {
   }
 };
 
-export const getMovieImages = async (id: string) => {
+export const getMovieImages = async (id: string | number) => {
   try {
     const res = await fetch(
       `https://api.themoviedb.org/3/movie/${id}/images`,
@@ -72,7 +72,7 @@ export const getMovieImages = async (id: string) => {
   }
 };
 
-export const getMovieSimilar = async (id: string) => {
+export const getMovieSimilar = async (id: string | number) => {
   try {
     const res = await fetch(
       `https://api.themoviedb.org/3/movie/${id}/similar`,

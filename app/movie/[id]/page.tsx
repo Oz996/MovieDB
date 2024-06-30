@@ -29,16 +29,14 @@ export default function Movie({ params }: { params: { id: string } }) {
     fetchMovieDetails();
   }, [params.id]);
 
-  const reviews = movie?.reviews.results;
-
   return (
     <section className="flex flex-col">
       <Banner movie={movie!} videos={videos!} setVideos={setVideos!} />
       <section className="grid grid-cols-4">
         <div className="col-span-3 space-y-5">
           <PersonCarousel movie={movie!} />
-          <ReviewSection reviews={reviews!} />
-          <MediaCarousel movie={movie!} videos={videos} setVideos={setVideos} />
+          <ReviewSection movie={movie!} />
+          <MediaCarousel id={params.id} videos={videos} setVideos={setVideos} />
           <SimilarCarousel id={params.id} />
         </div>
         <SideContent movie={movie!} />

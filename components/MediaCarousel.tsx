@@ -15,12 +15,12 @@ import { getMovieImages, getMovieVideos } from "@/services/movies";
 import { FaPlay } from "react-icons/fa6";
 
 interface props {
-  movie: Movie;
+  id: string;
   videos: Trailer[];
   setVideos: Dispatch<SetStateAction<Trailer[]>>;
 }
 
-export default function MediaCarousel({ movie, videos, setVideos }: props) {
+export default function MediaCarousel({ id, videos, setVideos }: props) {
   const [images, setImages] = useState<ImageType[]>([]);
   const [playTrailer, setPlayTrailer] = useState(false);
   const [trailerToDisplay, setTrailerToDisplay] = useState("");
@@ -38,9 +38,9 @@ export default function MediaCarousel({ movie, videos, setVideos }: props) {
   }, [mediaEntry]);
 
   const fetchVideos = async () => {
-    if (!movie || videos.length > 0) return;
+    if (videos.length > 0) return;
     try {
-      const res = await getMovieVideos(movie.id);
+      const res = await getMovieVideos(id);
       setVideos(res!);
     } catch (error: any) {
       console.error(error.message);
@@ -48,9 +48,9 @@ export default function MediaCarousel({ movie, videos, setVideos }: props) {
   };
 
   const fetchImages = async () => {
-    if (!movie || images.length > 0) return;
+    if (images.length > 0) return;
     try {
-      const res = await getMovieImages(movie.id);
+      const res = await getMovieImages(id);
       setImages(res!);
     } catch (error: any) {
       console.error(error.message);

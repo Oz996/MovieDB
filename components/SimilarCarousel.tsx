@@ -17,7 +17,7 @@ interface props {
 }
 
 export default function SimilarCarousel({ id }: props) {
-  const [similar, setSimilar] = useState<Similar[]>([]);
+  const [similar, setSimilar] = useState<Similar[] | undefined>([]);
 
   const [similarRef, similarEntry] = useIntersectionObserver({
     threshold: 0.5,
@@ -35,7 +35,7 @@ export default function SimilarCarousel({ id }: props) {
     // }
   }, [similarEntry]);
 
-  const similarsToDisplay = similar.slice(0, 19);
+  const similarsToDisplay = similar?.slice(0, 19);
 
   return (
     <section ref={similarRef} className="pb-10">

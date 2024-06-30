@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Review } from "@/types";
+import { Movie, Review } from "@/types";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
@@ -7,11 +7,12 @@ import { FaStar } from "react-icons/fa6";
 import { Button } from "./ui/button";
 
 interface props {
-  reviews: Review[];
+  movie: Movie;
 }
 
-export default function ReviewSection({ reviews }: props) {
+export default function ReviewSection({ movie }: props) {
   const [expanded, setExpanded] = useState(false);
+  const reviews = movie?.reviews.results;
   const reviewToDisplay = reviews?.slice(0, 1);
 
   const handleExpandCard = () => {
