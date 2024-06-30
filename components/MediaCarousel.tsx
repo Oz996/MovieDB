@@ -1,5 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Movie as IMovie, Image as ImageType, Movie, Trailer } from "@/types";
+import { Movie, Image as ImageType, Trailer } from "@/types";
 import {
   Carousel,
   CarouselContent,
@@ -72,12 +72,7 @@ export default function MediaCarousel({ movie, videos, setVideos }: props) {
       <Tabs defaultValue="videos">
         <div className="w-full flex flex-col gap-5">
           <div className="flex items-center">
-            <h2
-              className="text-title font-semibold py-5 pr-5"
-              onClick={fetchImages}
-            >
-              Media
-            </h2>
+            <h2 className="text-title font-semibold py-5 pr-5">Media</h2>
             <TabsList>
               <TabsTrigger value="videos">Videos</TabsTrigger>
               <TabsTrigger value="images" onMouseEnter={fetchImages}>

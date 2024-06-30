@@ -8,6 +8,7 @@ import SideContent from "@/components/SideContent";
 import "react-circular-progressbar/dist/styles.css";
 import ReviewSection from "@/components/ReviewSection";
 import MediaCarousel from "@/components/MediaCarousel";
+import SimilarCarousel from "@/components/SimilarCarousel";
 
 export default function Movie({ params }: { params: { id: string } }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -17,7 +18,7 @@ export default function Movie({ params }: { params: { id: string } }) {
   useEffect(() => {
     const fetchMovieDetails = async () => {
       try {
-        const res = await getMovieDetails(Number(params.id));
+        const res = await getMovieDetails(params.id);
         setMovie(res);
       } catch (error: any) {
         console.error(error.message);
@@ -38,6 +39,7 @@ export default function Movie({ params }: { params: { id: string } }) {
           <PersonCarousel movie={movie!} />
           <ReviewSection reviews={reviews!} />
           <MediaCarousel movie={movie!} videos={videos} setVideos={setVideos} />
+          <SimilarCarousel id={params.id} />
         </div>
         <SideContent movie={movie!} />
       </section>
