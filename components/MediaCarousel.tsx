@@ -12,6 +12,7 @@ import Image from "next/image";
 import TrailerIframe from "@/components/TrailerIframe";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { getMovieImages, getMovieVideos } from "@/services/movies";
+import { FaPlay } from "react-icons/fa6";
 
 interface props {
   movie: Movie;
@@ -91,10 +92,10 @@ export default function MediaCarousel({ movie, videos, setVideos }: props) {
                 {videos?.map((video) => (
                   <CarouselItem
                     key={video.id}
-                    className="pl-1 md:basis-1/4 lg:basis-1/3"
+                    className="md:basis-1/4 lg:basis-1/3 pr-6 group"
                   >
                     <button
-                      className="w-full h-full"
+                      className="w-full h-full relative"
                       onClick={() => handleShowTrailer(video.key)}
                     >
                       <Image
@@ -104,6 +105,12 @@ export default function MediaCarousel({ movie, videos, setVideos }: props) {
                         height={180}
                         className="rounded-lg"
                       />
+                      <div className="size-12 bg-black/60 rounded-full absolute top-[45%] left-[45%] flex items-center justify-center">
+                        <FaPlay
+                          size={18}
+                          className="text-white group-hover:text-white/80 duration-300"
+                        />
+                      </div>
                     </button>
                   </CarouselItem>
                 ))}

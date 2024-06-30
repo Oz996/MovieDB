@@ -86,7 +86,7 @@ export default function ReviewSection({ reviews }: props) {
                     onClick={handleExpandCard}
                     className="bg-transparent border-none p-0 hover:bg-transparent text-black"
                   >
-                    read the rest
+                    show more
                     <ChevronDown size={20} />
                   </Button>
                 </>
