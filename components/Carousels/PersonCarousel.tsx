@@ -9,6 +9,7 @@ import {
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Movie } from "@/types";
+import { handleDisplayImage } from "@/lib/utils";
 
 interface props {
   movie: Movie;
@@ -33,7 +34,7 @@ export default function PersonCarousel({ movie }: props) {
                     <Link href={""}>
                       <Image
                         className="rounded-t-lg"
-                        src={`https://image.tmdb.org/t/p/original${person.profile_path}`}
+                        src={handleDisplayImage("original", person)}
                         width={140}
                         height={140}
                         alt=""
