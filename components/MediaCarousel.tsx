@@ -68,11 +68,11 @@ export default function MediaCarousel({ id, videos, setVideos }: props) {
   const imagesToDisplay = images?.slice(0, 20);
 
   return (
-    <section ref={mediaRef} className="pb-10">
+    <section ref={mediaRef} className="py-10">
       <Tabs defaultValue="videos">
         <div className="w-full flex flex-col gap-5">
           <div className="flex items-center">
-            <h2 className="text-title font-semibold py-5 pr-5">Media</h2>
+            <h2 className="text-title font-semibold pr-5">Media</h2>
             <TabsList>
               <TabsTrigger value="videos">Videos</TabsTrigger>
               <TabsTrigger value="images" onMouseEnter={fetchImages}>

@@ -39,7 +39,7 @@ export default function SimilarCarousel({ id }: props) {
 
   return (
     <section ref={similarRef} className="pb-10">
-      <h2 className="text-title font-semibold py-5 pr-5">Recommendations</h2>
+      <h2 className="text-title font-semibold pr-5">Recommendations</h2>
       <Carousel>
         <CarouselContent>
           {similarsToDisplay?.map((item) => {
@@ -48,7 +48,7 @@ export default function SimilarCarousel({ id }: props) {
             return (
               <CarouselItem
                 key={item.id}
-                className="md:basis-1/4 lg:basis-1/4 pr-6 space-y-2"
+                className="md:basis-1/4 lg:basis-1/4 pr-6 space-y-2 self-center"
               >
                 <Link href={`http://localhost:3000/movie/${item.id}`}>
                   <Image
