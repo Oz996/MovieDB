@@ -34,7 +34,10 @@ export default function PersonCarousel({ movie }: props) {
                     <Link href={""}>
                       <Image
                         className="rounded-t-lg"
-                        src={handleDisplayImage("original", person)}
+                        src={handleDisplayImage(
+                          "original",
+                          person.profile_path
+                        )}
                         width={140}
                         height={140}
                         alt=""

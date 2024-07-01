@@ -12,7 +12,8 @@ interface props {
 export default function CarouselCard({ item }: props) {
   const title = item?.name || item?.title;
   const date = item?.first_air_date || item?.release_date;
-  const image = handleDisplayImage("w342", item);
+  const imageToDisplay = item?.poster_path || item?.profile_path;
+  const image = handleDisplayImage("w342", imageToDisplay!);
   return (
     <CarouselItem
       key={item.id}

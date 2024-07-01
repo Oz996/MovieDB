@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { FaStar } from "react-icons/fa6";
 import { Button } from "./ui/button";
+import { handleDisplayImage } from "@/lib/utils";
 
 interface props {
   movie: Movie;
@@ -42,7 +43,10 @@ export default function ReviewSection({ movie }: props) {
               <div className="flex gap-5">
                 <div>
                   <Image
-                    src={`https://media.themoviedb.org/t/p/w45_and_h45_face${review.author_details.avatar_path}`}
+                    src={handleDisplayImage(
+                      "w45_and_h45_face",
+                      review.author_details.avatar_path
+                    )}
                     height={50}
                     width={50}
                     alt=""

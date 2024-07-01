@@ -28,7 +28,8 @@ export default function SearchResults({
         const person = item?.known_for_department;
         const title = item?.name || item?.title;
         const date = item?.first_air_date || item?.release_date;
-        const image = handleDisplayImage("w342", item);
+        const imageToDisplay = item?.poster_path || item?.profile_path;
+        const image = handleDisplayImage("w342", imageToDisplay!);
 
         // checking if the title or name has a value before displaying it
         const personKnownFor = () => {
