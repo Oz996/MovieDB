@@ -113,7 +113,7 @@ export default function Banner({ movie, videos, setVideos }: props) {
         className="h-[32rem] flex items-center justify-center w-full relative before:bg-black/60 bg-no-repeat bg-cover before:absolute before:inset-0"
       >
         {/* image and other content */}
-        <div className="z-20 flex gap-10 text-white">
+        <div className="z-20 flex gap-10 text-white container">
           <Image
             width={300}
             height={300}

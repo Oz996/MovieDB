@@ -20,7 +20,7 @@ export default function PersonCarousel({ movie }: props) {
 
   return (
     <section>
-      <h2 className="text-title font-semibold py-5">Top Billed Cast</h2>
+      <h2 className="text-title font-semibold pb-5 pt-8">Top Billed Cast</h2>
       <Carousel className="rounded-xl pl-2 pr-6">
         <CarouselContent className="-ml-1">
           {cast?.map((person) => {
