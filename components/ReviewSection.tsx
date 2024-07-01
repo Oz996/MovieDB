@@ -25,8 +25,12 @@ export default function ReviewSection({ movie }: props) {
   });
 
   const username = review?.author_details.username ?? "Unknown";
-  const rating = Math.ceil(review?.author_details.rating!) * 10;
+  const rating = review?.author_details.rating
+    ? Math.ceil(review?.author_details.rating) * 10
+    : null;
   const image = review?.author_details.avatar_path;
+
+  console.log(review);
 
   const handleExpandCard = () => {
     setExpanded(true);
@@ -55,7 +59,7 @@ export default function ReviewSection({ movie }: props) {
             <div className="flex flex-col">
               <h2 className="font-bold text-lg">A review by {username}</h2>
               <div className="flex gap-2 text-sm">
-                {rating != null && (
+                {rating && (
                   <div className="bg-slate-800 text-white px-3 flex gap-1 items-center rounded-lg">
                     <FaStar size={10} /> <p>{rating}%</p>
                   </div>

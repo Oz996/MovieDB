@@ -5,8 +5,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { handleDisplayImage } from "@/lib/utils";
 import { getMovieSimilar } from "@/services/movies";
-import { Movie, Similar } from "@/types";
+import { Similar } from "@/types";
 import { useIntersectionObserver } from "@uidotdev/usehooks";
 import Image from "next/image";
 import Link from "next/link";
@@ -39,7 +40,7 @@ export default function SimilarCarousel({ id }: props) {
 
   return (
     <section ref={similarRef} className="pb-10">
-      <h2 className="text-title font-semibold pr-5">Recommendations</h2>
+      <h2 className="text-title font-semibold pb-8 pr-5">Similar</h2>
       <Carousel>
         <CarouselContent>
           {similarsToDisplay?.map((item) => {
@@ -52,11 +53,14 @@ export default function SimilarCarousel({ id }: props) {
               >
                 <Link href={`http://localhost:3000/movie/${item.id}`}>
                   <Image
-                    src={`https://media.themoviedb.org/t/p/w250_and_h141_face${item.poster_path}`}
+                    src={handleDisplayImage(
+                      "w250_and_h141_face",
+                      item.poster_path
+                    )}
                     width={270}
                     height={270}
                     alt=""
-                    className="rounded-lg"
+                    className="rounded-lg max-h-[7.5rem]"
                   />
                 </Link>
                 <div className="flex justify-between">

@@ -18,9 +18,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import CarouselCard from "../CarouselCard";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import LoaderCarousel from "./LoaderCarousel";
+import CarouselCard from "./CarouselCard";
 
 export default function TrendingCarousel() {
   const [isLoading, setIsLoading] = useState(true);
@@ -48,7 +48,7 @@ export default function TrendingCarousel() {
 
   if (isLoading) return <LoaderCarousel />;
   return (
-    <section className="pt-12 px-5">
+    <section className="pt-12 px-5 container">
       <Tabs defaultValue="today">
         <div className="w-full flex max-sm:flex-col items-center gap-5">
           <h2 className="text-xl font-semibold">Trending</h2>

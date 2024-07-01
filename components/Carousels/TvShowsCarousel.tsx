@@ -17,10 +17,10 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import CarouselCard from "../CarouselCard";
 import { useIntersectionObserver, useMediaQuery } from "@uidotdev/usehooks";
 import { getTvShows } from "@/services/tvShows";
 import LoaderCarousel from "./LoaderCarousel";
+import CarouselCard from "./CarouselCard";
 export default function TvShowsCarousel() {
   const [isLoading, setIsLoading] = useState(false);
   const [shows, setShows] = useState<Result[] | undefined>([]);
@@ -64,7 +64,7 @@ export default function TvShowsCarousel() {
   if (isLoading) return <LoaderCarousel />;
 
   return (
-    <section className="pt-12 px-5 pb-5" ref={showsRef}>
+    <section className="pt-12 px-5 pb-5 container" ref={showsRef}>
       <Tabs defaultValue="free">
         <div className="w-full flex max-sm:flex-col items-center gap-5">
           <h2 className="text-xl font-semibold">Discover Shows</h2>

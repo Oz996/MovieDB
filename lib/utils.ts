@@ -6,7 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const formatToDollars = (number: number) => {
-  if (!number) return null;
+  if (!number) return;
   const formattedNumber = number.toLocaleString("en-US", {
     style: "currency",
     currency: "USD",

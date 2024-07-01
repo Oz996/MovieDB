@@ -16,10 +16,10 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import CarouselCard from "../CarouselCard";
 import { getMovieList } from "@/services/movies";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import LoaderCarousel from "./LoaderCarousel";
+import CarouselCard from "./CarouselCard";
 
 export default function PopularCarousel() {
   const [isLoading, setIsLoading] = useState(true);
@@ -48,7 +48,7 @@ export default function PopularCarousel() {
 
   if (isLoading) return <LoaderCarousel />;
   return (
-    <section className="pt-12 px-5">
+    <section className="pt-12 px-5 container">
       <Tabs defaultValue="now_playing">
         <div className="w-full flex max-sm:flex-col items-center gap-5">
           <h2 className="text-xl font-semibold">What&apos;s Popular</h2>

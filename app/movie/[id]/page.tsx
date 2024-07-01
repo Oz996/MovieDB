@@ -7,8 +7,8 @@ import PersonCarousel from "@/components/Carousels/PersonCarousel";
 import SideContent from "@/components/SideContent";
 import "react-circular-progressbar/dist/styles.css";
 import ReviewSection from "@/components/ReviewSection";
-import MediaCarousel from "@/components/MediaCarousel";
-import SimilarCarousel from "@/components/SimilarCarousel";
+import MediaCarousel from "@/components/Carousels/MediaCarousel";
+import SimilarCarousel from "@/components/Carousels/SimilarCarousel";
 
 export default function Movie({ params }: { params: { id: string } }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -32,7 +32,7 @@ export default function Movie({ params }: { params: { id: string } }) {
   return (
     <section className="flex flex-col">
       <Banner movie={movie!} videos={videos!} setVideos={setVideos!} />
-      <section className="grid grid-cols-4">
+      <section className="grid grid-cols-4 container">
         <div className="col-span-3 space-y-5">
           <PersonCarousel movie={movie!} />
           <ReviewSection movie={movie!} />

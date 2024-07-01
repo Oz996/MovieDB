@@ -1,9 +1,9 @@
 import { Result } from "@/types";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { CarouselItem } from "./ui/carousel";
 import Link from "next/link";
 import { handleDisplayImage } from "@/lib/utils";
+import { CarouselItem } from "../ui/carousel";
 
 interface props {
   item: Result;

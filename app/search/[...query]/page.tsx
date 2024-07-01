@@ -52,7 +52,7 @@ export default function Search() {
   }, [query, currentPage, searchType]);
 
   return (
-    <section className="pt-28 grid grid-cols-1 lg:grid-cols-3">
+    <section className="pt-28 grid grid-cols-1 lg:grid-cols-3 container">
       <SearchResultsBar
         isLoading={isLoading}
         searchResults={searchResults!}
