@@ -8,14 +8,16 @@ import { Play } from "lucide-react";
 import Link from "next/link";
 import { getMovieVideos } from "@/services/movies";
 import TrailerIframe from "../TrailerIframe";
+import BannerLoader from "./components/BannerLoader";
 
 interface props {
   movie: Movie;
   videos: Trailer[];
+  isLoading: boolean;
   setVideos: Dispatch<SetStateAction<Trailer[]>>;
 }
 
-export default function Banner({ movie, videos, setVideos }: props) {
+export default function Banner({ movie, videos, isLoading, setVideos }: props) {
   const [playTrailer, setPlayTrailer] = useState(false);
 
   const date = new Date(movie?.release_date as string);
@@ -102,6 +104,8 @@ export default function Banner({ movie, videos, setVideos }: props) {
   const handleCloseTrailer = () => {
     setPlayTrailer(false);
   };
+
+  if (isLoading) return <BannerLoader />;
 
   return (
     <section className="pt-24">
