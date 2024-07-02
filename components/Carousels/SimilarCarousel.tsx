@@ -12,12 +12,14 @@ import { useIntersectionObserver } from "@uidotdev/usehooks";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import LoaderCarousel from "./LoaderCarousel";
 
 interface props {
   id: string;
 }
 
 export default function SimilarCarousel({ id }: props) {
+  const [isLoading, setIsLoading] = useState(false);
   const [similar, setSimilar] = useState<Similar[] | undefined>([]);
 
   const [similarRef, similarEntry] = useIntersectionObserver({
@@ -27,16 +29,24 @@ export default function SimilarCarousel({ id }: props) {
   });
 
   useEffect(() => {
-    // if (similarEntry?.isIntersecting && similar.length === 0) {
-    const fetchSimilar = async () => {
-      const res = await getMovieSimilar(id);
-      setSimilar(res);
-    };
-    fetchSimilar();
-    // }
+    if (similarEntry?.isIntersecting && similar!.length === 0) {
+      const fetchSimilar = async () => {
+        try {
+          const res = await getMovieSimilar(id);
+          setSimilar(res);
+        } catch (error: any) {
+          console.error(error.message);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+      fetchSimilar();
+    }
   }, [similarEntry]);
 
   const similarsToDisplay = similar?.slice(0, 19);
+
+  if (isLoading) return <LoaderCarousel />;
 
   return (
     <section ref={similarRef} className="pb-10">

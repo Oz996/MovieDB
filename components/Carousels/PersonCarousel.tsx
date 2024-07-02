@@ -10,13 +10,17 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { Movie } from "@/types";
 import { handleDisplayImage } from "@/lib/utils";
+import LoaderCarousel from "./LoaderCarousel";
 
 interface props {
   movie: Movie;
+  isLoading: boolean;
 }
 
-export default function PersonCarousel({ movie }: props) {
+export default function PersonCarousel({ movie, isLoading }: props) {
   const cast = movie?.credits.cast.slice(0, 8);
+
+  if (isLoading) return <LoaderCarousel />;
 
   return (
     <section>

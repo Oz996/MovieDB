@@ -9,9 +9,9 @@ import { Skeleton } from "../ui/skeleton";
 
 export default function LoaderCarousel() {
   return (
-    <Carousel className="pt-20">
+    <Carousel className="pt-20 container">
       <CarouselContent className="-ml-1">
-        {new Array(20).fill(0).map((item, i) => (
+        {new Array(20).fill(0).map((_, i) => (
           <CarouselItem
             key={i}
             className="pl-1 basis-1/1 sm:basis-1/3 md:basis-1/3 lg:basis-1/6"

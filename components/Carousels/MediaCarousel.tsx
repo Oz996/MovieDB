@@ -13,6 +13,7 @@ import TrailerIframe from "@/components/TrailerIframe";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { getMovieImages, getMovieVideos } from "@/services/movies";
 import { FaPlay } from "react-icons/fa6";
+import LoaderCarousel from "./LoaderCarousel";
 
 interface props {
   id: string;
@@ -21,10 +22,12 @@ interface props {
 }
 
 export default function MediaCarousel({ id, videos, setVideos }: props) {
+  const [isLoading, setIsLoading] = useState(false);
   const [images, setImages] = useState<ImageType[]>([]);
   const [playTrailer, setPlayTrailer] = useState(false);
   const [trailerToDisplay, setTrailerToDisplay] = useState("");
 
+  console.log("loadinkk", isLoading);
   const [mediaRef, mediaEntry] = useIntersectionObserver({
     threshold: 0.5,
     root: null,
@@ -39,11 +42,14 @@ export default function MediaCarousel({ id, videos, setVideos }: props) {
 
   const fetchVideos = async () => {
     if (videos.length > 0) return;
+    setIsLoading(true);
     try {
       const res = await getMovieVideos(id);
       setVideos(res!);
     } catch (error: any) {
       console.error(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -54,6 +60,8 @@ export default function MediaCarousel({ id, videos, setVideos }: props) {
       setImages(res!);
     } catch (error: any) {
       console.error(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -66,6 +74,8 @@ export default function MediaCarousel({ id, videos, setVideos }: props) {
     setTrailerToDisplay(key);
   };
   const imagesToDisplay = images?.slice(0, 20);
+
+  if (isLoading) return <LoaderCarousel />;
 
   return (
     <section ref={mediaRef} className="py-10">
