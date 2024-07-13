@@ -27,18 +27,18 @@ export default function MediaCarousel({ id, videos, setVideos }: props) {
   const [playTrailer, setPlayTrailer] = useState(false);
   const [trailerToDisplay, setTrailerToDisplay] = useState("");
 
-  console.log("loadinkk", isLoading);
   const [mediaRef, mediaEntry] = useIntersectionObserver({
     threshold: 0.5,
     root: null,
     rootMargin: "0px",
   });
 
+  console.log("media", mediaEntry);
   useEffect(() => {
     if (mediaEntry?.isIntersecting) {
       fetchVideos();
     }
-  }, [mediaEntry]);
+  }, [mediaEntry?.isIntersecting]);
 
   const fetchVideos = async () => {
     if (videos.length > 0) return;
@@ -97,7 +97,7 @@ export default function MediaCarousel({ id, videos, setVideos }: props) {
                 {videos?.map((video) => (
                   <CarouselItem
                     key={video.id}
-                    className="md:basis-1/4 lg:basis-1/3 pr-6 group"
+                    className="basis-1/2 md:basis-1/3 pr-6 group"
                   >
                     <button
                       className="w-full h-full relative"
@@ -121,7 +121,7 @@ export default function MediaCarousel({ id, videos, setVideos }: props) {
                 ))}
               </CarouselContent>
               <CarouselPrevious />
-              <CarouselNext />
+              <CarouselNext className="max-md:mr-5" />
             </Carousel>
           </TabsContent>
           <TabsContent value="images">
@@ -146,7 +146,7 @@ export default function MediaCarousel({ id, videos, setVideos }: props) {
                 ))}
               </CarouselContent>
               <CarouselPrevious />
-              <CarouselNext />
+              <CarouselNext className="max-md:mr-5" />
             </Carousel>
           </TabsContent>
         </div>

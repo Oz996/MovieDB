@@ -55,7 +55,7 @@ export default function TvShowsCarousel() {
         setIsLoading(false);
       }
     }
-  }, [showsType, showsEntry, hasRendered]);
+  }, [showsType, showsEntry?.isIntersecting, hasRendered]);
 
   const handleSelectChange = (type: string) => {
     setshowsType(type);

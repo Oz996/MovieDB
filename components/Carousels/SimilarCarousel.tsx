@@ -42,7 +42,7 @@ export default function SimilarCarousel({ id }: props) {
       };
       fetchSimilar();
     }
-  }, [similarEntry]);
+  }, [similarEntry?.isIntersecting]);
 
   const similarsToDisplay = similar?.slice(0, 19);
 
@@ -59,7 +59,7 @@ export default function SimilarCarousel({ id }: props) {
             return (
               <CarouselItem
                 key={item.id}
-                className="md:basis-1/4 lg:basis-1/4 pr-6 space-y-2 self-center"
+                className="basis-1/2 md:basis-1/3 lg:basis-1/4 shrink-0 pr-6 space-y-2 self-center"
               >
                 <Link href={`http://localhost:3000/movie/${item.id}`}>
                   <Image
@@ -87,7 +87,7 @@ export default function SimilarCarousel({ id }: props) {
           })}
         </CarouselContent>
         <CarouselPrevious />
-        <CarouselNext />
+        <CarouselNext className="max-md:mr-5" />
       </Carousel>
     </section>
   );
