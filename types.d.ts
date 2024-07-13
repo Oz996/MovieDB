@@ -181,6 +181,9 @@ export interface LastAirDate {
 export interface CreatedBy {
   id: number;
   credit_id: string;
+  name: string;
+  original_name: string;
+  profile_path: string;
 }
 
 export interface Similar {

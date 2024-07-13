@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import { Crew, Movie, Trailer } from "@/types";
+import { Crew, Movie, Trailer, TvShow } from "@/types";
 import Image from "next/image";
 import classNames from "classnames";
 import { CircularProgressbar } from "react-circular-progressbar";
@@ -12,29 +12,57 @@ import BannerLoader from "./components/BannerLoader";
 import { useMediaQuery } from "@uidotdev/usehooks";
 
 interface props {
-  movie: Movie;
+  movie?: Movie;
+  tvShow?: TvShow;
   videos: Trailer[];
   isLoading: boolean;
   setVideos: Dispatch<SetStateAction<Trailer[]>>;
 }
 
-export default function Banner({ movie, videos, isLoading, setVideos }: props) {
+export default function Banner({
+  movie,
+  tvShow,
+  videos,
+  isLoading,
+  setVideos,
+}: props) {
   const [playTrailer, setPlayTrailer] = useState(false);
 
-  const date = new Date(movie?.release_date as string);
-  const year = date.getFullYear();
-  const genres = movie?.genres;
+  const movieDate = new Date(movie?.release_date as string);
+  const year = movieDate.getFullYear();
+  const genres = movie?.genres || tvShow?.genres;
 
-  const crewToList = ["Director", "Writer", "Screenplay", "Story", "Creator"];
-  const crew = movie?.credits?.crew.filter((crew) => {
-    if (typeof crew.job === "string") return crewToList.includes(crew.job);
+  const getTvShowDate = () => {
+    const first = tvShow?.first_air_date.slice(0, 4);
+    const last = tvShow?.last_air_date.slice(0, 4);
+
+    if (tvShow?.in_production) {
+      return first + "-";
+    } else {
+      return `${first} - ${last}`;
+    }
+  };
+
+  const rolesToList = ["Director", "Writer", "Screenplay", "Story", "Creator"];
+  const crew = movie?.credits?.crew?.filter((crew) => {
+    if (typeof crew.job === "string") return rolesToList.includes(crew.job);
   });
 
-  const formattedDate = date.toLocaleString("en-US", {
+  const formattedDate = movieDate.toLocaleString("en-US", {
     month: "numeric",
     day: "numeric",
     year: "numeric",
   });
+
+  const dateToDisplay = movie ? year : getTvShowDate();
+
+  const title = movie?.title || tvShow?.name;
+  const image = movie?.poster_path || tvShow?.poster_path;
+  const backdrop = movie?.backdrop_path || tvShow?.backdrop_path;
+  const tagline = movie?.tagline || tvShow?.tagline;
+  const overview = movie?.overview || tvShow?.overview;
+
+  console.log("tvtv", tvShow);
 
   const isMobile = useMediaQuery("only screen and (max-width: 768px)");
 
@@ -52,7 +80,9 @@ export default function Banner({ movie, videos, isLoading, setVideos }: props) {
     }
   };
 
-  const rating = Math.ceil(movie?.vote_average! * 10);
+  const rating = Math.ceil(
+    movie?.vote_average! * 10 || tvShow?.vote_average! * 10
+  );
   const getColor = () => {
     if (!rating) return "#ccc";
     if (rating >= 70) {
@@ -83,6 +113,7 @@ export default function Banner({ movie, videos, isLoading, setVideos }: props) {
         result.push(person);
       }
     }
+
     return result;
   };
 
@@ -90,6 +121,7 @@ export default function Banner({ movie, videos, isLoading, setVideos }: props) {
   const trailerToDisplay = videos && videos[videos.length - 1]?.key;
 
   const fetchVideos = async () => {
+    if (!movie) return;
     try {
       const res = await getMovieVideos(movie?.id);
       setVideos(res!);
@@ -125,7 +157,7 @@ export default function Banner({ movie, videos, isLoading, setVideos }: props) {
       {/* backdrop image */}
       <div
         style={{
-          backgroundImage: `url("https://image.tmdb.org/t/p/w1280${movie?.backdrop_path}")`,
+          backgroundImage: `url("https://image.tmdb.org/t/p/w1280${backdrop}")`,
         }}
         className="md:h-[32rem] flex items-center justify-center w-full relative before:bg-black/60 bg-no-repeat bg-cover before:absolute before:inset-0"
       >
@@ -134,22 +166,24 @@ export default function Banner({ movie, videos, isLoading, setVideos }: props) {
           <Image
             width={imageSize()}
             height={imageSize()}
-            src={`https://image.tmdb.org/t/p/w1280/${movie?.poster_path}`}
+            src={`https://image.tmdb.org/t/p/w1280/${image}`}
             alt="Movie poster"
             className="z-20 lg:rounded-lg max-sm:object-cover max-sm:w-full max-md:self-center"
           />
           <div className="flex flex-col justify-center md:pr-10">
             <div className="z-20 flex gap-2 text-2xl md:text-4xl">
-              <h2 className="font-bold">{movie?.title}</h2>
-              <span className="opacity-80 max-md:hidden">({year})</span>
+              <h2 className="font-bold">{title}</h2>
+              <span className="opacity-80 max-md:hidden">
+                ({dateToDisplay})
+              </span>
             </div>
             <div className="flex max-md:flex-col lg:items-center max-md:pt-3 gap-3">
-              <span>{formattedDate}</span>
+              {movie && <span>{formattedDate}</span>}
               <div
                 className={classNames({
                   "pl-3 relative": true,
                   "before:absolute before:content-['•'] before:left-0":
-                    genres?.length > 0,
+                    genres?.length! > 0,
                 })}
               >
                 {genres?.map((genre, i) => (
@@ -202,20 +236,27 @@ export default function Banner({ movie, videos, isLoading, setVideos }: props) {
                 <Play size={22} />
                 <span className="font-semibold">Play Trailer</span>
               </div>
-              <span className="italic opacity-80">{movie?.tagline}</span>
+              <span className="italic opacity-80">{tagline}</span>
               <span className="text-xl">Overview</span>
-              <p>{movie?.overview}</p>
+              <p>{overview}</p>
               <ul className="grid grid-cols-3 pt-5">
-                {getCrewRoles()?.map((person) => (
-                  <li key={person.id}>
-                    <p className="font-semibold">{person.name}</p>
-                    <p>
-                      {Array.isArray(person.job)
-                        ? person.job.join(", ")
-                        : person.job}
-                    </p>
-                  </li>
-                ))}
+                {movie
+                  ? getCrewRoles()?.map((person) => (
+                      <li key={person.id}>
+                        <p className="font-semibold">{person.name}</p>
+                        <p>
+                          {Array.isArray(person.job)
+                            ? person.job.join(", ")
+                            : person.job}
+                        </p>
+                      </li>
+                    ))
+                  : tvShow?.created_by.map((person) => (
+                      <li key={person.id}>
+                        <p className="font-semibold">{person.name}</p>
+                        <p>Creator</p>
+                      </li>
+                    ))}
               </ul>
             </div>
           </div>
