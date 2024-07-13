@@ -36,7 +36,6 @@ export const getMovieDetails = async (id: string | number) => {
       options
     );
     const result = (await res.json()) as Movie;
-    console.log("moviedata", result);
     return result;
   } catch (error: any) {
     console.error(error.message);

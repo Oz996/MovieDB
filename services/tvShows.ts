@@ -29,3 +29,17 @@ export const getTvShows = async (type: string = "free") => {
     console.error(error.message);
   }
 };
+
+export const getTvShowDetails = async (id: string | number) => {
+  try {
+    const res = await fetch(
+      `https://api.themoviedb.org/3/tv/${id}?append_to_response=credits,keywords,external_ids,reviews`,
+      options
+    );
+    const result = await res.json();
+    console.log("tvdata", result);
+    return result;
+  } catch (error: any) {
+    console.error(error.message);
+  }
+};

@@ -17,7 +17,7 @@ export default function SearchList({ searchList, isLoading }: props) {
     <AnimatePresence>
       <motion.div
         key="trending-container"
-        className="absolute border border-black w-full max-h-[calc(100vh-6.8rem)] lg:max-h-[calc(100vh-4rem)] top-[2.4rem] lg:top-[3.1rem] z-10 bg-white text-black overflow-auto duration-200"
+        className="absolute border border-black w-full max-h-[calc(100vh-6.8rem)] lg:max-h-[calc(100vh-4rem)] top-[2.4rem] lg:top-[3.1rem] z-10 bg-white text-black overflow-auto duration-200 z-50"
         initial={{ height: 0 }}
         animate={{ height: "auto" }}
         exit={{ height: 0 }}
