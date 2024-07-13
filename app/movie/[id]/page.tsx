@@ -37,7 +37,7 @@ export default function Movie({ params }: { params: { id: string } }) {
         setVideos={setVideos!}
         isLoading={isLoading}
       />
-      <section className="grid grid-cols-4 container">
+      <section className="grid grid-cols-1 md:grid-cols-4 container">
         <div className="col-span-3 space-y-5">
           <PersonCarousel movie={movie!} isLoading={isLoading} />
           <ReviewSection movie={movie!} />

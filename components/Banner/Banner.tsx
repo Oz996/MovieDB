@@ -9,6 +9,7 @@ import Link from "next/link";
 import { getMovieVideos } from "@/services/movies";
 import TrailerIframe from "../TrailerIframe";
 import BannerLoader from "./components/BannerLoader";
+import { useMediaQuery } from "@uidotdev/usehooks";
 
 interface props {
   movie: Movie;
@@ -35,9 +36,11 @@ export default function Banner({ movie, videos, isLoading, setVideos }: props) {
     year: "numeric",
   });
 
+  const isMobile = useMediaQuery("only screen and (max-width: 768px)");
+
   const runtime = movie?.runtime;
   const getRunTime = () => {
-    if (!runtime) return null;
+    if (!runtime) return;
     const hours = Math.floor(runtime / 60);
     const minutes = runtime % 60;
     if (hours > 0 && minutes > 0) {
@@ -63,7 +66,7 @@ export default function Banner({ movie, videos, isLoading, setVideos }: props) {
 
   // making sure that no person gets duplicated and turning persons job property to an array of all jobs
   const getCrewRoles = () => {
-    if (!crew) return null;
+    if (!crew) return;
     const nameMap = new Map();
 
     for (const item of crew) {
@@ -105,6 +108,16 @@ export default function Banner({ movie, videos, isLoading, setVideos }: props) {
     setPlayTrailer(false);
   };
 
+  console.log("genres", genres);
+
+  const imageSize = () => {
+    if (isMobile) {
+      return 400;
+    } else {
+      return 300;
+    }
+  };
+
   if (isLoading) return <BannerLoader />;
 
   return (
@@ -114,27 +127,27 @@ export default function Banner({ movie, videos, isLoading, setVideos }: props) {
         style={{
           backgroundImage: `url("https://image.tmdb.org/t/p/w1280${movie?.backdrop_path}")`,
         }}
-        className="h-[32rem] flex items-center justify-center w-full relative before:bg-black/60 bg-no-repeat bg-cover before:absolute before:inset-0"
+        className="md:h-[32rem] flex items-center justify-center w-full relative before:bg-black/60 bg-no-repeat bg-cover before:absolute before:inset-0"
       >
         {/* image and other content */}
-        <div className="z-20 flex gap-10 text-white container">
+        <div className="z-20 flex max-md:flex-col gap-10 text-white container max-md:pb-5">
           <Image
-            width={300}
-            height={300}
+            width={imageSize()}
+            height={imageSize()}
             src={`https://image.tmdb.org/t/p/w1280/${movie?.poster_path}`}
             alt="Movie poster"
-            className="z-20 rounded-lg"
+            className="z-20 lg:rounded-lg max-sm:object-cover max-sm:w-full max-md:self-center"
           />
-          <div className="flex flex-col justify-center pr-10">
-            <div className="z-20 flex gap-2 text-4xl">
+          <div className="flex flex-col justify-center md:pr-10">
+            <div className="z-20 flex gap-2 text-2xl md:text-4xl">
               <h2 className="font-bold">{movie?.title}</h2>
-              <span className="opacity-80">({year})</span>
+              <span className="opacity-80 max-md:hidden">({year})</span>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex max-md:flex-col lg:items-center max-md:pt-3 gap-3">
               <span>{formattedDate}</span>
               <div
                 className={classNames({
-                  "pl-3 relative flex gap-1": true,
+                  "pl-3 relative": true,
                   "before:absolute before:content-['•'] before:left-0":
                     genres?.length > 0,
                 })}
