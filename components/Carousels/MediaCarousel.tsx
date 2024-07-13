@@ -41,7 +41,7 @@ export default function MediaCarousel({ id, videos, setVideos }: props) {
   }, [mediaEntry?.isIntersecting]);
 
   const fetchVideos = async () => {
-    if (videos.length > 0) return;
+    if (videos?.length > 0) return;
     setIsLoading(true);
     try {
       const res = await getMovieVideos(id);
@@ -93,7 +93,7 @@ export default function MediaCarousel({ id, videos, setVideos }: props) {
           <TabsContent value="videos">
             <Carousel>
               <CarouselContent>
-                {videos.length === 0 && <p className="pl-10"> No videos</p>}
+                {videos?.length === 0 && <p className="pl-10"> No videos</p>}
                 {videos?.map((video) => (
                   <CarouselItem
                     key={video.id}

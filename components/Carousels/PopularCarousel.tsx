@@ -28,6 +28,7 @@ export default function PopularCarousel() {
   const [popularType, setPopularType] = useState("now_playing");
   const isMobile = useMediaQuery("only screen and (max-width: 768px)");
 
+  console.log("popp", popular);
   useEffect(() => {
     try {
       const fetchPopular = async () => {
@@ -95,7 +96,7 @@ export default function PopularCarousel() {
           <Carousel className="bg-slate-100 rounded-xl pl-2">
             <CarouselContent className="-ml-1">
               {popular?.map((item) => (
-                <CarouselCard key={item.id} item={item} />
+                <CarouselCard key={item.id} item={item} type="movie" />
               ))}
             </CarouselContent>
             <CarouselPrevious />

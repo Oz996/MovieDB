@@ -29,7 +29,7 @@ export default function SimilarCarousel({ id }: props) {
   });
 
   useEffect(() => {
-    if (similarEntry?.isIntersecting && similar!.length === 0) {
+    if (similarEntry?.isIntersecting && similar?.length === 0) {
       const fetchSimilar = async () => {
         try {
           const res = await getMovieSimilar(id);

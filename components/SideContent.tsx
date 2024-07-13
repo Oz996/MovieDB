@@ -30,7 +30,7 @@ export default function SideContent({ movie }: props) {
         <div className="flex flex-col gap-2">
           <p className="font-semibold">Keywords</p>
           <div className="flex flex-wrap gap-2 text-sm">
-            {movie?.keywords.keywords.map((keyword) => (
+            {movie?.keywords?.keywords.map((keyword) => (
               <div
                 key={keyword.id}
                 className="rounded-lg py-1 px-3 bg-gray-200"

@@ -14,12 +14,12 @@ interface props {
 export default function ExternalLinks({ movie }: props) {
   return (
     <div className="flex gap-5">
-      {movie?.external_ids.facebook_id && (
+      {movie?.external_ids?.facebook_id && (
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
               <a
-                href={`https://www.facebook.com/${movie?.external_ids.facebook_id}`}
+                href={`https://www.facebook.com/${movie?.external_ids?.facebook_id}`}
                 target="_blank"
               >
                 <FaFacebook size={25} />
@@ -31,12 +31,12 @@ export default function ExternalLinks({ movie }: props) {
           </Tooltip>
         </TooltipProvider>
       )}
-      {movie?.external_ids.twitter_id && (
+      {movie?.external_ids?.twitter_id && (
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
               <a
-                href={`https://twitter.com/${movie?.external_ids.twitter_id}`}
+                href={`https://twitter.com/${movie?.external_ids?.twitter_id}`}
                 target="_blank"
               >
                 <FaTwitter size={25} />
@@ -48,12 +48,12 @@ export default function ExternalLinks({ movie }: props) {
           </Tooltip>
         </TooltipProvider>
       )}
-      {movie?.external_ids.facebook_id && (
+      {movie?.external_ids?.facebook_id && (
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
               <a
-                href={`https://www.instagram.com/${movie?.external_ids.instagram_id}`}
+                href={`https://www.instagram.com/${movie?.external_ids?.instagram_id}`}
                 target="_blank"
               >
                 <FaInstagram size={25} />

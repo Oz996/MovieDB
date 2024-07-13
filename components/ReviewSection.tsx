@@ -13,7 +13,7 @@ interface props {
 
 export default function ReviewSection({ movie }: props) {
   const [expanded, setExpanded] = useState(false);
-  const reviews = movie?.reviews.results;
+  const reviews = movie?.reviews?.results;
   const review = reviews?.[0];
 
   const date = new Date(review?.created_at);
@@ -24,11 +24,11 @@ export default function ReviewSection({ movie }: props) {
     year: "numeric",
   });
 
-  const username = review?.author_details.username ?? "Unknown";
-  const rating = review?.author_details.rating
-    ? Math.ceil(review?.author_details.rating) * 10
+  const username = review?.author_details?.username ?? "Unknown";
+  const rating = review?.author_details?.rating
+    ? Math.ceil(review?.author_details?.rating) * 10
     : null;
-  const image = review?.author_details.avatar_path;
+  const image = review?.author_details?.avatar_path;
 
   console.log(review);
 

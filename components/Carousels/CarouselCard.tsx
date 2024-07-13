@@ -7,9 +7,10 @@ import { CarouselItem } from "../ui/carousel";
 
 interface props {
   item: Result;
+  type?: "tv" | "movie";
 }
 
-export default function CarouselCard({ item }: props) {
+export default function CarouselCard({ item, type }: props) {
   const title = item?.name || item?.title;
   const date = item?.first_air_date || item?.release_date;
   const imageToDisplay = item?.poster_path || item?.profile_path;
@@ -19,7 +20,9 @@ export default function CarouselCard({ item }: props) {
       key={item.id}
       className="pl-1 basis-1/1 sm:basis-1/3 md:basis-1/3 lg:basis-1/6"
     >
-      <Link href={`http://localhost:3000/${item.media_type}/${item.id}`}>
+      <Link
+        href={`http://localhost:3000/${item.media_type ?? type}/${item.id}`}
+      >
         <motion.div
           className="p-1"
           initial={{ opacity: 0 }}

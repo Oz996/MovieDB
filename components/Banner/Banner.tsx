@@ -26,7 +26,7 @@ export default function Banner({ movie, videos, isLoading, setVideos }: props) {
   const genres = movie?.genres;
 
   const crewToList = ["Director", "Writer", "Screenplay", "Story", "Creator"];
-  const crew = movie?.credits.crew.filter((crew) => {
+  const crew = movie?.credits?.crew.filter((crew) => {
     if (typeof crew.job === "string") return crewToList.includes(crew.job);
   });
 
@@ -108,7 +108,7 @@ export default function Banner({ movie, videos, isLoading, setVideos }: props) {
     setPlayTrailer(false);
   };
 
-  console.log("genres", genres);
+  console.log("current movie", movie);
 
   const imageSize = () => {
     if (isMobile) {

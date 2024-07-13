@@ -18,7 +18,7 @@ interface props {
 }
 
 export default function PersonCarousel({ movie, isLoading }: props) {
-  const cast = movie?.credits.cast.slice(0, 8);
+  const cast = movie?.credits?.cast.slice(0, 8);
 
   if (isLoading) return <LoaderCarousel />;
 
