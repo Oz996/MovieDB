@@ -1,4 +1,4 @@
-import { Image, Result, Trailer, TvShow } from "@/types";
+import { Image, Result, Similar, Trailer, TvShow } from "@/types";
 import { options } from "./all";
 
 export const getTvShowTrending = async (time: string = "week") => {
@@ -67,6 +67,20 @@ export const getTvShowImages = async (id: string | number) => {
     const data = await res.json();
     const results = data.posters as Image[];
     console.log("res res res", data);
+    return results;
+  } catch (error: any) {
+    console.error(error.message);
+  }
+};
+
+export const getTvShowSimilar = async (id: string | number) => {
+  try {
+    const res = await fetch(
+      `https://api.themoviedb.org/3/tv/${id}/similar`,
+      options
+    );
+    const data = await res.json();
+    const results = data.results as Similar[];
     return results;
   } catch (error: any) {
     console.error(error.message);

@@ -17,7 +17,7 @@ export default function SideContent({ movie, tvShow }: props) {
   return (
     <aside>
       <div className="flex flex-col gap-4 pt-12 w-[15rem]">
-        <ExternalLinks movie={movie!} />
+        <ExternalLinks movie={movie ?? null} tvShow={tvShow ?? null} />
         <div className="flex flex-col gap-1">
           <p className="font-semibold">Status</p>
           <p>{status}</p>

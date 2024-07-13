@@ -2,6 +2,7 @@
 import Banner from "@/components/Banner/Banner";
 import MediaCarousel from "@/components/Carousels/MediaCarousel";
 import PersonCarousel from "@/components/Carousels/PersonCarousel";
+import SimilarCarousel from "@/components/Carousels/SimilarCarousel";
 import ReviewSection from "@/components/ReviewSection";
 import SideContent from "@/components/SideContent";
 import { getTvShowDetails } from "@/services/tvShows";
@@ -45,7 +46,7 @@ export default function Movie({ params }: { params: { id: string } }) {
             setVideos={setVideos}
             type="tv"
           />
-          {/*  <SimilarCarousel id={params.id} /> */}
+          <SimilarCarousel id={params.id} type="tv" />
         </div>
         <SideContent tvShow={tvShow!} />
       </section>

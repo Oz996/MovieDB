@@ -47,7 +47,7 @@ export default function Movie({ params }: { params: { id: string } }) {
             setVideos={setVideos}
             type="movie"
           />
-          <SimilarCarousel id={params.id} />
+          <SimilarCarousel id={params.id} type="movie" />
         </div>
         <SideContent movie={movie!} />
       </section>

@@ -13,14 +13,19 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import LoaderCarousel from "./LoaderCarousel";
+import { getTvShowSimilar } from "@/services/tvShows";
 
 interface props {
   id: string;
+  type: "movie" | "tv";
 }
 
-export default function SimilarCarousel({ id }: props) {
+export default function SimilarCarousel({ id, type }: props) {
   const [isLoading, setIsLoading] = useState(false);
   const [similar, setSimilar] = useState<Similar[] | undefined>([]);
+
+  const movie = type === "movie";
+  const tvShow = type === "tv";
 
   const [similarRef, similarEntry] = useIntersectionObserver({
     threshold: 0.5,
@@ -28,12 +33,19 @@ export default function SimilarCarousel({ id }: props) {
     rootMargin: "0px",
   });
 
+  console.log("similar", similar);
+
   useEffect(() => {
     if (similarEntry?.isIntersecting && similar?.length === 0) {
       const fetchSimilar = async () => {
         try {
-          const res = await getMovieSimilar(id);
-          setSimilar(res);
+          if (movie) {
+            const res = await getMovieSimilar(id);
+            setSimilar(res);
+          } else if (tvShow) {
+            const res = await getTvShowSimilar(id);
+            setSimilar(res);
+          }
         } catch (error: any) {
           console.error(error.message);
         } finally {
@@ -55,6 +67,7 @@ export default function SimilarCarousel({ id }: props) {
         <CarouselContent>
           {similarsToDisplay?.map((item) => {
             const rating = Math.ceil(item?.vote_average! * 10);
+            const title = item?.title || item?.name;
 
             return (
               <CarouselItem
@@ -78,7 +91,7 @@ export default function SimilarCarousel({ id }: props) {
                     href={`http://localhost:3000/movie/${item.id}`}
                     className="truncate pr-3"
                   >
-                    <span>{item.title}</span>
+                    <span>{title}</span>
                   </Link>
                   <span>{rating}%</span>
                 </div>

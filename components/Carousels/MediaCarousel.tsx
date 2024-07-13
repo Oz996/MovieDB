@@ -32,8 +32,6 @@ export default function MediaCarousel({ id, videos, type, setVideos }: props) {
   const movie = type === "movie";
   const tvShow = type === "tv";
 
-  console.log("imgas", images);
-
   const [mediaRef, mediaEntry] = useIntersectionObserver({
     threshold: 0.5,
     root: null,

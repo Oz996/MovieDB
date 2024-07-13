@@ -8,8 +8,8 @@ import {
 import { Movie, TvShow } from "@/types";
 
 interface props {
-  movie?: Movie;
-  tvShow?: TvShow;
+  movie?: Movie | null;
+  tvShow?: TvShow | null;
 }
 
 export default function ExternalLinks({ movie, tvShow }: props) {
