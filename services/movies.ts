@@ -64,7 +64,6 @@ export const getMovieImages = async (id: string | number) => {
     );
     const data = await res.json();
     const results = data.posters as Image[];
-    console.log("res res res", results);
     return results;
   } catch (error: any) {
     console.error(error.message);

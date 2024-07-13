@@ -41,7 +41,12 @@ export default function Movie({ params }: { params: { id: string } }) {
         <div className="col-span-3 space-y-5">
           <PersonCarousel movie={movie!} isLoading={isLoading} />
           <ReviewSection movie={movie!} />
-          <MediaCarousel id={params.id} videos={videos} setVideos={setVideos} />
+          <MediaCarousel
+            id={params.id}
+            videos={videos}
+            setVideos={setVideos}
+            type="movie"
+          />
           <SimilarCarousel id={params.id} />
         </div>
         <SideContent movie={movie!} />

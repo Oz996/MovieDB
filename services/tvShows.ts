@@ -1,4 +1,4 @@
-import { Result } from "@/types";
+import { Image, Result, Trailer, TvShow } from "@/types";
 import { options } from "./all";
 
 export const getTvShowTrending = async (time: string = "week") => {
@@ -36,9 +36,38 @@ export const getTvShowDetails = async (id: string | number) => {
       `https://api.themoviedb.org/3/tv/${id}?append_to_response=credits,keywords,external_ids,reviews`,
       options
     );
-    const result = await res.json();
+    const result = (await res.json()) as TvShow;
     console.log("tvdata", result);
     return result;
+  } catch (error: any) {
+    console.error(error.message);
+  }
+};
+
+export const getTvShowVideos = async (id: string | number) => {
+  try {
+    const res = await fetch(
+      `https://api.themoviedb.org/3/tv/${id}/videos`,
+      options
+    );
+    const data = await res.json();
+    const results = data.results as Trailer[];
+    return results;
+  } catch (error: any) {
+    console.error(error.message);
+  }
+};
+
+export const getTvShowImages = async (id: string | number) => {
+  try {
+    const res = await fetch(
+      `https://api.themoviedb.org/3/tv/${id}/images`,
+      options
+    );
+    const data = await res.json();
+    const results = data.posters as Image[];
+    console.log("res res res", data);
+    return results;
   } catch (error: any) {
     console.error(error.message);
   }

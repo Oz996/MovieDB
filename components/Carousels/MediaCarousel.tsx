@@ -14,18 +14,25 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { getMovieImages, getMovieVideos } from "@/services/movies";
 import { FaPlay } from "react-icons/fa6";
 import LoaderCarousel from "./LoaderCarousel";
+import { getTvShowImages, getTvShowVideos } from "@/services/tvShows";
 
 interface props {
   id: string;
+  type: "movie" | "tv";
   videos: Trailer[];
   setVideos: Dispatch<SetStateAction<Trailer[]>>;
 }
 
-export default function MediaCarousel({ id, videos, setVideos }: props) {
+export default function MediaCarousel({ id, videos, type, setVideos }: props) {
   const [isLoading, setIsLoading] = useState(false);
   const [images, setImages] = useState<ImageType[]>([]);
   const [playTrailer, setPlayTrailer] = useState(false);
   const [trailerToDisplay, setTrailerToDisplay] = useState("");
+
+  const movie = type === "movie";
+  const tvShow = type === "tv";
+
+  console.log("imgas", images);
 
   const [mediaRef, mediaEntry] = useIntersectionObserver({
     threshold: 0.5,
@@ -44,8 +51,13 @@ export default function MediaCarousel({ id, videos, setVideos }: props) {
     if (videos?.length > 0) return;
     setIsLoading(true);
     try {
-      const res = await getMovieVideos(id);
-      setVideos(res!);
+      if (movie) {
+        const res = await getMovieVideos(id);
+        setVideos(res!);
+      } else if (tvShow) {
+        const res = await getTvShowVideos(id);
+        setVideos(res!);
+      }
     } catch (error: any) {
       console.error(error.message);
     } finally {
@@ -56,8 +68,13 @@ export default function MediaCarousel({ id, videos, setVideos }: props) {
   const fetchImages = async () => {
     if (images.length > 0) return;
     try {
-      const res = await getMovieImages(id);
-      setImages(res!);
+      if (movie) {
+        const res = await getMovieImages(id);
+        setImages(res!);
+      } else if (tvShow) {
+        const res = await getTvShowImages(id);
+        setImages(res!);
+      }
     } catch (error: any) {
       console.error(error.message);
     } finally {
@@ -127,7 +144,7 @@ export default function MediaCarousel({ id, videos, setVideos }: props) {
           <TabsContent value="images">
             <Carousel>
               <CarouselContent>
-                {imagesToDisplay.length === 0 && (
+                {imagesToDisplay?.length === 0 && (
                   <p className="pl-10"> No images</p>
                 )}
                 {imagesToDisplay?.map((image) => (

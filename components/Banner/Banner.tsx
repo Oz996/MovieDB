@@ -10,6 +10,7 @@ import { getMovieVideos } from "@/services/movies";
 import TrailerIframe from "../TrailerIframe";
 import BannerLoader from "./components/BannerLoader";
 import { useMediaQuery } from "@uidotdev/usehooks";
+import { getTvShowVideos } from "@/services/tvShows";
 
 interface props {
   movie?: Movie;
@@ -121,10 +122,14 @@ export default function Banner({
   const trailerToDisplay = videos && videos[videos.length - 1]?.key;
 
   const fetchVideos = async () => {
-    if (!movie) return;
     try {
-      const res = await getMovieVideos(movie?.id);
-      setVideos(res!);
+      if (movie) {
+        const res = await getMovieVideos(movie?.id);
+        setVideos(res!);
+      } else if (tvShow) {
+        const res = await getTvShowVideos(tvShow?.id);
+        setVideos(res!);
+      }
     } catch (error: any) {
       console.error(error.message);
     }

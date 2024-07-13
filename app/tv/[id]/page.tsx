@@ -1,19 +1,23 @@
 "use client";
 import Banner from "@/components/Banner/Banner";
+import MediaCarousel from "@/components/Carousels/MediaCarousel";
+import PersonCarousel from "@/components/Carousels/PersonCarousel";
+import ReviewSection from "@/components/ReviewSection";
+import SideContent from "@/components/SideContent";
 import { getTvShowDetails } from "@/services/tvShows";
-import { Trailer } from "@/types";
+import { Trailer, TvShow } from "@/types";
 import { useEffect, useState } from "react";
 
 export default function Movie({ params }: { params: { id: string } }) {
   const [isLoading, setIsLoading] = useState(true);
-  const [show, setShow] = useState();
+  const [tvShow, setTvShow] = useState<TvShow>();
   const [videos, setVideos] = useState<Trailer[]>([]);
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
       try {
         const res = await getTvShowDetails(params.id);
-        setShow(res);
+        setTvShow(res);
       } catch (error: any) {
         console.error(error.message);
       } finally {
@@ -26,20 +30,25 @@ export default function Movie({ params }: { params: { id: string } }) {
   return (
     <section className="flex flex-col">
       <Banner
-        tvShow={show!}
+        tvShow={tvShow!}
         videos={videos!}
         setVideos={setVideos!}
         isLoading={isLoading}
       />
-      {/* <section className="grid grid-cols-1 md:grid-cols-4 container">
-      <div className="col-span-3 space-y-5">
-        <PersonCarousel movie={movie!} isLoading={isLoading} />
-        <ReviewSection movie={movie!} />
-        <MediaCarousel id={params.id} videos={videos} setVideos={setVideos} />
-        <SimilarCarousel id={params.id} />
-      </div>
-      <SideContent movie={movie!} />
-    </section> */}
+      <section className="grid grid-cols-1 md:grid-cols-4 container">
+        <div className="col-span-3 space-y-5">
+          <PersonCarousel tvShow={tvShow!} isLoading={isLoading} />
+          <ReviewSection tvShow={tvShow!} />
+          <MediaCarousel
+            id={params.id}
+            videos={videos}
+            setVideos={setVideos}
+            type="tv"
+          />
+          {/*  <SimilarCarousel id={params.id} /> */}
+        </div>
+        <SideContent tvShow={tvShow!} />
+      </section>
     </section>
   );
 }
