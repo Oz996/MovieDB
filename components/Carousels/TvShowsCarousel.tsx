@@ -7,7 +7,6 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -111,7 +110,7 @@ export default function TvShowsCarousel() {
           <Carousel>
             <CarouselContent className="-ml-1">
               {shows?.map((item) => (
-                <CarouselCard key={item.id} item={item} />
+                <CarouselCard key={item.id} item={item} type="tv" />
               ))}
             </CarouselContent>
             <CarouselPrevious />
@@ -122,7 +121,7 @@ export default function TvShowsCarousel() {
           <Carousel>
             <CarouselContent className="-ml-1">
               {shows?.map((item) => (
-                <CarouselCard key={item.id} item={item} />
+                <CarouselCard key={item.id} item={item} type="tv" />
               ))}
             </CarouselContent>
             <CarouselPrevious />
@@ -133,7 +132,7 @@ export default function TvShowsCarousel() {
           <Carousel>
             <CarouselContent className="-ml-1">
               {shows?.map((item) => (
-                <CarouselCard key={item.id} item={item} />
+                <CarouselCard key={item.id} item={item} type="tv" />
               ))}
             </CarouselContent>
             <CarouselPrevious />
