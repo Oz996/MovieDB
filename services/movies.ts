@@ -1,10 +1,12 @@
 import { Image, Movie, Result, Similar, Trailer } from "@/types";
 import { options } from "./all";
+import { QueryData } from "@/app/movies/page";
 
-export const getMovies = async () => {
+export const getMovies = async (queryData: QueryData) => {
+  const { sort, releasedBefore, releasedAfter } = queryData;
   try {
     const res = await fetch(
-      `https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc`,
+      `https://api.themoviedb.org/3/discover/movie?sort_by=${sort}&primary_release_date.lte=2024-07-16&primary_release_date.gte=2024-07-06`,
       options
     );
     const data = await res.json();
