@@ -114,9 +114,12 @@ export default function Movies() {
   const handleSelectGenre = (id: Number) => {
     if (genres.includes(id)) {
       const removedGenre = genres.filter((prevId) => prevId !== id);
-      return setGenres(removedGenre);
+      setGenres(removedGenre);
+      setQueryData((data) => ({ ...data, genres: removedGenre }));
+      return;
     }
     setGenres((ids) => [...ids, id]);
+    setQueryData((data) => ({ ...data, genres: [...genres, id] }));
   };
 
   console.log("queryData", queryData);
