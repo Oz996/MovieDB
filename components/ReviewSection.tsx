@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { FaStar } from "react-icons/fa6";
 import { Button } from "./ui/button";
-import { handleDisplayImage } from "@/lib/utils";
+import { formatDate, handleDisplayImage } from "@/lib/utils";
 
 interface props {
   movie?: Movie;
@@ -16,14 +16,6 @@ export default function ReviewSection({ movie, tvShow }: props) {
   const [expanded, setExpanded] = useState(false);
   const reviews = movie?.reviews?.results || tvShow?.reviews?.results;
   const review = reviews?.[0];
-
-  const date = new Date(review?.created_at!);
-
-  const formattedDate = date.toLocaleString("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  });
 
   const username = review?.author_details?.username ?? "Unknown";
   const rating = review?.author_details?.rating
@@ -67,7 +59,7 @@ export default function ReviewSection({ movie, tvShow }: props) {
                   )}
                   <span>
                     Written by <span className="font-semibold">{username}</span>{" "}
-                    on {formattedDate}
+                    on {formatDate(review?.created_at!)}
                   </span>
                 </div>
               </div>

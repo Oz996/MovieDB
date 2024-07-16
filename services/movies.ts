@@ -1,6 +1,20 @@
 import { Image, Movie, Result, Similar, Trailer } from "@/types";
 import { options } from "./all";
 
+export const getMovies = async () => {
+  try {
+    const res = await fetch(
+      `https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc`,
+      options
+    );
+    const data = await res.json();
+    const results = data.results as Result[];
+    return results;
+  } catch (error: any) {
+    console.error(error.message);
+  }
+};
+
 export const getMovieList = async (type: string = "now_playing") => {
   try {
     const res = await fetch(

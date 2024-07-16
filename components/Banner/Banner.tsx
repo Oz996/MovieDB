@@ -11,6 +11,7 @@ import TrailerIframe from "../TrailerIframe";
 import BannerLoader from "./components/BannerLoader";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { getTvShowVideos } from "@/services/tvShows";
+import { formatDate } from "@/lib/utils";
 
 interface props {
   movie?: Movie;
@@ -47,12 +48,6 @@ export default function Banner({
   const rolesToList = ["Director", "Writer", "Screenplay", "Story", "Creator"];
   const crew = movie?.credits?.crew?.filter((crew) => {
     if (typeof crew.job === "string") return rolesToList.includes(crew.job);
-  });
-
-  const formattedDate = movieDate.toLocaleString("en-US", {
-    month: "numeric",
-    day: "numeric",
-    year: "numeric",
   });
 
   const dateToDisplay = movie ? year : getTvShowDate();
@@ -183,7 +178,7 @@ export default function Banner({
               </span>
             </div>
             <div className="flex max-md:flex-col lg:items-center max-md:pt-3 gap-3">
-              {movie && <span>{formattedDate}</span>}
+              {movie && <span>{formatDate(movie?.release_date)}</span>}
               <div
                 className={classNames({
                   "pl-3 relative": true,

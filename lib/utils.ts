@@ -14,6 +14,16 @@ export const formatToDollars = (number: number) => {
   return formattedNumber;
 };
 
+export const formatDate = (date: string) => {
+  const dateToFormat = new Date(date);
+  const formattedDate = dateToFormat.toLocaleString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+  return formattedDate;
+};
+
 export const handleDisplayImage = (width: string, path: string) => {
   if (path) {
     return `https://image.tmdb.org/t/p/${width}/${path}`;
