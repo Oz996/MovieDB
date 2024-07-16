@@ -23,6 +23,7 @@ import {
 import { formatDate, handleDisplayImage } from "@/lib/utils";
 import { getGenres, getMovies } from "@/services/movies";
 import { Genre, Result } from "@/types";
+import classNames from "classnames";
 import { Calendar as CalendarIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -32,6 +33,7 @@ export interface QueryData {
   sort: string;
   fromDate: string;
   toDate: string;
+  genres: Number[] | undefined;
 }
 
 export default function Movies() {
@@ -39,12 +41,13 @@ export default function Movies() {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [genreList, setGenreList] = useState<Genre[] | undefined>([]);
-  const [genres, setGenres] = useState<Genre[] | undefined>([]);
+  const [genres, setGenres] = useState<Number[]>([]);
 
   const initialData: QueryData = {
     sort: "",
     fromDate,
     toDate,
+    genres,
   };
   const [queryData, setQueryData] = useState<QueryData>(initialData);
 
@@ -108,8 +111,16 @@ export default function Movies() {
     }
   };
 
+  const handleSelectGenre = (id: Number) => {
+    if (genres.includes(id)) {
+      const removedGenre = genres.filter((prevId) => prevId !== id);
+      return setGenres(removedGenre);
+    }
+    setGenres((ids) => [...ids, id]);
+  };
+
   console.log("queryData", queryData);
-  console.log("genres", genreList);
+  console.log("genres", genres);
 
   const sortOptions = [
     { name: "Popularity Descending", value: "popularity.desc" },
@@ -125,9 +136,13 @@ export default function Movies() {
   return (
     <section className="pt-24 container">
       <div className="grid grid-cols-4">
-        <div className="w-[17rem]">
+        <div className="w-[17rem] border shadow-lg rounded-lg p-5">
           <h2 className="text-2xl">Popular Movies</h2>
-          <Accordion type="single" className="w-full" defaultValue="item-3">
+          <Accordion
+            type="multiple"
+            className="w-full"
+            defaultValue={["item-3"]}
+          >
             <AccordionItem value="item-1">
               <AccordionTrigger>Sort</AccordionTrigger>
               <AccordionContent>
@@ -207,7 +222,15 @@ export default function Movies() {
                 <div>
                   <ul className="flex flex-wrap gap-2 items-center">
                     {genreList?.map((genre) => (
-                      <li key={genre.id} className="rounded-full border p-2">
+                      <li
+                        key={genre.id}
+                        onClick={() => handleSelectGenre(genre.id)}
+                        className={classNames({
+                          "rounded-full border border-gray-300 px-3 py-1 cursor-pointer duration-200":
+                            true,
+                          "bg-black text-white": genres?.includes(genre.id),
+                        })}
+                      >
                         {genre.name}
                       </li>
                     ))}
