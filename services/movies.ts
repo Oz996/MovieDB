@@ -3,12 +3,11 @@ import { options } from "./all";
 import { QueryData } from "@/app/movies/page";
 
 export const getMovies = async (queryData: QueryData) => {
-  const { sort, fromDate, toDate, genres } = queryData;
+  const { sort, fromDate, toDate, genres, vote_avg } = queryData;
   const joinedGenres = genres?.join(",");
   try {
     const res = await fetch(
-      //&with_genres=37,28
-      `https://api.themoviedb.org/3/discover/movie?sort_by=${sort}&primary_release_date.gte=${fromDate}&primary_release_date.lte=${toDate}&with_genres=${joinedGenres}`,
+      `https://api.themoviedb.org/3/discover/movie?sort_by=${sort}&primary_release_date.gte=${fromDate}&primary_release_date.lte=${toDate}&with_genres=${joinedGenres}&vote_average.gte=${vote_avg}`,
       options
     );
     const data = await res.json();

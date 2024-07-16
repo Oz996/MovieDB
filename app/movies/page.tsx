@@ -20,6 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Slider } from "@/components/ui/slider";
 import { formatDate, handleDisplayImage } from "@/lib/utils";
 import { getGenres, getMovies } from "@/services/movies";
 import { Genre, Result } from "@/types";
@@ -33,7 +34,8 @@ export interface QueryData {
   sort: string;
   fromDate: string;
   toDate: string;
-  genres: Number[] | undefined;
+  genres: number[] | undefined;
+  vote_avg: number | null;
 }
 
 export default function Movies() {
@@ -41,13 +43,14 @@ export default function Movies() {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [genreList, setGenreList] = useState<Genre[] | undefined>([]);
-  const [genres, setGenres] = useState<Number[]>([]);
+  const [genres, setGenres] = useState<number[]>([]);
 
   const initialData: QueryData = {
     sort: "",
     fromDate,
     toDate,
     genres,
+    vote_avg: null,
   };
   const [queryData, setQueryData] = useState<QueryData>(initialData);
 
@@ -111,7 +114,7 @@ export default function Movies() {
     }
   };
 
-  const handleSelectGenre = (id: Number) => {
+  const handleSelectGenre = (id: number) => {
     if (genres.includes(id)) {
       const removedGenre = genres.filter((prevId) => prevId !== id);
       setGenres(removedGenre);
@@ -120,6 +123,10 @@ export default function Movies() {
     }
     setGenres((ids) => [...ids, id]);
     setQueryData((data) => ({ ...data, genres: [...genres, id] }));
+  };
+
+  const handleUserScore = (value: any) => {
+    setQueryData((data) => ({ ...data, vote_avg: value[0] }));
   };
 
   console.log("queryData", queryData);
@@ -238,6 +245,17 @@ export default function Movies() {
                       </li>
                     ))}
                   </ul>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <p className="text-md">User Score</p>
+                  <Slider
+                    defaultValue={[0]}
+                    onValueChange={(value) => handleUserScore(value)}
+                    max={10}
+                    step={1}
+                    className=""
+                  />
+                  <span>{queryData.vote_avg ?? 0}</span>
                 </div>
               </AccordionContent>
             </AccordionItem>
