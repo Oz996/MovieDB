@@ -5,35 +5,45 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import { formatDate, handleDisplayImage } from "@/lib/utils";
 import { getMovies } from "@/services/movies";
 import { Result } from "@/types";
+import { Calendar as CalendarIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export interface QueryData {
   sort: string;
-  releasedBefore: string;
-  releasedAfter: string;
+  fromDate: string;
+  toDate: string;
 }
 
 export default function Movies() {
-  const initialData = {
-    sort: "",
-    releasedBefore: "",
-    releasedAfter: "",
-  };
   const [movies, setMovies] = useState<Result[] | undefined>([]);
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
+
+  const initialData: QueryData = {
+    sort: "",
+    fromDate,
+    toDate,
+  };
   const [queryData, setQueryData] = useState<QueryData>(initialData);
 
   useEffect(() => {
@@ -42,7 +52,7 @@ export default function Movies() {
       setMovies(res);
     };
     fetchMovies();
-  }, [queryData]);
+  }, [queryData, fromDate]);
 
   const handleChange = (value: string) => {
     setQueryData((data) => ({
@@ -51,7 +61,45 @@ export default function Movies() {
     }));
   };
 
+  const formatQueryDate = (date: Date) => {
+    const formattedDate = date.toLocaleString("en-CA", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+    return formattedDate;
+  };
+
+  const handleFromDate = (date: Date) => {
+    const format = formatQueryDate(date);
+    setFromDate(format);
+    setQueryData((data) => ({ ...data, fromDate: format }));
+  };
+
+  const handleToDate = (date: Date) => {
+    const format = formatQueryDate(date);
+    setToDate(format);
+    setQueryData((data) => ({ ...data, toDate: format }));
+  };
+
+  const displayFromDate = () => {
+    if (fromDate) {
+      return fromDate;
+    } else {
+      return "Choose Date";
+    }
+  };
+
+  const displayToDate = () => {
+    if (toDate) {
+      return toDate;
+    } else {
+      return "Choose Date";
+    }
+  };
+
   console.log("queryData", queryData);
+  console.log("toDate", toDate);
 
   const sortOptions = [
     { name: "Popularity Descending", value: "popularity.desc" },
@@ -59,7 +107,7 @@ export default function Movies() {
     { name: "Rating Descending", value: "vote_average.desc" },
     { name: "Rating Ascending", value: "vote_average.asc" },
     { name: "Release Date Descending", value: "primary_release_date.desc" },
-    { name: "Release Date Ascending", value: "1" },
+    { name: "Release Date Ascending", value: "primary_release_date.asc" },
     { name: "Title (A-Z)", value: "title.desc" },
     { name: "Title (Z-A)", value: "title.asc" },
   ];
@@ -69,12 +117,7 @@ export default function Movies() {
       <div className="grid grid-cols-4">
         <div className="w-[17rem]">
           <h2 className="text-2xl">Popular Movies</h2>
-          <Accordion
-            type="multiple"
-            collapsible
-            className="w-full"
-            defaultValue="item-3"
-          >
+          <Accordion type="single" className="w-full" defaultValue="item-3">
             <AccordionItem value="item-1">
               <AccordionTrigger>Sort</AccordionTrigger>
               <AccordionContent>
@@ -103,10 +146,53 @@ export default function Movies() {
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-3">
-              <AccordionTrigger>Is it animated?</AccordionTrigger>
-              <AccordionContent>
-                Yes. It&apos;s animated by default, but you can disable it if
-                you prefer.
+              <AccordionTrigger>Filters</AccordionTrigger>
+              <AccordionContent className="flex flex-col gap-2">
+                <p className="text-md">Release Dates</p>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <div className="flex items-center gap-5">
+                      <p className="w-12">From:</p>
+                      <Button
+                        variant="outline"
+                        className="flex items-center justify-between w-full"
+                      >
+                        <p>{displayFromDate()}</p>
+                        <CalendarIcon />
+                      </Button>
+                    </div>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-80">
+                    <Calendar
+                      mode="single"
+                      selected={fromDate}
+                      onSelect={handleFromDate}
+                      className="rounded-md border"
+                    />
+                  </PopoverContent>
+                </Popover>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <div className="flex items-center gap-5">
+                      <p className="w-12">To:</p>
+                      <Button
+                        variant="outline"
+                        className="flex items-center justify-between w-full"
+                      >
+                        <p>{displayToDate()}</p>
+                        <CalendarIcon />
+                      </Button>
+                    </div>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-80">
+                    <Calendar
+                      mode="single"
+                      selected={toDate}
+                      onSelect={handleToDate}
+                      className="rounded-md border"
+                    />
+                  </PopoverContent>
+                </Popover>
               </AccordionContent>
             </AccordionItem>
           </Accordion>

@@ -19,7 +19,6 @@ export const getAllTrending = async (time: string = "day") => {
     );
     const data = await res.json();
     const results = data.results as Result[];
-    console.log(results);
     return results;
   } catch (error: any) {
     console.error(error.message);
