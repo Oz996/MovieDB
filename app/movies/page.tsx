@@ -21,8 +21,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { formatDate, handleDisplayImage } from "@/lib/utils";
-import { getMovies } from "@/services/movies";
-import { Result } from "@/types";
+import { getGenres, getMovies } from "@/services/movies";
+import { Genre, Result } from "@/types";
 import { Calendar as CalendarIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -38,6 +38,8 @@ export default function Movies() {
   const [movies, setMovies] = useState<Result[] | undefined>([]);
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
+  const [genreList, setGenreList] = useState<Genre[] | undefined>([]);
+  const [genres, setGenres] = useState<Genre[] | undefined>([]);
 
   const initialData: QueryData = {
     sort: "",
@@ -53,6 +55,14 @@ export default function Movies() {
     };
     fetchMovies();
   }, [queryData, fromDate]);
+
+  useEffect(() => {
+    const fetchGenres = async () => {
+      const res = await getGenres();
+      setGenreList(res);
+    };
+    fetchGenres();
+  }, []);
 
   const handleChange = (value: string) => {
     setQueryData((data) => ({
@@ -99,7 +109,7 @@ export default function Movies() {
   };
 
   console.log("queryData", queryData);
-  console.log("toDate", toDate);
+  console.log("genres", genreList);
 
   const sortOptions = [
     { name: "Popularity Descending", value: "popularity.desc" },
@@ -193,6 +203,16 @@ export default function Movies() {
                     />
                   </PopoverContent>
                 </Popover>
+                <p className="text-md">Genres</p>
+                <div>
+                  <ul className="flex flex-wrap gap-2 items-center">
+                    {genreList?.map((genre) => (
+                      <li key={genre.id} className="rounded-full border p-2">
+                        {genre.name}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </AccordionContent>
             </AccordionItem>
           </Accordion>

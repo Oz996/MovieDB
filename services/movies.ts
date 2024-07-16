@@ -1,4 +1,4 @@
-import { Image, Movie, Result, Similar, Trailer } from "@/types";
+import { Genre, Image, Movie, Result, Similar, Trailer } from "@/types";
 import { options } from "./all";
 import { QueryData } from "@/app/movies/page";
 
@@ -6,11 +6,26 @@ export const getMovies = async (queryData: QueryData) => {
   const { sort, fromDate, toDate } = queryData;
   try {
     const res = await fetch(
+      //&with_genres=37,28
       `https://api.themoviedb.org/3/discover/movie?sort_by=${sort}&primary_release_date.gte=${fromDate}&primary_release_date.lte=${toDate}`,
       options
     );
     const data = await res.json();
     const results = data.results as Result[];
+    return results;
+  } catch (error: any) {
+    console.error(error.message);
+  }
+};
+
+export const getGenres = async () => {
+  try {
+    const res = await fetch(
+      `https://api.themoviedb.org/3/genre/movie/list`,
+      options
+    );
+    const data = await res.json();
+    const results = data.genres as Genre[];
     return results;
   } catch (error: any) {
     console.error(error.message);
