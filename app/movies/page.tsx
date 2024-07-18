@@ -35,7 +35,8 @@ export interface QueryData {
   fromDate: string;
   toDate: string;
   genres: number[] | undefined;
-  vote_avg: number | null;
+  voteAvgFrom: number | null;
+  voteAvgTo: number | null;
 }
 
 export default function Movies() {
@@ -50,7 +51,8 @@ export default function Movies() {
     fromDate,
     toDate,
     genres,
-    vote_avg: null,
+    voteAvgFrom: null,
+    voteAvgTo: null,
   };
   const [queryData, setQueryData] = useState<QueryData>(initialData);
 
@@ -125,12 +127,15 @@ export default function Movies() {
     setQueryData((data) => ({ ...data, genres: [...genres, id] }));
   };
 
-  const handleUserScore = (value: any) => {
-    setQueryData((data) => ({ ...data, vote_avg: value[0] }));
+  const handleScoreFrom = (value: any) => {
+    setQueryData((data) => ({ ...data, voteAvgFrom: value[0] }));
+  };
+
+  const handleScoreTo = (value: any) => {
+    setQueryData((data) => ({ ...data, voteAvgTo: value[0] }));
   };
 
   console.log("queryData", queryData);
-  console.log("genres", genres);
 
   const sortOptions = [
     { name: "Popularity Descending", value: "popularity.desc" },
@@ -248,14 +253,24 @@ export default function Movies() {
                 </div>
                 <div className="flex flex-col gap-2">
                   <p className="text-md">User Score</p>
+                  <p>From:</p>
                   <Slider
                     defaultValue={[0]}
-                    onValueChange={(value) => handleUserScore(value)}
+                    onValueChange={(value) => handleScoreFrom(value)}
                     max={10}
                     step={1}
                     className=""
                   />
-                  <span>{queryData.vote_avg ?? 0}</span>
+                  <span>{queryData.voteAvgFrom ?? 0}</span>
+                  <p>To:</p>
+                  <Slider
+                    defaultValue={[0]}
+                    onValueChange={(value) => handleScoreTo(value)}
+                    max={10}
+                    step={1}
+                    className=""
+                  />
+                  <span>{queryData.voteAvgTo ?? 0}</span>
                 </div>
               </AccordionContent>
             </AccordionItem>
