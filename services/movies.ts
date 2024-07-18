@@ -6,10 +6,28 @@ export const getMovies = async (queryData: QueryData) => {
   const { sort, fromDate, toDate, genres, voteAvgFrom, voteAvgTo } = queryData;
   const joinedGenres = genres?.join(",");
   try {
-    let query = `https://api.themoviedb.org/3/discover/movie?sort_by=${sort}&primary_release_date.gte=${fromDate}&primary_release_date.lte=${toDate}&with_genres=${joinedGenres}`;
-    if (voteAvgFrom) query += `&vote_average.gte=${voteAvgFrom}`;
-    if (voteAvgTo) query += `&vote_average.lte=${voteAvgTo}`;
-    const res = await fetch(query, options);
+    const url = new URL(
+      "https://api.themoviedb.org/3/discover/movie?include_adult=false"
+    );
+    if (sort) {
+      url.searchParams.append("sort_by", sort);
+    }
+    if (fromDate) {
+      url.searchParams.append("primary_release_date.gte", fromDate);
+    }
+    if (toDate) {
+      url.searchParams.append("primary_release_date.lte", toDate);
+    }
+    if (joinedGenres) {
+      url.searchParams.append("with_genres", joinedGenres);
+    }
+    if (voteAvgFrom) {
+      url.searchParams.append("vote_average.gte", voteAvgFrom.toString());
+    }
+    if (voteAvgTo) {
+      url.searchParams.append("vote_average.lte", voteAvgTo.toString());
+    }
+    const res = await fetch(url.toString(), options);
     const data = await res.json();
     const results = data.results as Result[];
     return results;
