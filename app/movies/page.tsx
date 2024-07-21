@@ -78,14 +78,14 @@ export default function Movies() {
     { name: "French", value: "fr" },
     { name: "Spanish", value: "es" },
     { name: "German", value: "de" },
-    { name: "Japanese", value: "jp" },
+    { name: "Japanese", value: "ja" },
     { name: "Portugese", value: "pt" },
     { name: "Chinese", value: "zh" },
     { name: "Italian", value: "it" },
     { name: "Russian", value: "ru" },
     { name: "Korean", value: "ko" },
     { name: "Turkish", value: "tr" },
-    { name: "Swedish", value: "vs" },
+    { name: "Swedish", value: "sv" },
   ];
 
   const monetizationOptions = [
