@@ -3,8 +3,16 @@ import { options } from "./all";
 import { QueryData } from "@/app/movies/page";
 
 export const getMovies = async (queryData: QueryData) => {
-  const { sort, fromDate, toDate, genres, types, voteAvgFrom, voteAvgTo } =
-    queryData;
+  const {
+    sort,
+    fromDate,
+    toDate,
+    genres,
+    types,
+    voteAvgFrom,
+    voteAvgTo,
+    language,
+  } = queryData;
   const joinedGenres = genres?.join(",");
   const joinedTypes = types?.join(",");
   try {
@@ -20,6 +28,8 @@ export const getMovies = async (queryData: QueryData) => {
     if (voteAvgTo)
       url.searchParams.append("vote_average.lte", voteAvgTo.toString());
     if (joinedTypes) url.searchParams.append("with_release_type", joinedTypes);
+    if (language)
+      url.searchParams.append("with_original_language", language.toString());
 
     const res = await fetch(url.toString(), options);
     const data = await res.json();

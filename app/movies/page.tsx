@@ -39,6 +39,7 @@ export interface QueryData {
   types: number[] | undefined;
   voteAvgFrom: number | null;
   voteAvgTo: number | null;
+  language: string;
 }
 
 export default function Movies() {
@@ -57,8 +58,44 @@ export default function Movies() {
     types,
     voteAvgFrom: null,
     voteAvgTo: null,
+    language: "",
   };
   const [queryData, setQueryData] = useState<QueryData>(initialData);
+
+  const sortOptions = [
+    { name: "Popularity Descending", value: "popularity.desc" },
+    { name: "Popularity Ascending", value: "popularity.asc" },
+    { name: "Rating Descending", value: "vote_average.desc" },
+    { name: "Rating Ascending", value: "vote_average.asc" },
+    { name: "Release Date Descending", value: "primary_release_date.desc" },
+    { name: "Release Date Ascending", value: "primary_release_date.asc" },
+    { name: "Title (A-Z)", value: "title.desc" },
+    { name: "Title (Z-A)", value: "title.asc" },
+  ];
+
+  const releaseTypes = [
+    { name: "Theatrical (limited)", value: 2 },
+    { name: "Theatrical", value: 3 },
+    { name: "Premiere", value: 1 },
+    { name: "Digital", value: 4 },
+    { name: "Physical", value: 5 },
+    { name: "TV", value: 6 },
+  ];
+
+  const languages = [
+    { name: "English", value: "en" },
+    { name: "French", value: "fr" },
+    { name: "Spanish", value: "es" },
+    { name: "German", value: "de" },
+    { name: "Japanese", value: "jp" },
+    { name: "Portugese", value: "pt" },
+    { name: "Chinese", value: "zh" },
+    { name: "Italian", value: "it" },
+    { name: "Russian", value: "ru" },
+    { name: "Korean", value: "ko" },
+    { name: "Turkish", value: "tr" },
+    { name: "Swedish", value: "vs" },
+  ];
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -76,10 +113,17 @@ export default function Movies() {
     fetchGenres();
   }, []);
 
-  const handleChange = (value: string) => {
+  const handleSortChange = (value: string) => {
     setQueryData((data) => ({
       ...data,
       sort: value,
+    }));
+  };
+
+  const handleLangChange = (value: string) => {
+    setQueryData((data) => ({
+      ...data,
+      language: value,
     }));
   };
 
@@ -152,26 +196,6 @@ export default function Movies() {
 
   console.log("queryData", queryData);
 
-  const sortOptions = [
-    { name: "Popularity Descending", value: "popularity.desc" },
-    { name: "Popularity Ascending", value: "popularity.asc" },
-    { name: "Rating Descending", value: "vote_average.desc" },
-    { name: "Rating Ascending", value: "vote_average.asc" },
-    { name: "Release Date Descending", value: "primary_release_date.desc" },
-    { name: "Release Date Ascending", value: "primary_release_date.asc" },
-    { name: "Title (A-Z)", value: "title.desc" },
-    { name: "Title (Z-A)", value: "title.asc" },
-  ];
-
-  const releaseTypes = [
-    { name: "Theatrical (limited)", value: 2 },
-    { name: "Theatrical", value: 3 },
-    { name: "Premiere", value: 1 },
-    { name: "Digital", value: 4 },
-    { name: "Physical", value: 5 },
-    { name: "TV", value: 6 },
-  ];
-
   return (
     <section className="pt-24 container">
       <div className="grid grid-cols-4">
@@ -186,7 +210,7 @@ export default function Movies() {
               <AccordionTrigger>Sort</AccordionTrigger>
               <AccordionContent>
                 <p className="">Sort Results By</p>
-                <Select onValueChange={handleChange}>
+                <Select onValueChange={handleSortChange}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder={sortOptions[0].name} />
                   </SelectTrigger>
@@ -305,6 +329,23 @@ export default function Movies() {
                     className=""
                   />
                   <span>{queryData.voteAvgTo ?? 0}</span>
+                </div>
+                <div>
+                  <p className="text-md">Language</p>
+                  <Select onValueChange={handleLangChange}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder={languages[0].name} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {languages.map((language) => (
+                          <SelectItem value={language.value}>
+                            {language.name}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
                 </div>
               </AccordionContent>
             </AccordionItem>
