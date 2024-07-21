@@ -36,10 +36,10 @@ export interface QueryData {
   fromDate: string;
   toDate: string;
   genres: number[] | undefined;
-  types: number[] | undefined;
   voteAvgFrom: number | null;
   voteAvgTo: number | null;
   language: string;
+  monetizations: string[] | undefined;
 }
 
 export default function Movies() {
@@ -48,17 +48,17 @@ export default function Movies() {
   const [toDate, setToDate] = useState("");
   const [genreList, setGenreList] = useState<Genre[] | undefined>([]);
   const [genres, setGenres] = useState<number[]>([]);
-  const [types, setTypes] = useState<number[]>([]);
+  const [monetizations, setMonetizations] = useState<string[]>([]);
 
   const initialData: QueryData = {
     sort: "",
     fromDate,
     toDate,
     genres,
-    types,
     voteAvgFrom: null,
     voteAvgTo: null,
     language: "",
+    monetizations,
   };
   const [queryData, setQueryData] = useState<QueryData>(initialData);
 
@@ -71,15 +71,6 @@ export default function Movies() {
     { name: "Release Date Ascending", value: "primary_release_date.asc" },
     { name: "Title (A-Z)", value: "title.desc" },
     { name: "Title (Z-A)", value: "title.asc" },
-  ];
-
-  const releaseTypes = [
-    { name: "Theatrical (limited)", value: 2 },
-    { name: "Theatrical", value: 3 },
-    { name: "Premiere", value: 1 },
-    { name: "Digital", value: 4 },
-    { name: "Physical", value: 5 },
-    { name: "TV", value: 6 },
   ];
 
   const languages = [
@@ -95,6 +86,14 @@ export default function Movies() {
     { name: "Korean", value: "ko" },
     { name: "Turkish", value: "tr" },
     { name: "Swedish", value: "vs" },
+  ];
+
+  const monetizationOptions = [
+    { name: "Flatrate", value: "flatrate" },
+    { name: "Free", value: "free" },
+    { name: "Ads", value: "ads" },
+    { name: "Buy", value: "buy" },
+    { name: "Rent", value: "rent" },
   ];
 
   useEffect(() => {
@@ -183,15 +182,18 @@ export default function Movies() {
     setQueryData((data) => ({ ...data, voteAvgTo: value[0] }));
   };
 
-  const handleSelectType = (id: number) => {
-    if (types.includes(id)) {
-      const removedType = types.filter((prevId) => prevId !== id);
-      setTypes(removedType);
-      setQueryData((data) => ({ ...data, types: removedType }));
+  const handleSelectMonetization = (value: string) => {
+    if (monetizations.includes(value)) {
+      const removedMonetization = monetizations.filter((val) => val !== value);
+      setMonetizations(removedMonetization);
+      setQueryData((data) => ({ ...data, monetizations: removedMonetization }));
       return;
     }
-    setTypes((ids) => [...ids, id]);
-    setQueryData((data) => ({ ...data, types: [...types, id] }));
+    setMonetizations((prevVals) => [...prevVals, value]);
+    setQueryData((data) => ({
+      ...data,
+      monetizations: [...monetizations, value],
+    }));
   };
 
   console.log("queryData", queryData);
@@ -229,19 +231,21 @@ export default function Movies() {
             <AccordionItem value="item-2">
               <AccordionTrigger>Filters</AccordionTrigger>
               <AccordionContent className="flex flex-col gap-2">
-                <p className="text-md">Release Types</p>
+                <p className="text-md">Availabilities</p>
                 <div className="space-y-5">
-                  {releaseTypes.map((type) => (
+                  {monetizationOptions.map((option) => (
                     <div className="flex items-center gap-1">
                       <Checkbox
-                        id={type.name}
-                        onCheckedChange={() => handleSelectType(type.value)}
+                        id={option.name}
+                        onCheckedChange={() =>
+                          handleSelectMonetization(option.value)
+                        }
                       />
                       <label
-                        htmlFor={type.name}
+                        htmlFor={option.name}
                         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                       >
-                        {type.name}
+                        {option.name}
                       </label>
                     </div>
                   ))}

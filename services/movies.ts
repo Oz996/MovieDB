@@ -8,13 +8,13 @@ export const getMovies = async (queryData: QueryData) => {
     fromDate,
     toDate,
     genres,
-    types,
     voteAvgFrom,
     voteAvgTo,
     language,
+    monetizations,
   } = queryData;
   const joinedGenres = genres?.join(",");
-  const joinedTypes = types?.join(",");
+  const joinedMonetizations = monetizations?.join("|");
   try {
     const url = new URL(
       "https://api.themoviedb.org/3/discover/movie?include_adult=false&region=US"
@@ -27,9 +27,15 @@ export const getMovies = async (queryData: QueryData) => {
       url.searchParams.append("vote_average.gte", voteAvgFrom.toString());
     if (voteAvgTo)
       url.searchParams.append("vote_average.lte", voteAvgTo.toString());
-    if (joinedTypes) url.searchParams.append("with_release_type", joinedTypes);
     if (language)
       url.searchParams.append("with_original_language", language.toString());
+    if (joinedMonetizations) {
+      url.searchParams.append("watch_region", "US");
+      url.searchParams.append(
+        "with_watch_monetization_types",
+        joinedMonetizations
+      );
+    }
 
     const res = await fetch(url.toString(), options);
     const data = await res.json();
