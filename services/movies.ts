@@ -3,30 +3,24 @@ import { options } from "./all";
 import { QueryData } from "@/app/movies/page";
 
 export const getMovies = async (queryData: QueryData) => {
-  const { sort, fromDate, toDate, genres, voteAvgFrom, voteAvgTo } = queryData;
+  const { sort, fromDate, toDate, genres, types, voteAvgFrom, voteAvgTo } =
+    queryData;
   const joinedGenres = genres?.join(",");
+  const joinedTypes = types?.join(",");
   try {
     const url = new URL(
-      "https://api.themoviedb.org/3/discover/movie?include_adult=false"
+      "https://api.themoviedb.org/3/discover/movie?include_adult=false&region=US"
     );
-    if (sort) {
-      url.searchParams.append("sort_by", sort);
-    }
-    if (fromDate) {
-      url.searchParams.append("primary_release_date.gte", fromDate);
-    }
-    if (toDate) {
-      url.searchParams.append("primary_release_date.lte", toDate);
-    }
-    if (joinedGenres) {
-      url.searchParams.append("with_genres", joinedGenres);
-    }
-    if (voteAvgFrom) {
+    if (sort) url.searchParams.append("sort_by", sort);
+    if (fromDate) url.searchParams.append("primary_release_date.gte", fromDate);
+    if (toDate) url.searchParams.append("primary_release_date.lte", toDate);
+    if (joinedGenres) url.searchParams.append("with_genres", joinedGenres);
+    if (voteAvgFrom)
       url.searchParams.append("vote_average.gte", voteAvgFrom.toString());
-    }
-    if (voteAvgTo) {
+    if (voteAvgTo)
       url.searchParams.append("vote_average.lte", voteAvgTo.toString());
-    }
+    if (joinedTypes) url.searchParams.append("with_release_type", joinedTypes);
+
     const res = await fetch(url.toString(), options);
     const data = await res.json();
     const results = data.results as Result[];

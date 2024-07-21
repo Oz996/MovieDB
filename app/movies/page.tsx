@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Popover,
   PopoverContent,
@@ -35,6 +36,7 @@ export interface QueryData {
   fromDate: string;
   toDate: string;
   genres: number[] | undefined;
+  types: number[] | undefined;
   voteAvgFrom: number | null;
   voteAvgTo: number | null;
 }
@@ -45,12 +47,14 @@ export default function Movies() {
   const [toDate, setToDate] = useState("");
   const [genreList, setGenreList] = useState<Genre[] | undefined>([]);
   const [genres, setGenres] = useState<number[]>([]);
+  const [types, setTypes] = useState<number[]>([]);
 
   const initialData: QueryData = {
     sort: "",
     fromDate,
     toDate,
     genres,
+    types,
     voteAvgFrom: null,
     voteAvgTo: null,
   };
@@ -135,6 +139,17 @@ export default function Movies() {
     setQueryData((data) => ({ ...data, voteAvgTo: value[0] }));
   };
 
+  const handleSelectType = (id: number) => {
+    if (types.includes(id)) {
+      const removedType = types.filter((prevId) => prevId !== id);
+      setTypes(removedType);
+      setQueryData((data) => ({ ...data, types: removedType }));
+      return;
+    }
+    setTypes((ids) => [...ids, id]);
+    setQueryData((data) => ({ ...data, types: [...types, id] }));
+  };
+
   console.log("queryData", queryData);
 
   const sortOptions = [
@@ -148,6 +163,15 @@ export default function Movies() {
     { name: "Title (Z-A)", value: "title.asc" },
   ];
 
+  const releaseTypes = [
+    { name: "Theatrical (limited)", value: 2 },
+    { name: "Theatrical", value: 3 },
+    { name: "Premiere", value: 1 },
+    { name: "Digital", value: 4 },
+    { name: "Physical", value: 5 },
+    { name: "TV", value: 6 },
+  ];
+
   return (
     <section className="pt-24 container">
       <div className="grid grid-cols-4">
@@ -156,7 +180,7 @@ export default function Movies() {
           <Accordion
             type="multiple"
             className="w-full"
-            defaultValue={["item-3"]}
+            defaultValue={["item-2"]}
           >
             <AccordionItem value="item-1">
               <AccordionTrigger>Sort</AccordionTrigger>
@@ -179,15 +203,25 @@ export default function Movies() {
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-2">
-              <AccordionTrigger>Is it styled?</AccordionTrigger>
-              <AccordionContent>
-                Yes. It comes with default styles that matches the other
-                components&apos; aesthetic.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-3">
               <AccordionTrigger>Filters</AccordionTrigger>
               <AccordionContent className="flex flex-col gap-2">
+                <p className="text-md">Release Types</p>
+                <div className="space-y-5">
+                  {releaseTypes.map((type) => (
+                    <div className="flex items-center gap-1">
+                      <Checkbox
+                        id={type.name}
+                        onCheckedChange={() => handleSelectType(type.value)}
+                      />
+                      <label
+                        htmlFor={type.name}
+                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                      >
+                        {type.name}
+                      </label>
+                    </div>
+                  ))}
+                </div>
                 <p className="text-md">Release Dates</p>
                 <Popover>
                   <PopoverTrigger asChild>
