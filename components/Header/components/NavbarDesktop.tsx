@@ -33,7 +33,7 @@ export default function NavbarDesktop() {
                 </li>
                 <li className="dropdown-list-item">
                   <NavigationMenuLink asChild>
-                    <Link href="/">Upcoming</Link>
+                    <Link href="/movies/upcoming">Upcoming</Link>
                   </NavigationMenuLink>
                 </li>
                 <li className="dropdown-list-item">

@@ -43,18 +43,16 @@ export interface QueryData {
   monetizations: string[] | undefined;
 }
 
-export default function Movies({ params }) {
+export default function Movies({ params }: { params: { movies: string[] } }) {
   const [movies, setMovies] = useState<Result[] | undefined>([]);
-  const [fromDate, setFromDate] = useState("");
-  const [toDate, setToDate] = useState("");
   const [genreList, setGenreList] = useState<Genre[] | undefined>([]);
   const [genres, setGenres] = useState<number[]>([]);
   const [monetizations, setMonetizations] = useState<string[]>([]);
 
   const initialData: QueryData = {
     sort: "popularity.desc",
-    fromDate,
-    toDate,
+    fromDate: "",
+    toDate: "",
     genres,
     voteAvgFrom: null,
     voteAvgTo: null,
@@ -103,7 +101,16 @@ export default function Movies({ params }) {
   const userVoteNumbers = [0, 100, 200, 300, 400, 500];
 
   const topRatedPage = params.movies.includes("top-rated");
-  const { voteAvgFrom, voteAvgTo, userVotes, sort, language } = queryData;
+  const upcomingPage = params.movies.includes("upcoming");
+  const {
+    fromDate,
+    toDate,
+    voteAvgFrom,
+    voteAvgTo,
+    userVotes,
+    sort,
+    language,
+  } = queryData;
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -111,7 +118,7 @@ export default function Movies({ params }) {
       setMovies(res);
     };
     fetchMovies();
-  }, [queryData, fromDate]);
+  }, [queryData]);
 
   useEffect(() => {
     if (topRatedPage) {
@@ -120,6 +127,13 @@ export default function Movies({ params }) {
         sort: "vote_average.desc",
         userVotes: 300,
       }));
+    } else if (upcomingPage) {
+      const date = new Date();
+      const todaysDate = formatQueryDate(date);
+      const toDate = new Date(date);
+      toDate.setMonth(toDate.getMonth() + 1);
+      const untilDate = formatQueryDate(toDate);
+      setQueryData((data) => ({ ...data, fromDate: todaysDate }));
     }
   }, [params]);
 
@@ -156,13 +170,11 @@ export default function Movies({ params }) {
 
   const handleFromDate = (date: Date) => {
     const format = formatQueryDate(date);
-    setFromDate(format);
     setQueryData((data) => ({ ...data, fromDate: format }));
   };
 
   const handleToDate = (date: Date) => {
     const format = formatQueryDate(date);
-    setToDate(format);
     setQueryData((data) => ({ ...data, toDate: format }));
   };
 
@@ -185,6 +197,8 @@ export default function Movies({ params }) {
   const displayHeading = () => {
     if (topRatedPage) {
       return "Top Rated Movies";
+    } else if (upcomingPage) {
+      return "Upcoming Movies";
     } else {
       return "Popular Movies";
     }
