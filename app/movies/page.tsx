@@ -98,6 +98,10 @@ export default function Movies() {
     { name: "Rent", value: "rent" },
   ];
 
+  const voteNumbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+  const userVoteNumbers = [0, 100, 200, 300, 400, 500];
+
   useEffect(() => {
     const fetchMovies = async () => {
       const res = await getMovies(queryData);
@@ -329,7 +333,18 @@ export default function Movies() {
                     step={1}
                     className=""
                   />
-                  <span>{queryData.voteAvgFrom ?? 0}</span>
+                  <div className="flex justify-between">
+                    {voteNumbers.map((num) => (
+                      <span
+                        key={num}
+                        className={classNames({
+                          "text-blue-600": queryData.voteAvgFrom === num,
+                        })}
+                      >
+                        {num}
+                      </span>
+                    ))}
+                  </div>
                   <p>To:</p>
                   <Slider
                     defaultValue={[0]}
@@ -338,7 +353,18 @@ export default function Movies() {
                     step={1}
                     className=""
                   />
-                  <span>{queryData.voteAvgTo ?? 0}</span>
+                  <div className="flex justify-between">
+                    {voteNumbers.map((num) => (
+                      <span
+                        key={num}
+                        className={classNames({
+                          "text-blue-600": queryData.voteAvgTo === num,
+                        })}
+                      >
+                        {num}
+                      </span>
+                    ))}
+                  </div>
                 </div>
                 <p>Minimum User Votes</p>
                 <Slider
@@ -348,7 +374,18 @@ export default function Movies() {
                   step={100}
                   className=""
                 />
-                <span>{queryData.userVotes ?? 0}</span>
+                <div className="flex justify-between">
+                  {userVoteNumbers.map((num) => (
+                    <span
+                      key={num}
+                      className={classNames({
+                        "text-blue-600": queryData.userVotes === num,
+                      })}
+                    >
+                      {num}
+                    </span>
+                  ))}
+                </div>
                 <div>
                   <p className="text-md">Language</p>
                   <Select onValueChange={handleLangChange}>
