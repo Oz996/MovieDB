@@ -130,7 +130,11 @@ export default function Searchbar() {
         )}
       </AnimatePresence>
       {showInput && !searchPage && (
-        <SearchList isLoading={isLoading} searchList={searchList} />
+        <SearchList
+          isLoading={isLoading}
+          searchList={searchList}
+          setShowInput={setShowInput}
+        />
       )}
     </div>
   );

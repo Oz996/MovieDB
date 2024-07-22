@@ -1,17 +1,20 @@
-import { Skeleton } from "@/components/ui/skeleton";
 import { Result } from "@/types";
-import classNames from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
 import { TrendingUp } from "lucide-react";
-import Image from "next/image";
 import SearchListCard from "./components/SearchListCard";
+import { Dispatch, SetStateAction } from "react";
 
 interface props {
   isLoading: boolean;
   searchList: Result[] | undefined;
+  setShowInput: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function SearchList({ searchList, isLoading }: props) {
+export default function SearchList({
+  searchList,
+  isLoading,
+  setShowInput,
+}: props) {
   console.log("isloading", isLoading);
   return (
     <AnimatePresence>
@@ -44,6 +47,7 @@ export default function SearchList({ searchList, isLoading }: props) {
               item={item}
               index={index}
               isLoading={isLoading}
+              setShowInput={setShowInput}
             />
           ))}
         </motion.ul>
