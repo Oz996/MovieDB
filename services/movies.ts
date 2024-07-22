@@ -10,6 +10,7 @@ export const getMovies = async (queryData: QueryData) => {
     genres,
     voteAvgFrom,
     voteAvgTo,
+    userVotes,
     language,
     monetizations,
   } = queryData;
@@ -36,6 +37,8 @@ export const getMovies = async (queryData: QueryData) => {
         joinedMonetizations
       );
     }
+    if (userVotes)
+      url.searchParams.append("vote_count.gte", userVotes.toString());
 
     const res = await fetch(url.toString(), options);
     const data = await res.json();

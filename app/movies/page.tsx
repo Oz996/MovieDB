@@ -38,6 +38,7 @@ export interface QueryData {
   genres: number[] | undefined;
   voteAvgFrom: number | null;
   voteAvgTo: number | null;
+  userVotes: number | null;
   language: string;
   monetizations: string[] | undefined;
 }
@@ -57,6 +58,7 @@ export default function Movies() {
     genres,
     voteAvgFrom: null,
     voteAvgTo: null,
+    userVotes: null,
     language: "",
     monetizations,
   };
@@ -180,6 +182,10 @@ export default function Movies() {
 
   const handleScoreTo = (value: any) => {
     setQueryData((data) => ({ ...data, voteAvgTo: value[0] }));
+  };
+
+  const handleUserScore = (value: any) => {
+    setQueryData((data) => ({ ...data, userVotes: value[0] }));
   };
 
   const handleSelectMonetization = (value: string) => {
@@ -334,6 +340,15 @@ export default function Movies() {
                   />
                   <span>{queryData.voteAvgTo ?? 0}</span>
                 </div>
+                <p>Minimum User Votes</p>
+                <Slider
+                  defaultValue={[0]}
+                  onValueChange={(value) => handleUserScore(value)}
+                  max={500}
+                  step={100}
+                  className=""
+                />
+                <span>{queryData.userVotes ?? 0}</span>
                 <div>
                   <p className="text-md">Language</p>
                   <Select onValueChange={handleLangChange}>
