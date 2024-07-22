@@ -43,7 +43,7 @@ export interface QueryData {
   monetizations: string[] | undefined;
 }
 
-export default function Movies() {
+export default function Movies({ params }) {
   const [movies, setMovies] = useState<Result[] | undefined>([]);
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
@@ -52,14 +52,14 @@ export default function Movies() {
   const [monetizations, setMonetizations] = useState<string[]>([]);
 
   const initialData: QueryData = {
-    sort: "",
+    sort: "popularity.desc",
     fromDate,
     toDate,
     genres,
     voteAvgFrom: null,
     voteAvgTo: null,
     userVotes: null,
-    language: "",
+    language: "en",
     monetizations,
   };
   const [queryData, setQueryData] = useState<QueryData>(initialData);
@@ -98,9 +98,12 @@ export default function Movies() {
     { name: "Rent", value: "rent" },
   ];
 
+  console.log("params", params);
   const voteNumbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
   const userVoteNumbers = [0, 100, 200, 300, 400, 500];
+
+  const topRatedPage = params.movies.includes("top-rated");
+  const { voteAvgFrom, voteAvgTo, userVotes, sort, language } = queryData;
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -109,6 +112,16 @@ export default function Movies() {
     };
     fetchMovies();
   }, [queryData, fromDate]);
+
+  useEffect(() => {
+    if (topRatedPage) {
+      setQueryData((data) => ({
+        ...data,
+        sort: "vote_average.desc",
+        userVotes: 300,
+      }));
+    }
+  }, [params]);
 
   useEffect(() => {
     const fetchGenres = async () => {
@@ -169,6 +182,14 @@ export default function Movies() {
     }
   };
 
+  const displayHeading = () => {
+    if (topRatedPage) {
+      return "Top Rated Movies";
+    } else {
+      return "Popular Movies";
+    }
+  };
+
   const handleSelectGenre = (id: number) => {
     if (genres.includes(id)) {
       const removedGenre = genres.filter((prevId) => prevId !== id);
@@ -212,7 +233,7 @@ export default function Movies() {
     <section className="pt-24 container">
       <div className="grid grid-cols-4">
         <div className="w-[17rem] border shadow-lg rounded-lg p-5">
-          <h2 className="text-2xl">Popular Movies</h2>
+          <h2 className="text-2xl">{displayHeading()}</h2>
           <Accordion
             type="multiple"
             className="w-full"
@@ -222,9 +243,9 @@ export default function Movies() {
               <AccordionTrigger>Sort</AccordionTrigger>
               <AccordionContent>
                 <p className="">Sort Results By</p>
-                <Select onValueChange={handleSortChange}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder={sortOptions[0].name} />
+                <Select value={sort} onValueChange={handleSortChange}>
+                  <SelectTrigger>
+                    <SelectValue placeholder={sort} />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
@@ -327,7 +348,7 @@ export default function Movies() {
                   <p className="text-md">User Score</p>
                   <p>From:</p>
                   <Slider
-                    defaultValue={[0]}
+                    value={[voteAvgFrom!]}
                     onValueChange={(value) => handleScoreFrom(value)}
                     max={10}
                     step={1}
@@ -338,7 +359,7 @@ export default function Movies() {
                       <span
                         key={num}
                         className={classNames({
-                          "text-blue-600": queryData.voteAvgFrom === num,
+                          "text-blue-600": voteAvgFrom === num,
                         })}
                       >
                         {num}
@@ -347,7 +368,7 @@ export default function Movies() {
                   </div>
                   <p>To:</p>
                   <Slider
-                    defaultValue={[0]}
+                    value={[voteAvgTo!]}
                     onValueChange={(value) => handleScoreTo(value)}
                     max={10}
                     step={1}
@@ -358,7 +379,7 @@ export default function Movies() {
                       <span
                         key={num}
                         className={classNames({
-                          "text-blue-600": queryData.voteAvgTo === num,
+                          "text-blue-600": voteAvgTo === num,
                         })}
                       >
                         {num}
@@ -368,7 +389,7 @@ export default function Movies() {
                 </div>
                 <p>Minimum User Votes</p>
                 <Slider
-                  defaultValue={[0]}
+                  value={[userVotes!]}
                   onValueChange={(value) => handleUserScore(value)}
                   max={500}
                   step={100}
@@ -379,7 +400,7 @@ export default function Movies() {
                     <span
                       key={num}
                       className={classNames({
-                        "text-blue-600": queryData.userVotes === num,
+                        "text-blue-600": userVotes === num,
                       })}
                     >
                       {num}
@@ -388,9 +409,9 @@ export default function Movies() {
                 </div>
                 <div>
                   <p className="text-md">Language</p>
-                  <Select onValueChange={handleLangChange}>
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder={languages[0].name} />
+                  <Select value={language} onValueChange={handleLangChange}>
+                    <SelectTrigger>
+                      <SelectValue placeholder={language} />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>

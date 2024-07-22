@@ -38,7 +38,7 @@ export default function NavbarDesktop() {
                 </li>
                 <li className="dropdown-list-item">
                   <NavigationMenuLink asChild>
-                    <Link href="/">Top Rated</Link>
+                    <Link href="/movies/top-rated">Top Rated</Link>
                   </NavigationMenuLink>
                 </li>
               </ul>
