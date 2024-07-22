@@ -153,7 +153,7 @@ export default function Banner({
   if (isLoading) return <BannerLoader />;
 
   return (
-    <section className="pt-24">
+    <section className="pt-16">
       {/* backdrop image */}
       <div
         style={{

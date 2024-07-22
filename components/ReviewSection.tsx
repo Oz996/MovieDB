@@ -51,7 +51,7 @@ export default function ReviewSection({ movie, tvShow }: props) {
               </div>
               <div className="flex flex-col">
                 <h2 className="font-bold text-lg">A review by {username}</h2>
-                <div className="flex gap-2 text-sm">
+                <div className="flex gap-2 text-sm max-md:items-start">
                   {rating && (
                     <div className="bg-slate-800 text-white px-3 flex gap-1 items-center rounded-lg">
                       <FaStar size={10} /> <p>{rating}%</p>
