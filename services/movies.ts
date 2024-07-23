@@ -1,6 +1,6 @@
 import { Genre, Image, Movie, Result, Similar, Trailer } from "@/types";
 import { options } from "./all";
-import { QueryData } from "@/app/[...movies]/page";
+import { QueryData } from "@/app/movies/page";
 
 export const getMovies = async (queryData: QueryData) => {
   const {

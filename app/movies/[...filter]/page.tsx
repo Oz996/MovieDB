@@ -20,9 +20,8 @@ export interface QueryData {
   monetizations: string[] | undefined;
 }
 
-export default function Movies({ params }: { params: { movies: string[] } }) {
+export default function Movies({ params }: { params: { filters: string[] } }) {
   const [movies, setMovies] = useState<Result[] | undefined>([]);
-
   const initialData: QueryData = {
     sort: "popularity.desc",
     fromDate: "",
