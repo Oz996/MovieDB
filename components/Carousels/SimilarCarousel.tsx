@@ -33,8 +33,6 @@ export default function SimilarCarousel({ id, type }: props) {
     rootMargin: "0px",
   });
 
-  console.log("similar", similar);
-
   useEffect(() => {
     if (similarEntry?.isIntersecting && similar?.length === 0) {
       const fetchSimilar = async () => {

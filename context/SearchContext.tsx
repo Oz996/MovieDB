@@ -43,7 +43,6 @@ export const SearchContextProvider = ({
 
   useEffect(() => {
     const hasValue = Object.values(cached).some((value) => value > 0);
-    console.log("hasValue", hasValue);
     if (hasValue) {
       sessionStorage.setItem("cached", JSON.stringify(cached));
     }

@@ -38,7 +38,6 @@ export default function MediaCarousel({ id, videos, type, setVideos }: props) {
     rootMargin: "0px",
   });
 
-  console.log("media", mediaEntry);
   useEffect(() => {
     if (mediaEntry?.isIntersecting) {
       fetchVideos();

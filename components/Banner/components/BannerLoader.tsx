@@ -25,8 +25,8 @@ export default function BannerLoader() {
               <Skeleton className="w-[50rem] h-[5.5rem]" />
 
               <ul className="grid grid-cols-3 pt-5">
-                {new Array(3).fill(0)?.map((_, i) => (
-                  <li key={i}>
+                {new Array(3).fill(0)?.map((_, index) => (
+                  <li key={index}>
                     <Skeleton className="w-[10rem] h-6" />
                     <Skeleton className="w-[7rem] h-6 mt-2" />
                   </li>

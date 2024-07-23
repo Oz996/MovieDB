@@ -3,7 +3,7 @@ import Banner from "@/components/Banner/Banner";
 import MediaCarousel from "@/components/Carousels/MediaCarousel";
 import PersonCarousel from "@/components/Carousels/PersonCarousel";
 import SimilarCarousel from "@/components/Carousels/SimilarCarousel";
-import ReviewSection from "@/components/ReviewSection";
+import ReviewSection from "@/components/ReviewSection/ReviewSection";
 import SideContent from "@/components/SideContent";
 import { getTvShowDetails } from "@/services/tvShows";
 import { Trailer, TvShow } from "@/types";

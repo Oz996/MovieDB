@@ -6,9 +6,9 @@ import Banner from "@/components/Banner/Banner";
 import PersonCarousel from "@/components/Carousels/PersonCarousel";
 import SideContent from "@/components/SideContent";
 import "react-circular-progressbar/dist/styles.css";
-import ReviewSection from "@/components/ReviewSection";
 import MediaCarousel from "@/components/Carousels/MediaCarousel";
 import SimilarCarousel from "@/components/Carousels/SimilarCarousel";
+import ReviewSection from "@/components/ReviewSection/ReviewSection";
 
 export default function Movie({ params }: { params: { id: string } }) {
   const [isLoading, setIsLoading] = useState(true);

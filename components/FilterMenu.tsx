@@ -179,12 +179,16 @@ export default function FilterMenu({
   };
 
   const displayHeading = () => {
-    if (topRatedPage) {
+    if (moviesPage && topRatedPage) {
       return "Top Rated Movies";
-    } else if (upcomingPage) {
+    } else if (moviesPage && upcomingPage) {
       return "Upcoming Movies";
-    } else {
+    } else if (moviesPage) {
       return "Popular Movies";
+    } else if (topRatedPage) {
+      return "Top Rated TV Shows";
+    } else {
+      return "Popular TV Shows";
     }
   };
 

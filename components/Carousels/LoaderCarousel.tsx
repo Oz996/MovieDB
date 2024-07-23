@@ -11,9 +11,9 @@ export default function LoaderCarousel() {
   return (
     <Carousel className="pt-20 container">
       <CarouselContent className="-ml-1">
-        {new Array(20).fill(0).map((_, i) => (
+        {new Array(20).fill(0).map((_, index) => (
           <CarouselItem
-            key={i}
+            key={index}
             className="pl-1 basis-1/1 sm:basis-1/3 md:basis-1/3 lg:basis-1/6"
           >
             <div className="p-1">
