@@ -45,7 +45,7 @@ export default function NavbarDesktop() {
               <ul className="flex flex-col w-[14rem]">
                 <li className="dropdown-list-item">
                   <NavigationMenuLink asChild>
-                    <Link href="/">Popular</Link>
+                    <Link href="/shows/popular">Popular</Link>
                   </NavigationMenuLink>
                 </li>
                 <li className="dropdown-list-item">
@@ -60,7 +60,7 @@ export default function NavbarDesktop() {
                 </li>
                 <li className="dropdown-list-item">
                   <NavigationMenuLink asChild>
-                    <Link href="/">Top Rated</Link>
+                    <Link href="/shows/top-rated">Top Rated</Link>
                   </NavigationMenuLink>
                 </li>
               </ul>

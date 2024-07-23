@@ -1,14 +1,14 @@
 "use client";
 import FilterMenu from "@/components/FilterMenu";
 import { formatDate, handleDisplayImage } from "@/lib/utils";
-import { getMovies } from "@/services/movies";
+import { getTvShows } from "@/services/tvShows";
 import { QueryData, Result } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-export default function Movies({ params }: { params: { filter: string[] } }) {
-  const [movies, setMovies] = useState<Result[] | undefined>([]);
+export default function Shows({ params }: { params: { filter: string[] } }) {
+  const [tvShows, setTvShows] = useState<Result[] | undefined>([]);
   const initialData: QueryData = {
     sort: "popularity.desc",
     fromDate: "",
@@ -24,34 +24,32 @@ export default function Movies({ params }: { params: { filter: string[] } }) {
 
   useEffect(() => {
     const fetchMovies = async () => {
-      const res = await getMovies(queryData);
-      setMovies(res);
+      const res = await getTvShows(queryData);
+      setTvShows(res);
     };
     fetchMovies();
   }, [queryData]);
-
-  console.log("queryData", queryData);
 
   return (
     <section className="pt-24 container">
       <div className="grid grid-cols-4">
         <FilterMenu
-          type="movie"
+          type="tv"
           params={params}
           queryData={queryData}
           setQueryData={setQueryData}
         />
         <div className="grid grid-cols-4 gap-y-8 col-span-3">
-          {movies?.map((movie) => {
+          {tvShows?.map((show) => {
             return (
               <Link
-                key={movie.id}
-                href={`http://localhost:3000/movie/${movie.id}`}
+                key={show.id}
+                href={`http://localhost:3000/tv/${show.id}`}
                 className="border rounded-lg shadow-md w-[11rem]"
               >
                 <Image
                   className="rounded-t-lg"
-                  src={handleDisplayImage("w342", movie.poster_path!)}
+                  src={handleDisplayImage("w342", show.poster_path!)}
                   width={180}
                   height={180}
                   alt=""
@@ -59,10 +57,10 @@ export default function Movies({ params }: { params: { filter: string[] } }) {
 
                 <div className="flex flex-col gap-1 p-2">
                   <p className="font-semibold max-w-[10rem] line-clamp-2">
-                    {movie.title}
+                    {show.title}
                   </p>
                   <p className="text-gray-500">
-                    {formatDate(movie.release_date!)}
+                    {formatDate(show.first_air_date!)}
                   </p>
                 </div>
               </Link>

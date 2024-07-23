@@ -21,23 +21,31 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
-import { getGenres } from "@/services/movies";
-import { Genre } from "@/types";
+import { getMovieGenres } from "@/services/movies";
+import { getTvShowGenres } from "@/services/tvShows";
+import { Genre, QueryData } from "@/types";
 import classNames from "classnames";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { QueryData } from "../page";
 
 interface props {
+  type: "movie" | "tv";
   params: { filter: string[] };
   queryData: QueryData;
   setQueryData: Dispatch<SetStateAction<QueryData>>;
 }
 
-export default function FilterMenu({ params, queryData, setQueryData }: props) {
+export default function FilterMenu({
+  type,
+  params,
+  queryData,
+  setQueryData,
+}: props) {
   const [genreList, setGenreList] = useState<Genre[] | undefined>([]);
   const [genres, setGenres] = useState<number[]>([]);
   const [monetizations, setMonetizations] = useState<string[]>([]);
+
+  console.log("list", genreList);
 
   const sortOptions = [
     { name: "Popularity Descending", value: "popularity.desc" },
@@ -78,6 +86,8 @@ export default function FilterMenu({ params, queryData, setQueryData }: props) {
 
   const topRatedPage = params.filter.includes("top-rated");
   const upcomingPage = params.filter.includes("upcoming");
+  const moviesPage = type === "movie";
+
   const {
     fromDate,
     toDate,
@@ -108,8 +118,13 @@ export default function FilterMenu({ params, queryData, setQueryData }: props) {
 
   useEffect(() => {
     const fetchGenres = async () => {
-      const res = await getGenres();
-      setGenreList(res);
+      if (moviesPage) {
+        const res = await getMovieGenres();
+        setGenreList(res);
+      } else {
+        const res = await getTvShowGenres();
+        setGenreList(res);
+      }
     };
     fetchGenres();
   }, []);

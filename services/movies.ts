@@ -1,6 +1,13 @@
-import { Genre, Image, Movie, Result, Similar, Trailer } from "@/types";
+import {
+  Genre,
+  Image,
+  Movie,
+  QueryData,
+  Result,
+  Similar,
+  Trailer,
+} from "@/types";
 import { options } from "./all";
-import { QueryData } from "@/app/movies/page";
 
 export const getMovies = async (queryData: QueryData) => {
   const {
@@ -14,6 +21,7 @@ export const getMovies = async (queryData: QueryData) => {
     language,
     monetizations,
   } = queryData;
+
   const joinedGenres = genres?.join(",");
   const joinedMonetizations = monetizations?.join("|");
   try {
@@ -49,7 +57,7 @@ export const getMovies = async (queryData: QueryData) => {
   }
 };
 
-export const getGenres = async () => {
+export const getMovieGenres = async () => {
   try {
     const res = await fetch(
       `https://api.themoviedb.org/3/genre/movie/list`,

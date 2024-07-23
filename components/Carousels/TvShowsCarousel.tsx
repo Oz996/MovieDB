@@ -17,7 +17,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { useIntersectionObserver, useMediaQuery } from "@uidotdev/usehooks";
-import { getTvShows } from "@/services/tvShows";
+import { getTvShowsDiscover } from "@/services/tvShows";
 import LoaderCarousel from "./LoaderCarousel";
 import CarouselCard from "./CarouselCard";
 export default function TvShowsCarousel() {
@@ -44,7 +44,7 @@ export default function TvShowsCarousel() {
       setIsLoading(true);
       try {
         const fetchShows = async () => {
-          const data = await getTvShows(showsType);
+          const data = await getTvShowsDiscover(showsType);
           setShows(data);
         };
         fetchShows();
