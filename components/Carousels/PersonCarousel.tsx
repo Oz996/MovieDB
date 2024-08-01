@@ -37,7 +37,7 @@ export default function PersonCarousel({ movie, tvShow, isLoading }: props) {
               >
                 <motion.div>
                   <div className="space-y-5 border flex flex-col items-center w-[8.95rem] rounded-lg pb-2">
-                    <Link href={""}>
+                    <Link href={`/person/${person.id}`}>
                       <Image
                         className="rounded-t-lg"
                         src={handleDisplayImage(

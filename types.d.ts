@@ -22,6 +22,28 @@ export interface Result {
   known_for: Overview[];
 }
 
+export interface Person {
+  adult: boolean;
+  also_known_as: string[];
+  biography: string;
+  birthday: string | null;
+  deathday: string | null;
+  gender: number;
+  homepage: string | null;
+  id: number;
+  imdb_id: string;
+  known_for_department: string;
+  name: string;
+  place_of_birth: string;
+  popularity: number;
+  profile_path: string;
+  external_ids: ExternalLinks;
+  combined_credits: {
+    cast: Cast[];
+    crew: Crew[];
+  };
+}
+
 export interface ResultObject {
   page: number;
   results: Result[];

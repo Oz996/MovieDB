@@ -20,6 +20,8 @@ export default function ReviewCard({ review }: props) {
     : null;
   const image = review?.author_details?.avatar_path;
 
+  const longReview = review?.content.length > 677;
+
   const handleExpandCard = () => {
     setExpanded(true);
   };
@@ -72,7 +74,7 @@ export default function ReviewCard({ review }: props) {
         ) : (
           <>
             <p className="line-clamp-5">{review?.content}</p>
-            {review?.content.length > 677 && (
+            {longReview && (
               <Button
                 onClick={handleExpandCard}
                 className="bg-transparent border-none p-0 hover:bg-transparent text-black"

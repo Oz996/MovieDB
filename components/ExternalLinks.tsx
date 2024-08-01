@@ -5,15 +5,16 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Movie, TvShow } from "@/types";
+import { Movie, Person, TvShow } from "@/types";
 
 interface props {
   movie?: Movie | null;
   tvShow?: TvShow | null;
+  person?: Person | null;
 }
 
-export default function ExternalLinks({ movie, tvShow }: props) {
-  const item = movie || tvShow;
+export default function ExternalLinks({ movie, tvShow, person }: props) {
+  const item = movie || tvShow || person;
   return (
     <div className="flex gap-5">
       {item?.external_ids?.facebook_id && (
@@ -67,19 +68,24 @@ export default function ExternalLinks({ movie, tvShow }: props) {
           </Tooltip>
         </TooltipProvider>
       )}
-
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <a href={item?.homepage} target="_blank" className="border-l pl-4">
-              <FaLink size={23} />
-            </a>
-          </TooltipTrigger>
-          <TooltipContent className="bg-black text-white border-none">
-            <p className="text-lg">Visit Homepage</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+      {item?.homepage && (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <a
+                href={item?.homepage}
+                target="_blank"
+                className="border-l pl-4"
+              >
+                <FaLink size={23} />
+              </a>
+            </TooltipTrigger>
+            <TooltipContent className="bg-black text-white border-none">
+              <p className="text-lg">Visit Homepage</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      )}
     </div>
   );
 }
