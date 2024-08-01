@@ -72,13 +72,15 @@ export default function ReviewCard({ review }: props) {
         ) : (
           <>
             <p className="line-clamp-5">{review?.content}</p>
-            <Button
-              onClick={handleExpandCard}
-              className="bg-transparent border-none p-0 hover:bg-transparent text-black"
-            >
-              Show More
-              <ChevronDown size={20} />
-            </Button>
+            {review?.content.length > 677 && (
+              <Button
+                onClick={handleExpandCard}
+                className="bg-transparent border-none p-0 hover:bg-transparent text-black"
+              >
+                Show More
+                <ChevronDown size={20} />
+              </Button>
+            )}
           </>
         )}
       </CardContent>

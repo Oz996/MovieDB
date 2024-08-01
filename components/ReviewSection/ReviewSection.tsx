@@ -44,15 +44,11 @@ export default function ReviewSection({ movie, tvShow }: props) {
   };
 
   const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage((current) => current + 1);
-    }
+    setCurrentPage((current) => current + 1);
   };
 
   const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage((current) => current - 1);
-    }
+    setCurrentPage((current) => current - 1);
   };
 
   const handleClickPage = (page: number) => {
