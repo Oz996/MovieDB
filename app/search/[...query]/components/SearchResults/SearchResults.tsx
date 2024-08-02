@@ -82,7 +82,11 @@ export default function SearchResults({
             </Link>
             <div className="flex flex-col justify-center gap-4 px-1">
               <div className="w-full">
-                <Link href="">
+                <Link
+                  href={`http://localhost:3000/${
+                    item.media_type || handleNavigation()
+                  }/${item.id}`}
+                >
                   <h2 className="text-lg font-semibold">{title}</h2>
                 </Link>
                 <span className="text-gray-500">{date}</span>
