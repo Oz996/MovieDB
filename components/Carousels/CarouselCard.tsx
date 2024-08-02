@@ -24,7 +24,7 @@ export default function CarouselCard({ item, type }: props) {
         href={`http://localhost:3000/${item.media_type ?? type}/${item.id}`}
       >
         <motion.div
-          className="p-1"
+          className="p-1 flex items-center justify-center"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 1 }}

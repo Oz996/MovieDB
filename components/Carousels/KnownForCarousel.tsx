@@ -51,7 +51,7 @@ export default function KnownForCarousel({ person }: props) {
             return (
               <CarouselItem
                 key={item.id}
-                className="pl-1 basis-1/1 sm:basis-1/3 md:basis-1/3 lg:basis-1/6"
+                className="pl-5 basis-1/1 sm:basis-1/3 md:basis-1/3 lg:basis-1/6"
               >
                 <Link
                   href={`/${item.media_type}/${item.id}`}
@@ -70,7 +70,7 @@ export default function KnownForCarousel({ person }: props) {
             );
           })}
         </CarouselContent>
-        <CarouselPrevious />
+        <CarouselPrevious className="ml-3" />
         <CarouselNext className="max-md:mr-5" />
       </Carousel>
     </section>

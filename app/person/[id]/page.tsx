@@ -1,7 +1,7 @@
 "use client";
 import KnownForCarousel from "@/components/Carousels/KnownForCarousel";
 import ExternalLinks from "@/components/ExternalLinks";
-import { formatDate } from "@/lib/utils";
+import { formatDate, handleDisplayImage } from "@/lib/utils";
 import { getPersonDetails } from "@/services/person";
 import { Person as IPerson } from "@/types";
 import { useMediaQuery } from "@uidotdev/usehooks";
@@ -46,21 +46,13 @@ export default function Person({ params }: { params: { id: string } }) {
     }
   };
 
-  const handleDisplayImage = () => {
-    if (person?.profile_path) {
-      return `https://image.tmdb.org/t/p/w1280/${person?.profile_path}`;
-    } else {
-      return "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png";
-    }
-  };
-
   return (
     <section className="pt-24 grid grid-cols-4 container">
       <div className="col-span-1">
         <Image
           width={imageSize()}
           height={imageSize()}
-          src={handleDisplayImage()}
+          src={handleDisplayImage("w1280", person?.profile_path!)}
           alt={`Image of ${person?.name}`}
           className="z-20 lg:rounded-lg max-sm:object-cover max-sm:w-full max-md:self-center"
         />
