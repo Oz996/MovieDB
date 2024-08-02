@@ -2,15 +2,17 @@
 import KnownForCarousel from "./components/KnownForCarousel";
 import { handleDisplayImage } from "@/lib/utils";
 import { getPersonDetails } from "@/services/person";
-import { Person as IPerson } from "@/types";
+import { Cast, Crew, Person as IPerson } from "@/types";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import PersonLoader from "./components/PersonLoader";
 import SideContent from "./components/SideContent";
+import Link from "next/link";
 
 export default function Person({ params }: { params: { id: string } }) {
   const [person, setPerson] = useState<IPerson | null>(null);
+  const [credits, setCredits] = useState<Cast[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -28,7 +30,33 @@ export default function Person({ params }: { params: { id: string } }) {
     fetchPersonDetails();
   }, [params.id]);
 
+  const cast = person?.combined_credits.cast;
+
+  useEffect(() => {
+    if (!cast) return;
+    const uniqueMedia = new Map();
+    for (const media of cast) {
+      const title = media.original_title || media.original_name;
+      if (!uniqueMedia.has(title)) {
+        uniqueMedia.set(title, media);
+      }
+      const filtered = Array.from(uniqueMedia.values());
+      const date = media.release_date || media.first_air_date;
+      const sorted = filtered.sort((a, b) => {
+        const dateA = new Date(
+          a.release_date || a.first_air_date
+        ).getFullYear();
+        const dateB = new Date(
+          b.release_date || b.first_air_date
+        ).getFullYear();
+        return dateB - dateA;
+      });
+      setCredits(sorted);
+    }
+  }, [cast]);
+
   console.log(person);
+  console.log(credits);
   const isMobile = useMediaQuery("only screen and (max-width: 768px)");
 
   const imageSize = () => {
@@ -58,10 +86,32 @@ export default function Person({ params }: { params: { id: string } }) {
       <div className="col-span-3 flex flex-col gap-5">
         <h2 className="font-bold text-4xl">{person?.name}</h2>
         <div className="space-y-2">
-          <p className="text-xl font-semibold">Biography</p>
+          <h3 className="text-xl font-semibold">Biography</h3>
           <p>{person?.biography}</p>
         </div>
         <KnownForCarousel person={person!} />
+        <div>
+          <h3 className="text-xl font-semibold pb-5">Acting</h3>
+          <ol className="flex flex-col gap-4 list-disc py-5 px-10 border shadow-lg">
+            {credits?.map((item) => {
+              const title = item.name || item.title;
+              return (
+                <li key={item.id}>
+                  <Link
+                    href={`http://localhost:3000/${item.media_type}/${item.id}`}
+                  >
+                    <p className="font-semibold">{title}</p>
+                  </Link>
+                  {item.character && (
+                    <p className="text-gray-400">
+                      as <span className="text-gray-600">{item.character}</span>
+                    </p>
+                  )}
+                </li>
+              );
+            })}
+          </ol>
+        </div>
       </div>
     </section>
   );

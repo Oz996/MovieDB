@@ -297,14 +297,14 @@ export interface Crew {
   original_title?: string;
   original_name?: string;
   overview: string;
-  popularity: 923.639;
+  popularity: number;
   poster_path: string;
   release_date: string;
   title?: string;
   name?: string;
   video: false;
-  vote_average: 7.619;
-  vote_count: 30343;
+  vote_average: number;
+  vote_count: number;
 }
 
 export interface Cast {
@@ -312,8 +312,9 @@ export interface Cast {
   backdrop_path: string;
   character: string;
   credit_id: string;
-  episode_count: 1;
-  first_air_date: string;
+  episode_count: number;
+  release_date?: string;
+  first_air_date?: string;
   genre_ids: number[];
   id: number;
   media_type: string;
