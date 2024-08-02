@@ -1,4 +1,5 @@
 "use client";
+import KnownForCarousel from "@/components/Carousels/KnownForCarousel";
 import ExternalLinks from "@/components/ExternalLinks";
 import { formatDate } from "@/lib/utils";
 import { getPersonDetails } from "@/services/person";
@@ -56,9 +57,9 @@ export default function Person({ params }: { params: { id: string } }) {
           className="z-20 lg:rounded-lg max-sm:object-cover max-sm:w-full max-md:self-center"
         />
         <aside>
-          <div className="flex flex-col gap-4 pt-12">
+          <div className="flex flex-col gap-4 pt-8">
             <ExternalLinks person={person} />
-            <p className="text-xl pt-10 font-semibold">Personal Info</p>
+            <p className="text-xl pt-4 font-semibold">Personal Info</p>
             <div className="flex flex-col gap-1">
               <p className="font-semibold">Known For</p>
               <p>{person?.known_for_department}</p>
@@ -81,6 +82,12 @@ export default function Person({ params }: { params: { id: string } }) {
               <p className="font-semibold">Place of Birth</p>
               <p>{person?.place_of_birth}</p>
             </div>
+            <div className="flex flex-col gap-1">
+              <p className="font-semibold">Also Known As</p>
+              {person?.also_known_as.map((name) => (
+                <p key={name}>{name}</p>
+              ))}
+            </div>
           </div>
         </aside>
       </div>
@@ -90,6 +97,7 @@ export default function Person({ params }: { params: { id: string } }) {
           <p className="text-xl font-semibold">Biography</p>
           <p>{person?.biography}</p>
         </div>
+        <KnownForCarousel person={person!} />
       </div>
     </section>
   );

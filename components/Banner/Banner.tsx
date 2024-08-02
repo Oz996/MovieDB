@@ -35,8 +35,8 @@ export default function Banner({
   const genres = movie?.genres || tvShow?.genres;
 
   const getTvShowDate = () => {
-    const first = tvShow?.first_air_date.slice(0, 4);
-    const last = tvShow?.last_air_date.slice(0, 4);
+    const first = tvShow?.first_air_date?.slice(0, 4);
+    const last = tvShow?.last_air_date?.slice(0, 4);
 
     if (tvShow?.in_production) {
       return first + "-";

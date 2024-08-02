@@ -284,6 +284,52 @@ export interface Credit {
   profile_path: string;
 }
 
+export interface Crew {
+  adult: false;
+  backdrop_path: string;
+  credit_id: string;
+  department: string;
+  genre_ids: number[];
+  id: number;
+  job: string;
+  media_type: string;
+  original_language: string;
+  original_title?: string;
+  original_name?: string;
+  overview: string;
+  popularity: 923.639;
+  poster_path: string;
+  release_date: string;
+  title?: string;
+  name?: string;
+  video: false;
+  vote_average: 7.619;
+  vote_count: 30343;
+}
+
+export interface Cast {
+  adult: false;
+  backdrop_path: string;
+  character: string;
+  credit_id: string;
+  episode_count: 1;
+  first_air_date: string;
+  genre_ids: number[];
+  id: number;
+  media_type: string;
+  title?: string;
+  name?: string;
+  origin_country: string[];
+  original_language: string;
+  original_title?: string;
+  original_name?: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  vote_average: number;
+  vote_count: number;
+}
+
 export interface Trailer {
   id: string;
   iso_639_1: string;
@@ -295,16 +341,6 @@ export interface Trailer {
   site: string;
   size: number;
   type: string;
-}
-
-export interface Crew extends Credit {
-  department: string;
-  job: string | string[];
-}
-
-export interface Cast extends Credit {
-  character: string;
-  order: number;
 }
 
 export interface SpokenLanguage {
