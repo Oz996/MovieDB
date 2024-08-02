@@ -23,10 +23,8 @@ export default function Search() {
   // console.log("searchResults", searchResults);
   // console.log("type", type);
   // console.log("searchType", searchType);
-  console.log("isloading", isLoading);
 
   const currentPage = pageParam ? parseInt(pageParam, 10) : 1;
-  console.log("page", currentPage);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,6 +60,7 @@ export default function Search() {
       <SearchResults
         isLoading={isLoading}
         currentPage={currentPage}
+        searchParams={searchParams}
         searchResults={searchResults!}
       />
     </section>

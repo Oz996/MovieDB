@@ -8,16 +8,25 @@ import { handleDisplayImage } from "@/lib/utils";
 interface props {
   isLoading: boolean;
   currentPage: number;
+  searchParams: any;
   searchResults: Result[];
 }
 
 export default function SearchResults({
   currentPage,
+  searchParams,
   searchResults,
   isLoading,
 }: props) {
   if (isLoading) return <ResultSkeleton />;
 
+  const searchType = searchParams.get("type");
+
+  const handleNavigation = () => {
+    if (searchType === "tv") return "tv";
+    else if (searchType === "movie") return "movie";
+    else if (searchType === "person") return "person";
+  };
   return (
     <section className="lg:col-span-2 lg:-ml-20 max-lg:pt-5 space-y-5">
       {searchResults?.length === 0 && (
@@ -58,7 +67,9 @@ export default function SearchResults({
         return (
           <div key={item.id} className="flex gap-3 rounded-lg border">
             <Link
-              href=""
+              href={`http://localhost:3000/${
+                item.media_type || handleNavigation()
+              }/${item.id}`}
               className="w-[5.5rem] h-32 lg:w-28 lg:h-40 flex-shrink-0"
             >
               <Image

@@ -6,7 +6,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { handleDisplayImage } from "@/lib/utils";
-import { Overview, Person } from "@/types";
+import { Cast, Crew, Person } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -16,7 +16,7 @@ interface props {
 }
 
 export default function KnownForCarousel({ person }: props) {
-  const [knownFor, setKnownFor] = useState<Overview[]>([]);
+  const [knownFor, setKnownFor] = useState<Cast[] | Crew[]>([]);
 
   useEffect(() => {
     const mostPopular = () => {
@@ -46,20 +46,20 @@ export default function KnownForCarousel({ person }: props) {
       <h2 className="text-xl font-semibold pb-2">Known For</h2>
       <Carousel>
         <CarouselContent>
-          {knownFor?.map((media) => {
-            const title = media.title || media.name;
+          {knownFor?.map((item) => {
+            const title = item.title || item.name;
             return (
               <CarouselItem
-                key={media.id}
+                key={item.id}
                 className="pl-1 basis-1/1 sm:basis-1/3 md:basis-1/3 lg:basis-1/6"
               >
                 <Link
-                  href={`/${media.media_type}/${media.id}`}
+                  href={`/${item.media_type}/${item.id}`}
                   className="flex flex-col gap-3"
                 >
                   <Image
                     alt=""
-                    src={handleDisplayImage("w342", media.poster_path)}
+                    src={handleDisplayImage("w342", item.poster_path)}
                     width={150}
                     height={150}
                     className="rounded-lg"

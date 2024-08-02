@@ -15,7 +15,6 @@ export default function SearchList({
   isLoading,
   setShowInput,
 }: props) {
-  console.log("isloading", isLoading);
   return (
     <AnimatePresence>
       <motion.div
