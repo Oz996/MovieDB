@@ -23,12 +23,10 @@ import CarouselCard from "./CarouselCard";
 
 export default function PopularCarousel() {
   const [isLoading, setIsLoading] = useState(true);
-
   const [popular, setPopular] = useState<Result[] | undefined>([]);
   const [popularType, setPopularType] = useState("now_playing");
   const isMobile = useMediaQuery("only screen and (max-width: 768px)");
 
-  console.log("popp", popular);
   useEffect(() => {
     try {
       const fetchPopular = async () => {

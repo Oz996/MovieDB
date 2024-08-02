@@ -55,7 +55,7 @@ export default function SearchResults({
         const listKnownFor = () => {
           const knownFor = personKnownFor();
           return knownFor?.map((item, i) => (
-            <Link key={item} href={""}>
+            <Link key={i} href={""}>
               <p className="text-gray-500">
                 {item}
                 {i === knownFor.length - 1 ? "" : ","}
