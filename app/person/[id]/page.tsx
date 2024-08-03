@@ -36,7 +36,6 @@ export default function Person({ params }: { params: { id: string } }) {
 
   const cast = person?.combined_credits.cast;
   const crew = person?.combined_credits.crew;
-  const currentYear = new Date().getFullYear();
 
   useEffect(() => {
     if (!cast) return;
@@ -78,7 +77,6 @@ export default function Person({ params }: { params: { id: string } }) {
         uniqueMedia.set(key, media);
       }
     }
-    console.log("uniq", uniqueMedia);
 
     const filtered = Array.from(uniqueMedia.values());
     const sorted = filtered.sort((a, b) => {
@@ -93,9 +91,12 @@ export default function Person({ params }: { params: { id: string } }) {
       return dateB - dateA;
     });
 
-    const production = sorted.filter((item) => item.job === "Producer");
+    const production = sorted.filter(
+      (item) => item.department === "Production"
+    );
     const writing = sorted.filter((item) => item.job === "Writer");
-    const creator = sorted.filter((item) => item.job === "Creator");
+    const creator = sorted.filter((item) => item.department === "Creator");
+    console.log("writing", writing);
     setProduction(production);
     setWriting(writing);
     setCreator(creator);
@@ -120,7 +121,7 @@ export default function Person({ params }: { params: { id: string } }) {
     if (isMobile) return 400;
     else return 300;
   };
-
+  console.log("act", acting);
   if (isLoading) return <PersonLoader />;
 
   return (
@@ -189,6 +190,7 @@ export default function Person({ params }: { params: { id: string } }) {
                         "pb-2": date !== nextDate && item.character,
                       })}
                     >
+                      {item.episode_count && `(${item.episode_count} episodes)`}{" "}
                       as <span className="text-gray-600">{item.character}</span>
                     </p>
                   )}
@@ -240,11 +242,12 @@ export default function Person({ params }: { params: { id: string } }) {
                   {item.job && (
                     <p
                       className={classNames({
-                        "text-gray-600 pl-10": true,
+                        "text-gray-400 pl-10": true,
                         "pb-2": date !== nextDate && item.job,
                       })}
                     >
-                      ...{item.job}
+                      {item.episode_count && `(${item.episode_count} episodes)`}{" "}
+                      <span className="text-gray-400">...{item.job}</span>
                     </p>
                   )}
                 </li>
@@ -293,11 +296,12 @@ export default function Person({ params }: { params: { id: string } }) {
                   {item.job && (
                     <p
                       className={classNames({
-                        "text-gray-600 pl-10": true,
+                        "text-gray-400 pl-10": true,
                         "pb-2": date !== nextDate && item.job,
                       })}
                     >
-                      ...{item.job}
+                      {item.episode_count && `(${item.episode_count} episodes)`}{" "}
+                      <span className="text-gray-600">...{item.job}</span>
                     </p>
                   )}
                 </li>
@@ -346,11 +350,12 @@ export default function Person({ params }: { params: { id: string } }) {
                   {item.job && (
                     <p
                       className={classNames({
-                        "text-gray-600 pl-10": true,
+                        "text-gray-400 pl-10": true,
                         "pb-2": date !== nextDate && item.job,
                       })}
                     >
-                      ...{item.job}
+                      {item.episode_count && `(${item.episode_count} episodes)`}{" "}
+                      <span className="text-gray-600">...{item.job}</span>
                     </p>
                   )}
                 </li>

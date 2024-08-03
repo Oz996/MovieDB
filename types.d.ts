@@ -305,6 +305,7 @@ export interface Crew {
   video: false;
   vote_average: number;
   vote_count: number;
+  episode_count?: number;
 }
 
 export interface Cast {
