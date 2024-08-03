@@ -12,9 +12,12 @@ import Link from "next/link";
 import classNames from "classnames";
 
 export default function Person({ params }: { params: { id: string } }) {
-  const [person, setPerson] = useState<IPerson | null>(null);
-  const [credits, setCredits] = useState<Cast[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [person, setPerson] = useState<IPerson | null>(null);
+  const [acting, setActing] = useState<Cast[]>([]);
+  const [production, setProduction] = useState<Crew[]>([]);
+  const [writing, setWriting] = useState<Crew[]>([]);
+  const [creator, setCreator] = useState<Crew[]>([]);
 
   useEffect(() => {
     const fetchPersonDetails = async () => {
@@ -32,6 +35,7 @@ export default function Person({ params }: { params: { id: string } }) {
   }, [params.id]);
 
   const cast = person?.combined_credits.cast;
+  const crew = person?.combined_credits.crew;
   const currentYear = new Date().getFullYear();
 
   useEffect(() => {
@@ -58,15 +62,51 @@ export default function Person({ params }: { params: { id: string } }) {
       return dateB - dateA;
     });
 
-    setCredits(sorted);
+    setActing(sorted);
   }, [cast]);
+
+  useEffect(() => {
+    if (!crew) return;
+
+    const uniqueMedia = new Map();
+    for (const media of crew) {
+      // creating a title-job key combination in order to keep track of unique items based on those instead of just title
+      // because some titles exists under different jobs
+      const title = media.original_title || media.original_name;
+      const key = `${title}-${media.job}`;
+      if (!uniqueMedia.has(key)) {
+        uniqueMedia.set(key, media);
+      }
+    }
+    console.log("uniq", uniqueMedia);
+
+    const filtered = Array.from(uniqueMedia.values());
+    const sorted = filtered.sort((a, b) => {
+      const dateA = new Date(a.release_date || a.first_air_date!).getFullYear();
+      const dateB = new Date(b.release_date || b.first_air_date!).getFullYear();
+
+      // NaN values caused issues with sorting, here is a solution I found:
+      if (isNaN(dateA) && isNaN(dateB)) return 0;
+      if (isNaN(dateA)) return 1;
+      if (isNaN(dateB)) return -1;
+
+      return dateB - dateA;
+    });
+
+    const production = sorted.filter((item) => item.job === "Producer");
+    const writing = sorted.filter((item) => item.job === "Writer");
+    const creator = sorted.filter((item) => item.job === "Creator");
+    setProduction(production);
+    setWriting(writing);
+    setCreator(creator);
+  }, [crew]);
 
   const dateToDisplay = (year: number) => {
     if (!year) return "";
     else return year;
   };
 
-  const getDate = (item: Cast) => {
+  const getDate = (item: any) => {
     const date = new Date(
       item.release_date || item.first_air_date!
     ).getFullYear();
@@ -74,7 +114,6 @@ export default function Person({ params }: { params: { id: string } }) {
   };
 
   console.log(person);
-  console.log(credits);
   const isMobile = useMediaQuery("only screen and (max-width: 768px)");
 
   const imageSize = () => {
@@ -108,16 +147,18 @@ export default function Person({ params }: { params: { id: string } }) {
         <div>
           <h3 className="text-xl font-semibold pb-5">Acting</h3>
           <ol className="flex flex-col gap-4 list-disc py-5 px-10 border shadow-lg">
-            {credits?.map((item, i) => {
+            {acting?.map((item, i) => {
               const title = item.name || item.title;
               const date = getDate(item);
-              const nextDate = credits[i + 1] ? getDate(credits[i + 1]) : null;
+              const nextDate = acting[i + 1] ? getDate(acting[i + 1]) : null;
+              const lastIndex = acting.length - 1;
 
               return (
                 <li
                   key={item.id}
                   className={classNames({
-                    "border-b border-slate-300": date !== nextDate,
+                    "border-b border-slate-300":
+                      date !== nextDate && i !== lastIndex,
                   })}
                 >
                   <div className="flex gap-2">
@@ -144,11 +185,172 @@ export default function Person({ params }: { params: { id: string } }) {
                   {item.character && (
                     <p
                       className={classNames({
-                        "text-gray-400": true,
+                        "text-gray-400 pl-10": true,
                         "pb-2": date !== nextDate && item.character,
                       })}
                     >
                       as <span className="text-gray-600">{item.character}</span>
+                    </p>
+                  )}
+                </li>
+              );
+            })}
+          </ol>
+        </div>
+        <div>
+          <h3 className="text-xl font-semibold pb-5">Production</h3>
+          <ol className="flex flex-col gap-4 list-disc py-5 px-10 border shadow-lg">
+            {production?.map((item, i) => {
+              const title = item.name || item.title;
+              const date = getDate(item);
+              const nextDate = production[i + 1]
+                ? getDate(production[i + 1])
+                : null;
+              const lastIndex = acting.length - 1;
+
+              return (
+                <li
+                  key={item.id}
+                  className={classNames({
+                    "border-b border-slate-300":
+                      date !== nextDate && i !== lastIndex,
+                  })}
+                >
+                  <div className="flex gap-2">
+                    <p
+                      className={classNames({
+                        "pb-2": date !== nextDate && !item.job,
+                      })}
+                    >
+                      {dateToDisplay(date)}
+                    </p>
+                    <Link
+                      href={`http://localhost:3000/${item.media_type}/${item.id}`}
+                    >
+                      <p
+                        className={classNames({
+                          "font-semibold": true,
+                          "pb-2": date !== nextDate && !item.job,
+                        })}
+                      >
+                        {title}
+                      </p>
+                    </Link>
+                  </div>
+                  {item.job && (
+                    <p
+                      className={classNames({
+                        "text-gray-600 pl-10": true,
+                        "pb-2": date !== nextDate && item.job,
+                      })}
+                    >
+                      ...{item.job}
+                    </p>
+                  )}
+                </li>
+              );
+            })}
+          </ol>
+        </div>
+        <div>
+          <h3 className="text-xl font-semibold pb-5">Writing</h3>
+          <ol className="flex flex-col gap-4 list-disc py-5 px-10 border shadow-lg">
+            {writing?.map((item, i) => {
+              const title = item.name || item.title;
+              const date = getDate(item);
+              const nextDate = writing[i + 1] ? getDate(writing[i + 1]) : null;
+              const lastIndex = acting.length - 1;
+
+              return (
+                <li
+                  key={item.id}
+                  className={classNames({
+                    "border-b border-slate-300":
+                      date !== nextDate && i !== lastIndex,
+                  })}
+                >
+                  <div className="flex gap-2">
+                    <p
+                      className={classNames({
+                        "pb-2": date !== nextDate && !item.job,
+                      })}
+                    >
+                      {dateToDisplay(date)}
+                    </p>
+                    <Link
+                      href={`http://localhost:3000/${item.media_type}/${item.id}`}
+                    >
+                      <p
+                        className={classNames({
+                          "font-semibold": true,
+                          "pb-2": date !== nextDate && !item.job,
+                        })}
+                      >
+                        {title}
+                      </p>
+                    </Link>
+                  </div>
+                  {item.job && (
+                    <p
+                      className={classNames({
+                        "text-gray-600 pl-10": true,
+                        "pb-2": date !== nextDate && item.job,
+                      })}
+                    >
+                      ...{item.job}
+                    </p>
+                  )}
+                </li>
+              );
+            })}
+          </ol>
+        </div>
+        <div>
+          <h3 className="text-xl font-semibold pb-5">Creator</h3>
+          <ol className="flex flex-col gap-4 list-disc py-5 px-10 border shadow-lg">
+            {creator?.map((item, i) => {
+              const title = item.name || item.title;
+              const date = getDate(item);
+              const nextDate = creator[i + 1] ? getDate(creator[i + 1]) : null;
+              const lastIndex = acting.length - 1;
+
+              return (
+                <li
+                  key={item.id}
+                  className={classNames({
+                    "border-b border-slate-300":
+                      date !== nextDate && i !== lastIndex,
+                  })}
+                >
+                  <div className="flex gap-2">
+                    <p
+                      className={classNames({
+                        "pb-2": date !== nextDate && !item.job,
+                      })}
+                    >
+                      {dateToDisplay(date)}
+                    </p>
+                    <Link
+                      href={`http://localhost:3000/${item.media_type}/${item.id}`}
+                    >
+                      <p
+                        className={classNames({
+                          "font-semibold": true,
+                          "pb-2": date !== nextDate && !item.job,
+                        })}
+                      >
+                        {title}
+                      </p>
+                    </Link>
+                  </div>
+                  {item.job && (
+                    <p
+                      className={classNames({
+                        "text-gray-600 pl-10": true,
+                        "pb-2": date !== nextDate && item.job,
+                      })}
+                    >
+                      ...{item.job}
                     </p>
                   )}
                 </li>
