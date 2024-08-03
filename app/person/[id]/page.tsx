@@ -123,7 +123,7 @@ export default function Person({ params }: { params: { id: string } }) {
                   <div className="flex gap-2">
                     <p
                       className={classNames({
-                        "leading-10": date !== nextDate && !item.character,
+                        "pb-2": date !== nextDate && !item.character,
                       })}
                     >
                       {dateToDisplay(date)}
@@ -134,7 +134,7 @@ export default function Person({ params }: { params: { id: string } }) {
                       <p
                         className={classNames({
                           "font-semibold": true,
-                          "leading-10": date !== nextDate && !item.character,
+                          "pb-2": date !== nextDate && !item.character,
                         })}
                       >
                         {title}
@@ -142,16 +142,13 @@ export default function Person({ params }: { params: { id: string } }) {
                     </Link>
                   </div>
                   {item.character && (
-                    <p className="text-gray-400 pl-10">
-                      as{" "}
-                      <span
-                        className={classNames({
-                          "text-gray-600": true,
-                          "leading-10": date !== nextDate && item.character,
-                        })}
-                      >
-                        {item.character}
-                      </span>
+                    <p
+                      className={classNames({
+                        "text-gray-400": true,
+                        "pb-2": date !== nextDate && item.character,
+                      })}
+                    >
+                      as <span className="text-gray-600">{item.character}</span>
                     </p>
                   )}
                 </li>
