@@ -8,14 +8,11 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import PersonLoader from "./components/PersonLoader";
 import SideContent from "./components/SideContent";
-import Link from "next/link";
-import classNames from "classnames";
-import Filmography from "./components/Filmography";
+import Filmography from "./components/Filmography/Filmography";
 
 export default function Person({ params }: { params: { id: string } }) {
   const [isLoading, setIsLoading] = useState(false);
   const [person, setPerson] = useState<IPerson | null>(null);
-  const [acting, setActing] = useState<Cast[]>([]);
 
   useEffect(() => {
     const fetchPersonDetails = async () => {
@@ -39,7 +36,6 @@ export default function Person({ params }: { params: { id: string } }) {
     if (isMobile) return 400;
     else return 300;
   };
-  console.log("act", acting);
   if (isLoading) return <PersonLoader />;
 
   return (
