@@ -140,6 +140,14 @@ export default function Banner({
     setPlayTrailer(false);
   };
 
+  const handleDisplayImage = (path: string) => {
+    if (path) {
+      return `https://image.tmdb.org/t/p/w1280/${image}`;
+    } else {
+      return "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png";
+    }
+  };
+
   console.log("current movie", movie);
 
   const imageSize = () => {
@@ -166,7 +174,7 @@ export default function Banner({
           <Image
             width={imageSize()}
             height={imageSize()}
-            src={`https://image.tmdb.org/t/p/w1280/${image}`}
+            src={handleDisplayImage(image!)}
             alt="Movie poster"
             className="z-20 lg:rounded-lg max-sm:object-cover max-sm:w-full max-md:self-center"
           />
