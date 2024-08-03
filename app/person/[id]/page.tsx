@@ -31,28 +31,34 @@ export default function Person({ params }: { params: { id: string } }) {
   }, [params.id]);
 
   const cast = person?.combined_credits.cast;
+  const currentYear = new Date().getFullYear();
+  console.log(currentYear);
 
   useEffect(() => {
     if (!cast) return;
+
     const uniqueMedia = new Map();
     for (const media of cast) {
       const title = media.original_title || media.original_name;
       if (!uniqueMedia.has(title)) {
         uniqueMedia.set(title, media);
       }
-      const filtered = Array.from(uniqueMedia.values());
-      const date = media.release_date || media.first_air_date;
-      const sorted = filtered.sort((a, b) => {
-        const dateA = new Date(
-          a.release_date || a.first_air_date
-        ).getFullYear();
-        const dateB = new Date(
-          b.release_date || b.first_air_date
-        ).getFullYear();
-        return dateB - dateA;
-      });
-      setCredits(sorted);
     }
+
+    const filtered = Array.from(uniqueMedia.values());
+    const sorted = filtered.sort((a, b) => {
+      const dateA = new Date(a.release_date || a.first_air_date!).getFullYear();
+      const dateB = new Date(b.release_date || b.first_air_date!).getFullYear();
+
+      // NaN values caused issues with sorting, here is a solution I found:
+      if (isNaN(dateA) && isNaN(dateB)) return 0;
+      if (isNaN(dateA)) return 1;
+      if (isNaN(dateB)) return -1;
+
+      return dateB - dateA;
+    });
+
+    setCredits(sorted);
   }, [cast]);
 
   console.log(person);
@@ -95,15 +101,21 @@ export default function Person({ params }: { params: { id: string } }) {
           <ol className="flex flex-col gap-4 list-disc py-5 px-10 border shadow-lg">
             {credits?.map((item) => {
               const title = item.name || item.title;
+              const date =
+                new Date(item.release_date!).getFullYear() ||
+                new Date(item.first_air_date!).getFullYear();
               return (
                 <li key={item.id}>
-                  <Link
-                    href={`http://localhost:3000/${item.media_type}/${item.id}`}
-                  >
-                    <p className="font-semibold">{title}</p>
-                  </Link>
+                  <div className="flex gap-2">
+                    {Number(date) && <p>{date}</p>}
+                    <Link
+                      href={`http://localhost:3000/${item.media_type}/${item.id}`}
+                    >
+                      <p className="font-semibold">{title}</p>
+                    </Link>
+                  </div>
                   {item.character && (
-                    <p className="text-gray-400">
+                    <p className="text-gray-400 pl-10">
                       as <span className="text-gray-600">{item.character}</span>
                     </p>
                   )}

@@ -21,6 +21,14 @@ export default function SideContent({ person }: props) {
     }
   };
 
+  const handleGender = () => {
+    if (person?.gender === 1) {
+      return "Female";
+    } else {
+      return "Male";
+    }
+  };
+
   return (
     <aside>
       <div className="flex flex-col gap-4 pt-8">
@@ -36,7 +44,7 @@ export default function SideContent({ person }: props) {
         </div>
         <div className="flex flex-col gap-1">
           <p className="font-semibold">Gender</p>
-          <p>{person?.gender}</p>
+          <p>{handleGender()}</p>
         </div>
         <div className="flex flex-col gap-1">
           <p className="font-semibold">Birthday</p>
