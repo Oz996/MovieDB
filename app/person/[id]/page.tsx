@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import PersonLoader from "./components/PersonLoader";
 import SideContent from "./components/SideContent";
 import Link from "next/link";
+import classNames from "classnames";
 
 export default function Person({ params }: { params: { id: string } }) {
   const [person, setPerson] = useState<IPerson | null>(null);
@@ -32,7 +33,6 @@ export default function Person({ params }: { params: { id: string } }) {
 
   const cast = person?.combined_credits.cast;
   const currentYear = new Date().getFullYear();
-  console.log(currentYear);
 
   useEffect(() => {
     if (!cast) return;
@@ -61,16 +61,25 @@ export default function Person({ params }: { params: { id: string } }) {
     setCredits(sorted);
   }, [cast]);
 
+  const dateToDisplay = (year: number) => {
+    if (!year) return "";
+    else return year;
+  };
+
+  const getDate = (item: Cast) => {
+    const date = new Date(
+      item.release_date || item.first_air_date!
+    ).getFullYear();
+    return date;
+  };
+
   console.log(person);
   console.log(credits);
   const isMobile = useMediaQuery("only screen and (max-width: 768px)");
 
   const imageSize = () => {
-    if (isMobile) {
-      return 400;
-    } else {
-      return 300;
-    }
+    if (isMobile) return 400;
+    else return 300;
   };
 
   if (isLoading) return <PersonLoader />;
@@ -99,24 +108,50 @@ export default function Person({ params }: { params: { id: string } }) {
         <div>
           <h3 className="text-xl font-semibold pb-5">Acting</h3>
           <ol className="flex flex-col gap-4 list-disc py-5 px-10 border shadow-lg">
-            {credits?.map((item) => {
+            {credits?.map((item, i) => {
               const title = item.name || item.title;
-              const date =
-                new Date(item.release_date!).getFullYear() ||
-                new Date(item.first_air_date!).getFullYear();
+              const date = getDate(item);
+              const nextDate = credits[i + 1] ? getDate(credits[i + 1]) : null;
+
               return (
-                <li key={item.id}>
+                <li
+                  key={item.id}
+                  className={classNames({
+                    "border-b border-slate-300": date !== nextDate,
+                  })}
+                >
                   <div className="flex gap-2">
-                    {Number(date) && <p>{date}</p>}
+                    <p
+                      className={classNames({
+                        "leading-10": date !== nextDate && !item.character,
+                      })}
+                    >
+                      {dateToDisplay(date)}
+                    </p>
                     <Link
                       href={`http://localhost:3000/${item.media_type}/${item.id}`}
                     >
-                      <p className="font-semibold">{title}</p>
+                      <p
+                        className={classNames({
+                          "font-semibold": true,
+                          "leading-10": date !== nextDate && !item.character,
+                        })}
+                      >
+                        {title}
+                      </p>
                     </Link>
                   </div>
                   {item.character && (
                     <p className="text-gray-400 pl-10">
-                      as <span className="text-gray-600">{item.character}</span>
+                      as{" "}
+                      <span
+                        className={classNames({
+                          "text-gray-600": true,
+                          "leading-10": date !== nextDate && item.character,
+                        })}
+                      >
+                        {item.character}
+                      </span>
                     </p>
                   )}
                 </li>
