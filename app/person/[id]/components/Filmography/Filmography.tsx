@@ -1,6 +1,4 @@
 import { Cast, Crew, Person } from "@/types";
-import classNames from "classnames";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import FilmographyCard from "./FilmographyCard";
 
@@ -81,19 +79,6 @@ export default function Filmography({ person }: props) {
     setWriting(writing);
     setCreator(creator);
   }, [crew]);
-
-  const dateToDisplay = (year: number) => {
-    if (!year) return "";
-    else return year;
-  };
-
-  const getDate = (item: any) => {
-    const date = new Date(
-      item.release_date || item.first_air_date!
-    ).getFullYear();
-    return date;
-  };
-  //  <FilmographyCard item={item} array={acting} i={index} />
 
   return (
     <>

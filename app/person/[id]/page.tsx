@@ -2,7 +2,7 @@
 import KnownForCarousel from "./components/KnownForCarousel";
 import { handleDisplayImage } from "@/lib/utils";
 import { getPersonDetails } from "@/services/person";
-import { Cast, Crew, Person as IPerson } from "@/types";
+import { Person as IPerson } from "@/types";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import Image from "next/image";
 import { useEffect, useState } from "react";

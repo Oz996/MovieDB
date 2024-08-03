@@ -34,42 +34,20 @@ export default function FilmographyCard({ item, array, i }: props) {
       })}
     >
       <div className="flex gap-2">
-        <p
-          className={classNames({
-            "pb-2": date !== nextDate && "character" in item,
-          })}
-        >
-          {dateToDisplay(date)}
-        </p>
+        <p>{dateToDisplay(date)}</p>
         <Link href={`http://localhost:3000/${item.media_type}/${item.id}`}>
-          <p
-            className={classNames({
-              "font-semibold": true,
-              "pb-2": date !== nextDate && "character" in item,
-            })}
-          >
-            {title}
-          </p>
+          <p className="font-semibold">{title}</p>
         </Link>
       </div>
       {"character" in item && (
-        <p
-          className={classNames({
-            "text-gray-400 pl-10": true,
-            "pb-2": date !== nextDate && item.character,
-          })}
-        >
-          {item.episode_count && `(${item.episode_count} episodes)`} as{" "}
+        <p className="text-gray-400 pl-10 pb-2">
+          {item.episode_count && `(${item.episode_count} episodes)`}
+          {item.character && " as "}
           <span className="text-gray-600">{item.character}</span>
         </p>
       )}
       {"job" in item && (
-        <p
-          className={classNames({
-            "text-gray-400 pl-10": true,
-            "pb-2": date !== nextDate && item.job,
-          })}
-        >
+        <p className="text-gray-400 pl-10 pb-2">
           {item.episode_count && `(${item.episode_count} episodes)`}{" "}
           <span className="text-gray-600">...{item.job}</span>
         </p>
