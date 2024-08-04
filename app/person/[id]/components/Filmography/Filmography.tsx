@@ -81,7 +81,7 @@ export default function Filmography({ person }: props) {
   }, [crew]);
 
   return (
-    <section className="pb-10">
+    <section className="space-y-5 pb-10">
       {acting.length > 0 && (
         <div>
           <h3 className="text-xl font-semibold pb-5">Acting</h3>

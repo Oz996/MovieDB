@@ -9,7 +9,7 @@ interface props {
 }
 
 const dateToDisplay = (year: number) => {
-  if (!year) return "";
+  if (!year) return "TBA";
   else return year;
 };
 
@@ -28,7 +28,8 @@ export default function FilmographyCard({ item, array, i }: props) {
     <li
       key={item.id}
       className={classNames({
-        "border-b border-slate-300": date !== nextDate && i !== lastIndex,
+        "border-b border-slate-300":
+          date !== nextDate && i !== lastIndex && getDate(item),
       })}
     >
       <div className="flex gap-2">
