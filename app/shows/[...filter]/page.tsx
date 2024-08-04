@@ -1,5 +1,6 @@
 "use client";
 import FilterMenu from "@/components/FilterMenu";
+import MediaCard from "@/components/MediaCard";
 import { Button } from "@/components/ui/button";
 import { formatDate, handleDisplayImage } from "@/lib/utils";
 import { getTvShows } from "@/services/tvShows";
@@ -74,32 +75,9 @@ export default function Shows({ params }: { params: { filter: string[] } }) {
           )}
         </dialog>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-y-8 sm:col-span-3">
-          {tvShows?.map((show) => {
-            return (
-              <Link
-                key={show.id}
-                href={`http://localhost:3000/tv/${show.id}`}
-                className="border rounded-lg shadow-md w-[11rem]"
-              >
-                <Image
-                  className="rounded-t-lg"
-                  src={handleDisplayImage("w342", show.poster_path!)}
-                  width={180}
-                  height={180}
-                  alt=""
-                />
-
-                <div className="flex flex-col gap-1 p-2">
-                  <p className="font-semibold max-w-[10rem] line-clamp-2">
-                    {show.title}
-                  </p>
-                  <p className="text-gray-500">
-                    {formatDate(show.release_date!)}
-                  </p>
-                </div>
-              </Link>
-            );
-          })}
+          {tvShows?.map((show) => (
+            <MediaCard item={show} />
+          ))}
         </div>
       </div>
     </section>

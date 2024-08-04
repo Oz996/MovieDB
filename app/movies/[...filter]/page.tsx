@@ -1,12 +1,10 @@
 "use client";
 import FilterMenu from "@/components/FilterMenu";
+import MediaCard from "@/components/MediaCard";
 import { Button } from "@/components/ui/button";
-import { formatDate, handleDisplayImage } from "@/lib/utils";
 import { getMovies } from "@/services/movies";
 import { QueryData, Result } from "@/types";
 import { useMediaQuery } from "@uidotdev/usehooks";
-import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 export default function Movies({ params }: { params: { filter: string[] } }) {
@@ -75,32 +73,9 @@ export default function Movies({ params }: { params: { filter: string[] } }) {
           )}
         </dialog>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-y-8 sm:col-span-3">
-          {movies?.map((movie) => {
-            return (
-              <Link
-                key={movie.id}
-                href={`http://localhost:3000/movie/${movie.id}`}
-                className="border rounded-lg shadow-md w-[11rem]"
-              >
-                <Image
-                  className="rounded-t-lg"
-                  src={handleDisplayImage("w342", movie.poster_path!)}
-                  width={180}
-                  height={180}
-                  alt=""
-                />
-
-                <div className="flex flex-col gap-1 p-2">
-                  <p className="font-semibold max-w-[10rem] line-clamp-2">
-                    {movie.title}
-                  </p>
-                  <p className="text-gray-500">
-                    {formatDate(movie.release_date!)}
-                  </p>
-                </div>
-              </Link>
-            );
-          })}
+          {movies?.map((movie) => (
+            <MediaCard item={movie} />
+          ))}
         </div>
       </div>
     </section>
