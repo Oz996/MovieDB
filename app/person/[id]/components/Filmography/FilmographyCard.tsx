@@ -14,9 +14,7 @@ const dateToDisplay = (year: number) => {
 };
 
 const getDate = (item: any) => {
-  const date = new Date(
-    item.release_date || item.first_air_date!
-  ).getFullYear();
+  const date = new Date(item.release_date || item.first_air_date).getFullYear();
   return date;
 };
 
