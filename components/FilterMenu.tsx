@@ -25,7 +25,7 @@ import { getMovieGenres } from "@/services/movies";
 import { getTvShowGenres } from "@/services/tvShows";
 import { Genre, QueryData } from "@/types";
 import classNames from "classnames";
-import { Calendar as CalendarIcon } from "lucide-react";
+import { Calendar as CalendarIcon, X } from "lucide-react";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 interface props {
@@ -33,6 +33,7 @@ interface props {
   params: { filter: string[] };
   queryData: QueryData;
   setQueryData: Dispatch<SetStateAction<QueryData>>;
+  handleFilterMenu?: () => void;
 }
 
 export default function FilterMenu({
@@ -40,6 +41,7 @@ export default function FilterMenu({
   params,
   queryData,
   setQueryData,
+  handleFilterMenu,
 }: props) {
   const [genreList, setGenreList] = useState<Genre[] | undefined>([]);
   const [genres, setGenres] = useState<number[]>([]);
@@ -230,8 +232,18 @@ export default function FilterMenu({
   };
 
   return (
-    <div className="w-[17rem] border shadow-lg rounded-lg p-5">
-      <h2 className="text-2xl">{displayHeading()}</h2>
+    <div className="w-[90%] md:w-[17rem] md:border md:shadow-lg rounded-lg p-5">
+      <div className="relative">
+        <h2 className="text-2xl">{displayHeading()}</h2>
+        {handleFilterMenu && (
+          <button
+            onClick={handleFilterMenu}
+            className="flex items-center justify-center p-3 bg-slate-200 hover:bg-white/20 duration-300 cursor-pointer group rounded-full fixed right-10 top-9"
+          >
+            <X size={17} className="group-hover:opacity-70" />
+          </button>
+        )}
+      </div>
       <Accordion type="multiple" className="w-full" defaultValue={["item-2"]}>
         <AccordionItem value="item-1">
           <AccordionTrigger>Sort</AccordionTrigger>

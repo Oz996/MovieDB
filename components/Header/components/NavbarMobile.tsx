@@ -39,21 +39,20 @@ export default function NavbarMobile() {
             className="flex flex-col py-5 items-center gap-1 absolute left-0 right-0 top-[4rem] w-full z-10 bg-black rounded-b-lg"
           >
             <p className="text-lg font-semibold">Movies</p>
-            <li className="dropdown-list-item">
-              <Link href="/">Popular</Link>
+            <li onClick={handleToggleNavbar} className="dropdown-list-item">
+              <Link href="http://localhost:3000/movies/popular">Popular</Link>
             </li>
-            <li className="dropdown-list-item">
-              <Link href="/">Now Playing</Link>
+            <li onClick={handleToggleNavbar} className="dropdown-list-item">
+              <Link href="http://localhost:3000/movies/upcoming">Upcoming</Link>
             </li>
-            <li className="dropdown-list-item">
-              <Link href="/">Upcoming</Link>
-            </li>
-            <li className="dropdown-list-item">
-              <Link href="/">Top Rated</Link>
+            <li onClick={handleToggleNavbar} className="dropdown-list-item">
+              <Link href="http://localhost:3000/movies/top-rated">
+                Top Rated
+              </Link>
             </li>
             <p className="text-lg font-semibold">Tv Shows</p>
-            <li className="dropdown-list-item">
-              <Link href="/">Popular</Link>
+            <li onClick={handleToggleNavbar} className="dropdown-list-item">
+              <Link href="http://localhost:3000/shows/popular">Popular</Link>
             </li>
             <li className="dropdown-list-item">
               <Link href="/">Airing Today</Link>
