@@ -34,8 +34,8 @@ export default function Searchbar() {
   }, [showInput]);
 
   useEffect(() => {
-    if (indexPage) setShowInput(false);
-  }, [indexPage]);
+    setShowInput(false);
+  }, [pathname]);
 
   // resetting these states so that the caching logic works
   useEffect(() => {
@@ -49,7 +49,7 @@ export default function Searchbar() {
   }, [value]);
 
   useEffect(() => {
-    if (debouncedValue.length > 1 && indexPage) {
+    if (debouncedValue.length > 1) {
       const searchValue = async () => {
         setIsLoading(true);
         try {
@@ -129,7 +129,7 @@ export default function Searchbar() {
           />
         )}
       </AnimatePresence>
-      {showInput && !searchPage && (
+      {showInput && (
         <SearchList
           isLoading={isLoading}
           searchList={searchList}

@@ -11,7 +11,7 @@ import Searchbar from "./Searchbar";
 
 export default function NavbarDesktop() {
   return (
-    <header className="absolute top-0 left-0 right-0 w-full h-[4rem] bg-black px-[18rem] text-white flex items-center gap-5 max-md:hidden">
+    <header className="absolute top-0 left-0 right-0 w-full h-[4rem] bg-black px-[2rem] lg:px-[18rem] text-white flex items-center gap-5 max-md:hidden">
       <Link href="/" className="text-3xl font-bold tracking-[2px]">
         MovieDB
       </Link>

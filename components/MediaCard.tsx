@@ -12,9 +12,10 @@ export default function MediaCard({ item }: props) {
   const date = item.release_date || item.first_air_date;
 
   const getType = () => {
-    if (item.release_date) return "movie";
+    if (item.title) return "movie";
     else return "tv";
   };
+
   return (
     <Link
       key={item.id}
