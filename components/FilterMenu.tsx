@@ -256,7 +256,9 @@ export default function FilterMenu({
               <SelectContent>
                 <SelectGroup>
                   {sortOptions.map((option) => (
-                    <SelectItem value={option.value}>{option.name}</SelectItem>
+                    <SelectItem key={option.name} value={option.value}>
+                      {option.name}
+                    </SelectItem>
                   ))}
                 </SelectGroup>
               </SelectContent>
@@ -269,7 +271,7 @@ export default function FilterMenu({
             <p className="text-md">Availabilities</p>
             <div className="space-y-5">
               {monetizationOptions.map((option) => (
-                <div className="flex items-center gap-1">
+                <div key={option.name} className="flex items-center gap-1">
                   <Checkbox
                     id={option.name}
                     onCheckedChange={() =>
@@ -420,7 +422,7 @@ export default function FilterMenu({
                 <SelectContent>
                   <SelectGroup>
                     {languages.map((language) => (
-                      <SelectItem value={language.value}>
+                      <SelectItem key={language.name} value={language.value}>
                         {language.name}
                       </SelectItem>
                     ))}

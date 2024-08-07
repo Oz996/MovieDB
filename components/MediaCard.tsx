@@ -18,7 +18,6 @@ export default function MediaCard({ item }: props) {
 
   return (
     <Link
-      key={item.id}
       href={`http://localhost:3000/${getType()}/${item.id}`}
       className="border rounded-lg shadow-md w-[11rem]"
     >

@@ -26,7 +26,6 @@ export default function FilmographyCard({ item, array, i }: props) {
 
   return (
     <li
-      key={item.id}
       className={classNames({
         "border-b border-slate-300":
           date !== nextDate && i !== lastIndex && getDate(item),

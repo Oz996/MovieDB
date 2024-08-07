@@ -26,6 +26,7 @@ export default function TrendingCarousel() {
   const [trending, setTrending] = useState<Result[] | undefined>([]);
   const [trendingTime, setTrendingTime] = useState("day");
   const isMobile = useMediaQuery("only screen and (max-width: 768px)");
+  console.log("windoww", window?.location);
 
   useEffect(() => {
     const fetchTrending = async () => {

@@ -87,7 +87,12 @@ export default function Filmography({ person }: props) {
           <h3 className="text-xl font-semibold pb-5">Acting</h3>
           <ol className="flex flex-col gap-4 list-disc py-5 px-10 border shadow-lg">
             {acting?.map((item, index) => (
-              <FilmographyCard item={item} array={acting} i={index} />
+              <FilmographyCard
+                key={item.id}
+                item={item}
+                array={acting}
+                i={index}
+              />
             ))}
           </ol>
         </div>
@@ -97,7 +102,12 @@ export default function Filmography({ person }: props) {
           <h3 className="text-xl font-semibold pb-5">Production</h3>
           <ol className="flex flex-col gap-4 list-disc py-5 px-10 border shadow-lg">
             {production?.map((item, index) => (
-              <FilmographyCard item={item} array={production} i={index} />
+              <FilmographyCard
+                key={item.id}
+                item={item}
+                array={production}
+                i={index}
+              />
             ))}
           </ol>
         </div>
@@ -107,7 +117,12 @@ export default function Filmography({ person }: props) {
           <h3 className="text-xl font-semibold pb-5">Writing</h3>
           <ol className="flex flex-col gap-4 list-disc py-5 px-10 border shadow-lg">
             {writing?.map((item, index) => (
-              <FilmographyCard item={item} array={writing} i={index} />
+              <FilmographyCard
+                key={item.id}
+                item={item}
+                array={writing}
+                i={index}
+              />
             ))}
           </ol>
         </div>
@@ -117,7 +132,12 @@ export default function Filmography({ person }: props) {
           <h3 className="text-xl font-semibold pb-5">Creator</h3>
           <ol className="flex flex-col gap-4 list-disc py-5 px-10 border shadow-lg">
             {creator?.map((item, index) => (
-              <FilmographyCard item={item} array={creator} i={index} />
+              <FilmographyCard
+                key={item.id}
+                item={item}
+                array={creator}
+                i={index}
+              />
             ))}
           </ol>
         </div>

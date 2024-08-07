@@ -76,7 +76,7 @@ export default function Shows({ params }: { params: { filter: string[] } }) {
         </dialog>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-y-8 sm:col-span-3">
           {tvShows?.map((show) => (
-            <MediaCard item={show} />
+            <MediaCard key={show.id} item={show} />
           ))}
         </div>
       </div>
