@@ -1,5 +1,5 @@
 import { Result } from "@/types";
-import { formatDate, handleDisplayImage } from "@/lib/utils";
+import { formatDate, getBaseUrl, handleDisplayImage } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -18,7 +18,7 @@ export default function MediaCard({ item }: props) {
 
   return (
     <Link
-      href={`http://localhost:3000/${getType()}/${item.id}`}
+      href={getBaseUrl() + `/${getType()}/${item.id}`}
       className="border rounded-lg shadow-md w-[11rem]"
     >
       <Image

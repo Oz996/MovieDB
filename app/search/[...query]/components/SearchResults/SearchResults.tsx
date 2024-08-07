@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ResultSkeleton from "../ResultsSkeleton";
 import SearchPagination from "./components/SearchPagination";
-import { handleDisplayImage } from "@/lib/utils";
+import { getBaseUrl, handleDisplayImage } from "@/lib/utils";
 
 interface props {
   isLoading: boolean;
@@ -67,9 +67,10 @@ export default function SearchResults({
         return (
           <div key={item.id} className="flex gap-3 rounded-lg border">
             <Link
-              href={`http://localhost:3000/${
-                item.media_type || handleNavigation()
-              }/${item.id}`}
+              href={
+                getBaseUrl() +
+                `/${item.media_type || handleNavigation()}/${item.id}`
+              }
               className="w-[5.5rem] h-32 lg:w-28 lg:h-40 flex-shrink-0"
             >
               <Image
@@ -83,9 +84,10 @@ export default function SearchResults({
             <div className="flex flex-col justify-center gap-4 px-1">
               <div className="w-full">
                 <Link
-                  href={`http://localhost:3000/${
-                    item.media_type || handleNavigation()
-                  }/${item.id}`}
+                  href={
+                    getBaseUrl() +
+                    `/${item.media_type || handleNavigation()}/${item.id}`
+                  }
                 >
                   <h2 className="text-lg font-semibold">{title}</h2>
                 </Link>

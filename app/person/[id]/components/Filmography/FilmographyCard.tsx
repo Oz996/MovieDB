@@ -1,3 +1,4 @@
+import { getBaseUrl } from "@/lib/utils";
 import { Cast, Crew } from "@/types";
 import classNames from "classnames";
 import Link from "next/link";
@@ -33,7 +34,7 @@ export default function FilmographyCard({ item, array, i }: props) {
     >
       <div className="flex gap-2">
         <p>{dateToDisplay(date)}</p>
-        <Link href={`http://localhost:3000/${item.media_type}/${item.id}`}>
+        <Link href={getBaseUrl() + `/${item.media_type}/${item.id}`}>
           <p className="font-semibold">{title}</p>
         </Link>
       </div>

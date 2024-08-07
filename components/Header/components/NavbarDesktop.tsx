@@ -29,14 +29,14 @@ export default function NavbarDesktop() {
                 </li>
                 <li className="dropdown-list-item">
                   <NavigationMenuLink asChild>
-                    <Link href="http://localhost:3000/movies/upcoming">
+                    <Link href={getBaseUrl() + "/movies/upcoming"}>
                       Upcoming
                     </Link>
                   </NavigationMenuLink>
                 </li>
                 <li className="dropdown-list-item">
                   <NavigationMenuLink asChild>
-                    <Link href="http://localhost:3000/movies/top-rated">
+                    <Link href={getBaseUrl() + "/movies/top-rated"}>
                       Top Rated
                     </Link>
                   </NavigationMenuLink>
@@ -50,9 +50,7 @@ export default function NavbarDesktop() {
               <ul className="flex flex-col w-[14rem]">
                 <li className="dropdown-list-item">
                   <NavigationMenuLink asChild>
-                    <Link href="http://localhost:3000/shows/popular">
-                      Popular
-                    </Link>
+                    <Link href={getBaseUrl() + "/shows/popular"}>Popular</Link>
                   </NavigationMenuLink>
                 </li>
                 <li className="dropdown-list-item">
@@ -67,7 +65,9 @@ export default function NavbarDesktop() {
                 </li>
                 <li className="dropdown-list-item">
                   <NavigationMenuLink asChild>
-                    <Link href="/shows/top-rated">Top Rated</Link>
+                    <Link href={getBaseUrl() + "/shows/top-rated"}>
+                      Top Rated
+                    </Link>
                   </NavigationMenuLink>
                 </li>
               </ul>

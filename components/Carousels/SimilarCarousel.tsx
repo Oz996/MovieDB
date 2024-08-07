@@ -5,7 +5,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { handleDisplayImage } from "@/lib/utils";
+import { getBaseUrl, handleDisplayImage } from "@/lib/utils";
 import { getMovieSimilar } from "@/services/movies";
 import { Similar } from "@/types";
 import { useIntersectionObserver } from "@uidotdev/usehooks";
@@ -72,7 +72,7 @@ export default function SimilarCarousel({ id, type }: props) {
                 key={item.id}
                 className="basis-1/3 lg:basis-1/4 shrink-0 pr-6 space-y-2 self-center"
               >
-                <Link href={`http://localhost:3000/movie/${item.id}`}>
+                <Link href={getBaseUrl() + `/movie/${item.id}`}>
                   <Image
                     src={handleDisplayImage(
                       "w250_and_h141_face",
@@ -86,7 +86,7 @@ export default function SimilarCarousel({ id, type }: props) {
                 </Link>
                 <div className="flex justify-between">
                   <Link
-                    href={`http://localhost:3000/movie/${item.id}`}
+                    href={getBaseUrl() + `/movie/${item.id}`}
                     className="truncate pr-3"
                   >
                     <span>{title}</span>

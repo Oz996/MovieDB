@@ -2,7 +2,7 @@ import { Result } from "@/types";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { handleDisplayImage } from "@/lib/utils";
+import { getBaseUrl, handleDisplayImage } from "@/lib/utils";
 import { CarouselItem } from "../ui/carousel";
 
 interface props {
@@ -20,9 +20,7 @@ export default function CarouselCard({ item, type }: props) {
       key={item.id}
       className="pl-1 basis-1/1 sm:basis-1/3 md:basis-1/3 lg:basis-1/6"
     >
-      <Link
-        href={`http://localhost:3000/${item.media_type ?? type}/${item.id}`}
-      >
+      <Link href={getBaseUrl() + `/${item.media_type ?? type}/${item.id}`}>
         <motion.div
           className="p-1 flex items-center justify-center"
           initial={{ opacity: 0 }}
