@@ -56,7 +56,7 @@ export default function SearchResults({
           const knownFor = personKnownFor();
           return knownFor?.map((item, i) => (
             <Link key={i} href={""}>
-              <p className="text-gray-500">
+              <p className="text-gray-500 truncate line-clamp-1">
                 {item}
                 {i === knownFor.length - 1 ? "" : ","}
               </p>
@@ -95,7 +95,9 @@ export default function SearchResults({
                     <span className="text-lg">
                       {item?.known_for_department} •
                     </span>
-                    <div className="flex gap-1">{listKnownFor()}</div>
+                    <div className="flex gap-1 truncate line-clamp-1">
+                      {listKnownFor()}
+                    </div>
                   </div>
                 )}
               </div>

@@ -15,7 +15,7 @@ export default function NavbarDesktop() {
       <Link href="/" className="text-3xl font-bold tracking-[2px]">
         MovieDB
       </Link>
-      <NavigationMenu className="flex gap-10 z-20">
+      <NavigationMenu className="flex gap-10 z-50">
         <NavigationMenuList className="flex items-center gap-5 font-semibold">
           <NavigationMenuItem>
             <NavigationMenuTrigger>Movies</NavigationMenuTrigger>

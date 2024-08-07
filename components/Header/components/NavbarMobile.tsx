@@ -36,7 +36,7 @@ export default function NavbarMobile() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="flex flex-col py-5 items-center gap-1 absolute left-0 right-0 top-[4rem] w-full z-10 bg-black rounded-b-lg"
+            className="flex flex-col py-5 items-center gap-1 absolute left-0 right-0 top-[4rem] w-full z-50 bg-black rounded-b-lg"
           >
             <p className="text-lg font-semibold">Movies</p>
             <li onClick={handleToggleNavbar} className="dropdown-list-item">
