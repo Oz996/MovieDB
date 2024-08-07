@@ -298,7 +298,8 @@ export interface Crew {
   original_name?: string;
   overview: string;
   popularity: number;
-  poster_path: string;
+  poster_path?: string;
+  profile_path?: string;
   release_date: string;
   title?: string;
   name?: string;
@@ -327,7 +328,8 @@ export interface Cast {
   original_name?: string;
   overview: string;
   popularity: number;
-  poster_path: string;
+  poster_path?: string;
+  profile_path?: string;
   vote_average: number;
   vote_count: number;
 }

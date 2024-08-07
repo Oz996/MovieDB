@@ -59,7 +59,7 @@ export default function KnownForCarousel({ person }: props) {
                 >
                   <Image
                     alt=""
-                    src={handleDisplayImage("w342", item.poster_path)}
+                    src={handleDisplayImage("w342", item.poster_path!)}
                     width={150}
                     height={150}
                     className="rounded-lg"

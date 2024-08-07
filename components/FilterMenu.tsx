@@ -304,8 +304,8 @@ export default function FilterMenu({
               <PopoverContent className="w-80">
                 <Calendar
                   mode="single"
-                  selected={fromDate}
-                  onSelect={handleFromDate}
+                  selected={fromDate as any}
+                  onSelect={handleFromDate as any}
                   className="rounded-md border"
                 />
               </PopoverContent>
@@ -326,8 +326,8 @@ export default function FilterMenu({
               <PopoverContent className="w-80">
                 <Calendar
                   mode="single"
-                  selected={toDate}
-                  onSelect={handleToDate}
+                  selected={toDate as any}
+                  onSelect={handleToDate as any}
                   className="rounded-md border"
                 />
               </PopoverContent>

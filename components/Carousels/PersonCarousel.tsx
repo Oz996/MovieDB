@@ -42,7 +42,7 @@ export default function PersonCarousel({ movie, tvShow, isLoading }: props) {
                         className="rounded-t-lg"
                         src={handleDisplayImage(
                           "original",
-                          person.profile_path
+                          person.profile_path!
                         )}
                         width={140}
                         height={140}
