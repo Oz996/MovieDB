@@ -6,10 +6,15 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const getBaseUrl = () => {
-  if (window.location.hostname === "localhost") {
-    return "http://localhost:3000";
+  if (typeof window !== "undefined") {
+    // Client-side code
+    return ""; // or return any default client URL
+  } else if (process.env.NETLIFY_URL) {
+    // Running in a Vercel environment
+    return `https://${process.env.NETLIFY_URL}`;
   } else {
-    return "https://moviedb-oz.netlify.app";
+    // Running locally or in an environment where VERCEL_URL is not set
+    return `http://localhost:3000`;
   }
 };
 
