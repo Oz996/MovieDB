@@ -9,6 +9,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { useSearch } from "@/hooks/useSearch";
+import classNames from "classnames";
 import Link from "next/link";
 
 interface props {
@@ -26,8 +27,15 @@ export default function SearchPagination({ isLoading, currentPage }: props) {
     }&page=${page}`;
   };
 
+  const hidePagination = isLoading || pageAmount <= 1;
+
   return (
-    <Pagination hidden={isLoading} className="py-10">
+    <Pagination
+      className={classNames({
+        "py-10": true,
+        hidden: hidePagination,
+      })}
+    >
       <PaginationContent>
         <PaginationItem>
           <Button

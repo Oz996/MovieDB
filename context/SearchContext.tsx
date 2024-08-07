@@ -30,16 +30,20 @@ export const SearchContextProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const storedMediaCounts: any = sessionStorage.getItem("cached");
   const [type, setType] = useState<string | null>(null);
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
   const [cached, setCached] = useState<MediaCounts>(
-    storedMediaCounts
-      ? JSON.parse(storedMediaCounts)
-      : { movies: 0, tvShows: 0, people: 0 } || {}
+    { movies: 0, tvShows: 0, people: 0 } || {}
   );
   const [pageAmount, setPageAmount] = useState(0);
+
+  useEffect(() => {
+    const storedMediaCounts = sessionStorage.getItem("cached");
+    if (storedMediaCounts) {
+      setCached(JSON.parse(storedMediaCounts));
+    }
+  }, []);
 
   useEffect(() => {
     const hasValue = Object.values(cached).some((value) => value > 0);

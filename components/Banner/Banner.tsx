@@ -1,3 +1,4 @@
+"use client";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Crew, Movie, Trailer, TvShow } from "@/types";
 import Image from "next/image";

@@ -16,7 +16,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { useIntersectionObserver, useMediaQuery } from "@uidotdev/usehooks";
+import { useIntersectionObserver } from "@uidotdev/usehooks";
 import { getTvShowsDiscover } from "@/services/tvShows";
 import LoaderCarousel from "./LoaderCarousel";
 import CarouselCard from "./CarouselCard";
@@ -25,7 +25,6 @@ export default function TvShowsCarousel() {
   const [shows, setShows] = useState<Result[] | undefined>([]);
   const [showsType, setshowsType] = useState("free");
   const [hasRendered, setHasRendered] = useState(false);
-  const isMobile = useMediaQuery("only screen and (max-width: 768px)");
 
   const [showsRef, showsEntry] = useIntersectionObserver({
     threshold: 0.5,
@@ -67,7 +66,8 @@ export default function TvShowsCarousel() {
       <Tabs defaultValue="free">
         <div className="w-full flex max-sm:flex-col items-center gap-5">
           <h2 className="text-xl font-semibold">Discover Shows</h2>
-          {isMobile ? (
+
+          <div className="md:hidden w-full">
             <Select value={showsType} onValueChange={handleSelectChange}>
               <SelectTrigger>
                 <SelectValue placeholder={showsType} />
@@ -80,31 +80,31 @@ export default function TvShowsCarousel() {
                 </SelectContent>
               </SelectTrigger>
             </Select>
-          ) : (
-            <TabsList>
-              <TabsTrigger
-                value="free"
-                className="text-md"
-                onClick={() => setshowsType("free")}
-              >
-                Free
-              </TabsTrigger>
-              <TabsTrigger
-                value="rent"
-                className="text-md"
-                onClick={() => setshowsType("rent")}
-              >
-                Rent
-              </TabsTrigger>
-              <TabsTrigger
-                value="buy"
-                className="text-md"
-                onClick={() => setshowsType("buy")}
-              >
-                Buy
-              </TabsTrigger>
-            </TabsList>
-          )}
+          </div>
+
+          <TabsList className="hidden md:inline">
+            <TabsTrigger
+              value="free"
+              className="text-md"
+              onClick={() => setshowsType("free")}
+            >
+              Free
+            </TabsTrigger>
+            <TabsTrigger
+              value="rent"
+              className="text-md"
+              onClick={() => setshowsType("rent")}
+            >
+              Rent
+            </TabsTrigger>
+            <TabsTrigger
+              value="buy"
+              className="text-md"
+              onClick={() => setshowsType("buy")}
+            >
+              Buy
+            </TabsTrigger>
+          </TabsList>
         </div>
         <TabsContent value="free">
           <Carousel>

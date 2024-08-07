@@ -17,7 +17,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { useMediaQuery } from "@uidotdev/usehooks";
 import LoaderCarousel from "./LoaderCarousel";
 import CarouselCard from "./CarouselCard";
 
@@ -25,8 +24,6 @@ export default function TrendingCarousel() {
   const [isLoading, setIsLoading] = useState(true);
   const [trending, setTrending] = useState<Result[] | undefined>([]);
   const [trendingTime, setTrendingTime] = useState("day");
-  const isMobile = useMediaQuery("only screen and (max-width: 768px)");
-  console.log("windoww", window?.location);
 
   useEffect(() => {
     const fetchTrending = async () => {
@@ -52,7 +49,8 @@ export default function TrendingCarousel() {
       <Tabs defaultValue="today">
         <div className="w-full flex max-sm:flex-col items-center gap-5">
           <h2 className="text-xl font-semibold">Trending</h2>
-          {isMobile ? (
+
+          <div className="md:hidden w-full">
             <Select value={trendingTime} onValueChange={handleSelectChange}>
               <SelectTrigger>
                 <SelectValue placeholder={trendingTime} />
@@ -64,24 +62,24 @@ export default function TrendingCarousel() {
                 </SelectContent>
               </SelectTrigger>
             </Select>
-          ) : (
-            <TabsList>
-              <TabsTrigger
-                value="today"
-                className="text-md"
-                onClick={() => setTrendingTime("day")}
-              >
-                Today
-              </TabsTrigger>
-              <TabsTrigger
-                value="week"
-                className="text-md"
-                onClick={() => setTrendingTime("week")}
-              >
-                This Week
-              </TabsTrigger>
-            </TabsList>
-          )}
+          </div>
+
+          <TabsList className="hidden md:inline">
+            <TabsTrigger
+              value="today"
+              className="text-md"
+              onClick={() => setTrendingTime("day")}
+            >
+              Today
+            </TabsTrigger>
+            <TabsTrigger
+              value="week"
+              className="text-md"
+              onClick={() => setTrendingTime("week")}
+            >
+              This Week
+            </TabsTrigger>
+          </TabsList>
         </div>
         <TabsContent value="today">
           <Carousel>

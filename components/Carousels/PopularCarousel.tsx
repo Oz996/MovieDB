@@ -17,7 +17,6 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { getMovieList } from "@/services/movies";
-import { useMediaQuery } from "@uidotdev/usehooks";
 import LoaderCarousel from "./LoaderCarousel";
 import CarouselCard from "./CarouselCard";
 
@@ -25,7 +24,6 @@ export default function PopularCarousel() {
   const [isLoading, setIsLoading] = useState(true);
   const [popular, setPopular] = useState<Result[] | undefined>([]);
   const [popularType, setPopularType] = useState("now_playing");
-  const isMobile = useMediaQuery("only screen and (max-width: 768px)");
 
   useEffect(() => {
     try {
@@ -51,7 +49,8 @@ export default function PopularCarousel() {
       <Tabs defaultValue="now_playing">
         <div className="w-full flex max-sm:flex-col items-center gap-5">
           <h2 className="text-xl font-semibold">What&apos;s Popular</h2>
-          {isMobile ? (
+
+          <div className="md:hidden w-full">
             <Select value={popularType} onValueChange={handleSelectChange}>
               <SelectTrigger>
                 <SelectValue placeholder={popularType} />
@@ -64,31 +63,31 @@ export default function PopularCarousel() {
                 </SelectContent>
               </SelectTrigger>
             </Select>
-          ) : (
-            <TabsList>
-              <TabsTrigger
-                value="now_playing"
-                className="text-md"
-                onClick={() => setPopularType("now_playing")}
-              >
-                Now Playing
-              </TabsTrigger>
-              <TabsTrigger
-                value="top_rated"
-                className="text-md"
-                onClick={() => setPopularType("top_rated")}
-              >
-                Top Rated
-              </TabsTrigger>
-              <TabsTrigger
-                value="upcoming"
-                className="text-md"
-                onClick={() => setPopularType("upcoming")}
-              >
-                Upcoming
-              </TabsTrigger>
-            </TabsList>
-          )}
+          </div>
+
+          <TabsList className="hidden md:inline">
+            <TabsTrigger
+              value="now_playing"
+              className="text-md"
+              onClick={() => setPopularType("now_playing")}
+            >
+              Now Playing
+            </TabsTrigger>
+            <TabsTrigger
+              value="top_rated"
+              className="text-md"
+              onClick={() => setPopularType("top_rated")}
+            >
+              Top Rated
+            </TabsTrigger>
+            <TabsTrigger
+              value="upcoming"
+              className="text-md"
+              onClick={() => setPopularType("upcoming")}
+            >
+              Upcoming
+            </TabsTrigger>
+          </TabsList>
         </div>
         <TabsContent value="now_playing">
           <Carousel className="bg-slate-100 rounded-xl pl-2">
