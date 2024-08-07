@@ -5,6 +5,14 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export const getBaseUrl = () => {
+  if (window.location.hostname === "localhost") {
+    return "http://localhost:3000";
+  } else {
+    return "https://moviedb-oz.netlify.app";
+  }
+};
+
 export const formatToDollars = (number: number) => {
   const formattedNumber = number.toLocaleString("en-US", {
     style: "currency",

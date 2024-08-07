@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import Link from "next/link";
 import Searchbar from "./Searchbar";
+import { getBaseUrl } from "@/lib/utils";
 
 export default function NavbarDesktop() {
   return (
@@ -23,9 +24,7 @@ export default function NavbarDesktop() {
               <ul className="flex flex-col w-[14rem]">
                 <li className="dropdown-list-item">
                   <NavigationMenuLink asChild>
-                    <Link href="http://localhost:3000/movies/popular">
-                      Popular
-                    </Link>
+                    <Link href={getBaseUrl() + "/movies/popular"}>Popular</Link>
                   </NavigationMenuLink>
                 </li>
                 <li className="dropdown-list-item">
