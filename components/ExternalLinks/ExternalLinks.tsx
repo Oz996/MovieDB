@@ -1,10 +1,3 @@
-import { FaFacebook, FaTwitter, FaInstagram, FaLink } from "react-icons/fa";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { Movie, Person, TvShow } from "@/types";
 import ExternalLink from "./ExternalLink";
 

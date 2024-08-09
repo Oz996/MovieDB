@@ -116,17 +116,17 @@ export default function Searchbar() {
               />
             </motion.form>
 
-            <X
-              size={28}
-              className="cursor-pointer max-md:absolute max-md:-top-[3rem] max-md:right-4"
-              onClick={handleCloseInput}
-            />
+            <button onClick={handleCloseInput}>
+              <X
+                size={28}
+                className="cursor-pointer max-md:absolute max-md:-top-[3rem] max-md:right-4"
+              />
+            </button>
           </>
         ) : (
-          <Search
-            onClick={handleOpenInput}
-            className="cursor-pointer max-md:absolute max-md:-top-[3rem] max-md:right-4"
-          />
+          <button onClick={handleOpenInput}>
+            <Search className="cursor-pointer max-md:absolute max-md:-top-[3rem] max-md:right-4" />
+          </button>
         )}
       </AnimatePresence>
       {showInput && (
