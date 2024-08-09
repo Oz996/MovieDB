@@ -12,7 +12,7 @@ import TrailerIframe from "../TrailerIframe";
 import BannerLoader from "./components/BannerLoader";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { getTvShowVideos } from "@/services/tvShows";
-import { formatDate } from "@/lib/utils";
+import { formatDate, getBaseUrl } from "@/lib/utils";
 
 interface props {
   movie?: Movie;
@@ -238,13 +238,13 @@ export default function Banner({
               </div>
             )}
             <div className="flex flex-col gap-2">
-              <div
+              <button
                 className="flex gap-1 cursor-pointer pt-2 pb-3"
                 onClick={handleShowTrailer}
               >
-                <Play size={22} />
+                <Play size={22} aria-hidden="true" />
                 <span className="font-semibold">Play Trailer</span>
-              </div>
+              </button>
               <span className="italic opacity-80">{tagline}</span>
               <span className="text-xl">Overview</span>
               <p>{overview}</p>
@@ -252,7 +252,12 @@ export default function Banner({
                 {movie
                   ? getCrewRoles()?.map((person) => (
                       <li key={person.id}>
-                        <p className="font-semibold">{person.name}</p>
+                        <Link
+                          href={getBaseUrl() + `/person/${person.id}`}
+                          className="font-semibold"
+                        >
+                          {person.name}
+                        </Link>
                         <p>
                           {Array.isArray(person.job)
                             ? person.job.join(", ")
@@ -262,7 +267,12 @@ export default function Banner({
                     ))
                   : tvShow?.created_by.map((person) => (
                       <li key={person.id}>
-                        <p className="font-semibold">{person.name}</p>
+                        <Link
+                          href={getBaseUrl() + `/person/${person.id}`}
+                          className="font-semibold"
+                        >
+                          {person.name}
+                        </Link>
                         <p>Creator</p>
                       </li>
                     ))}

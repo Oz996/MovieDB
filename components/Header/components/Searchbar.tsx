@@ -112,7 +112,7 @@ export default function Searchbar() {
                 value={value}
                 onChange={handleQueryChange}
                 type="text"
-                className="h-full w-full focus-visible:ring-0 text-black"
+                className="h-full w-full text-black"
               />
             </motion.form>
 
