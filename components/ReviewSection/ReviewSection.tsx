@@ -40,6 +40,10 @@ export default function ReviewSection({ movie, tvShow }: props) {
   };
 
   const handleHideReviews = () => {
+    if (currentPage !== 1) {
+      setReviews(allReviews?.slice(0, 5));
+      setCurrentPage(1);
+    }
     setShowAll(false);
   };
 
@@ -79,13 +83,15 @@ export default function ReviewSection({ movie, tvShow }: props) {
           {reviews?.map((review) => (
             <ReviewCard key={review.id} review={review} />
           ))}
-          <Button
-            onClick={handleHideReviews}
-            className="bg-transparent border-none p-0 hover:bg-transparent text-black"
-          >
-            Show Less Reviews
-            <ChevronUp size={20} />
-          </Button>
+          {reviews?.length! > 1 && (
+            <Button
+              onClick={handleHideReviews}
+              className="bg-transparent border-none p-0 hover:bg-transparent text-black"
+            >
+              Show Less Reviews
+              <ChevronUp size={20} />
+            </Button>
+          )}
           {allReviews?.length! > 5 && (
             <Pagination>
               <PaginationContent>
@@ -127,13 +133,15 @@ export default function ReviewSection({ movie, tvShow }: props) {
         <div>
           <ReviewCard review={review!} />
 
-          <Button
-            onClick={handleShowReviews}
-            className="bg-transparent border-none p-0 hover:bg-transparent text-black"
-          >
-            Show All Reviews
-            <ChevronDown size={20} />
-          </Button>
+          {reviews?.length! > 1 && (
+            <Button
+              onClick={handleShowReviews}
+              className="bg-transparent border-none p-0 hover:bg-transparent text-black"
+            >
+              Show All Reviews
+              <ChevronDown size={20} />
+            </Button>
+          )}
         </div>
       )}
     </section>
