@@ -1,4 +1,4 @@
-import ExternalLinks from "@/components/ExternalLinks";
+import ExternalLinks from "@/components/ExternalLinks/ExternalLinks";
 import { formatDate } from "@/lib/utils";
 import { Person } from "@/types";
 

@@ -1,5 +1,5 @@
 import { Movie, TvShow } from "@/types";
-import ExternalLinks from "./ExternalLinks";
+import ExternalLinks from "./ExternalLinks/ExternalLinks";
 import { formatToDollars, handleDisplayImage } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
