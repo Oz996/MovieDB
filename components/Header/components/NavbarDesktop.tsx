@@ -25,21 +25,30 @@ export default function NavbarDesktop() {
                 <ul className="flex flex-col w-[14rem]">
                   <li className="dropdown-list-item">
                     <NavigationMenuLink asChild>
-                      <Link href={getBaseUrl() + "/movies/popular"}>
+                      <Link
+                        href={getBaseUrl() + "/movies/popular"}
+                        className="block w-full h-full"
+                      >
                         Popular
                       </Link>
                     </NavigationMenuLink>
                   </li>
                   <li className="dropdown-list-item">
                     <NavigationMenuLink asChild>
-                      <Link href={getBaseUrl() + "/movies/upcoming"}>
+                      <Link
+                        href={getBaseUrl() + "/movies/upcoming"}
+                        className="block w-full h-full"
+                      >
                         Upcoming
                       </Link>
                     </NavigationMenuLink>
                   </li>
                   <li className="dropdown-list-item">
                     <NavigationMenuLink asChild>
-                      <Link href={getBaseUrl() + "/movies/top-rated"}>
+                      <Link
+                        href={getBaseUrl() + "/movies/top-rated"}
+                        className="block w-full h-full"
+                      >
                         Top Rated
                       </Link>
                     </NavigationMenuLink>
@@ -53,24 +62,34 @@ export default function NavbarDesktop() {
                 <ul className="flex flex-col w-[14rem]">
                   <li className="dropdown-list-item">
                     <NavigationMenuLink asChild>
-                      <Link href={getBaseUrl() + "/shows/popular"}>
+                      <Link
+                        href={getBaseUrl() + "/shows/popular"}
+                        className="block w-full h-full"
+                      >
                         Popular
                       </Link>
                     </NavigationMenuLink>
                   </li>
                   <li className="dropdown-list-item">
                     <NavigationMenuLink asChild>
-                      <Link href="/">Airing Today</Link>
+                      <Link href="/" className="block w-full h-full">
+                        Airing Today
+                      </Link>
                     </NavigationMenuLink>
                   </li>
                   <li className="dropdown-list-item">
                     <NavigationMenuLink asChild>
-                      <Link href="/">On Tv</Link>
+                      <Link href="/" className="block w-full h-full">
+                        On Tv
+                      </Link>
                     </NavigationMenuLink>
                   </li>
                   <li className="dropdown-list-item">
                     <NavigationMenuLink asChild>
-                      <Link href={getBaseUrl() + "/shows/top-rated"}>
+                      <Link
+                        href={getBaseUrl() + "/shows/top-rated"}
+                        className="block w-full h-full"
+                      >
                         Top Rated
                       </Link>
                     </NavigationMenuLink>
@@ -84,7 +103,9 @@ export default function NavbarDesktop() {
                 <ul className="flex flex-col w-[14rem]">
                   <li className="dropdown-list-item">
                     <NavigationMenuLink asChild>
-                      <Link href="/">Popular</Link>
+                      <Link href="/" className="block w-full h-full">
+                        Popular
+                      </Link>
                     </NavigationMenuLink>
                   </li>
                 </ul>
