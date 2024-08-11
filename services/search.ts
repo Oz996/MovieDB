@@ -1,4 +1,4 @@
-import { options } from "./all";
+import options from "./options";
 
 export const getSearchResults = async (
   query: string,

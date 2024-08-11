@@ -22,8 +22,6 @@ export default function Searchbar() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const pathname = usePathname();
-  const indexPage = pathname === "/";
-  const searchPage = pathname.startsWith("/search");
 
   // using debounce to add a delay when user types in the input, less api calls made
   const debouncedValue = useDebounce(value, 300);

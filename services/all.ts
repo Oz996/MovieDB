@@ -1,15 +1,6 @@
 import { Result } from "@/types";
 import { getMovieList } from "./movies";
-
-const token = process.env.TOKEN;
-
-export const options = {
-  method: "GET",
-  headers: {
-    accept: "application/json",
-    Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiZTAyMjFiYzZkNzQyMTc4MWVjN2NmM2E3MjlkMWU2NSIsInN1YiI6IjY0YTA3MDNlYzM5MGM1MDBjYWZmYWRiZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.W1T2Ad204uX43WIrXDRmfudR8rCdyLWuyVejhEIQOEU`,
-  },
-};
+import options from "./options";
 
 export const getAllTrending = async (time: string = "day") => {
   try {

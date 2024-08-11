@@ -7,7 +7,7 @@ import {
   Trailer,
   TvShow,
 } from "@/types";
-import { options } from "./all";
+import options from "./options";
 
 export const getTvShows = async (queryData: QueryData) => {
   const {

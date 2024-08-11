@@ -1,5 +1,5 @@
 import { Person } from "@/types";
-import { options } from "./all";
+import options from "./options";
 
 export const getPersonDetails = async (id: string | number) => {
   try {

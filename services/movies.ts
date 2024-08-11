@@ -7,7 +7,7 @@ import {
   Similar,
   Trailer,
 } from "@/types";
-import { options } from "./all";
+import options from "./options";
 
 export const getMovies = async (queryData: QueryData) => {
   const {
