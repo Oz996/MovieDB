@@ -12,7 +12,12 @@ import TrailerIframe from "../TrailerIframe";
 import BannerLoader from "./components/BannerLoader";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { getTvShowVideos } from "@/services/tvShows";
-import { formatDate, getBaseUrl, handleDisplayImage } from "@/lib/utils";
+import {
+  filterByTrailers,
+  formatDate,
+  getBaseUrl,
+  handleDisplayImage,
+} from "@/lib/utils";
 
 interface props {
   movie?: Movie;
@@ -114,16 +119,20 @@ export default function Banner({
     return result;
   };
 
-  const trailerToDisplay = videos[videos.length - 1]?.key;
+  const trailerToDisplay = videos[0]?.key;
+
+  console.log("vidss", videos);
 
   const fetchVideos = async () => {
     try {
       if (movie) {
         const res = await getMovieVideos(movie?.id);
-        setVideos(res!);
+        const trailers = filterByTrailers(res!);
+        setVideos(trailers);
       } else if (tvShow) {
         const res = await getTvShowVideos(tvShow?.id);
-        setVideos(res!);
+        const trailers = filterByTrailers(res!);
+        setVideos(trailers);
       }
     } catch (error: any) {
       console.error(error.message);

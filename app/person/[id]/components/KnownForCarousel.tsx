@@ -16,7 +16,7 @@ interface props {
 }
 
 export default function KnownForCarousel({ person }: props) {
-  const [knownFor, setKnownFor] = useState<Cast[] | Crew[]>([]);
+  const [knownFor, setKnownFor] = useState<(Cast | Crew)[]>([]);
 
   useEffect(() => {
     const mostPopular = () => {
@@ -25,17 +25,12 @@ export default function KnownForCarousel({ person }: props) {
       // filtering to make sure we dont display duplicates of a show/movie
       if (cast && crew) {
         const combined = [...cast, ...crew];
-        const uniqueMedia = new Map();
 
-        for (const media of combined) {
-          const title = media.original_title || media.original_name;
-          if (!uniqueMedia.has(title)) {
-            uniqueMedia.set(title, media);
-          }
-          const filtered = Array.from(uniqueMedia.values());
-          const sorted = filtered.sort((a, b) => b.popularity - a.popularity);
-          setKnownFor(sorted.slice(0, 8));
-        }
+        const sorted = combined.sort((a, b) => b.popularity - a.popularity);
+        const results = sorted.filter((media, index, array) => {
+          return array.findIndex((item) => item.id === media.id) === index;
+        });
+        setKnownFor(results.slice(0, 8));
       }
     };
     mostPopular();

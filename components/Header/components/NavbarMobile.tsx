@@ -12,7 +12,7 @@ export default function NavbarMobile() {
     setNavbar(!navbar);
   };
   return (
-    <header className="absolute top-0 left-0 right-0 w-full h-[4rem] bg-black px-4 text-white flex items-center gap-5 md:hidden">
+    <header className="absolute inset-0 w-full h-[4rem] bg-black px-4 text-white flex items-center gap-5 md:hidden">
       {navbar ? (
         <X
           size={25}

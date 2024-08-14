@@ -15,6 +15,7 @@ import { getMovieImages, getMovieVideos } from "@/services/movies";
 import { FaPlay } from "react-icons/fa6";
 import LoaderCarousel from "./LoaderCarousel";
 import { getTvShowImages, getTvShowVideos } from "@/services/tvShows";
+import { filterByTrailers } from "@/lib/utils";
 
 interface props {
   id: string;
@@ -50,10 +51,12 @@ export default function MediaCarousel({ id, videos, type, setVideos }: props) {
     try {
       if (movie) {
         const res = await getMovieVideos(id);
-        setVideos(res!);
+        const trailers = filterByTrailers(res!);
+        setVideos(trailers);
       } else if (tvShow) {
         const res = await getTvShowVideos(id);
-        setVideos(res!);
+        const trailers = filterByTrailers(res!);
+        setVideos(trailers);
       }
     } catch (error: any) {
       console.error(error.message);

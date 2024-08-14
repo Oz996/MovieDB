@@ -12,7 +12,7 @@ import { getBaseUrl } from "@/lib/utils";
 
 export default function NavbarDesktop() {
   return (
-    <header className="absolute top-0 left-0 right-0 w-full h-[4rem] bg-black flex items-center md:px-6 text-white max-md:hidden">
+    <header className="absolute inset-0 h-[4rem] bg-black flex items-center md:px-6 text-white max-md:hidden">
       <div className="container flex items-center gap-5 ">
         <Link href="/" className="text-3xl font-bold tracking-[2px]">
           MovieDB

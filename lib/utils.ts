@@ -1,3 +1,4 @@
+import { Trailer } from "@/types";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -39,4 +40,9 @@ export const handleDisplayImage = (width: string, path: string) => {
   } else {
     return "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png";
   }
+};
+
+export const filterByTrailers = (arr: Trailer[]) => {
+  const trailers = arr?.filter((item) => item.type === "Trailer");
+  return trailers;
 };
