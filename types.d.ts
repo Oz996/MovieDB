@@ -199,93 +199,34 @@ export interface Keyword {
   name: string;
 }
 
-export interface Credit {
-  adult: boolean;
-  cast_id: number;
-  credit_id: string;
-  gender: number;
-  id: number;
-  known_for_department: string;
-  name: string;
-  original_name: string;
-  popularity: number;
-  profile_path: string;
-}
-
 export interface Crew {
-  adult: false;
-  backdrop_path: string;
-  credit_id: string;
-  department: string;
-  genre_ids: number[];
   id: number;
   job: string;
   media_type: string;
-  original_language: string;
-  original_title?: string;
-  original_name?: string;
-  overview: string;
   popularity: number;
   poster_path?: string;
-  profile_path?: string;
-  release_date: string;
   title?: string;
   name?: string;
-  video: false;
-  vote_average: number;
-  vote_count: number;
   episode_count?: number;
 }
 
 export interface Cast {
-  adult: false;
-  backdrop_path: string;
   character: string;
-  credit_id: string;
   episode_count: number;
-  release_date?: string;
-  first_air_date?: string;
-  genre_ids: number[];
   id: number;
   media_type: string;
   title?: string;
   name?: string;
-  origin_country: string[];
-  original_language: string;
-  original_title?: string;
-  original_name?: string;
-  overview: string;
   popularity: number;
   poster_path?: string;
   profile_path?: string;
-  vote_average: number;
-  vote_count: number;
 }
 
 export interface Trailer {
   id: string;
-  iso_639_1: string;
-  iso_3166_1: string;
   key: string;
   name: string;
-  official: true;
-  published_at: string;
-  site: string;
-  size: number;
   type: string;
-}
-
-export interface SpokenLanguage {
-  english_name: string;
-  iso_639_1: string;
-  name: string;
-}
-
-export interface BelongsTo {
-  backdrop_path: string;
-  id: number;
-  name: string;
-  poster_path: string;
 }
 
 export interface Genre {

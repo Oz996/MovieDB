@@ -20,7 +20,7 @@ export default function Filmography({ person }: props) {
 
     const uniqueMedia = new Map();
     for (const media of cast) {
-      const title = media.original_title || media.original_name;
+      const title = media.title || media.name;
       if (!uniqueMedia.has(title)) {
         uniqueMedia.set(title, media);
       }
@@ -49,7 +49,7 @@ export default function Filmography({ person }: props) {
     for (const media of crew) {
       // creating a title-job key combination in order to keep track of unique items based on those instead of just title
       // because some titles exist under different jobs
-      const title = media.original_title || media.original_name;
+      const title = media.title || media.name;
       const key = `${title}-${media.job}`;
       if (!uniqueMedia.has(key)) {
         uniqueMedia.set(key, media);

@@ -121,8 +121,6 @@ export default function Banner({
 
   const trailerToDisplay = videos[0]?.key;
 
-  console.log("vidss", videos);
-
   const fetchVideos = async () => {
     try {
       if (movie) {

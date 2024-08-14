@@ -1,4 +1,4 @@
-import { Result } from "@/types";
+import { Movie, Result, TvShow } from "@/types";
 import { getMovieList } from "./movies";
 import options from "./options";
 
@@ -9,7 +9,7 @@ export const getAllTrending = async (time: string = "day") => {
       options
     );
     const data = await res.json();
-    const results = data.results as Result[];
+    const results = data.results as Movie[] | TvShow[];
     return results;
   } catch (error: any) {
     console.error(error.message);
