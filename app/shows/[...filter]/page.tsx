@@ -1,17 +1,14 @@
 "use client";
 import FilterMenu from "@/components/FilterMenu";
-import MediaCard from "@/components/MediaCard";
+import TvShowCard from "@/components/Header/components/cards/TvShowCard";
 import { Button } from "@/components/ui/button";
-import { formatDate, handleDisplayImage } from "@/lib/utils";
 import { getTvShows } from "@/services/tvShows";
-import { QueryData, Result } from "@/types";
+import { QueryData, Result, TvShow } from "@/types";
 import { useMediaQuery } from "@uidotdev/usehooks";
-import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 export default function Shows({ params }: { params: { filter: string[] } }) {
-  const [tvShows, setTvShows] = useState<Result[] | undefined>([]);
+  const [tvShows, setTvShows] = useState<TvShow[] | undefined>([]);
   const [filterMenu, setFilterMenu] = useState(false);
   const initialData: QueryData = {
     sort: "popularity.desc",
@@ -75,8 +72,8 @@ export default function Shows({ params }: { params: { filter: string[] } }) {
           )}
         </dialog>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-y-8 sm:col-span-3">
-          {tvShows?.map((show) => (
-            <MediaCard key={show.id} item={show} />
+          {tvShows?.map((tvShow) => (
+            <TvShowCard key={tvShow.id} tvShow={tvShow} />
           ))}
         </div>
       </div>

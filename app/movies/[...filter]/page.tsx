@@ -1,14 +1,14 @@
 "use client";
 import FilterMenu from "@/components/FilterMenu";
-import MediaCard from "@/components/MediaCard";
+import MovieCard from "@/components/Header/components/cards/MovieCard";
 import { Button } from "@/components/ui/button";
 import { getMovies } from "@/services/movies";
-import { QueryData, Result } from "@/types";
+import { Movie, QueryData, Result } from "@/types";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { useEffect, useRef, useState } from "react";
 
 export default function Movies({ params }: { params: { filter: string[] } }) {
-  const [movies, setMovies] = useState<Result[] | undefined>([]);
+  const [movies, setMovies] = useState<Movie[] | undefined>([]);
   const [filterMenu, setFilterMenu] = useState(false);
   const initialData: QueryData = {
     sort: "popularity.desc",
@@ -74,7 +74,7 @@ export default function Movies({ params }: { params: { filter: string[] } }) {
         </dialog>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-y-8 sm:col-span-3">
           {movies?.map((movie) => (
-            <MediaCard key={movie.id} item={movie} />
+            <MovieCard key={movie.id} movie={movie} />
           ))}
         </div>
       </div>

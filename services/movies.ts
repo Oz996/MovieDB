@@ -50,7 +50,7 @@ export const getMovies = async (queryData: QueryData) => {
 
     const res = await fetch(url.toString(), options);
     const data = await res.json();
-    const results = data.results as Result[];
+    const results = data.results as Movie[];
     return results;
   } catch (error: any) {
     console.error(error.message);
