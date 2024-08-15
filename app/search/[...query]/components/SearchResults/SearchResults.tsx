@@ -27,13 +27,13 @@ export default function SearchResults({
     else if (searchType === "movie") return "movie";
     else if (searchType === "person") return "person";
   };
+
   return (
     <section className="lg:col-span-2 lg:-ml-20 max-lg:pt-5 space-y-5">
       {searchResults?.length === 0 && (
         <p className="text-lg">There are no results that matched your query.</p>
       )}
       {searchResults?.map((item) => {
-        // console.log(`item, ${i}`, item);
         const person = item?.known_for_department;
         const title = item?.name || item?.title;
         const date = item?.first_air_date || item?.release_date;

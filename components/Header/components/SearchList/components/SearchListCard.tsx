@@ -44,16 +44,17 @@ export default function SearchListCard({
         onClick={handleCloseList}
       >
         {isLoading ? (
-          <Skeleton className="w-8 h-12" />
+          <>
+            <Skeleton className="w-8 h-12" />
+            <Skeleton className="w-[20rem] h-[1.3rem]" />
+          </>
         ) : (
-          <Image src={image} width={30} height={30} alt="" />
-        )}
-        {isLoading ? (
-          <Skeleton className="w-[20rem] h-[1.3rem]" />
-        ) : (
-          <div>
-            <p>{title}</p>
-          </div>
+          <>
+            <Image src={image} width={30} height={30} alt="" />
+            <div>
+              <p>{title}</p>
+            </div>
+          </>
         )}{" "}
       </Link>
     </motion.li>

@@ -99,7 +99,7 @@ export interface MediaInterface {
 }
 
 export interface TvShow extends MediaInterface {
-  created_by: CreatedBy[];
+  created_by: Crew[];
   first_air_date: string;
   in_production: boolean;
   keywords: {
@@ -126,14 +126,6 @@ export interface Network {
   logo_path: string;
   name: string;
   origin_country: string;
-}
-
-export interface CreatedBy {
-  id: number;
-  credit_id: string;
-  name: string;
-  original_name: string;
-  profile_path: string;
 }
 
 export interface Similar {
