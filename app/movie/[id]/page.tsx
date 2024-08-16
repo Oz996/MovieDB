@@ -42,7 +42,7 @@ export default function Movie({ params }: { params: { id: string } }) {
             cast={movie?.credits?.cast.slice(0, 8)!}
             isLoading={isLoading}
           />
-          <ReviewSection movie={movie!} />
+          <ReviewSection reviews={movie?.reviews.results!} />
           <MediaCarousel
             id={params.id}
             videos={videos}

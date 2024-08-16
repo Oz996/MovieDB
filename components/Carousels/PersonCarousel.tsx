@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/carousel";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Cast, Movie, TvShow } from "@/types";
+import { Cast } from "@/types";
 import { handleDisplayImage } from "@/lib/utils";
 import LoaderCarousel from "./LoaderCarousel";
 

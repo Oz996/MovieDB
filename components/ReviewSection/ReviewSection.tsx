@@ -1,4 +1,4 @@
-import { Movie, Review, TvShow } from "@/types";
+import { Review } from "@/types";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
@@ -14,26 +14,24 @@ import ReviewCard from "./components/ReviewCard";
 import classNames from "classnames";
 
 interface props {
-  movie?: Movie;
-  tvShow?: TvShow;
+  reviews: Review[];
 }
 
-export default function ReviewSection({ movie, tvShow }: props) {
+export default function ReviewSection({ reviews }: props) {
   const [showAll, setShowAll] = useState(false);
-  const [reviews, setReviews] = useState<Review[]>();
+  const [reviewList, setReviewList] = useState<Review[]>();
   const [currentPage, setCurrentPage] = useState(1);
-  const reviewsPerPage = 5;
 
-  const allReviews = movie?.reviews?.results || tvShow?.reviews?.results;
-  const totalPages = Math.ceil(allReviews?.length! / reviewsPerPage);
+  const reviewsPerPage = 5;
+  const totalPages = Math.ceil(reviews?.length! / reviewsPerPage);
 
   useEffect(() => {
     const startIndex = (currentPage - 1) * reviewsPerPage;
     const endIndex = startIndex + reviewsPerPage;
-    setReviews(allReviews?.slice(startIndex, endIndex));
-  }, [currentPage, allReviews]);
+    setReviewList(reviews?.slice(startIndex, endIndex));
+  }, [currentPage, reviews]);
 
-  const review = reviews?.[0];
+  const review = reviewList?.[0];
 
   const handleShowReviews = () => {
     setShowAll(true);
@@ -41,7 +39,7 @@ export default function ReviewSection({ movie, tvShow }: props) {
 
   const handleHideReviews = () => {
     if (currentPage !== 1) {
-      setReviews(allReviews?.slice(0, 5));
+      setReviewList(reviews?.slice(0, 5));
       setCurrentPage(1);
     }
     setShowAll(false);
@@ -67,7 +65,7 @@ export default function ReviewSection({ movie, tvShow }: props) {
     return pages;
   };
 
-  if (reviews?.length === 0)
+  if (reviewList?.length === 0)
     return (
       <section>
         <h2 className="text-title font-semibold py-5">Reviews</h2>
@@ -80,10 +78,10 @@ export default function ReviewSection({ movie, tvShow }: props) {
       <h2 className="text-title font-semibold py-5">Reviews</h2>
       {showAll ? (
         <div className="space-y-5">
-          {reviews?.map((review) => (
+          {reviewList?.map((review) => (
             <ReviewCard key={review.id} review={review} />
           ))}
-          {reviews?.length! > 1 && (
+          {reviewList?.length! > 1 && (
             <Button
               onClick={handleHideReviews}
               className="bg-transparent border-none p-0 hover:bg-transparent text-black"
@@ -92,7 +90,7 @@ export default function ReviewSection({ movie, tvShow }: props) {
               <ChevronUp size={20} />
             </Button>
           )}
-          {allReviews?.length! > 5 && (
+          {reviews?.length! > 5 && (
             <Pagination>
               <PaginationContent>
                 <PaginationItem>
@@ -133,7 +131,7 @@ export default function ReviewSection({ movie, tvShow }: props) {
         <div>
           <ReviewCard review={review!} />
 
-          {reviews?.length! > 1 && (
+          {reviewList?.length! > 1 && (
             <Button
               onClick={handleShowReviews}
               className="bg-transparent border-none p-0 hover:bg-transparent text-black"
