@@ -1,5 +1,5 @@
 "use client";
-import { Result } from "@/types";
+import { Movie } from "@/types";
 import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -22,7 +22,7 @@ import CarouselCard from "./CarouselCard";
 
 export default function PopularCarousel() {
   const [isLoading, setIsLoading] = useState(true);
-  const [popular, setPopular] = useState<Result[] | undefined>([]);
+  const [popular, setPopular] = useState<Movie[] | undefined>([]);
   const [popularType, setPopularType] = useState("now_playing");
 
   useEffect(() => {
@@ -92,8 +92,15 @@ export default function PopularCarousel() {
         <TabsContent value="now_playing">
           <Carousel className="bg-slate-100 rounded-xl pl-2">
             <CarouselContent className="-ml-1">
-              {popular?.map((item) => (
-                <CarouselCard key={item.id} item={item} type="movie" />
+              {popular?.map((movie) => (
+                <CarouselCard
+                  type="movie"
+                  key={movie.id}
+                  id={movie.id}
+                  title={movie.title!}
+                  date={movie.release_date!}
+                  image={movie.poster_path!}
+                />
               ))}
             </CarouselContent>
             <CarouselPrevious />
@@ -103,8 +110,15 @@ export default function PopularCarousel() {
         <TabsContent value="top_rated">
           <Carousel>
             <CarouselContent className="-ml-1">
-              {popular?.map((item) => (
-                <CarouselCard key={item.id} item={item} />
+              {popular?.map((movie) => (
+                <CarouselCard
+                  type="movie"
+                  key={movie.id}
+                  id={movie.id}
+                  title={movie.title!}
+                  date={movie.release_date!}
+                  image={movie.poster_path!}
+                />
               ))}
             </CarouselContent>
             <CarouselPrevious />
@@ -114,8 +128,15 @@ export default function PopularCarousel() {
         <TabsContent value="upcoming">
           <Carousel>
             <CarouselContent className="-ml-1">
-              {popular?.map((item) => (
-                <CarouselCard key={item.id} item={item} />
+              {popular?.map((movie) => (
+                <CarouselCard
+                  type="movie"
+                  key={movie.id}
+                  id={movie.id}
+                  title={movie.title!}
+                  date={movie.release_date!}
+                  image={movie.poster_path!}
+                />
               ))}
             </CarouselContent>
             <CarouselPrevious />

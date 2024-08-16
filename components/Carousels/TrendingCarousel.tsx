@@ -85,7 +85,14 @@ export default function TrendingCarousel() {
           <Carousel>
             <CarouselContent className="-ml-1">
               {trending?.map((item) => (
-                <CarouselCard key={item.id} item={item} />
+                <CarouselCard
+                  type={item.media_type}
+                  key={item.id}
+                  id={item.id}
+                  title={item.title || item.name!}
+                  date={item.release_date || item.first_air_date!}
+                  image={item.poster_path!}
+                />
               ))}
             </CarouselContent>
             <CarouselPrevious />
@@ -96,7 +103,14 @@ export default function TrendingCarousel() {
           <Carousel>
             <CarouselContent className="-ml-1">
               {trending?.map((item) => (
-                <CarouselCard key={item.id} item={item} />
+                <CarouselCard
+                  type={item.media_type}
+                  key={item.id}
+                  id={item.id}
+                  title={item.title || item.name!}
+                  date={item.release_date || item.first_air_date!}
+                  image={item.poster_path!}
+                />
               ))}
             </CarouselContent>
             <CarouselPrevious />

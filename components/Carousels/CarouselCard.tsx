@@ -6,21 +6,17 @@ import { getBaseUrl, handleDisplayImage } from "@/lib/utils";
 import { CarouselItem } from "../ui/carousel";
 
 interface props {
-  item: Result;
-  type?: "tv" | "movie";
+  id: number;
+  type: string;
+  title: string;
+  date: string;
+  image: string;
 }
 
-export default function CarouselCard({ item, type }: props) {
-  const title = item?.name || item?.title;
-  const date = item?.first_air_date || item?.release_date;
-  const imageToDisplay = item?.poster_path || item?.profile_path;
-  const image = handleDisplayImage("w342", imageToDisplay!);
+export default function CarouselCard({ id, type, title, date, image }: props) {
   return (
-    <CarouselItem
-      key={item.id}
-      className="pl-1 basis-1/1 sm:basis-1/3 md:basis-1/3 lg:basis-1/6"
-    >
-      <Link href={getBaseUrl() + `/${item.media_type ?? type}/${item.id}`}>
+    <CarouselItem className="pl-1 basis-1/1 sm:basis-1/3 md:basis-1/3 lg:basis-1/6">
+      <Link href={getBaseUrl() + `/${type}/${id}`}>
         <motion.div
           className="p-1 flex items-center justify-center"
           initial={{ opacity: 0 }}
@@ -31,7 +27,7 @@ export default function CarouselCard({ item, type }: props) {
             <div className="flex">
               <Image
                 className="rounded-lg"
-                src={image}
+                src={handleDisplayImage("w342", image)}
                 width={150}
                 height={150}
                 alt=""

@@ -1,5 +1,5 @@
 "use client";
-import { Result } from "@/types";
+import { TvShow } from "@/types";
 import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -22,7 +22,7 @@ import LoaderCarousel from "./LoaderCarousel";
 import CarouselCard from "./CarouselCard";
 export default function TvShowsCarousel() {
   const [isLoading, setIsLoading] = useState(false);
-  const [shows, setShows] = useState<Result[] | undefined>([]);
+  const [shows, setShows] = useState<TvShow[] | undefined>([]);
   const [showsType, setshowsType] = useState("free");
   const [hasRendered, setHasRendered] = useState(false);
 
@@ -109,8 +109,15 @@ export default function TvShowsCarousel() {
         <TabsContent value="free">
           <Carousel>
             <CarouselContent className="-ml-1">
-              {shows?.map((item) => (
-                <CarouselCard key={item.id} item={item} type="tv" />
+              {shows?.map((tvShow) => (
+                <CarouselCard
+                  type="tv"
+                  key={tvShow.id}
+                  id={tvShow.id}
+                  title={tvShow.name}
+                  date={tvShow.first_air_date}
+                  image={tvShow.poster_path}
+                />
               ))}
             </CarouselContent>
             <CarouselPrevious />
@@ -120,8 +127,15 @@ export default function TvShowsCarousel() {
         <TabsContent value="rent">
           <Carousel>
             <CarouselContent className="-ml-1">
-              {shows?.map((item) => (
-                <CarouselCard key={item.id} item={item} type="tv" />
+              {shows?.map((tvShow) => (
+                <CarouselCard
+                  type="tv"
+                  key={tvShow.id}
+                  id={tvShow.id}
+                  title={tvShow.name}
+                  date={tvShow.first_air_date}
+                  image={tvShow.poster_path}
+                />
               ))}
             </CarouselContent>
             <CarouselPrevious />
@@ -131,8 +145,15 @@ export default function TvShowsCarousel() {
         <TabsContent value="buy">
           <Carousel>
             <CarouselContent className="-ml-1">
-              {shows?.map((item) => (
-                <CarouselCard key={item.id} item={item} type="tv" />
+              {shows?.map((tvShow) => (
+                <CarouselCard
+                  type="tv"
+                  key={tvShow.id}
+                  id={tvShow.id}
+                  title={tvShow.name}
+                  date={tvShow.first_air_date}
+                  image={tvShow.poster_path}
+                />
               ))}
             </CarouselContent>
             <CarouselPrevious />
