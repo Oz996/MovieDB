@@ -8,20 +8,16 @@ import {
 } from "@/components/ui/carousel";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Movie, TvShow } from "@/types";
+import { Cast, Movie, TvShow } from "@/types";
 import { handleDisplayImage } from "@/lib/utils";
 import LoaderCarousel from "./LoaderCarousel";
 
 interface props {
-  movie?: Movie;
-  tvShow?: TvShow;
+  cast: Cast[];
   isLoading: boolean;
 }
 
-export default function PersonCarousel({ movie, tvShow, isLoading }: props) {
-  const cast =
-    movie?.credits?.cast.slice(0, 8) || tvShow?.credits?.cast.slice(0, 8);
-
+export default function PersonCarousel({ cast, isLoading }: props) {
   if (isLoading) return <LoaderCarousel />;
 
   return (

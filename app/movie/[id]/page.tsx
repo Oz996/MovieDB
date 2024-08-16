@@ -38,7 +38,10 @@ export default function Movie({ params }: { params: { id: string } }) {
       />
       <section className="grid grid-cols-1 md:grid-cols-4 container">
         <div className="col-span-3 space-y-5">
-          <PersonCarousel movie={movie!} isLoading={isLoading} />
+          <PersonCarousel
+            cast={movie?.credits?.cast.slice(0, 8)!}
+            isLoading={isLoading}
+          />
           <ReviewSection movie={movie!} />
           <MediaCarousel
             id={params.id}
