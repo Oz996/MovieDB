@@ -4,51 +4,65 @@ import classNames from "classnames";
 import Link from "next/link";
 
 interface props {
+  id: number;
+  title: string;
+  date: string;
+  media_type: string;
+  episode_count?: number | null;
+  character?: string;
+  job?: string;
   array: Crew[] | Cast[];
-  item: Crew | Cast;
   i: number;
 }
 
-const dateToDisplay = (year: number) => {
-  if (!year) return "TBA";
-  else return year;
-};
+export default function FilmographyCard({
+  id,
+  title,
+  date,
+  media_type,
+  episode_count,
+  character,
+  job,
+  array,
+  i,
+}: props) {
+  const dateToDisplay = (year: number) => {
+    if (!year) return "TBA";
+    else return year;
+  };
 
-const getDate = (item: any) => {
-  const date = new Date(item.release_date || item.first_air_date).getFullYear();
-  return date;
-};
+  const getYear = (date: any) =>
+    new Date(date || date?.release_date || date?.first_air_date).getFullYear();
 
-export default function FilmographyCard({ item, array, i }: props) {
-  const title = item.name || item.title;
-  const date = getDate(item);
-  const nextDate = array[i + 1] ? getDate(array[i + 1]) : null;
+  const currentDate = getYear(date);
+  const nextDate = array[i + 1]
+    ? getYear(array[i + 1].release_date || array[i + 1].first_air_date)
+    : null;
   const lastIndex = array.length - 1;
 
   return (
     <li
       className={classNames({
-        "border-b border-slate-300":
-          date !== nextDate && i !== lastIndex && getDate(item),
+        "border-b border-slate-300 pb-3":
+          currentDate !== nextDate && i !== lastIndex && currentDate,
       })}
     >
       <div className="flex gap-2">
-        <p>{dateToDisplay(date)}</p>
-        <Link href={getBaseUrl() + `/${item.media_type}/${item.id}`}>
+        <p>{dateToDisplay(currentDate)}</p>
+        <Link href={getBaseUrl() + `/${media_type}/${id}`}>
           <p className="font-semibold">{title}</p>
         </Link>
       </div>
-      {"character" in item && (
-        <p className="text-gray-400 pl-10 pb-2">
-          {item.episode_count && `(${item.episode_count} episodes)`}
-          {item.character && " as "}
-          <span className="text-gray-600">{item.character}</span>
+      {character && (
+        <p className="text-gray-400 pl-10">
+          {episode_count && `(${episode_count} episodes)`} as{" "}
+          <span className="text-gray-600">{character}</span>
         </p>
       )}
-      {"job" in item && (
-        <p className="text-gray-400 pl-10 pb-2">
-          {item.episode_count && `(${item.episode_count} episodes)`}{" "}
-          <span className="text-gray-600">...{item.job}</span>
+      {job && (
+        <p className="text-gray-400 pl-10">
+          {episode_count && `(${episode_count} episodes)`}{" "}
+          <span className="text-gray-600">...{job}</span>
         </p>
       )}
     </li>

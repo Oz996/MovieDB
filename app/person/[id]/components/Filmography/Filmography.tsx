@@ -38,7 +38,6 @@ export default function Filmography({ person }: props) {
 
       return dateB - dateA;
     });
-
     setActing(sorted);
   }, [cast]);
 
@@ -89,7 +88,12 @@ export default function Filmography({ person }: props) {
             {acting?.map((item, index) => (
               <FilmographyCard
                 key={item.id}
-                item={item}
+                id={item.id}
+                title={item.title || item.name!}
+                character={item.character}
+                date={item.release_date || item.first_air_date!}
+                media_type={item.media_type}
+                episode_count={item.episode_count ?? null}
                 array={acting}
                 i={index}
               />
@@ -104,7 +108,12 @@ export default function Filmography({ person }: props) {
             {production?.map((item, index) => (
               <FilmographyCard
                 key={item.id}
-                item={item}
+                id={item.id}
+                title={item.title || item.name!}
+                job={item.job}
+                date={item.release_date || item.first_air_date!}
+                media_type={item.media_type}
+                episode_count={item.episode_count ?? null}
                 array={production}
                 i={index}
               />
@@ -119,7 +128,12 @@ export default function Filmography({ person }: props) {
             {writing?.map((item, index) => (
               <FilmographyCard
                 key={item.id}
-                item={item}
+                id={item.id}
+                title={item.title || item.name!}
+                job={item.job}
+                date={item.release_date || item.first_air_date!}
+                media_type={item.media_type}
+                episode_count={item.episode_count ?? null}
                 array={writing}
                 i={index}
               />
@@ -134,7 +148,12 @@ export default function Filmography({ person }: props) {
             {creator?.map((item, index) => (
               <FilmographyCard
                 key={item.id}
-                item={item}
+                id={item.id}
+                title={item.title || item.name!}
+                job={item.job}
+                date={item.release_date || item.first_air_date!}
+                media_type={item.media_type}
+                episode_count={item.episode_count ?? null}
                 array={creator}
                 i={index}
               />

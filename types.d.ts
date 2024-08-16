@@ -200,6 +200,9 @@ export interface Crew {
   title?: string;
   name?: string;
   episode_count?: number;
+  media_type: "movie" | "tv";
+  name?: string;
+  title: string;
 }
 
 export interface Cast {
@@ -212,6 +215,9 @@ export interface Cast {
   popularity: number;
   poster_path?: string;
   profile_path?: string;
+  media_type: "movie" | "tv";
+  name?: string;
+  title: string;
 }
 
 export interface Trailer {
