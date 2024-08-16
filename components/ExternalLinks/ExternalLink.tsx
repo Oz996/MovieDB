@@ -36,17 +36,19 @@ export default function ExternalLink({ link, website }: props) {
   };
 
   return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <a href={handleLink()} target="_blank">
-            {handleIcon()}
-          </a>
-        </TooltipTrigger>
-        <TooltipContent className="bg-black text-white border-none">
-          <p className="text-lg capitalize">{`visit ${website}`}</p>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+    <div className={website === "homepage" ? "border-l pl-4" : ""}>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <a href={handleLink()} target="_blank" rel="noopener noreferrer">
+              {handleIcon()}
+            </a>
+          </TooltipTrigger>
+          <TooltipContent className="bg-black text-white border-none">
+            <p className="text-lg capitalize">{`visit ${website}`}</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    </div>
   );
 }

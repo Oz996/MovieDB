@@ -4,7 +4,7 @@ import MediaCarousel from "@/components/Carousels/MediaCarousel";
 import PersonCarousel from "@/components/Carousels/PersonCarousel";
 import SimilarCarousel from "@/components/Carousels/SimilarCarousel";
 import ReviewSection from "@/components/ReviewSection/ReviewSection";
-import SideContent from "@/components/SideContent";
+import TvShowAside from "@/components/TvShowAside";
 import { getTvShowDetails } from "@/services/tvShows";
 import { Trailer, TvShow } from "@/types";
 import { useEffect, useState } from "react";
@@ -44,14 +44,27 @@ export default function Movie({ params }: { params: { id: string } }) {
           />
           <ReviewSection reviews={tvShow?.reviews.results!} />
           <MediaCarousel
+            type="tv"
             id={params.id}
             videos={videos}
             setVideos={setVideos}
-            type="tv"
           />
-          <SimilarCarousel id={params.id} type="tv" />
+          <SimilarCarousel
+            type="tv"
+            id={params.id}
+            title={tvShow?.name!}
+            image={tvShow?.poster_path!}
+            rating={Math.ceil(tvShow?.vote_average! * 10)}
+          />
         </div>
-        <SideContent tvShow={tvShow!} />
+        <TvShowAside
+          homepage={tvShow?.homepage!}
+          networks={tvShow?.networks!}
+          keywords={tvShow?.keywords.results!}
+          language={tvShow?.original_language!}
+          links={tvShow?.external_ids!}
+          status={tvShow?.status!}
+        />
       </section>
     </section>
   );

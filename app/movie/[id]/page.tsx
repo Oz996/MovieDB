@@ -3,11 +3,11 @@ import { getMovieDetails } from "@/services/movies";
 import { useEffect, useState } from "react";
 import { Movie as IMovie, Trailer } from "@/types";
 import PersonCarousel from "@/components/Carousels/PersonCarousel";
-import SideContent from "@/components/SideContent";
 import MediaCarousel from "@/components/Carousels/MediaCarousel";
 import SimilarCarousel from "@/components/Carousels/SimilarCarousel";
 import ReviewSection from "@/components/ReviewSection/ReviewSection";
 import MovieBanner from "@/components/Banner/MovieBanner";
+import MovieAside from "@/components/MovieAside";
 
 export default function Movie({ params }: { params: { id: string } }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -44,14 +44,28 @@ export default function Movie({ params }: { params: { id: string } }) {
           />
           <ReviewSection reviews={movie?.reviews.results!} />
           <MediaCarousel
+            type="movie"
             id={params.id}
             videos={videos}
             setVideos={setVideos}
-            type="movie"
           />
-          <SimilarCarousel id={params.id} type="movie" />
+          <SimilarCarousel
+            type="movie"
+            id={params.id}
+            title={movie?.title!}
+            image={movie?.poster_path!}
+            rating={Math.ceil(movie?.vote_average! * 10)}
+          />
         </div>
-        <SideContent movie={movie!} />
+        <MovieAside
+          homepage={movie?.homepage!}
+          keywords={movie?.keywords.keywords!}
+          language={movie?.original_language!}
+          revenue={movie?.revenue!}
+          budget={movie?.budget!}
+          links={movie?.external_ids!}
+          status={movie?.status!}
+        />
       </section>
     </section>
   );

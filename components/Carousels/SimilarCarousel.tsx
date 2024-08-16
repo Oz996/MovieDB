@@ -17,10 +17,19 @@ import { getTvShowSimilar } from "@/services/tvShows";
 
 interface props {
   id: string;
+  title: string;
   type: "movie" | "tv";
+  image: string;
+  rating: number;
 }
 
-export default function SimilarCarousel({ id, type }: props) {
+export default function SimilarCarousel({
+  id,
+  title,
+  type,
+  image,
+  rating,
+}: props) {
   const [isLoading, setIsLoading] = useState(false);
   const [similar, setSimilar] = useState<Similar[] | undefined>([]);
 
@@ -63,39 +72,34 @@ export default function SimilarCarousel({ id, type }: props) {
       <h2 className="text-title font-semibold pb-8 pr-5">Similar</h2>
       <Carousel>
         <CarouselContent>
-          {similarsToDisplay?.map((item) => {
-            const rating = Math.ceil(item?.vote_average! * 10);
-            const title = item?.title || item?.name;
-
-            return (
-              <CarouselItem
-                key={item.id}
-                className="basis-1/3 lg:basis-1/4 shrink-0 pr-6 space-y-2 self-center"
-              >
-                <Link href={getBaseUrl() + `/movie/${item.id}`}>
-                  <Image
-                    src={handleDisplayImage(
-                      "w250_and_h141_face",
-                      item.poster_path
-                    )}
-                    width={270}
-                    height={270}
-                    alt=""
-                    className="rounded-lg max-h-[7.5rem]"
-                  />
+          {similarsToDisplay?.map((item) => (
+            <CarouselItem
+              key={item.id}
+              className="basis-1/3 lg:basis-1/4 shrink-0 pr-6 space-y-2 self-center"
+            >
+              <Link href={getBaseUrl() + `/movie/${item.id}`}>
+                <Image
+                  src={handleDisplayImage(
+                    "w250_and_h141_face",
+                    item.poster_path
+                  )}
+                  width={270}
+                  height={270}
+                  alt=""
+                  className="rounded-lg max-h-[7.5rem]"
+                />
+              </Link>
+              <div className="flex justify-between">
+                <Link
+                  href={getBaseUrl() + `/movie/${item.id}`}
+                  className="truncate pr-3"
+                >
+                  <span>{item.title || item.name}</span>
                 </Link>
-                <div className="flex justify-between">
-                  <Link
-                    href={getBaseUrl() + `/movie/${item.id}`}
-                    className="truncate pr-3"
-                  >
-                    <span>{title}</span>
-                  </Link>
-                  <span>{rating}%</span>
-                </div>
-              </CarouselItem>
-            );
-          })}
+                <span>{rating}%</span>
+              </div>
+            </CarouselItem>
+          ))}
         </CarouselContent>
         <CarouselPrevious />
         <CarouselNext className="max-md:mr-5" />

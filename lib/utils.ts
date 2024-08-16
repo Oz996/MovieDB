@@ -17,6 +17,7 @@ export const getBaseUrl = () => {
 };
 
 export const formatToDollars = (number: number) => {
+  if (!number) return "N/A";
   const formattedNumber = number.toLocaleString("en-US", {
     style: "currency",
     currency: "USD",

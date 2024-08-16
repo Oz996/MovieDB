@@ -185,6 +185,7 @@ export interface ExternalLinks {
   instagram_id: string | null;
   twitter_id: string | null;
   wikidata_id: string | null;
+  homepage: string | null;
 }
 
 export interface Keyword {

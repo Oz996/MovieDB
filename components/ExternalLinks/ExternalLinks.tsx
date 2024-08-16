@@ -1,34 +1,24 @@
-import { Movie, Person, TvShow } from "@/types";
+import { ExternalLinks as ILinks, Movie, Person, TvShow } from "@/types";
 import ExternalLink from "./ExternalLink";
 
 interface props {
-  movie?: Movie | null;
-  tvShow?: TvShow | null;
-  person?: Person | null;
+  links: ILinks;
+  homepage: string;
 }
 
-export default function ExternalLinks({ movie, tvShow, person }: props) {
-  const item = movie || tvShow || person;
+export default function ExternalLinks({ links, homepage }: props) {
   return (
     <div className="flex gap-5">
-      {item?.external_ids?.facebook_id && (
-        <ExternalLink
-          link={item?.external_ids?.facebook_id}
-          website="facebook"
-        />
+      {links?.facebook_id && (
+        <ExternalLink link={links?.facebook_id} website="facebook" />
       )}
-      {item?.external_ids?.twitter_id && (
-        <ExternalLink link={item?.external_ids?.twitter_id} website="twitter" />
+      {links?.twitter_id && (
+        <ExternalLink link={links?.twitter_id} website="twitter" />
       )}
-      {item?.external_ids?.instagram_id && (
-        <ExternalLink
-          link={item?.external_ids?.instagram_id}
-          website="instagram"
-        />
+      {links?.instagram_id && (
+        <ExternalLink link={links?.instagram_id} website="instagram" />
       )}
-      {item?.homepage && (
-        <ExternalLink link={item?.homepage} website="homepage" />
-      )}
+      {homepage && <ExternalLink link={homepage} website="homepage" />}
     </div>
   );
 }
