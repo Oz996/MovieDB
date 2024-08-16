@@ -1,5 +1,5 @@
 "use client";
-import Banner from "@/components/Banner/Banner";
+import TvShowBanner from "@/components/Banner/TvShowBanner";
 import MediaCarousel from "@/components/Carousels/MediaCarousel";
 import PersonCarousel from "@/components/Carousels/PersonCarousel";
 import SimilarCarousel from "@/components/Carousels/SimilarCarousel";
@@ -30,7 +30,7 @@ export default function Movie({ params }: { params: { id: string } }) {
 
   return (
     <section className="flex flex-col">
-      <Banner
+      <TvShowBanner
         tvShow={tvShow!}
         videos={videos!}
         setVideos={setVideos!}

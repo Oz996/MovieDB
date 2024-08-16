@@ -2,13 +2,12 @@
 import { getMovieDetails } from "@/services/movies";
 import { useEffect, useState } from "react";
 import { Movie as IMovie, Trailer } from "@/types";
-import Banner from "@/components/Banner/Banner";
 import PersonCarousel from "@/components/Carousels/PersonCarousel";
 import SideContent from "@/components/SideContent";
-import "react-circular-progressbar/dist/styles.css";
 import MediaCarousel from "@/components/Carousels/MediaCarousel";
 import SimilarCarousel from "@/components/Carousels/SimilarCarousel";
 import ReviewSection from "@/components/ReviewSection/ReviewSection";
+import MovieBanner from "@/components/Banner/MovieBanner";
 
 export default function Movie({ params }: { params: { id: string } }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -31,7 +30,7 @@ export default function Movie({ params }: { params: { id: string } }) {
 
   return (
     <section className="flex flex-col">
-      <Banner
+      <MovieBanner
         movie={movie!}
         videos={videos!}
         setVideos={setVideos!}

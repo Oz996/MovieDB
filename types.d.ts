@@ -90,6 +90,7 @@ export interface MediaInterface {
   overview: string;
   popularity: number;
   poster_path: string;
+  backdrop_path: string;
   status: string;
   similar: Similar[];
   tagline: string;
@@ -203,6 +204,8 @@ export interface Crew {
   media_type: "movie" | "tv";
   name?: string;
   title: string;
+  release_date?: string;
+  first_air_date?: string;
 }
 
 export interface Cast {
@@ -218,6 +221,8 @@ export interface Cast {
   media_type: "movie" | "tv";
   name?: string;
   title: string;
+  release_date?: string;
+  first_air_date?: string;
 }
 
 export interface Trailer {
