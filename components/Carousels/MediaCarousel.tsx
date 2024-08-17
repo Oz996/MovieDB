@@ -1,5 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Movie, Image as ImageType, Trailer } from "@/types";
+import { Image as ImageType, Trailer } from "@/types";
 import {
   Carousel,
   CarouselContent,
@@ -77,8 +77,6 @@ export default function MediaCarousel({ id, videos, type, setVideos }: props) {
       }
     } catch (error: any) {
       console.error(error.message);
-    } finally {
-      setIsLoading(false);
     }
   };
 

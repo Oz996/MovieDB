@@ -21,7 +21,7 @@ export default function PersonCarousel({ cast }: props) {
       <h2 className="text-title font-semibold pb-5 pt-8">Top Billed Cast</h2>
       <Carousel className="rounded-xl pl-2 pr-6">
         <CarouselContent className="-ml-1">
-          {cast?.map((person) => {
+          {cast.map((person) => {
             return (
               <CarouselItem
                 key={person.id}
@@ -34,7 +34,7 @@ export default function PersonCarousel({ cast }: props) {
                         className="rounded-t-lg"
                         src={handleDisplayImage(
                           "original",
-                          person.profile_path!
+                          person.profile_path
                         )}
                         width={140}
                         height={140}

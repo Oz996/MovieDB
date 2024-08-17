@@ -30,7 +30,7 @@ export default function Movie({ params }: { params: { id: string } }) {
     fetchMovieDetails();
   }, [params.id]);
 
-  if (isLoading)
+  if (isLoading || !movie)
     return (
       <>
         <BannerLoader />
@@ -40,11 +40,11 @@ export default function Movie({ params }: { params: { id: string } }) {
 
   return (
     <section className="flex flex-col">
-      <MovieBanner movie={movie!} videos={videos!} setVideos={setVideos!} />
+      <MovieBanner movie={movie} videos={videos} setVideos={setVideos} />
       <section className="grid grid-cols-1 md:grid-cols-4 container">
         <div className="col-span-3 space-y-5">
-          <PersonCarousel cast={movie?.credits?.cast.slice(0, 8)!} />
-          <ReviewSection reviews={movie?.reviews.results!} />
+          <PersonCarousel cast={movie.credits.cast.slice(0, 8)} />
+          <ReviewSection reviews={movie.reviews.results} />
           <MediaCarousel
             type="movie"
             id={params.id}
@@ -54,19 +54,19 @@ export default function Movie({ params }: { params: { id: string } }) {
           <SimilarCarousel
             type="movie"
             id={params.id}
-            title={movie?.title!}
-            image={movie?.poster_path!}
-            rating={Math.ceil(movie?.vote_average! * 10)}
+            title={movie.title}
+            image={movie.poster_path}
+            rating={Math.ceil(movie.vote_average * 10)}
           />
         </div>
         <MovieAside
-          homepage={movie?.homepage!}
-          keywords={movie?.keywords.keywords!}
-          language={movie?.original_language!}
-          revenue={movie?.revenue!}
-          budget={movie?.budget!}
-          links={movie?.external_ids!}
-          status={movie?.status!}
+          homepage={movie.homepage}
+          keywords={movie.keywords.keywords}
+          language={movie.original_language}
+          revenue={movie.revenue}
+          budget={movie.budget}
+          links={movie.external_ids}
+          status={movie.status}
         />
       </section>
     </section>

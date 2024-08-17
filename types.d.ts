@@ -218,7 +218,7 @@ export interface Cast {
   name?: string;
   popularity: number;
   poster_path?: string;
-  profile_path?: string;
+  profile_path: string;
   media_type: "movie" | "tv";
   name?: string;
   title: string;

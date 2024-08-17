@@ -16,7 +16,7 @@ export default function Searchbar() {
   const [value, setValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showInput, setShowInput] = useState(false);
-  const [searchList, setSearchList] = useState<Result[] | undefined>([]);
+  const [searchList, setSearchList] = useState<Result[]>([]);
 
   const { setQuery, setCached, setType } = useSearch();
   const inputRef = useRef<HTMLInputElement>(null);

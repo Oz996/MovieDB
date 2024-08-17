@@ -19,19 +19,19 @@ interface props {
 
 export default function ReviewSection({ reviews }: props) {
   const [showAll, setShowAll] = useState(false);
-  const [reviewList, setReviewList] = useState<Review[]>();
+  const [reviewList, setReviewList] = useState<Review[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
 
   const reviewsPerPage = 5;
-  const totalPages = Math.ceil(reviews?.length! / reviewsPerPage);
+  const totalPages = Math.ceil(reviews.length! / reviewsPerPage);
 
   useEffect(() => {
     const startIndex = (currentPage - 1) * reviewsPerPage;
     const endIndex = startIndex + reviewsPerPage;
-    setReviewList(reviews?.slice(startIndex, endIndex));
+    setReviewList(reviews.slice(startIndex, endIndex));
   }, [currentPage, reviews]);
 
-  const review = reviewList?.[0];
+  const review = reviewList[0];
 
   const handleShowReviews = () => {
     setShowAll(true);
@@ -39,7 +39,7 @@ export default function ReviewSection({ reviews }: props) {
 
   const handleHideReviews = () => {
     if (currentPage !== 1) {
-      setReviewList(reviews?.slice(0, 5));
+      setReviewList(reviews.slice(0, 5));
       setCurrentPage(1);
     }
     setShowAll(false);
@@ -65,7 +65,7 @@ export default function ReviewSection({ reviews }: props) {
     return pages;
   };
 
-  if (reviewList?.length === 0)
+  if (reviewList.length === 0)
     return (
       <section>
         <h2 className="text-title font-semibold py-5">Reviews</h2>
@@ -78,10 +78,10 @@ export default function ReviewSection({ reviews }: props) {
       <h2 className="text-title font-semibold py-5">Reviews</h2>
       {showAll ? (
         <div className="space-y-5">
-          {reviewList?.map((review) => (
+          {reviewList.map((review) => (
             <ReviewCard key={review.id} review={review} />
           ))}
-          {reviewList?.length! > 1 && (
+          {reviewList.length! > 1 && (
             <Button
               onClick={handleHideReviews}
               className="bg-transparent border-none p-0 hover:bg-transparent text-black"
@@ -90,7 +90,7 @@ export default function ReviewSection({ reviews }: props) {
               <ChevronUp size={20} />
             </Button>
           )}
-          {reviews?.length! > 5 && (
+          {reviews.length > 5 && (
             <Pagination>
               <PaginationContent>
                 <PaginationItem>
@@ -131,7 +131,7 @@ export default function ReviewSection({ reviews }: props) {
         <div>
           <ReviewCard review={review!} />
 
-          {reviewList?.length! > 1 && (
+          {reviewList.length > 1 && (
             <Button
               onClick={handleShowReviews}
               className="bg-transparent border-none p-0 hover:bg-transparent text-black"

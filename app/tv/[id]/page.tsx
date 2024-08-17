@@ -30,7 +30,7 @@ export default function Movie({ params }: { params: { id: string } }) {
     fetchMovieDetails();
   }, [params.id]);
 
-  if (isLoading)
+  if (isLoading || !tvShow)
     return (
       <>
         <BannerLoader />
@@ -40,11 +40,11 @@ export default function Movie({ params }: { params: { id: string } }) {
 
   return (
     <section className="flex flex-col">
-      <TvShowBanner tvShow={tvShow!} videos={videos!} setVideos={setVideos!} />
+      <TvShowBanner tvShow={tvShow} videos={videos} setVideos={setVideos} />
       <section className="grid grid-cols-1 md:grid-cols-4 container">
         <div className="col-span-3 space-y-5">
-          <PersonCarousel cast={tvShow?.credits?.cast.slice(0, 8)!} />
-          <ReviewSection reviews={tvShow?.reviews.results!} />
+          <PersonCarousel cast={tvShow.credits.cast.slice(0, 8)} />
+          <ReviewSection reviews={tvShow.reviews.results} />
           <MediaCarousel
             type="tv"
             id={params.id}
@@ -54,18 +54,18 @@ export default function Movie({ params }: { params: { id: string } }) {
           <SimilarCarousel
             type="tv"
             id={params.id}
-            title={tvShow?.name!}
-            image={tvShow?.poster_path!}
-            rating={Math.ceil(tvShow?.vote_average! * 10)}
+            title={tvShow.name}
+            image={tvShow.poster_path}
+            rating={Math.ceil(tvShow.vote_average * 10)}
           />
         </div>
         <TvShowAside
-          homepage={tvShow?.homepage}
-          networks={tvShow.networks!}
-          keywords={tvShow?.keywords.results!}
-          language={tvShow?.original_language!}
-          links={tvShow?.external_ids!}
-          status={tvShow?.status!}
+          homepage={tvShow.homepage}
+          networks={tvShow.networks}
+          keywords={tvShow.keywords.results}
+          language={tvShow.original_language}
+          links={tvShow.external_ids}
+          status={tvShow.status}
         />
       </section>
     </section>
