@@ -4,7 +4,6 @@ import { Trailer, TvShow } from "@/types";
 import Image from "next/image";
 import "react-circular-progressbar/dist/styles.css";
 import TrailerIframe from "../TrailerIframe";
-import BannerLoader from "./components/BannerLoader";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { filterByTrailers, handleDisplayImage } from "@/lib/utils";
 import BannerContainer from "./Banner";
@@ -14,16 +13,10 @@ import TvShowDetails from "./components/TvShowDetails";
 interface props {
   tvShow: TvShow;
   videos: Trailer[];
-  isLoading: boolean;
   setVideos: Dispatch<SetStateAction<Trailer[]>>;
 }
 
-export default function TvShowBanner({
-  tvShow,
-  videos,
-  isLoading,
-  setVideos,
-}: props) {
+export default function TvShowBanner({ tvShow, videos, setVideos }: props) {
   const [playTrailer, setPlayTrailer] = useState(false);
 
   console.log("current tvShow", tvShow);
@@ -57,8 +50,6 @@ export default function TvShowBanner({
     }
   };
 
-  if (isLoading) return <BannerLoader />;
-
   return (
     <BannerContainer backdrop_path={tvShow?.backdrop_path}>
       <Image
@@ -88,16 +79,3 @@ export default function TvShowBanner({
     </BannerContainer>
   );
 }
-
-// <TvShowDetails
-// title={tvShow.name}
-// first_air_date={tvShow.first_air_date}
-// last_air_date={tvShow.last_air_date}
-// genres={tvShow.genres}
-// in_production={tvShow.in_production}
-// tagline={tvShow.tagline}
-// overview={tvShow.overview}
-// crew={tvShow.created_by}
-// rating={Math.ceil(tvShow.vote_average * 10)}
-// handleShowTrailer={handleShowTrailer}
-// />

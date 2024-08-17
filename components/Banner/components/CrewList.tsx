@@ -66,7 +66,7 @@ export default function CrewList({ crew, type }: props) {
   if (type === "tv")
     return (
       <CrewListContainer>
-        {crew.map((person) => (
+        {crew?.slice(0, 2).map((person) => (
           <li key={person.id}>
             <Link
               href={`${getBaseUrl()}/person/${person.id}`}

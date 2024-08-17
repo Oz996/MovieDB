@@ -10,16 +10,12 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { Cast } from "@/types";
 import { handleDisplayImage } from "@/lib/utils";
-import LoaderCarousel from "./LoaderCarousel";
 
 interface props {
   cast: Cast[];
-  isLoading: boolean;
 }
 
-export default function PersonCarousel({ cast, isLoading }: props) {
-  if (isLoading) return <LoaderCarousel />;
-
+export default function PersonCarousel({ cast }: props) {
   return (
     <section>
       <h2 className="text-title font-semibold pb-5 pt-8">Top Billed Cast</h2>

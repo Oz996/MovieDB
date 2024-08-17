@@ -1,5 +1,7 @@
 "use client";
+import BannerLoader from "@/components/Banner/components/BannerLoader";
 import TvShowBanner from "@/components/Banner/TvShowBanner";
+import LoaderCarousel from "@/components/Carousels/LoaderCarousel";
 import MediaCarousel from "@/components/Carousels/MediaCarousel";
 import PersonCarousel from "@/components/Carousels/PersonCarousel";
 import SimilarCarousel from "@/components/Carousels/SimilarCarousel";
@@ -28,20 +30,20 @@ export default function Movie({ params }: { params: { id: string } }) {
     fetchMovieDetails();
   }, [params.id]);
 
+  if (isLoading)
+    return (
+      <>
+        <BannerLoader />
+        <LoaderCarousel />
+      </>
+    );
+
   return (
     <section className="flex flex-col">
-      <TvShowBanner
-        tvShow={tvShow!}
-        videos={videos!}
-        setVideos={setVideos!}
-        isLoading={isLoading}
-      />
+      <TvShowBanner tvShow={tvShow!} videos={videos!} setVideos={setVideos!} />
       <section className="grid grid-cols-1 md:grid-cols-4 container">
         <div className="col-span-3 space-y-5">
-          <PersonCarousel
-            cast={tvShow?.credits?.cast.slice(0, 8)!}
-            isLoading={isLoading}
-          />
+          <PersonCarousel cast={tvShow?.credits?.cast.slice(0, 8)!} />
           <ReviewSection reviews={tvShow?.reviews.results!} />
           <MediaCarousel
             type="tv"
@@ -58,8 +60,8 @@ export default function Movie({ params }: { params: { id: string } }) {
           />
         </div>
         <TvShowAside
-          homepage={tvShow?.homepage!}
-          networks={tvShow?.networks!}
+          homepage={tvShow?.homepage}
+          networks={tvShow.networks!}
           keywords={tvShow?.keywords.results!}
           language={tvShow?.original_language!}
           links={tvShow?.external_ids!}

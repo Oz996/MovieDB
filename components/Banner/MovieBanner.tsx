@@ -5,7 +5,6 @@ import Image from "next/image";
 import "react-circular-progressbar/dist/styles.css";
 import { getMovieVideos } from "@/services/movies";
 import TrailerIframe from "../TrailerIframe";
-import BannerLoader from "./components/BannerLoader";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { filterByTrailers, handleDisplayImage } from "@/lib/utils";
 import MovieDetails from "./components/MovieDetails";
@@ -14,16 +13,10 @@ import BannerContainer from "./Banner";
 interface props {
   movie: Movie;
   videos: Trailer[];
-  isLoading: boolean;
   setVideos: Dispatch<SetStateAction<Trailer[]>>;
 }
 
-export default function MovieBanner({
-  movie,
-  videos,
-  isLoading,
-  setVideos,
-}: props) {
+export default function MovieBanner({ movie, videos, setVideos }: props) {
   const [playTrailer, setPlayTrailer] = useState(false);
 
   console.log("current movie", movie);
@@ -56,8 +49,6 @@ export default function MovieBanner({
       return 300;
     }
   };
-
-  if (isLoading) return <BannerLoader />;
 
   return (
     <BannerContainer backdrop_path={movie?.backdrop_path}>

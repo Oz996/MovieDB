@@ -8,6 +8,8 @@ import SimilarCarousel from "@/components/Carousels/SimilarCarousel";
 import ReviewSection from "@/components/ReviewSection/ReviewSection";
 import MovieBanner from "@/components/Banner/MovieBanner";
 import MovieAside from "@/components/MovieAside";
+import BannerLoader from "@/components/Banner/components/BannerLoader";
+import LoaderCarousel from "@/components/Carousels/LoaderCarousel";
 
 export default function Movie({ params }: { params: { id: string } }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -28,20 +30,20 @@ export default function Movie({ params }: { params: { id: string } }) {
     fetchMovieDetails();
   }, [params.id]);
 
+  if (isLoading)
+    return (
+      <>
+        <BannerLoader />
+        <LoaderCarousel />
+      </>
+    );
+
   return (
     <section className="flex flex-col">
-      <MovieBanner
-        movie={movie!}
-        videos={videos!}
-        setVideos={setVideos!}
-        isLoading={isLoading}
-      />
+      <MovieBanner movie={movie!} videos={videos!} setVideos={setVideos!} />
       <section className="grid grid-cols-1 md:grid-cols-4 container">
         <div className="col-span-3 space-y-5">
-          <PersonCarousel
-            cast={movie?.credits?.cast.slice(0, 8)!}
-            isLoading={isLoading}
-          />
+          <PersonCarousel cast={movie?.credits?.cast.slice(0, 8)!} />
           <ReviewSection reviews={movie?.reviews.results!} />
           <MediaCarousel
             type="movie"
