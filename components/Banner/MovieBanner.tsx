@@ -31,7 +31,7 @@ export default function MovieBanner({
   const isMobile = useMediaQuery("only screen and (max-width: 768px)");
   const fetchVideos = async () => {
     try {
-      const res = await getMovieVideos(movie.id);
+      const res = await getMovieVideos(movie?.id);
       const trailers = filterByTrailers(res);
       setVideos(trailers);
     } catch (error: any) {
@@ -60,28 +60,28 @@ export default function MovieBanner({
   if (isLoading) return <BannerLoader />;
 
   return (
-    <BannerContainer backdrop_path={movie.backdrop_path}>
+    <BannerContainer backdrop_path={movie?.backdrop_path}>
       <Image
         width={imageSize()}
         height={imageSize()}
-        src={handleDisplayImage("w1280", movie.poster_path)}
+        src={handleDisplayImage("w1280", movie?.poster_path)}
         alt="Movie poster"
         className="z-20 lg:rounded-lg max-sm:object-cover max-sm:w-full max-md:self-center"
       />
       <MovieDetails
-        title={movie.title}
-        release={movie.release_date}
-        genres={movie.genres}
-        runtime={movie.runtime}
-        tagline={movie.tagline}
-        overview={movie.overview}
-        crew={movie.credits.crew}
+        title={movie?.title}
+        release={movie?.release_date}
+        genres={movie?.genres}
+        runtime={movie?.runtime}
+        tagline={movie?.tagline}
+        overview={movie?.overview}
+        crew={movie?.credits.crew}
         rating={Math.ceil(movie.vote_average * 10)}
         handleShowTrailer={handleShowTrailer}
       />
       <TrailerIframe
         play={playTrailer}
-        trailer={videos[0].key}
+        trailer={videos[0]?.key}
         handleClose={handleCloseTrailer}
       />
     </BannerContainer>
