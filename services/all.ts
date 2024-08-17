@@ -1,38 +1,39 @@
 import { Result } from "@/types";
-import { getMovieList } from "./movies";
 import options from "./options";
 
-export const getAllTrending = async (time: string = "day") => {
+export const getAllTrending = async (
+  time: string = "day"
+): Promise<Result[]> => {
   try {
     const res = await fetch(
       `https://api.themoviedb.org/3/trending/all/${time}?language=en-US`,
       options
     );
     const data = await res.json();
-    const results = data.results as Result[];
+    const results = data.results;
     return results;
   } catch (error: any) {
-    console.error(error.message);
+    throw Error(error.message);
   }
 };
 
-export const getBackgroundImages = async () => {
-  try {
-    const popular = await getMovieList("popular");
-    const ids = popular?.map((image) => image.id);
+// export const getBackgroundImages = async () => {
+//   try {
+//     const popular = await getMovieList("popular");
+//     const ids = popular?.map((image) => image.id);
 
-    const randomIndex = Math.floor(Math.random() * ids?.length!);
-    const randomId = ids![randomIndex];
+//     const randomIndex = Math.floor(Math.random() * ids?.length!);
+//     const randomId = ids![randomIndex];
 
-    const res = await fetch(
-      `https://api.themoviedb.org/3/movie/${randomId}/images`,
-      options
-    );
-    const data = await res.json();
-    const result = data.posters[0].file_path;
-    console.log("image res", data.posters);
-    return result;
-  } catch (error: any) {
-    console.error(error.message);
-  }
-};
+//     const res = await fetch(
+//       `https://api.themoviedb.org/3/movie/${randomId}/images`,
+//       options
+//     );
+//     const data = await res.json();
+//     const result = data.posters[0].file_path;
+//     console.log("image res", data.posters);
+//     return result;
+//   } catch (error: any) {
+//     console.error(error.message);
+//   }
+// };

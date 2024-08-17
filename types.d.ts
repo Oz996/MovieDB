@@ -26,10 +26,10 @@ export interface Person {
   adult: boolean;
   also_known_as: string[];
   biography: string;
-  birthday: string | null;
-  deathday: string | null;
+  birthday: string;
+  deathday: string;
   gender: number;
-  homepage: string | null;
+  homepage: string;
   id: number;
   imdb_id: string;
   known_for_department: string;
@@ -242,10 +242,10 @@ export interface QueryData {
   sort: string;
   fromDate: string;
   toDate: string;
-  genres: number[] | undefined;
+  genres: number[];
   voteAvgFrom: number | null;
   voteAvgTo: number | null;
   userVotes: number | null;
   language: string;
-  monetizations: string[] | undefined;
+  monetizations: string[];
 }

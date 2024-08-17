@@ -8,7 +8,7 @@ import { useMediaQuery } from "@uidotdev/usehooks";
 import { useEffect, useRef, useState } from "react";
 
 export default function Movies({ params }: { params: { filter: string[] } }) {
-  const [movies, setMovies] = useState<Movie[] | undefined>([]);
+  const [movies, setMovies] = useState<Movie[]>([]);
   const [filterMenu, setFilterMenu] = useState(false);
   const initialData: QueryData = {
     sort: "popularity.desc",

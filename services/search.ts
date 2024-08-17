@@ -1,10 +1,11 @@
+import { Result, ResultObject } from "@/types";
 import options from "./options";
 
 export const getSearchResults = async (
   query: string,
   type: string = "multi",
   page: number = 1
-) => {
+): Promise<ResultObject> => {
   try {
     const res = await fetch(
       `https://api.themoviedb.org/3/search/${type}?query=${query}&page=${page}`,
@@ -15,6 +16,6 @@ export const getSearchResults = async (
     console.log("search", data);
     return data;
   } catch (error: any) {
-    console.error(error.message);
+    throw Error(error.message);
   }
 };

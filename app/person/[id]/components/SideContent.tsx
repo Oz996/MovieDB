@@ -7,12 +7,9 @@ interface props {
 }
 
 export default function SideContent({ person }: props) {
-  const formattedBirth = formatDate(person?.birthday!);
-  const formattedDeath = formatDate(person?.deathday!);
-
   const currentDate = new Date();
-  const birthDate = new Date(person?.birthday!);
-  const deathDate = new Date(person?.deathday!);
+  const birthDate = new Date(person?.birthday);
+  const deathDate = new Date(person?.deathday);
   const currentAge = currentDate.getFullYear() - birthDate.getFullYear();
 
   const ageOfDeath = () => {
@@ -52,7 +49,10 @@ export default function SideContent({ person }: props) {
   return (
     <aside>
       <div className="flex flex-col gap-4 pt-8">
-        <ExternalLinks person={person} />
+        <ExternalLinks
+          links={person?.external_ids}
+          homepage={person?.homepage}
+        />
         <p className="text-xl pt-4 font-semibold">Personal Info</p>
         <div className="flex flex-col gap-1">
           <p className="font-semibold">Known For</p>
@@ -69,27 +69,32 @@ export default function SideContent({ person }: props) {
         <div className="flex flex-col gap-1">
           <p className="font-semibold">Birthday</p>
           <p>
-            {formattedBirth} {!person?.deathday && `(${currentAge} years old)`}
+            {formatDate(person?.birthday) ?? "Unknown Date"}{" "}
+            {!person?.deathday && `(${currentAge} years old)`}
           </p>
         </div>
         {person?.deathday && (
           <div className="flex flex-col gap-1">
             <p className="font-semibold">Day of Death</p>
             <p>
-              {formattedDeath} ({`${ageOfDeath()} years old`})
+              {formatDate(person?.deathday)} ({`${ageOfDeath()} years old`})
             </p>
           </div>
         )}
-        <div className="flex flex-col gap-1">
-          <p className="font-semibold">Place of Birth</p>
-          <p>{person?.place_of_birth}</p>
-        </div>
-        <div className="flex flex-col gap-1">
-          <p className="font-semibold">Also Known As</p>
-          {person?.also_known_as.map((name) => (
-            <p key={name}>{name}</p>
-          ))}
-        </div>
+        {person?.place_of_birth && (
+          <div className="flex flex-col gap-1">
+            <p className="font-semibold">Place of Birth</p>
+            <p>{person?.place_of_birth}</p>
+          </div>
+        )}
+        {person?.also_known_as.length > 0 && (
+          <div className="flex flex-col gap-1">
+            <p className="font-semibold">Also Known As</p>
+            {person?.also_known_as.map((name) => (
+              <p key={name}>{name}</p>
+            ))}
+          </div>
+        )}
       </div>
     </aside>
   );

@@ -9,7 +9,7 @@ import {
 } from "@/types";
 import options from "./options";
 
-export const getMovies = async (queryData: QueryData) => {
+export const getMovies = async (queryData: QueryData): Promise<Movie[]> => {
   const {
     sort,
     fromDate,
@@ -50,106 +50,114 @@ export const getMovies = async (queryData: QueryData) => {
 
     const res = await fetch(url.toString(), options);
     const data = await res.json();
-    const results = data.results as Movie[];
+    const results = data.results;
     return results;
   } catch (error: any) {
-    console.error(error.message);
+    throw Error(error.message);
   }
 };
 
-export const getMovieGenres = async () => {
+export const getMovieGenres = async (): Promise<Genre[]> => {
   try {
     const res = await fetch(
       `https://api.themoviedb.org/3/genre/movie/list`,
       options
     );
     const data = await res.json();
-    const results = data.genres as Genre[];
+    const results = data.genres;
     return results;
   } catch (error: any) {
-    console.error(error.message);
+    throw Error(error.message);
   }
 };
 
-export const getMovieList = async (type: string = "now_playing") => {
+export const getMovieList = async (
+  type: string = "now_playing"
+): Promise<Movie[]> => {
   try {
     const res = await fetch(
       `https://api.themoviedb.org/3/movie/${type}`,
       options
     );
     const data = await res.json();
-    const results = data.results as Movie[];
+    const results = data.results;
     return results;
   } catch (error: any) {
-    console.error(error.message);
+    throw Error(error.message);
   }
 };
 
-export const getMovieTrending = async (time: string = "week") => {
+export const getMovieTrending = async (
+  time: string = "week"
+): Promise<Result[]> => {
   try {
     const res = await fetch(
       `https://api.themoviedb.org/3/trending/movie/${time}`,
       options
     );
     const data = await res.json();
-    const results = data.results as Result[];
+    const results = data.results;
     return results;
   } catch (error: any) {
-    console.error(error.message);
+    throw Error(error.message);
   }
 };
 
-export const getMovieDetails = async (id: string | number) => {
+export const getMovieDetails = async (id: string | number): Promise<Movie> => {
   try {
     const res = await fetch(
       `https://api.themoviedb.org/3/movie/${id}?append_to_response=credits,keywords,external_ids,reviews`,
       options
     );
-    const result = (await res.json()) as Movie;
+    const result = await res.json();
     return result;
   } catch (error: any) {
-    console.error(error.message);
+    throw Error(error.message);
   }
 };
 
-export const getMovieVideos = async (id: string | number) => {
+export const getMovieVideos = async (
+  id: string | number
+): Promise<Trailer[]> => {
   try {
     const res = await fetch(
       `https://api.themoviedb.org/3/movie/${id}/videos`,
       options
     );
     const data = await res.json();
-    const results = data.results as Trailer[];
+    const results = data.results;
     return results;
   } catch (error: any) {
-    console.error(error.message);
+    throw Error(error.message);
   }
 };
 
-export const getMovieImages = async (id: string | number) => {
+export const getMovieImages = async (id: string | number): Promise<Image[]> => {
   try {
     const res = await fetch(
       `https://api.themoviedb.org/3/movie/${id}/images`,
       options
     );
     const data = await res.json();
-    const results = data.posters as Image[];
+    const results = data.posters;
     return results;
   } catch (error: any) {
-    console.error(error.message);
+    throw Error(error.message);
   }
 };
 
-export const getMovieSimilar = async (id: string | number) => {
+export const getMovieSimilar = async (
+  id: string | number
+): Promise<Similar[]> => {
   try {
     const res = await fetch(
       `https://api.themoviedb.org/3/movie/${id}/similar`,
       options
     );
     const data = await res.json();
-    const results = data.results as Similar[];
+    const results = data.results;
     return results;
   } catch (error: any) {
-    console.error(error.message);
+    throw Error(error.message);
   }
 };
