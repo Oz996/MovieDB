@@ -71,10 +71,7 @@ export default function SimilarCarousel({ id, type, rating }: props) {
       <Carousel>
         <CarouselContent>
           {similarsToDisplay?.map((item) => (
-            <CarouselItem
-              key={item.id}
-              className="basis-1/3 lg:basis-1/4 shrink-0 pr-6 space-y-2 self-center"
-            >
+            <CarouselItem key={item.id} className="flex-centered flex-col">
               <Link href={getBaseUrl() + `/movie/${item.id}`}>
                 <Image
                   src={handleDisplayImage(
@@ -84,7 +81,7 @@ export default function SimilarCarousel({ id, type, rating }: props) {
                   width={270}
                   height={270}
                   alt=""
-                  className="rounded-lg max-h-[7.5rem]"
+                  className="rounded-lg"
                 />
               </Link>
               <div className="flex justify-between">

@@ -96,10 +96,7 @@ export default function MediaCarousel({ id, videos, type, setVideos }: props) {
               <CarouselContent>
                 {videos?.length === 0 && <p className="pl-10"> No videos</p>}
                 {videos?.map((video) => (
-                  <CarouselItem
-                    key={video.id}
-                    className="basis-1/2 md:basis-1/3 pr-6 group"
-                  >
+                  <CarouselItem key={video.id} className="flex-centered group">
                     <button
                       className="w-full h-full relative"
                       onClick={() => handleShowTrailer(video.key)}
