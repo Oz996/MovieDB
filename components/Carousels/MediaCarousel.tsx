@@ -9,13 +9,13 @@ import {
 } from "@/components/ui/carousel";
 import { useIntersectionObserver } from "@uidotdev/usehooks";
 import Image from "next/image";
-import TrailerIframe from "@/components/TrailerIframe";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { getMovieImages, getMovieVideos } from "@/services/movies";
 import { FaPlay } from "react-icons/fa6";
 import LoaderCarousel from "./LoaderCarousel";
 import { getTvShowImages, getTvShowVideos } from "@/services/tvShows";
 import { filterByTrailers } from "@/lib/utils";
+import TrailerModal from "../TrailerModal";
 
 interface props {
   id: string;
@@ -166,7 +166,7 @@ export default function MediaCarousel({ id, videos, type, setVideos }: props) {
           </TabsContent>
         </div>
       </Tabs>
-      <TrailerIframe
+      <TrailerModal
         play={playTrailer}
         trailer={trailerToDisplay!}
         handleClose={handleCloseTrailer}

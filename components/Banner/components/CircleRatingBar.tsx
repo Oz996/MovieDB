@@ -6,7 +6,6 @@ interface props {
 
 export default function CircleRatingBar({ rating }: props) {
   const getColor = () => {
-    if (!rating) return "#ccc";
     if (rating >= 70) {
       return "#21d07a";
     } else if (rating >= 40) {

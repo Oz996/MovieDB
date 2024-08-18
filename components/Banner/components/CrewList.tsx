@@ -17,7 +17,6 @@ export default function CrewList({ crew, type }: props) {
   // making sure that no person gets duplicated and turning persons job property to an array of all jobs
   useEffect(() => {
     const getCrewRoles = () => {
-      if (!crewToList) return;
       const nameMap = new Map();
 
       for (const item of crewToList) {
@@ -30,12 +29,11 @@ export default function CrewList({ crew, type }: props) {
       const result: Crew[] = [];
       for (const item of crewToList) {
         const person = nameMap.get(item.name);
-        if (person && !result.some((p) => p.name === person.name)) {
+        if (!result.some((p) => p.name === person.name)) {
           result.push(person);
         }
       }
       setCrewList(result);
-      return result;
     };
     getCrewRoles();
   }, []);

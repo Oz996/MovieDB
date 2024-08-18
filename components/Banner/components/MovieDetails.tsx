@@ -30,7 +30,6 @@ export default function MovieDetails({
   handleShowTrailer,
 }: props) {
   const getRunTime = () => {
-    if (!runtime) return;
     const hours = Math.floor(runtime / 60);
     const minutes = runtime % 60;
     if (hours > 0 && minutes > 0) {
@@ -56,7 +55,7 @@ export default function MovieDetails({
           className={classNames({
             "pl-3 relative": true,
             "before:absolute before:content-['•'] before:left-0":
-              genres?.length! > 0,
+              genres.length > 0,
           })}
         >
           {genres?.map((genre) => (
