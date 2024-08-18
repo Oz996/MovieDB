@@ -42,7 +42,7 @@ export default function MediaCarousel({ id, videos, type, setVideos }: props) {
   useEffect(() => {
     if (mediaEntry?.isIntersecting) {
       if (videos?.length > 0) return;
-      fetchVideos(type, Number(id), setVideos);
+      fetchVideos(type, Number(id), setVideos, setIsLoading);
     }
   }, [mediaEntry?.isIntersecting]);
 

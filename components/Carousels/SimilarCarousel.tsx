@@ -30,7 +30,7 @@ export default function SimilarCarousel({
   image,
   rating,
 }: props) {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [similar, setSimilar] = useState<Similar[] | undefined>([]);
 
   const movie = type === "movie";
@@ -45,11 +45,12 @@ export default function SimilarCarousel({
   useEffect(() => {
     if (similarEntry?.isIntersecting && similar?.length === 0) {
       const fetchSimilar = async () => {
+        setIsLoading(true);
         try {
           if (movie) {
             const res = await getMovieSimilar(id);
             setSimilar(res);
-          } else if (tvShow) {
+          } else {
             const res = await getTvShowSimilar(id);
             setSimilar(res);
           }
@@ -65,7 +66,12 @@ export default function SimilarCarousel({
 
   const similarsToDisplay = similar?.slice(0, 19);
 
-  if (isLoading) return <LoaderCarousel />;
+  if (isLoading)
+    return (
+      <section ref={similarRef}>
+        <LoaderCarousel />
+      </section>
+    );
 
   return (
     <section ref={similarRef} className="pb-10">

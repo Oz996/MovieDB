@@ -54,7 +54,8 @@ export const filterByTrailers = (arr: Trailer[]) => {
 export const fetchVideos = async (
   type: "movie" | "tv",
   id: number,
-  setState: Dispatch<SetStateAction<Trailer[]>>
+  setState: Dispatch<SetStateAction<Trailer[]>>,
+  setIsLoading?: Dispatch<SetStateAction<boolean>>
 ) => {
   const getVideos = type === "movie" ? getMovieVideos : getTvShowVideos;
   try {
@@ -63,5 +64,7 @@ export const fetchVideos = async (
     setState(trailers);
   } catch (error: any) {
     console.error(error.message);
+  } finally {
+    setIsLoading && setIsLoading(false);
   }
 };
