@@ -25,7 +25,7 @@ interface props {
 }
 
 export default function MediaCarousel({ id, videos, type, setVideos }: props) {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [images, setImages] = useState<ImageType[]>([]);
   const [playTrailer, setPlayTrailer] = useState(false);
   const [trailerToDisplay, setTrailerToDisplay] = useState("");
@@ -71,7 +71,12 @@ export default function MediaCarousel({ id, videos, type, setVideos }: props) {
   };
   const imagesToDisplay = images?.slice(0, 20);
 
-  if (isLoading) return <LoaderCarousel />;
+  if (isLoading)
+    return (
+      <section ref={mediaRef}>
+        <LoaderCarousel />
+      </section>
+    );
 
   return (
     <section ref={mediaRef} className="py-10">
