@@ -12,14 +12,11 @@ export default function LoaderCarousel() {
     <Carousel className="pt-20 container">
       <CarouselContent className="-ml-1">
         {new Array(20).fill(0).map((_, index) => (
-          <CarouselItem
-            key={index}
-            className="pl-1 basis-1/1 sm:basis-1/3 md:basis-1/3 lg:basis-1/6"
-          >
+          <CarouselItem key={index} className="flex-centered">
             <div className="p-1">
               <div className="space-y-5">
                 <div className="flex items-centerjustify-center">
-                  <Skeleton className="w-[9.5rem] h-48" />
+                  <Skeleton className="w-[9.5rem] h-[13.5rem]" />
                 </div>
                 <div className="space-y-2">
                   <Skeleton className="w-[80%] h-6" />

@@ -129,10 +129,7 @@ export default function MediaCarousel({ id, videos, type, setVideos }: props) {
                   <p className="pl-10"> No images</p>
                 )}
                 {imagesToDisplay?.map((image) => (
-                  <CarouselItem
-                    key={image.file_path}
-                    className="pl-1 md:basis-1/4 lg:basis-1/6"
-                  >
+                  <CarouselItem key={image.file_path} className="flex-centered">
                     <Image
                       src={`https://media.themoviedb.org/t/p/w220_and_h330_face${image.file_path}`}
                       alt="Poster"
