@@ -111,7 +111,7 @@ export default function MediaCarousel({ id, videos, type, setVideos }: props) {
                         height={180}
                         className="rounded-lg"
                       />
-                      <div className="size-12 bg-black/60 rounded-full absolute top-[45%] left-[45%] flex items-center justify-center">
+                      <div className="size-12 bg-black/60 rounded-full absolute top-[45%] left-[45%] flex-centered">
                         <FaPlay
                           size={18}
                           className="text-white group-hover:text-white/80 duration-300"

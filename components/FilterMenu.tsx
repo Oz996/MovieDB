@@ -238,7 +238,7 @@ export default function FilterMenu({
         {handleFilterMenu && (
           <button
             onClick={handleFilterMenu}
-            className="flex items-center justify-center p-3 bg-slate-200 hover:bg-white/20 duration-300 cursor-pointer group rounded-full fixed right-10 top-9"
+            className="flex-centered p-3 bg-slate-200 hover:bg-white/20 duration-300 cursor-pointer group rounded-full fixed right-10 top-9"
           >
             <X size={17} className="group-hover:opacity-70" />
           </button>

@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 export default function BannerLoader() {
   return (
     <section className="pt-24">
-      <div className="h-[32rem] flex items-center justify-center w-full relative before:bg-black/65 bg-no-repeat bg-cover before:absolute before:inset-0">
+      <div className="h-[32rem] flex-centered w-full relative before:bg-black/65 bg-no-repeat bg-cover before:absolute before:inset-0">
         <div className="z-20 flex gap-10 text-white container w-full">
           <Skeleton className="w-[19rem] h-[27rem] rounded-lg" />
 

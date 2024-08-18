@@ -82,4 +82,7 @@
   .text-title {
     @apply text-[22.5px];
   }
+  .flex-centered {
+    @apply flex items-center justify-center;
+  }
 }

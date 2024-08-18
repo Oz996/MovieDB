@@ -10,7 +10,7 @@ export default function BannerContainer({ backdrop_path, children }: props) {
         style={{
           backgroundImage: `url("https://image.tmdb.org/t/p/w1280${backdrop_path}")`,
         }}
-        className="md:h-[32rem] flex items-center justify-center w-full relative before:bg-black/60 bg-no-repeat bg-cover before:absolute before:inset-0"
+        className="md:h-[32rem] flex-centered w-full relative before:bg-black/60 bg-no-repeat bg-cover before:absolute before:inset-0"
       >
         <div className="z-20 flex max-md:flex-col gap-10 text-white container max-md:pb-5">
           {children}

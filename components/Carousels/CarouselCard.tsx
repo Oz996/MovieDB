@@ -17,13 +17,13 @@ export default function CarouselCard({ id, type, title, date, image }: props) {
     <CarouselItem className="pl-1">
       <Link href={getBaseUrl() + `/${type}/${id}`}>
         <motion.div
-          className="p-1 flex items-center justify-center"
+          className="p-1 flex-centered"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 1 }}
         >
           <div className="space-y-5">
-            <div className="flex">
+            <div className="flex-centered">
               <Image
                 className="rounded-lg"
                 src={handleDisplayImage("w342", image)}
