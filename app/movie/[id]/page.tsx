@@ -54,8 +54,6 @@ export default function Movie({ params }: { params: { id: string } }) {
           <SimilarCarousel
             type="movie"
             id={params.id}
-            title={movie.title}
-            image={movie.poster_path}
             rating={Math.ceil(movie.vote_average * 10)}
           />
         </div>

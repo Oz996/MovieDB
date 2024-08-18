@@ -17,19 +17,11 @@ import { getTvShowSimilar } from "@/services/tvShows";
 
 interface props {
   id: string;
-  title: string;
   type: "movie" | "tv";
-  image: string;
   rating: number;
 }
 
-export default function SimilarCarousel({
-  id,
-  title,
-  type,
-  image,
-  rating,
-}: props) {
+export default function SimilarCarousel({ id, type, rating }: props) {
   const [isLoading, setIsLoading] = useState(true);
   const [similar, setSimilar] = useState<Similar[] | undefined>([]);
 

@@ -14,7 +14,7 @@ interface props {
 
 export default function CarouselCard({ id, type, title, date, image }: props) {
   return (
-    <CarouselItem className="pl-1 basis-1/1 sm:basis-1/3 md:basis-1/3 lg:basis-1/6">
+    <CarouselItem className="pl-1">
       <Link href={getBaseUrl() + `/${type}/${id}`}>
         <motion.div
           className="p-1 flex items-center justify-center"

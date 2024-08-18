@@ -10,11 +10,11 @@ import {
 import { useIntersectionObserver } from "@uidotdev/usehooks";
 import Image from "next/image";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { getMovieImages, getMovieVideos } from "@/services/movies";
+import { getMovieImages } from "@/services/movies";
 import { FaPlay } from "react-icons/fa6";
 import LoaderCarousel from "./LoaderCarousel";
-import { getTvShowImages, getTvShowVideos } from "@/services/tvShows";
-import { fetchVideos, filterByTrailers } from "@/lib/utils";
+import { getTvShowImages } from "@/services/tvShows";
+import { fetchVideos } from "@/lib/utils";
 import TrailerModal from "../TrailerModal";
 
 interface props {
