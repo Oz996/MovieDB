@@ -14,7 +14,7 @@ import { getMovieImages, getMovieVideos } from "@/services/movies";
 import { FaPlay } from "react-icons/fa6";
 import LoaderCarousel from "./LoaderCarousel";
 import { getTvShowImages, getTvShowVideos } from "@/services/tvShows";
-import { filterByTrailers } from "@/lib/utils";
+import { fetchVideos, filterByTrailers } from "@/lib/utils";
 import TrailerModal from "../TrailerModal";
 
 interface props {
@@ -41,39 +41,20 @@ export default function MediaCarousel({ id, videos, type, setVideos }: props) {
 
   useEffect(() => {
     if (mediaEntry?.isIntersecting) {
-      fetchVideos();
+      if (videos?.length > 0) return;
+      fetchVideos(type, Number(id), setVideos);
     }
   }, [mediaEntry?.isIntersecting]);
-
-  const fetchVideos = async () => {
-    if (videos?.length > 0) return;
-    setIsLoading(true);
-    try {
-      if (movie) {
-        const res = await getMovieVideos(id);
-        const trailers = filterByTrailers(res!);
-        setVideos(trailers);
-      } else if (tvShow) {
-        const res = await getTvShowVideos(id);
-        const trailers = filterByTrailers(res!);
-        setVideos(trailers);
-      }
-    } catch (error: any) {
-      console.error(error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const fetchImages = async () => {
     if (images.length > 0) return;
     try {
       if (movie) {
         const res = await getMovieImages(id);
-        setImages(res!);
-      } else if (tvShow) {
+        setImages(res);
+      } else {
         const res = await getTvShowImages(id);
-        setImages(res!);
+        setImages(res);
       }
     } catch (error: any) {
       console.error(error.message);

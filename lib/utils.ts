@@ -1,5 +1,8 @@
+import { getMovieVideos } from "@/services/movies";
+import { getTvShowVideos } from "@/services/tvShows";
 import { Trailer } from "@/types";
 import { type ClassValue, clsx } from "clsx";
+import { Dispatch, SetStateAction } from "react";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -46,4 +49,19 @@ export const handleDisplayImage = (width: string, path: string) => {
 export const filterByTrailers = (arr: Trailer[]) => {
   const trailers = arr?.filter((item) => item.type === "Trailer");
   return trailers;
+};
+
+export const fetchVideos = async (
+  type: "movie" | "tv",
+  id: number,
+  setState: Dispatch<SetStateAction<Trailer[]>>
+) => {
+  const getVideos = type === "movie" ? getMovieVideos : getTvShowVideos;
+  try {
+    const res = await getVideos(id);
+    const trailers = filterByTrailers(res);
+    setState(trailers);
+  } catch (error: any) {
+    console.error(error.message);
+  }
 };

@@ -3,9 +3,8 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { Movie, Trailer } from "@/types";
 import Image from "next/image";
 import "react-circular-progressbar/dist/styles.css";
-import { getMovieVideos } from "@/services/movies";
 import { useMediaQuery } from "@uidotdev/usehooks";
-import { filterByTrailers, handleDisplayImage } from "@/lib/utils";
+import { fetchVideos, handleDisplayImage } from "@/lib/utils";
 import MovieDetails from "./components/MovieDetails";
 import BannerContainer from "./Banner";
 import TrailerModal from "../TrailerModal";
@@ -22,20 +21,11 @@ export default function MovieBanner({ movie, videos, setVideos }: props) {
   console.log("current movie", movie);
 
   const isMobile = useMediaQuery("only screen and (max-width: 768px)");
-  const fetchVideos = async () => {
-    try {
-      const res = await getMovieVideos(movie.id);
-      const trailers = filterByTrailers(res);
-      setVideos(trailers);
-    } catch (error: any) {
-      console.error(error.message);
-    }
-  };
 
   const handleShowTrailer = () => {
     setPlayTrailer(true);
     if (videos.length === 0) {
-      fetchVideos();
+      fetchVideos("movie", movie?.id, setVideos);
     }
   };
   const handleCloseTrailer = () => {
