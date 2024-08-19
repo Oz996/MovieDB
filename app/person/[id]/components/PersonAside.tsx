@@ -6,7 +6,9 @@ interface props {
   person: Person;
 }
 
-export default function SideContent({ person }: props) {
+// Sending the whole person object as a prop cause it would get cluttered with props otherwise
+
+export default function PersonAside({ person }: props) {
   const currentDate = new Date();
   const birthDate = new Date(person.birthday);
   const deathDate = new Date(person.deathday);
@@ -32,19 +34,10 @@ export default function SideContent({ person }: props) {
   const personCredits = () => {
     const cast = person.combined_credits.cast;
     const crew = person.combined_credits.crew;
-
-    if (cast && crew) {
-      return [...cast, ...crew].length;
-    }
+    return [...cast, ...crew].length;
   };
 
-  const handleGender = () => {
-    if (person.gender === 1) {
-      return "Female";
-    } else {
-      return "Male";
-    }
-  };
+  const personGender = person.gender === 1 ? "Female" : "Male";
 
   return (
     <aside>
@@ -61,7 +54,7 @@ export default function SideContent({ person }: props) {
         </div>
         <div className="flex flex-col gap-1">
           <p className="font-semibold">Gender</p>
-          <p>{handleGender()}</p>
+          <p>{personGender}</p>
         </div>
         <div className="flex flex-col gap-1">
           <p className="font-semibold">Birthday</p>

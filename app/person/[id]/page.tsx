@@ -7,8 +7,8 @@ import { useMediaQuery } from "@uidotdev/usehooks";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import PersonLoader from "./components/PersonLoader";
-import SideContent from "./components/SideContent";
 import Filmography from "./components/Filmography/Filmography";
+import PersonAside from "./components/PersonAside";
 
 export default function Person({ params }: { params: { id: string } }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -46,7 +46,7 @@ export default function Person({ params }: { params: { id: string } }) {
             className="z-20 lg:rounded-lg max-sm:object-cover max-sm:w-full max-md:self-center"
           />
         </div>
-        {!isMobile && <SideContent person={person} />}
+        {!isMobile && <PersonAside person={person} />}
       </div>
       <div className="col-span-3 flex flex-col gap-5">
         <h2 className="font-bold text-4xl max-sm:pt-5">{person.name}</h2>
@@ -54,7 +54,7 @@ export default function Person({ params }: { params: { id: string } }) {
           <h3 className="text-xl font-semibold">Biography</h3>
           <p>{person.biography}</p>
         </div>
-        {isMobile && <SideContent person={person} />}
+        {isMobile && <PersonAside person={person} />}
         <KnownForCarousel person={person} />
         <Filmography person={person} />
       </div>

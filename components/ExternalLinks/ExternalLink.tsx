@@ -27,20 +27,15 @@ export default function ExternalLink({ link, website }: props) {
     }
   };
 
-  const handleLink = () => {
-    if (website === "homepage") {
-      return link;
-    } else {
-      return `https://www.${website}.com/${link}`;
-    }
-  };
+  const homepage = website === "homepage";
+  const navigationLink = homepage ? link : `https://www.${website}.com/${link}`;
 
   return (
-    <div className={website === "homepage" ? "border-l pl-4" : ""}>
+    <div className={homepage ? "border-l pl-4" : ""}>
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <a href={handleLink()} target="_blank" rel="noopener noreferrer">
+            <a href={navigationLink} target="_blank" rel="noopener noreferrer">
               {handleIcon()}
             </a>
           </TooltipTrigger>
