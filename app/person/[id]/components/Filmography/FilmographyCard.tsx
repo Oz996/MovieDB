@@ -26,10 +26,7 @@ export default function FilmographyCard({
   array,
   i,
 }: props) {
-  const dateToDisplay = (year: number) => {
-    if (!year) return "TBA";
-    else return year;
-  };
+  const dateToDisplay = (year: number) => year ?? "TBA";
 
   const getYear = (date: any) =>
     new Date(date || date?.release_date || date?.first_air_date).getFullYear();

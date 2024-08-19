@@ -23,7 +23,7 @@ export default function ReviewSection({ reviews }: props) {
   const [currentPage, setCurrentPage] = useState(1);
 
   const reviewsPerPage = 5;
-  const totalPages = Math.ceil(reviews.length! / reviewsPerPage);
+  const totalPages = Math.ceil(reviews.length / reviewsPerPage);
 
   useEffect(() => {
     const startIndex = (currentPage - 1) * reviewsPerPage;
@@ -81,7 +81,7 @@ export default function ReviewSection({ reviews }: props) {
           {reviewList.map((review) => (
             <ReviewCard key={review.id} review={review} />
           ))}
-          {reviewList.length! > 1 && (
+          {reviewList.length > 1 && (
             <Button
               onClick={handleHideReviews}
               className="bg-transparent border-none p-0 hover:bg-transparent text-black"
@@ -129,7 +129,7 @@ export default function ReviewSection({ reviews }: props) {
         </div>
       ) : (
         <div>
-          <ReviewCard review={review!} />
+          <ReviewCard review={review} />
 
           {reviewList.length > 1 && (
             <Button

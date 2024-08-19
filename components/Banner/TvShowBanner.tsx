@@ -4,9 +4,8 @@ import { Trailer, TvShow } from "@/types";
 import Image from "next/image";
 import "react-circular-progressbar/dist/styles.css";
 import { useMediaQuery } from "@uidotdev/usehooks";
-import { fetchVideos, filterByTrailers, handleDisplayImage } from "@/lib/utils";
+import { fetchVideos, handleDisplayImage } from "@/lib/utils";
 import BannerContainer from "./Banner";
-import { getTvShowVideos } from "@/services/tvShows";
 import TvShowDetails from "./components/TvShowDetails";
 import TrailerModal from "../TrailerModal";
 
@@ -19,6 +18,7 @@ interface props {
 export default function TvShowBanner({ tvShow, videos, setVideos }: props) {
   const [playTrailer, setPlayTrailer] = useState(false);
 
+  console.log("vidsz", videos);
   console.log("current tvShow", tvShow);
 
   const isMobile = useMediaQuery("only screen and (max-width: 768px)");

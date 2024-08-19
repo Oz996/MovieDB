@@ -8,8 +8,8 @@ interface props {
 
 export default function SideContent({ person }: props) {
   const currentDate = new Date();
-  const birthDate = new Date(person?.birthday);
-  const deathDate = new Date(person?.deathday);
+  const birthDate = new Date(person.birthday);
+  const deathDate = new Date(person.deathday);
   const currentAge = currentDate.getFullYear() - birthDate.getFullYear();
 
   const ageOfDeath = () => {
@@ -30,8 +30,8 @@ export default function SideContent({ person }: props) {
   };
 
   const personCredits = () => {
-    const cast = person?.combined_credits.cast;
-    const crew = person?.combined_credits.crew;
+    const cast = person.combined_credits.cast;
+    const crew = person.combined_credits.crew;
 
     if (cast && crew) {
       return [...cast, ...crew].length;
@@ -39,7 +39,7 @@ export default function SideContent({ person }: props) {
   };
 
   const handleGender = () => {
-    if (person?.gender === 1) {
+    if (person.gender === 1) {
       return "Female";
     } else {
       return "Male";
@@ -49,14 +49,11 @@ export default function SideContent({ person }: props) {
   return (
     <aside>
       <div className="flex flex-col gap-4 pt-8">
-        <ExternalLinks
-          links={person?.external_ids}
-          homepage={person?.homepage}
-        />
+        <ExternalLinks links={person.external_ids} homepage={person.homepage} />
         <p className="text-xl pt-4 font-semibold">Personal Info</p>
         <div className="flex flex-col gap-1">
           <p className="font-semibold">Known For</p>
-          <p>{person?.known_for_department}</p>
+          <p>{person.known_for_department}</p>
         </div>
         <div className="flex flex-col gap-1">
           <p className="font-semibold">Known Credits</p>
@@ -69,28 +66,28 @@ export default function SideContent({ person }: props) {
         <div className="flex flex-col gap-1">
           <p className="font-semibold">Birthday</p>
           <p>
-            {formatDate(person?.birthday) ?? "Unknown Date"}{" "}
-            {!person?.deathday && `(${currentAge} years old)`}
+            {formatDate(person.birthday) ?? "Unknown Date"}{" "}
+            {!person.deathday && `(${currentAge} years old)`}
           </p>
         </div>
-        {person?.deathday && (
+        {person.deathday && (
           <div className="flex flex-col gap-1">
             <p className="font-semibold">Day of Death</p>
             <p>
-              {formatDate(person?.deathday)} ({`${ageOfDeath()} years old`})
+              {formatDate(person.deathday)} ({`${ageOfDeath()} years old`})
             </p>
           </div>
         )}
-        {person?.place_of_birth && (
+        {person.place_of_birth && (
           <div className="flex flex-col gap-1">
             <p className="font-semibold">Place of Birth</p>
-            <p>{person?.place_of_birth}</p>
+            <p>{person.place_of_birth}</p>
           </div>
         )}
-        {person?.also_known_as.length > 0 && (
+        {person.also_known_as.length > 0 && (
           <div className="flex flex-col gap-1">
             <p className="font-semibold">Also Known As</p>
-            {person?.also_known_as.map((name) => (
+            {person.also_known_as.map((name) => (
               <p key={name}>{name}</p>
             ))}
           </div>

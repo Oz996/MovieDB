@@ -20,8 +20,8 @@ export default function KnownForCarousel({ person }: props) {
 
   useEffect(() => {
     const mostPopular = () => {
-      const cast = person?.combined_credits.cast;
-      const crew = person?.combined_credits.crew;
+      const cast = person.combined_credits.cast;
+      const crew = person.combined_credits.crew;
       // filtering to make sure we dont display duplicates of a show/movie
       if (cast && crew) {
         const combined = [...cast, ...crew];
