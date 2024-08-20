@@ -3,21 +3,17 @@ import { useEffect, useState } from "react";
 import FilmographyCard from "./FilmographyCard";
 
 interface props {
-  person: Person;
+  cast: Cast[];
+  crew: Crew[];
 }
 
-export default function Filmography({ person }: props) {
+export default function Filmography({ cast, crew }: props) {
   const [acting, setActing] = useState<Cast[]>([]);
   const [production, setProduction] = useState<Crew[]>([]);
   const [writing, setWriting] = useState<Crew[]>([]);
   const [creator, setCreator] = useState<Crew[]>([]);
 
-  const cast = person?.combined_credits.cast;
-  const crew = person?.combined_credits.crew;
-
   useEffect(() => {
-    if (!cast) return;
-
     const uniqueMedia = new Map();
     for (const media of cast) {
       const title = media.title || media.name;
@@ -42,8 +38,6 @@ export default function Filmography({ person }: props) {
   }, [cast]);
 
   useEffect(() => {
-    if (!crew) return;
-
     const uniqueMedia = new Map();
     for (const media of crew) {
       // creating a title-job key combination in order to keep track of unique items based on those instead of just title

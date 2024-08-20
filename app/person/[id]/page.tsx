@@ -55,8 +55,14 @@ export default function Person({ params }: { params: { id: string } }) {
           <p>{person.biography}</p>
         </div>
         {isMobile && <PersonAside person={person} />}
-        <KnownForCarousel person={person} />
-        <Filmography person={person} />
+        <KnownForCarousel
+          cast={person.combined_credits.cast}
+          crew={person.combined_credits.crew}
+        />
+        <Filmography
+          cast={person.combined_credits.cast}
+          crew={person.combined_credits.crew}
+        />
       </div>
     </section>
   );

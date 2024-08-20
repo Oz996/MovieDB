@@ -31,8 +31,6 @@ export default function MediaCarousel({ id, videos, type, setVideos }: props) {
   const [trailerToDisplay, setTrailerToDisplay] = useState("");
 
   const movie = type === "movie";
-  const tvShow = type === "tv";
-
   const [mediaRef, mediaEntry] = useIntersectionObserver({
     threshold: 0.5,
     root: null,

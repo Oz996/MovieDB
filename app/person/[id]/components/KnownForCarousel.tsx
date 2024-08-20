@@ -12,16 +12,15 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 interface props {
-  person: Person;
+  cast: Cast[];
+  crew: Crew[];
 }
 
-export default function KnownForCarousel({ person }: props) {
+export default function KnownForCarousel({ cast, crew }: props) {
   const [knownFor, setKnownFor] = useState<(Cast | Crew)[]>([]);
 
   useEffect(() => {
     const mostPopular = () => {
-      const cast = person.combined_credits.cast;
-      const crew = person.combined_credits.crew;
       // filtering to make sure we dont display duplicates of a show/movie
       if (cast && crew) {
         const combined = [...cast, ...crew];
@@ -34,7 +33,7 @@ export default function KnownForCarousel({ person }: props) {
       }
     };
     mostPopular();
-  }, [person]);
+  }, [cast, crew]);
 
   return (
     <section>
