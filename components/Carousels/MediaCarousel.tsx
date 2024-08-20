@@ -25,7 +25,7 @@ interface props {
 }
 
 export default function MediaCarousel({ id, videos, type, setVideos }: props) {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(videos ? false : true);
   const [images, setImages] = useState<ImageType[]>([]);
   const [playTrailer, setPlayTrailer] = useState(false);
   const [trailerToDisplay, setTrailerToDisplay] = useState("");
@@ -40,8 +40,7 @@ export default function MediaCarousel({ id, videos, type, setVideos }: props) {
   });
 
   useEffect(() => {
-    if (mediaEntry?.isIntersecting) {
-      if (videos?.length > 0) return;
+    if (mediaEntry?.isIntersecting && videos.length === 0) {
       fetchVideos(type, Number(id), setVideos, setIsLoading);
     }
   }, [mediaEntry?.isIntersecting]);
@@ -148,7 +147,7 @@ export default function MediaCarousel({ id, videos, type, setVideos }: props) {
       </Tabs>
       <TrailerModal
         play={playTrailer}
-        trailer={trailerToDisplay!}
+        trailer={trailerToDisplay}
         handleClose={handleCloseTrailer}
       />
     </section>
