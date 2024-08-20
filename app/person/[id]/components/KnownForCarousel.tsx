@@ -22,15 +22,13 @@ export default function KnownForCarousel({ cast, crew }: props) {
   useEffect(() => {
     const mostPopular = () => {
       // filtering to make sure we dont display duplicates of a show/movie
-      if (cast && crew) {
-        const combined = [...cast, ...crew];
+      const combined = [...cast, ...crew];
 
-        const sorted = combined.sort((a, b) => b.popularity - a.popularity);
-        const results = sorted.filter((media, index, array) => {
-          return array.findIndex((item) => item.id === media.id) === index;
-        });
-        setKnownFor(results.slice(0, 8));
-      }
+      const sorted = combined.sort((a, b) => b.popularity - a.popularity);
+      const results = sorted.filter((media, index, array) => {
+        return array.findIndex((item) => item.id === media.id) === index;
+      });
+      setKnownFor(results.slice(0, 8));
     };
     mostPopular();
   }, [cast, crew]);
@@ -47,18 +45,23 @@ export default function KnownForCarousel({ cast, crew }: props) {
                 key={item.id}
                 className="pl-5 basis-1/1 sm:basis-1/3 md:basis-1/3 lg:basis-1/6"
               >
-                <Link
-                  href={`/${item.media_type}/${item.id}`}
-                  className="flex flex-col gap-3"
-                >
-                  <Image
-                    alt=""
-                    src={handleDisplayImage("w342", item.poster_path!)}
-                    width={150}
-                    height={150}
-                    className="rounded-lg"
-                  />
-                  <p>{title}</p>
+                <Link href={`/${item.media_type}/${item.id}`}>
+                  <div className="flex-centered">
+                    <div className="space-y-5">
+                      <div className="flex-centered">
+                        <Image
+                          alt=""
+                          src={handleDisplayImage("w342", item.poster_path!)}
+                          width={150}
+                          height={150}
+                          className="rounded-lg"
+                        />
+                      </div>
+                      <div>
+                        <p className="line-clamp-2">{title}</p>
+                      </div>
+                    </div>
+                  </div>
                 </Link>
               </CarouselItem>
             );

@@ -1,5 +1,5 @@
 import { formatDate, getBaseUrl, handleDisplayImage } from "@/lib/utils";
-import { Card } from "../../../ui/card";
+import { Card } from "../ui/card";
 import Image from "next/image";
 import Link from "next/link";
 

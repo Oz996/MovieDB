@@ -1,24 +1,24 @@
-import { ExternalLinks as ILinks, Keyword } from "@/types";
-import { formatToDollars } from "@/lib/utils";
-import ExternalLinks from "./ExternalLinks/ExternalLinks";
+import { ExternalLinks as ILinks, Keyword, Network } from "@/types";
+import { handleDisplayImage } from "@/lib/utils";
+import Image from "next/image";
+import Link from "next/link";
+import ExternalLinks from "@/components/ExternalLinks/ExternalLinks";
 
 interface props {
   links: ILinks;
-  status: string;
-  budget: number;
-  revenue: number;
   keywords: Keyword[];
+  status: string;
   language: string;
+  networks: Network[];
   homepage: string;
 }
 
-export default function MovieAside({
+export default function TvShowAside({
   links,
   keywords,
   status,
   language,
-  budget,
-  revenue,
+  networks,
   homepage,
 }: props) {
   return (
@@ -33,14 +33,22 @@ export default function MovieAside({
           <p className="font-semibold">Original Language</p>
           <p>{language}</p>
         </div>
-
         <div className="flex flex-col gap-1">
-          <p className="font-semibold">Budget</p>
-          <p>{formatToDollars(budget)}</p>
-        </div>
-        <div className="flex flex-col gap-1">
-          <p className="font-semibold">Revenue</p>
-          <p>{formatToDollars(revenue)}</p>
+          <p className="font-semibold">Network</p>
+          <ul className="flex flex-col gap-2">
+            {networks?.map((network) => (
+              <li key={network.id}>
+                <Link href="">
+                  <Image
+                    width={100}
+                    height={100}
+                    src={handleDisplayImage("w342", network.logo_path)}
+                    alt=""
+                  />
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
         <div className="flex flex-col gap-2">
           <p className="font-semibold">Keywords</p>

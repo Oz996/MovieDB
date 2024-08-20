@@ -32,7 +32,7 @@ export default function CarouselCard({ id, type, title, date, image }: props) {
                 alt=""
               />
             </div>
-            <div className="">
+            <div>
               <p className="font-semibold max-w-[10rem] line-clamp-2">
                 {title}
               </p>

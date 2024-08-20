@@ -5,7 +5,7 @@ import {
   MediaCardDate,
   MediaCardImage,
   MediaCardTitle,
-} from "./Card";
+} from "./MediaCard";
 
 interface props {
   tvShow: TvShow;

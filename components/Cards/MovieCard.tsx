@@ -4,7 +4,7 @@ import {
   MediaCardDate,
   MediaCardImage,
   MediaCardTitle,
-} from "./Card";
+} from "./MediaCard";
 import { Movie } from "@/types";
 
 interface props {

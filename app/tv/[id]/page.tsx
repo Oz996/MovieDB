@@ -6,7 +6,7 @@ import MediaCarousel from "@/components/Carousels/MediaCarousel";
 import PersonCarousel from "@/components/Carousels/PersonCarousel";
 import SimilarCarousel from "@/components/Carousels/SimilarCarousel";
 import ReviewSection from "@/components/ReviewSection/ReviewSection";
-import TvShowAside from "@/components/TvShowAside";
+import TvShowAside from "./components/TvShowAside";
 import { getTvShowDetails } from "@/services/tvShows";
 import { Trailer, TvShow } from "@/types";
 import { useEffect, useState } from "react";

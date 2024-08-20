@@ -1,6 +1,6 @@
 "use client";
 import FilterMenu from "@/components/FilterMenu";
-import MovieCard from "@/components/Header/components/cards/MovieCard";
+import MovieCard from "@/components/Cards/MovieCard";
 import { Button } from "@/components/ui/button";
 import { getMovies } from "@/services/movies";
 import { Movie, QueryData, Result } from "@/types";
