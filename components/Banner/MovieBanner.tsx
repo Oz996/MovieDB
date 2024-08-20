@@ -41,17 +41,7 @@ export default function MovieBanner({ movie, videos, setVideos }: props) {
         alt="Movie poster"
         className="z-20 lg:rounded-lg max-sm:object-cover max-sm:w-full max-md:self-center"
       />
-      <MovieDetails
-        title={movie.title}
-        release={movie.release_date}
-        genres={movie.genres}
-        runtime={movie.runtime}
-        tagline={movie.tagline}
-        overview={movie.overview}
-        crew={movie.credits.crew}
-        rating={Math.ceil(movie.vote_average * 10)}
-        handleShowTrailer={handleShowTrailer}
-      />
+      <MovieDetails movie={movie} handleShowTrailer={handleShowTrailer} />
       <TrailerModal
         play={playTrailer}
         trailer={videos[0]?.key}

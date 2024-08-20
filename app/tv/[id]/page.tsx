@@ -57,14 +57,7 @@ export default function Movie({ params }: { params: { id: string } }) {
             rating={Math.ceil(tvShow.vote_average * 10)}
           />
         </div>
-        <TvShowAside
-          homepage={tvShow.homepage}
-          networks={tvShow.networks}
-          keywords={tvShow.keywords.results}
-          language={tvShow.original_language}
-          links={tvShow.external_ids}
-          status={tvShow.status}
-        />
+        <TvShowAside tvShow={tvShow} />
       </section>
     </section>
   );

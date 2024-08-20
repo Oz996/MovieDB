@@ -57,15 +57,7 @@ export default function Movie({ params }: { params: { id: string } }) {
             rating={Math.ceil(movie.vote_average * 10)}
           />
         </div>
-        <MovieAside
-          homepage={movie.homepage}
-          keywords={movie.keywords.keywords}
-          language={movie.original_language}
-          revenue={movie.revenue}
-          budget={movie.budget}
-          links={movie.external_ids}
-          status={movie.status}
-        />
+        <MovieAside movie={movie} />
       </section>
     </section>
   );

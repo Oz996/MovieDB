@@ -113,8 +113,11 @@ export default function FilterMenu({
       const toDate = new Date(date);
       toDate.setMonth(toDate.getMonth() + 1);
       const untilDate = formatQueryDate(toDate);
-      setQueryData((data) => ({ ...data, fromDate: todaysDate }));
-      setQueryData((data) => ({ ...data, toDate: untilDate }));
+      setQueryData((data) => ({
+        ...data,
+        fromDate: todaysDate,
+        toDate: untilDate,
+      }));
     }
   }, [params]);
 
@@ -164,21 +167,8 @@ export default function FilterMenu({
     setQueryData((data) => ({ ...data, toDate: format }));
   };
 
-  const displayFromDate = () => {
-    if (fromDate) {
-      return fromDate;
-    } else {
-      return "Choose Date";
-    }
-  };
-
-  const displayToDate = () => {
-    if (toDate) {
-      return toDate;
-    } else {
-      return "Choose Date";
-    }
-  };
+  const displayFromDate = fromDate ? fromDate : "Choose Date";
+  const displayToDate = toDate ? toDate : "Choose Date";
 
   const displayHeading = () => {
     if (moviesPage && topRatedPage) {
@@ -296,7 +286,7 @@ export default function FilterMenu({
                     variant="outline"
                     className="flex items-center justify-between w-full"
                   >
-                    <p>{displayFromDate()}</p>
+                    <p>{displayFromDate}</p>
                     <CalendarIcon />
                   </Button>
                 </div>
@@ -318,7 +308,7 @@ export default function FilterMenu({
                     variant="outline"
                     className="flex items-center justify-between w-full"
                   >
-                    <p>{displayToDate()}</p>
+                    <p>{displayToDate}</p>
                     <CalendarIcon />
                   </Button>
                 </div>

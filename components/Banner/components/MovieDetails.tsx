@@ -1,5 +1,5 @@
 import { formatDate } from "@/lib/utils";
-import { Crew, Genre } from "@/types";
+import { Movie } from "@/types";
 import classNames from "classnames";
 import { Play } from "lucide-react";
 import Link from "next/link";
@@ -7,31 +7,14 @@ import CircleRatingBar from "./CircleRatingBar";
 import CrewList from "./CrewList";
 
 interface props {
-  title: string;
-  release: string;
-  genres: Genre[];
-  rating: number;
-  runtime: number;
-  tagline: string;
-  overview: string;
-  crew: Crew[];
+  movie: Movie;
   handleShowTrailer: () => void;
 }
 
-export default function MovieDetails({
-  title,
-  release,
-  genres,
-  rating,
-  runtime,
-  tagline,
-  overview,
-  crew,
-  handleShowTrailer,
-}: props) {
+export default function MovieDetails({ movie, handleShowTrailer }: props) {
   const getRunTime = () => {
-    const hours = Math.floor(runtime / 60);
-    const minutes = runtime % 60;
+    const hours = Math.floor(movie.runtime / 60);
+    const minutes = movie.runtime % 60;
     if (hours > 0 && minutes > 0) {
       return `${hours}h ${minutes}m`;
     } else if (hours > 0) {
@@ -44,21 +27,21 @@ export default function MovieDetails({
   return (
     <div className="flex flex-col justify-center md:pr-10">
       <div className="z-20 flex gap-2 text-2xl md:text-4xl">
-        <h2 className="font-bold">{title}</h2>
+        <h2 className="font-bold">{movie.title}</h2>
         <span className="opacity-80 max-md:hidden">
-          ({new Date(release).getFullYear()})
+          ({new Date(movie.release_date).getFullYear()})
         </span>
       </div>
       <div className="flex max-md:flex-col lg:items-center max-md:pt-3 gap-3">
-        <span>{formatDate(release)}</span>
+        <span>{formatDate(movie.release_date)}</span>
         <div
           className={classNames({
             "pl-3 relative": true,
             "before:absolute before:content-['•'] before:left-0":
-              genres.length > 0,
+              movie.genres.length > 0,
           })}
         >
-          {genres?.map((genre) => (
+          {movie.genres?.map((genre) => (
             <Link
               key={genre.id}
               href=""
@@ -71,15 +54,15 @@ export default function MovieDetails({
         <span
           className={classNames({
             "pl-3 relative flex gap-1": true,
-            "before:absolute before:content-['•'] before:left-0": runtime,
+            "before:absolute before:content-['•'] before:left-0": movie.runtime,
           })}
         >
           {getRunTime()}
         </span>
       </div>
-      {rating !== 0 && (
+      {movie.vote_average !== 0 && (
         <div className="size-28 pt-5 flex gap-2 items-center">
-          <CircleRatingBar rating={rating} />
+          <CircleRatingBar rating={Math.floor(movie.vote_average * 10)} />
         </div>
       )}
       <div className="flex flex-col gap-2">
@@ -90,10 +73,10 @@ export default function MovieDetails({
           <Play size={22} aria-hidden="true" />
           <span className="font-semibold">Play Trailer</span>
         </button>
-        <span className="italic opacity-80">{tagline}</span>
+        <span className="italic opacity-80">{movie.tagline}</span>
         <span className="text-xl">Overview</span>
-        <p>{overview}</p>
-        <CrewList type="movie" crew={crew} />
+        <p>{movie.overview}</p>
+        <CrewList type="movie" crew={movie.credits.crew} />
       </div>
     </div>
   );
