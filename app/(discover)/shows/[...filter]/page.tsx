@@ -1,12 +1,16 @@
 "use client";
 import FilterMenu from "@/components/FilterMenu";
 import TvShowCard from "@/components/Cards/TvShowCard";
-import { Button } from "@/components/ui/button";
 import { getTvShows } from "@/services/tvShows";
 import { QueryData, TvShow } from "@/types";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { useEffect, useRef, useState } from "react";
 import MediaLoader from "@/components/Banner/components/MediaLoader";
+import {
+  DiscoverContainer,
+  DiscoverMediaDiv,
+  FilterMenuButton,
+} from "../../components/DiscoverContainer";
 
 export default function Shows({ params }: { params: { filter: string[] } }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -50,45 +54,38 @@ export default function Shows({ params }: { params: { filter: string[] } }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   return (
-    <section className="pt-24 container pb-10">
-      <div className="grid grid-cols-1 md:grid-cols-4">
-        {!isMobile && (
+    <DiscoverContainer>
+      {!isMobile && (
+        <FilterMenu
+          type="tv"
+          params={params}
+          queryData={queryData}
+          setQueryData={setQueryData}
+        />
+      )}
+      {isMobile && !filterMenu && (
+        <FilterMenuButton onClick={handleFilterMenu}>Filters</FilterMenuButton>
+      )}
+      <dialog ref={dialogRef} className="fixed top-0">
+        {isMobile && filterMenu && (
           <FilterMenu
             type="tv"
             params={params}
             queryData={queryData}
             setQueryData={setQueryData}
+            handleFilterMenu={handleFilterMenu}
           />
         )}
-        {isMobile && !filterMenu && (
-          <Button
-            className="bg-black text-white text-lg rounded-full fixed bottom-5 left-5 px-10"
-            onClick={handleFilterMenu}
-          >
-            Filters
-          </Button>
+      </dialog>
+      <DiscoverMediaDiv>
+        {isLoading ? (
+          <MediaLoader />
+        ) : (
+          tvShows?.map((tvShow) => (
+            <TvShowCard key={tvShow.id} tvShow={tvShow} />
+          ))
         )}
-        <dialog ref={dialogRef} className="fixed top-0">
-          {isMobile && filterMenu && (
-            <FilterMenu
-              type="tv"
-              params={params}
-              queryData={queryData}
-              setQueryData={setQueryData}
-              handleFilterMenu={handleFilterMenu}
-            />
-          )}
-        </dialog>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-y-8 sm:col-span-3">
-          {isLoading ? (
-            <MediaLoader />
-          ) : (
-            tvShows?.map((tvShow) => (
-              <TvShowCard key={tvShow.id} tvShow={tvShow} />
-            ))
-          )}
-        </div>
-      </div>
-    </section>
+      </DiscoverMediaDiv>
+    </DiscoverContainer>
   );
 }

@@ -1,12 +1,16 @@
 "use client";
 import FilterMenu from "@/components/FilterMenu";
 import MovieCard from "@/components/Cards/MovieCard";
-import { Button } from "@/components/ui/button";
 import { getMovies } from "@/services/movies";
 import { Movie, QueryData } from "@/types";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { useEffect, useRef, useState } from "react";
 import MediaLoader from "@/components/Banner/components/MediaLoader";
+import {
+  DiscoverContainer,
+  DiscoverMediaDiv,
+  FilterMenuButton,
+} from "../../components/DiscoverContainer";
 
 export default function Movies({ params }: { params: { filter: string[] } }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -51,43 +55,36 @@ export default function Movies({ params }: { params: { filter: string[] } }) {
   console.log("queryData", queryData);
 
   return (
-    <section className="pt-24 container pb-10">
-      <div className="grid grid-cols-1 md:grid-cols-4">
-        {!isMobile && (
+    <DiscoverContainer>
+      {!isMobile && (
+        <FilterMenu
+          type="movie"
+          params={params}
+          queryData={queryData}
+          setQueryData={setQueryData}
+        />
+      )}
+      {isMobile && !filterMenu && (
+        <FilterMenuButton onClick={handleFilterMenu}>Filters</FilterMenuButton>
+      )}
+      <dialog ref={dialogRef} className="fixed top-0">
+        {isMobile && filterMenu && (
           <FilterMenu
             type="movie"
             params={params}
             queryData={queryData}
             setQueryData={setQueryData}
+            handleFilterMenu={handleFilterMenu}
           />
         )}
-        {isMobile && !filterMenu && (
-          <Button
-            className="bg-black text-white text-lg rounded-full fixed bottom-5 left-5 px-10"
-            onClick={handleFilterMenu}
-          >
-            Filters
-          </Button>
+      </dialog>
+      <DiscoverMediaDiv>
+        {isLoading || !movies ? (
+          <MediaLoader />
+        ) : (
+          movies?.map((movie) => <MovieCard key={movie.id} movie={movie} />)
         )}
-        <dialog ref={dialogRef} className="fixed top-0">
-          {isMobile && filterMenu && (
-            <FilterMenu
-              type="movie"
-              params={params}
-              queryData={queryData}
-              setQueryData={setQueryData}
-              handleFilterMenu={handleFilterMenu}
-            />
-          )}
-        </dialog>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-y-8 sm:col-span-3">
-          {isLoading || !movies ? (
-            <MediaLoader />
-          ) : (
-            movies?.map((movie) => <MovieCard key={movie.id} movie={movie} />)
-          )}
-        </div>
-      </div>
-    </section>
+      </DiscoverMediaDiv>
+    </DiscoverContainer>
   );
 }
