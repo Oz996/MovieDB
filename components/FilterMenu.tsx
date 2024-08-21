@@ -118,6 +118,11 @@ export default function FilterMenu({
         fromDate: todaysDate,
         toDate: untilDate,
       }));
+    } else {
+      setQueryData((data) => ({
+        ...data,
+        userVotes: 100,
+      }));
     }
   }, [params]);
 
