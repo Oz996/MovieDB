@@ -1,17 +1,19 @@
 import { Result } from "@/types";
 import { AnimatePresence, motion } from "framer-motion";
-import { TrendingUp } from "lucide-react";
+import { Search, TrendingUp } from "lucide-react";
 import SearchListCard from "./components/SearchListCard";
 import { Dispatch, SetStateAction } from "react";
 import NoResults from "@/components/NoResults";
 
 interface props {
+  title: "Search" | "Trending";
   isLoading: boolean;
-  searchList: Result[] | undefined;
+  searchList: Result[];
   setShowInput: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function SearchList({
+  title,
   searchList,
   isLoading,
   setShowInput,
@@ -27,8 +29,17 @@ export default function SearchList({
         transition={{ duration: 0.4 }}
       >
         <div className="flex gap-2 ml-5 py-2 border-b">
-          <TrendingUp />
-          <h2 className="text-xl font-bold">Trending</h2>
+          {title === "Search" ? (
+            <>
+              <Search />
+              <h2 className="text-xl font-bold">{title}</h2>
+            </>
+          ) : (
+            <>
+              <TrendingUp />
+              <h2 className="text-xl font-bold">{title}</h2>
+            </>
+          )}
         </div>
         <motion.ul
           className="overflow-auto"

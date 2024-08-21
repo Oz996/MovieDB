@@ -47,7 +47,17 @@ export default function Searchbar() {
   }, [value]);
 
   useEffect(() => {
-    if (debouncedValue.length > 1) {
+    if (value === "") {
+      const handleFetchTrending = async () => {
+        const data = await getAllTrending();
+        setSearchList(data);
+      };
+      handleFetchTrending();
+    }
+  }, [value]);
+
+  useEffect(() => {
+    if (debouncedValue) {
       const searchValue = async () => {
         setIsLoading(true);
         try {
@@ -68,7 +78,6 @@ export default function Searchbar() {
 
   const handleOpenInput = () => {
     setShowInput(true);
-    handleFetchTrending();
   };
 
   const handleCloseInput = () => {
@@ -78,11 +87,6 @@ export default function Searchbar() {
 
   const handleQueryChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
-  };
-
-  const handleFetchTrending = async () => {
-    const data = await getAllTrending();
-    setSearchList(data);
   };
 
   const handleMultiSearch = (e: FormEvent) => {
@@ -129,6 +133,7 @@ export default function Searchbar() {
       </AnimatePresence>
       {showInput && (
         <SearchList
+          title={value ? "Search" : "Trending"}
           isLoading={isLoading}
           searchList={searchList}
           setShowInput={setShowInput}
