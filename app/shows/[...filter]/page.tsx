@@ -6,8 +6,10 @@ import { getTvShows } from "@/services/tvShows";
 import { QueryData, Result, TvShow } from "@/types";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { useEffect, useRef, useState } from "react";
+import MediaLoader from "@/components/Banner/components/MediaLoader";
 
 export default function Shows({ params }: { params: { filter: string[] } }) {
+  const [isLoading, setIsLoading] = useState(true);
   const [tvShows, setTvShows] = useState<TvShow[] | undefined>([]);
   const [filterMenu, setFilterMenu] = useState(false);
   const initialData: QueryData = {
@@ -25,8 +27,14 @@ export default function Shows({ params }: { params: { filter: string[] } }) {
 
   useEffect(() => {
     const fetchMovies = async () => {
-      const res = await getTvShows(queryData);
-      setTvShows(res);
+      try {
+        const res = await getTvShows(queryData);
+        setTvShows(res);
+      } catch (error: any) {
+        console.error(error.message);
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchMovies();
   }, [queryData]);
@@ -42,7 +50,7 @@ export default function Shows({ params }: { params: { filter: string[] } }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   return (
-    <section className="pt-24 container">
+    <section className="pt-24 container pb-10">
       <div className="grid grid-cols-1 md:grid-cols-4">
         {!isMobile && (
           <FilterMenu
@@ -72,9 +80,13 @@ export default function Shows({ params }: { params: { filter: string[] } }) {
           )}
         </dialog>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-y-8 sm:col-span-3">
-          {tvShows?.map((tvShow) => (
-            <TvShowCard key={tvShow.id} tvShow={tvShow} />
-          ))}
+          {isLoading ? (
+            <MediaLoader />
+          ) : (
+            tvShows?.map((tvShow) => (
+              <TvShowCard key={tvShow.id} tvShow={tvShow} />
+            ))
+          )}
         </div>
       </div>
     </section>

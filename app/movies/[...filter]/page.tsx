@@ -6,8 +6,10 @@ import { getMovies } from "@/services/movies";
 import { Movie, QueryData, Result } from "@/types";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { useEffect, useRef, useState } from "react";
+import MediaLoader from "@/components/Banner/components/MediaLoader";
 
 export default function Movies({ params }: { params: { filter: string[] } }) {
+  const [isLoading, setIsLoading] = useState(true);
   const [movies, setMovies] = useState<Movie[]>([]);
   const [filterMenu, setFilterMenu] = useState(false);
   const initialData: QueryData = {
@@ -25,8 +27,14 @@ export default function Movies({ params }: { params: { filter: string[] } }) {
 
   useEffect(() => {
     const fetchMovies = async () => {
-      const res = await getMovies(queryData);
-      setMovies(res);
+      try {
+        const res = await getMovies(queryData);
+        setMovies(res);
+      } catch (error: any) {
+        console.error(error.message);
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchMovies();
   }, [queryData]);
@@ -43,7 +51,7 @@ export default function Movies({ params }: { params: { filter: string[] } }) {
   console.log("queryData", queryData);
 
   return (
-    <section className="pt-24 container">
+    <section className="pt-24 container pb-10">
       <div className="grid grid-cols-1 md:grid-cols-4">
         {!isMobile && (
           <FilterMenu
@@ -73,9 +81,11 @@ export default function Movies({ params }: { params: { filter: string[] } }) {
           )}
         </dialog>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-y-8 sm:col-span-3">
-          {movies?.map((movie) => (
-            <MovieCard key={movie.id} movie={movie} />
-          ))}
+          {isLoading || !movies ? (
+            <MediaLoader />
+          ) : (
+            movies?.map((movie) => <MovieCard key={movie.id} movie={movie} />)
+          )}
         </div>
       </div>
     </section>

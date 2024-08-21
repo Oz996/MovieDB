@@ -97,9 +97,9 @@ export default function PopularCarousel() {
                   type="movie"
                   key={movie.id}
                   id={movie.id}
-                  title={movie.title!}
-                  date={movie.release_date!}
-                  image={movie.poster_path!}
+                  title={movie.title}
+                  date={movie.release_date}
+                  image={movie.poster_path}
                 />
               ))}
             </CarouselContent>
@@ -115,9 +115,9 @@ export default function PopularCarousel() {
                   type="movie"
                   key={movie.id}
                   id={movie.id}
-                  title={movie.title!}
-                  date={movie.release_date!}
-                  image={movie.poster_path!}
+                  title={movie.title}
+                  date={movie.release_date}
+                  image={movie.poster_path}
                 />
               ))}
             </CarouselContent>
@@ -133,9 +133,9 @@ export default function PopularCarousel() {
                   type="movie"
                   key={movie.id}
                   id={movie.id}
-                  title={movie.title!}
-                  date={movie.release_date!}
-                  image={movie.poster_path!}
+                  title={movie.title}
+                  date={movie.release_date}
+                  image={movie.poster_path}
                 />
               ))}
             </CarouselContent>
