@@ -3,7 +3,7 @@ import FilterMenu from "@/components/FilterMenu";
 import MovieCard from "@/components/Cards/MovieCard";
 import { Button } from "@/components/ui/button";
 import { getMovies } from "@/services/movies";
-import { Movie, QueryData, Result } from "@/types";
+import { Movie, QueryData } from "@/types";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { useEffect, useRef, useState } from "react";
 import MediaLoader from "@/components/Banner/components/MediaLoader";
