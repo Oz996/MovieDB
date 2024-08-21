@@ -10,6 +10,10 @@ import TvShowAside from "./components/TvShowAside";
 import { getTvShowDetails } from "@/services/tvShows";
 import { Trailer, TvShow } from "@/types";
 import { useEffect, useState } from "react";
+import {
+  DetailsContainer,
+  DetailsGridDiv,
+} from "../../components/DetailsContainer";
 
 export default function Movie({ params }: { params: { id: string } }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -39,9 +43,9 @@ export default function Movie({ params }: { params: { id: string } }) {
     );
 
   return (
-    <section className="flex flex-col">
+    <DetailsContainer>
       <TvShowBanner tvShow={tvShow} videos={videos} setVideos={setVideos} />
-      <section className="grid grid-cols-1 md:grid-cols-4 container">
+      <DetailsGridDiv>
         <div className="col-span-3 space-y-5">
           <PersonCarousel cast={tvShow.credits.cast.slice(0, 8)} />
           <ReviewSection reviews={tvShow.reviews.results} />
@@ -58,7 +62,7 @@ export default function Movie({ params }: { params: { id: string } }) {
           />
         </div>
         <TvShowAside tvShow={tvShow} />
-      </section>
-    </section>
+      </DetailsGridDiv>
+    </DetailsContainer>
   );
 }

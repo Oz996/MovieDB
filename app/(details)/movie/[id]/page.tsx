@@ -10,6 +10,10 @@ import MovieBanner from "@/components/Banner/MovieBanner";
 import MovieAside from "./components/MovieAside";
 import BannerLoader from "@/components/Banner/components/BannerLoader";
 import LoaderCarousel from "@/components/Carousels/LoaderCarousel";
+import {
+  DetailsContainer,
+  DetailsGridDiv,
+} from "../../components/DetailsContainer";
 
 export default function Movie({ params }: { params: { id: string } }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -39,9 +43,9 @@ export default function Movie({ params }: { params: { id: string } }) {
     );
 
   return (
-    <section className="flex flex-col">
+    <DetailsContainer>
       <MovieBanner movie={movie} videos={videos} setVideos={setVideos} />
-      <section className="grid grid-cols-1 md:grid-cols-4 container">
+      <DetailsGridDiv>
         <div className="col-span-3 space-y-5">
           <PersonCarousel cast={movie.credits.cast.slice(0, 8)} />
           <ReviewSection reviews={movie.reviews.results} />
@@ -58,7 +62,7 @@ export default function Movie({ params }: { params: { id: string } }) {
           />
         </div>
         <MovieAside movie={movie} />
-      </section>
-    </section>
+      </DetailsGridDiv>
+    </DetailsContainer>
   );
 }
