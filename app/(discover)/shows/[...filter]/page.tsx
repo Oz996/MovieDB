@@ -7,7 +7,6 @@ import { useMediaQuery } from "@uidotdev/usehooks";
 import { useEffect, useRef, useState } from "react";
 import MediaLoader from "@/components/Banner/components/MediaLoader";
 import {
-  DiscoverContainer,
   DiscoverMediaDiv,
   FilterMenuButton,
 } from "../../components/DiscoverContainer";
@@ -54,7 +53,7 @@ export default function Shows({ params }: { params: { filter: string[] } }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   return (
-    <DiscoverContainer>
+    <>
       {!isMobile && (
         <FilterMenu
           type="tv"
@@ -86,6 +85,6 @@ export default function Shows({ params }: { params: { filter: string[] } }) {
           ))
         )}
       </DiscoverMediaDiv>
-    </DiscoverContainer>
+    </>
   );
 }

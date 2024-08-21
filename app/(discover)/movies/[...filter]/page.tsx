@@ -7,7 +7,6 @@ import { useMediaQuery } from "@uidotdev/usehooks";
 import { useEffect, useRef, useState } from "react";
 import MediaLoader from "@/components/Banner/components/MediaLoader";
 import {
-  DiscoverContainer,
   DiscoverMediaDiv,
   FilterMenuButton,
 } from "../../components/DiscoverContainer";
@@ -55,7 +54,7 @@ export default function Movies({ params }: { params: { filter: string[] } }) {
   console.log("queryData", queryData);
 
   return (
-    <DiscoverContainer>
+    <>
       {!isMobile && (
         <FilterMenu
           type="movie"
@@ -85,6 +84,6 @@ export default function Movies({ params }: { params: { filter: string[] } }) {
           movies?.map((movie) => <MovieCard key={movie.id} movie={movie} />)
         )}
       </DiscoverMediaDiv>
-    </DiscoverContainer>
+    </>
   );
 }
