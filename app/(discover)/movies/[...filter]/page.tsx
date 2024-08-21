@@ -10,6 +10,8 @@ import {
   DiscoverMediaDiv,
   FilterMenuButton,
 } from "../../components/DiscoverContainer";
+import { Frown } from "lucide-react";
+import NoResults from "@/components/NoResults";
 
 export default function Movies({ params }: { params: { filter: string[] } }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -78,10 +80,14 @@ export default function Movies({ params }: { params: { filter: string[] } }) {
         )}
       </dialog>
       <DiscoverMediaDiv>
-        {isLoading || !movies ? (
+        {isLoading ? (
           <MediaLoader />
+        ) : movies.length === 0 ? (
+          <div className="col-span-2">
+            <NoResults />
+          </div>
         ) : (
-          movies?.map((movie) => <MovieCard key={movie.id} movie={movie} />)
+          movies.map((movie) => <MovieCard key={movie.id} movie={movie} />)
         )}
       </DiscoverMediaDiv>
     </>

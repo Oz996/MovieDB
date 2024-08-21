@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { TrendingUp } from "lucide-react";
 import SearchListCard from "./components/SearchListCard";
 import { Dispatch, SetStateAction } from "react";
+import NoResults from "@/components/NoResults";
 
 interface props {
   isLoading: boolean;
@@ -36,9 +37,9 @@ export default function SearchList({
           transition={{ duration: 0.4 }}
         >
           {searchList?.length === 0 && (
-            <p className="text-lg px-2 py-5">
-              There are no results that matched your query.
-            </p>
+            <div className="py-5 px-4">
+              <NoResults />
+            </div>
           )}
           {searchList?.map((item, index) => (
             <SearchListCard

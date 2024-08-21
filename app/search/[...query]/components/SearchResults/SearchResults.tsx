@@ -4,6 +4,7 @@ import Link from "next/link";
 import ResultSkeleton from "../ResultsSkeleton";
 import SearchPagination from "./components/SearchPagination";
 import { getBaseUrl, handleDisplayImage } from "@/lib/utils";
+import NoResults from "@/components/NoResults";
 
 interface props {
   isLoading: boolean;
@@ -30,9 +31,7 @@ export default function SearchResults({
 
   return (
     <section className="lg:col-span-2 lg:-ml-20 max-lg:pt-5 space-y-5">
-      {searchResults?.length === 0 && (
-        <p className="text-lg">There are no results that matched your query.</p>
-      )}
+      {searchResults?.length === 0 && <NoResults />}
       {searchResults?.map((item) => {
         const person = item?.known_for_department;
         const title = item?.name || item?.title;

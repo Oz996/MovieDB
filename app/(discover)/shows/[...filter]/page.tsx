@@ -10,10 +10,11 @@ import {
   DiscoverMediaDiv,
   FilterMenuButton,
 } from "../../components/DiscoverContainer";
+import NoResults from "@/components/NoResults";
 
 export default function Shows({ params }: { params: { filter: string[] } }) {
   const [isLoading, setIsLoading] = useState(true);
-  const [tvShows, setTvShows] = useState<TvShow[] | undefined>([]);
+  const [tvShows, setTvShows] = useState<TvShow[]>([]);
   const [filterMenu, setFilterMenu] = useState(false);
   const initialData: QueryData = {
     sort: "popularity.desc",
@@ -79,6 +80,10 @@ export default function Shows({ params }: { params: { filter: string[] } }) {
       <DiscoverMediaDiv>
         {isLoading ? (
           <MediaLoader />
+        ) : tvShows.length == 0 ? (
+          <div className="col-span-2">
+            <NoResults />
+          </div>
         ) : (
           tvShows?.map((tvShow) => (
             <TvShowCard key={tvShow.id} tvShow={tvShow} />

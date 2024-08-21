@@ -27,6 +27,7 @@ import { Genre, QueryData } from "@/types";
 import classNames from "classnames";
 import { Calendar as CalendarIcon, X } from "lucide-react";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import GenresLoader from "./GenresLoader";
 
 interface props {
   type: "movie" | "tv";
@@ -43,6 +44,7 @@ export default function FilterMenu({
   setQueryData,
   handleFilterMenu,
 }: props) {
+  const [isLoading, setIsLoading] = useState(true);
   const [genreList, setGenreList] = useState<Genre[] | undefined>([]);
   const [genres, setGenres] = useState<number[]>([]);
   const [monetizations, setMonetizations] = useState<string[]>([]);
@@ -128,12 +130,18 @@ export default function FilterMenu({
 
   useEffect(() => {
     const fetchGenres = async () => {
-      if (moviesPage) {
-        const res = await getMovieGenres();
-        setGenreList(res);
-      } else {
-        const res = await getTvShowGenres();
-        setGenreList(res);
+      try {
+        if (moviesPage) {
+          const res = await getMovieGenres();
+          setGenreList(res);
+        } else {
+          const res = await getTvShowGenres();
+          setGenreList(res);
+        }
+      } catch (error: any) {
+        console.error(error.message);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchGenres();
@@ -330,19 +338,23 @@ export default function FilterMenu({
             <p className="text-md">Genres</p>
             <div>
               <ul className="flex flex-wrap gap-2 items-center">
-                {genreList?.map((genre) => (
-                  <li
-                    key={genre.id}
-                    onClick={() => handleSelectGenre(genre.id)}
-                    className={classNames({
-                      "rounded-full border border-gray-300 px-3 py-1 cursor-pointer duration-200":
-                        true,
-                      "bg-black text-white": genres?.includes(genre.id),
-                    })}
-                  >
-                    {genre.name}
-                  </li>
-                ))}
+                {isLoading ? (
+                  <GenresLoader />
+                ) : (
+                  genreList?.map((genre) => (
+                    <li
+                      key={genre.id}
+                      onClick={() => handleSelectGenre(genre.id)}
+                      className={classNames({
+                        "rounded-full border border-gray-300 px-3 py-1 cursor-pointer duration-200":
+                          true,
+                        "bg-black text-white": genres?.includes(genre.id),
+                      })}
+                    >
+                      {genre.name}
+                    </li>
+                  ))
+                )}
               </ul>
             </div>
             <div className="flex flex-col gap-2">
