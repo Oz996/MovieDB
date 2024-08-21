@@ -36,7 +36,7 @@ export const DiscoverMediaDiv = ({
   children: React.ReactNode;
 }) => {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-y-8 sm:col-span-3">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-y-8 sm:col-span-3">
       {children}
     </div>
   );
