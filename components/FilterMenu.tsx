@@ -57,6 +57,7 @@ export default function FilterMenu({
 
   const topRatedPage = params.filter.includes("top-rated");
   const upcomingPage = params.filter.includes("upcoming");
+  const popularPage = params.filter.includes("popular");
   const moviesPage = type === "movie";
 
   const query = queryData;
@@ -88,7 +89,7 @@ export default function FilterMenu({
         fromDate: todaysDate,
         toDate: untilDate,
       }));
-    } else {
+    } else if (popularPage) {
       setQueryData((data) => ({
         ...data,
         userVotes: 100,

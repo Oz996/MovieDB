@@ -29,8 +29,8 @@ export const getTvShows = async (queryData: QueryData): Promise<TvShow[]> => {
       "https://api.themoviedb.org/3/discover/tv?include_adult=false&region=US"
     );
     if (sort) url.searchParams.append("sort_by", sort);
-    if (fromDate) url.searchParams.append("primary_release_date.gte", fromDate);
-    if (toDate) url.searchParams.append("primary_release_date.lte", toDate);
+    if (fromDate) url.searchParams.append("first_air_date.gte", fromDate);
+    if (toDate) url.searchParams.append("first_air_date.lte", toDate);
     if (joinedGenres) url.searchParams.append("with_genres", joinedGenres);
     if (voteAvgFrom)
       url.searchParams.append("vote_average.gte", voteAvgFrom.toString());
