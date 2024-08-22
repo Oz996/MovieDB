@@ -28,13 +28,17 @@ import classNames from "classnames";
 import { Calendar as CalendarIcon, X } from "lucide-react";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import GenresLoader from "./GenresLoader";
+import {
+  languages,
+  monetizationOptions,
+  sortOptions,
+} from "@/lib/constants/mediaFilters";
 
 interface props {
   type: "movie" | "tv";
   params: { filter: string[] };
   queryData: QueryData;
   setQueryData: Dispatch<SetStateAction<QueryData>>;
-  handleFilterMenu?: () => void;
 }
 
 export default function FilterMenu({
@@ -42,48 +46,11 @@ export default function FilterMenu({
   params,
   queryData,
   setQueryData,
-  handleFilterMenu,
 }: props) {
   const [isLoading, setIsLoading] = useState(true);
   const [genreList, setGenreList] = useState<Genre[] | undefined>([]);
-  const [genres, setGenres] = useState<number[]>([]);
-  const [monetizations, setMonetizations] = useState<string[]>([]);
 
   console.log("list", genreList);
-
-  const sortOptions = [
-    { name: "Popularity Descending", value: "popularity.desc" },
-    { name: "Popularity Ascending", value: "popularity.asc" },
-    { name: "Rating Descending", value: "vote_average.desc" },
-    { name: "Rating Ascending", value: "vote_average.asc" },
-    { name: "Release Date Descending", value: "primary_release_date.desc" },
-    { name: "Release Date Ascending", value: "primary_release_date.asc" },
-    { name: "Title (A-Z)", value: "title.desc" },
-    { name: "Title (Z-A)", value: "title.asc" },
-  ];
-
-  const languages = [
-    { name: "English", value: "en" },
-    { name: "French", value: "fr" },
-    { name: "Spanish", value: "es" },
-    { name: "German", value: "de" },
-    { name: "Japanese", value: "ja" },
-    { name: "Portugese", value: "pt" },
-    { name: "Chinese", value: "zh" },
-    { name: "Italian", value: "it" },
-    { name: "Russian", value: "ru" },
-    { name: "Korean", value: "ko" },
-    { name: "Turkish", value: "tr" },
-    { name: "Swedish", value: "sv" },
-  ];
-
-  const monetizationOptions = [
-    { name: "Flatrate", value: "flatrate" },
-    { name: "Free", value: "free" },
-    { name: "Ads", value: "ads" },
-    { name: "Buy", value: "buy" },
-    { name: "Rent", value: "rent" },
-  ];
 
   const voteNumbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const userVoteNumbers = [0, 100, 200, 300, 400, 500];
@@ -92,6 +59,7 @@ export default function FilterMenu({
   const upcomingPage = params.filter.includes("upcoming");
   const moviesPage = type === "movie";
 
+  const query = queryData;
   const {
     fromDate,
     toDate,
@@ -100,7 +68,7 @@ export default function FilterMenu({
     userVotes,
     sort,
     language,
-  } = queryData;
+  } = query;
 
   useEffect(() => {
     if (topRatedPage) {
@@ -180,8 +148,8 @@ export default function FilterMenu({
     setQueryData((data) => ({ ...data, toDate: format }));
   };
 
-  const displayFromDate = fromDate ? fromDate : "Choose Date";
-  const displayToDate = toDate ? toDate : "Choose Date";
+  const displayFromDate = query.fromDate ? query.fromDate : "Choose Date";
+  const displayToDate = query.toDate ? query.toDate : "Choose Date";
 
   const displayHeading = () => {
     if (moviesPage && topRatedPage) {
@@ -198,14 +166,12 @@ export default function FilterMenu({
   };
 
   const handleSelectGenre = (id: number) => {
-    if (genres.includes(id)) {
-      const removedGenre = genres.filter((prevId) => prevId !== id);
-      setGenres(removedGenre);
+    if (query.genres.includes(id)) {
+      const removedGenre = query.genres.filter((prevId) => prevId !== id);
       setQueryData((data) => ({ ...data, genres: removedGenre }));
       return;
     }
-    setGenres((ids) => [...ids, id]);
-    setQueryData((data) => ({ ...data, genres: [...genres, id] }));
+    setQueryData((data) => ({ ...data, genres: [...query.genres, id] }));
   };
 
   const handleScoreFrom = (value: any) => {
@@ -221,16 +187,16 @@ export default function FilterMenu({
   };
 
   const handleSelectMonetization = (value: string) => {
-    if (monetizations.includes(value)) {
-      const removedMonetization = monetizations.filter((val) => val !== value);
-      setMonetizations(removedMonetization);
+    if (query.monetizations.includes(value)) {
+      const removedMonetization = query.monetizations.filter(
+        (val) => val !== value
+      );
       setQueryData((data) => ({ ...data, monetizations: removedMonetization }));
       return;
     }
-    setMonetizations((prevVals) => [...prevVals, value]);
     setQueryData((data) => ({
       ...data,
-      monetizations: [...monetizations, value],
+      monetizations: [...query.monetizations, value],
     }));
   };
 
@@ -238,14 +204,6 @@ export default function FilterMenu({
     <div className="w-[90%] md:w-[17rem] md:border md:shadow-lg rounded-lg p-5">
       <div className="relative">
         <h2 className="text-2xl">{displayHeading()}</h2>
-        {handleFilterMenu && (
-          <button
-            onClick={handleFilterMenu}
-            className="flex-centered p-3 bg-slate-200 hover:bg-white/20 duration-300 cursor-pointer group rounded-full fixed right-10 top-9"
-          >
-            <X size={17} className="group-hover:opacity-70" />
-          </button>
-        )}
       </div>
       <Accordion type="multiple" className="w-full" defaultValue={["item-2"]}>
         <AccordionItem value="item-1">
@@ -277,6 +235,7 @@ export default function FilterMenu({
                 <div key={option.name} className="flex items-center gap-1">
                   <Checkbox
                     id={option.name}
+                    defaultChecked={query.monetizations.includes(option.value)}
                     onCheckedChange={() =>
                       handleSelectMonetization(option.value)
                     }
@@ -348,7 +307,7 @@ export default function FilterMenu({
                       className={classNames({
                         "rounded-full border border-gray-300 px-3 py-1 cursor-pointer duration-200":
                           true,
-                        "bg-black text-white": genres?.includes(genre.id),
+                        "bg-black text-white": query?.genres.includes(genre.id),
                       })}
                     >
                       {genre.name}

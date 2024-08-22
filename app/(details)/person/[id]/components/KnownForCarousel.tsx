@@ -6,7 +6,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { handleDisplayImage } from "@/lib/utils";
-import { Cast, Crew, Person } from "@/types";
+import { Cast, Crew } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -41,10 +41,7 @@ export default function KnownForCarousel({ cast, crew }: props) {
           {knownFor?.map((item) => {
             const title = item.title || item.name;
             return (
-              <CarouselItem
-                key={item.id}
-                className="pl-5 basis-1/1 sm:basis-1/3 md:basis-1/3 lg:basis-1/6"
-              >
+              <CarouselItem key={item.id} className="flex-centered">
                 <Link href={`/${item.media_type}/${item.id}`}>
                   <div className="flex-centered">
                     <div className="space-y-5">

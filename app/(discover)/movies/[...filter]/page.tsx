@@ -4,19 +4,18 @@ import MovieCard from "@/components/Cards/MovieCard";
 import { getMovies } from "@/services/movies";
 import { Movie, QueryData } from "@/types";
 import { useMediaQuery } from "@uidotdev/usehooks";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import MediaLoader from "@/components/Banner/components/MediaLoader";
 import {
   DiscoverMediaDiv,
   FilterMenuButton,
 } from "../../components/DiscoverContainer";
-import { Frown } from "lucide-react";
 import NoResults from "@/components/NoResults";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 export default function Movies({ params }: { params: { filter: string[] } }) {
   const [isLoading, setIsLoading] = useState(true);
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [filterMenu, setFilterMenu] = useState(false);
   const initialData: QueryData = {
     sort: "popularity.desc",
     fromDate: "",
@@ -44,16 +43,7 @@ export default function Movies({ params }: { params: { filter: string[] } }) {
     fetchMovies();
   }, [queryData]);
 
-  const handleFilterMenu = () => {
-    setFilterMenu(!filterMenu);
-    const dialogOpen = dialogRef.current?.hasAttribute("open");
-    if (dialogOpen) dialogRef.current?.close();
-    else dialogRef.current?.showModal();
-  };
-
   const isMobile = useMediaQuery("only screen and (max-width: 768px)");
-  const dialogRef = useRef<HTMLDialogElement>(null);
-  console.log("queryData", queryData);
 
   return (
     <>
@@ -65,20 +55,21 @@ export default function Movies({ params }: { params: { filter: string[] } }) {
           setQueryData={setQueryData}
         />
       )}
-      {isMobile && !filterMenu && (
-        <FilterMenuButton onClick={handleFilterMenu}>Filters</FilterMenuButton>
+      {isMobile && (
+        <Dialog>
+          <DialogTrigger asChild>
+            <FilterMenuButton>Filters</FilterMenuButton>
+          </DialogTrigger>
+          <DialogContent>
+            <FilterMenu
+              type="movie"
+              params={params}
+              queryData={queryData}
+              setQueryData={setQueryData}
+            />
+          </DialogContent>
+        </Dialog>
       )}
-      <dialog ref={dialogRef} className="fixed top-0">
-        {isMobile && filterMenu && (
-          <FilterMenu
-            type="movie"
-            params={params}
-            queryData={queryData}
-            setQueryData={setQueryData}
-            handleFilterMenu={handleFilterMenu}
-          />
-        )}
-      </dialog>
       <DiscoverMediaDiv>
         {isLoading ? (
           <MediaLoader />

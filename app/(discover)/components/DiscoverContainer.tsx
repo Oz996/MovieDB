@@ -18,7 +18,7 @@ export const FilterMenuButton = ({
   onClick,
 }: {
   children: React.ReactNode;
-  onClick: MouseEventHandler<HTMLButtonElement>;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 }) => {
   return (
     <Button
