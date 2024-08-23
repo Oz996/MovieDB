@@ -41,8 +41,8 @@ export interface Person {
   profile_path: string;
   external_ids: ExternalLinks;
   combined_credits: {
-    cast: Cast[];
-    crew: Crew[];
+    cast: PersonCast[];
+    crew: PersonCrew[];
   };
 }
 
@@ -81,8 +81,8 @@ export interface Overview {
 export interface MediaInterface {
   backdrop_path: string;
   credits: {
-    cast: Cast[];
-    crew: Crew[];
+    cast: MediaCast[];
+    crew: MediaCrew[];
   };
   external_ids: ExternalLinks;
   genres: Genre[];

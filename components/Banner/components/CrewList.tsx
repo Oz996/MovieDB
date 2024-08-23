@@ -1,15 +1,15 @@
 import { getBaseUrl } from "@/lib/utils";
-import { Crew } from "@/types";
+import { MediaCrew } from "@/types";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 interface props {
-  crew: Crew[];
+  crew: MediaCrew[];
   type: "movie" | "tv";
 }
 
 export default function CrewList({ crew, type }: props) {
-  const [crewList, setCrewList] = useState<Crew[]>([]);
+  const [crewList, setCrewList] = useState<MediaCrew[]>([]);
 
   const rolesToList = ["Director", "Writer", "Screenplay", "Story", "Creator"];
   const crewToList = crew?.filter((crew) => rolesToList.includes(crew.job));
@@ -26,7 +26,7 @@ export default function CrewList({ crew, type }: props) {
           nameMap.set(item.name, { ...item, job: [item.job] });
         }
       }
-      const result: Crew[] = [];
+      const result: MediaCrew[] = [];
       for (const item of crewToList) {
         const person = nameMap.get(item.name);
         if (!result.some((p) => p.name === person.name)) {
