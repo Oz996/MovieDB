@@ -23,7 +23,7 @@ interface props {
 
 export default function SimilarCarousel({ id, type, rating }: props) {
   const [isLoading, setIsLoading] = useState(true);
-  const [similar, setSimilar] = useState<Similar[] | undefined>([]);
+  const [similar, setSimilar] = useState<Similar[]>([]);
 
   const movie = type === "movie";
   const tvShow = type === "tv";
@@ -35,7 +35,7 @@ export default function SimilarCarousel({ id, type, rating }: props) {
   });
 
   useEffect(() => {
-    if (similarEntry?.isIntersecting && similar?.length === 0) {
+    if (similarEntry?.isIntersecting && similar.length === 0) {
       const fetchSimilar = async () => {
         setIsLoading(true);
         try {
@@ -56,7 +56,9 @@ export default function SimilarCarousel({ id, type, rating }: props) {
     }
   }, [similarEntry?.isIntersecting]);
 
-  const similarsToDisplay = similar?.slice(0, 19);
+  console.log("similar", similar);
+
+  const similarsToDisplay = similar.slice(0, 19);
 
   if (isLoading)
     return (
@@ -65,13 +67,21 @@ export default function SimilarCarousel({ id, type, rating }: props) {
       </section>
     );
 
+  if (similar.length === 0)
+    return (
+      <section className="pb-10">
+        <h2 className="text-title font-semibold pb-8 pr-5">Similar</h2>
+        <p>No similar titles</p>
+      </section>
+    );
+
   return (
     <section ref={similarRef} className="pb-10">
       <h2 className="text-title font-semibold pb-8 pr-5">Similar</h2>
       <Carousel>
-        <CarouselContent>
-          {similarsToDisplay?.map((item) => (
-            <CarouselItem key={item.id} className="flex-centered flex-col">
+        <CarouselContent className="h-[12rem]">
+          {similarsToDisplay.map((item) => (
+            <CarouselItem key={item.id} className="flex-col gap-2">
               <Link href={getBaseUrl() + `/movie/${item.id}`}>
                 <Image
                   src={handleDisplayImage(
@@ -87,7 +97,7 @@ export default function SimilarCarousel({ id, type, rating }: props) {
               <div className="flex justify-between">
                 <Link
                   href={getBaseUrl() + `/movie/${item.id}`}
-                  className="truncate pr-3"
+                  className="truncate pr-3 max-w-[15rem]"
                 >
                   <span>{item.title || item.name}</span>
                 </Link>

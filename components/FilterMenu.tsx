@@ -48,7 +48,7 @@ export default function FilterMenu({
   setQueryData,
 }: props) {
   const [isLoading, setIsLoading] = useState(true);
-  const [genreList, setGenreList] = useState<Genre[] | undefined>([]);
+  const [genreList, setGenreList] = useState<Genre[]>([]);
 
   console.log("list", genreList);
 
@@ -301,14 +301,14 @@ export default function FilterMenu({
                 {isLoading ? (
                   <GenresLoader />
                 ) : (
-                  genreList?.map((genre) => (
+                  genreList.map((genre) => (
                     <li
                       key={genre.id}
                       onClick={() => handleSelectGenre(genre.id)}
                       className={classNames({
                         "rounded-full border border-gray-300 px-3 py-1 cursor-pointer duration-200":
                           true,
-                        "bg-black text-white": query?.genres.includes(genre.id),
+                        "bg-black text-white": query.genres.includes(genre.id),
                       })}
                     >
                       {genre.name}

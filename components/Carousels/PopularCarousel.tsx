@@ -22,7 +22,7 @@ import CarouselCard from "./CarouselCard";
 
 export default function PopularCarousel() {
   const [isLoading, setIsLoading] = useState(true);
-  const [popular, setPopular] = useState<Movie[] | undefined>([]);
+  const [popular, setPopular] = useState<Movie[]>([]);
   const [popularType, setPopularType] = useState("now_playing");
 
   useEffect(() => {
@@ -44,6 +44,7 @@ export default function PopularCarousel() {
   };
 
   if (isLoading) return <LoaderCarousel />;
+
   return (
     <section className="pt-12 px-5 container">
       <Tabs defaultValue="now_playing">
@@ -92,7 +93,7 @@ export default function PopularCarousel() {
         <TabsContent value="now_playing">
           <Carousel className="bg-slate-100 rounded-xl pl-2">
             <CarouselContent className="-ml-1">
-              {popular?.map((movie) => (
+              {popular.map((movie) => (
                 <CarouselCard
                   type="movie"
                   key={movie.id}
@@ -110,7 +111,7 @@ export default function PopularCarousel() {
         <TabsContent value="top_rated">
           <Carousel>
             <CarouselContent className="-ml-1">
-              {popular?.map((movie) => (
+              {popular.map((movie) => (
                 <CarouselCard
                   type="movie"
                   key={movie.id}
@@ -128,7 +129,7 @@ export default function PopularCarousel() {
         <TabsContent value="upcoming">
           <Carousel>
             <CarouselContent className="-ml-1">
-              {popular?.map((movie) => (
+              {popular.map((movie) => (
                 <CarouselCard
                   type="movie"
                   key={movie.id}

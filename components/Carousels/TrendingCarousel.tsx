@@ -22,7 +22,7 @@ import CarouselCard from "./CarouselCard";
 
 export default function TrendingCarousel() {
   const [isLoading, setIsLoading] = useState(true);
-  const [trending, setTrending] = useState<Result[] | undefined>([]);
+  const [trending, setTrending] = useState<Result[]>([]);
   const [trendingTime, setTrendingTime] = useState("day");
 
   useEffect(() => {
@@ -44,6 +44,7 @@ export default function TrendingCarousel() {
   };
 
   if (isLoading) return <LoaderCarousel />;
+
   return (
     <section className="pt-12 px-5 container">
       <Tabs defaultValue="today">
@@ -84,7 +85,7 @@ export default function TrendingCarousel() {
         <TabsContent value="today">
           <Carousel>
             <CarouselContent className="-ml-1">
-              {trending?.map((item) => (
+              {trending.map((item) => (
                 <CarouselCard
                   type={item.media_type}
                   key={item.id}
@@ -102,7 +103,7 @@ export default function TrendingCarousel() {
         <TabsContent value="week">
           <Carousel>
             <CarouselContent className="-ml-1">
-              {trending?.map((item) => (
+              {trending.map((item) => (
                 <CarouselCard
                   type={item.media_type}
                   key={item.id}

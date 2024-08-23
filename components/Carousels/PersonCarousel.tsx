@@ -16,9 +16,15 @@ interface props {
 }
 
 export default function PersonCarousel({ cast }: props) {
+  if (cast.length === 0)
+    return (
+      <SectionContainer>
+        <p>No cast to display</p>
+      </SectionContainer>
+    );
+
   return (
-    <section>
-      <h2 className="text-title font-semibold pb-5 pt-8">Top Billed Cast</h2>
+    <SectionContainer>
       <Carousel className="rounded-xl pl-2 pr-6">
         <CarouselContent className="-ml-1">
           {cast.map((person) => {
@@ -56,6 +62,15 @@ export default function PersonCarousel({ cast }: props) {
         <CarouselPrevious />
         <CarouselNext className="mr-[4.5rem]" />
       </Carousel>
-    </section>
+    </SectionContainer>
   );
+
+  function SectionContainer({ children }: { children: React.ReactNode }) {
+    return (
+      <section>
+        <h2 className="text-title font-semibold pb-5 pt-8">Top Billed Cast</h2>
+        {children}
+      </section>
+    );
+  }
 }

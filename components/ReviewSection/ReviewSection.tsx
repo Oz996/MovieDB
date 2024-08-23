@@ -67,15 +67,13 @@ export default function ReviewSection({ reviews }: props) {
 
   if (reviewList.length === 0)
     return (
-      <section>
-        <h2 className="text-title font-semibold py-5">Reviews</h2>
+      <ReviewsContainer>
         <p>No reviews</p>
-      </section>
+      </ReviewsContainer>
     );
 
   return (
-    <section>
-      <h2 className="text-title font-semibold py-5">Reviews</h2>
+    <ReviewsContainer>
       {showAll ? (
         <div className="space-y-5">
           {reviewList.map((review) => (
@@ -142,6 +140,15 @@ export default function ReviewSection({ reviews }: props) {
           )}
         </div>
       )}
+    </ReviewsContainer>
+  );
+}
+
+function ReviewsContainer({ children }: { children: React.ReactNode }) {
+  return (
+    <section>
+      <h2 className="text-title font-semibold py-5">Reviews</h2>
+      {children}
     </section>
   );
 }

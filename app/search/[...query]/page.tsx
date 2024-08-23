@@ -8,7 +8,7 @@ import { useSearchParams } from "next/navigation";
 import { useSearch } from "@/hooks/useSearch";
 
 export default function Search() {
-  const [searchResults, setSearchResults] = useState<Result[]>();
+  const [searchResults, setSearchResults] = useState<Result[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const { setQuery, setPageAmount, setType } = useSearch();
 
@@ -18,11 +18,6 @@ export default function Search() {
   const searchType = searchParams.get("type");
   setType(searchType);
   setQuery(query!);
-
-  // console.log("search", query);
-  // console.log("searchResults", searchResults);
-  // console.log("type", type);
-  // console.log("searchType", searchType);
 
   const currentPage = pageParam ? parseInt(pageParam, 10) : 1;
 
@@ -53,7 +48,7 @@ export default function Search() {
     <section className="pt-28 grid grid-cols-1 lg:grid-cols-3 container">
       <SearchResultsBar
         isLoading={isLoading}
-        searchResults={searchResults!}
+        searchResults={searchResults}
         setSearchResults={setSearchResults}
       />
 
@@ -61,7 +56,7 @@ export default function Search() {
         isLoading={isLoading}
         currentPage={currentPage}
         searchParams={searchParams}
-        searchResults={searchResults!}
+        searchResults={searchResults}
       />
     </section>
   );

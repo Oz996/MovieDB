@@ -22,7 +22,7 @@ import LoaderCarousel from "./LoaderCarousel";
 import CarouselCard from "./CarouselCard";
 export default function TvShowsCarousel() {
   const [isLoading, setIsLoading] = useState(false);
-  const [shows, setShows] = useState<TvShow[] | undefined>([]);
+  const [shows, setShows] = useState<TvShow[]>([]);
   const [showsType, setshowsType] = useState("free");
   const [hasRendered, setHasRendered] = useState(false);
 
@@ -109,7 +109,7 @@ export default function TvShowsCarousel() {
         <TabsContent value="free">
           <Carousel>
             <CarouselContent className="-ml-1">
-              {shows?.map((tvShow) => (
+              {shows.map((tvShow) => (
                 <CarouselCard
                   type="tv"
                   key={tvShow.id}
@@ -145,7 +145,7 @@ export default function TvShowsCarousel() {
         <TabsContent value="buy">
           <Carousel>
             <CarouselContent className="-ml-1">
-              {shows?.map((tvShow) => (
+              {shows.map((tvShow) => (
                 <CarouselCard
                   type="tv"
                   key={tvShow.id}

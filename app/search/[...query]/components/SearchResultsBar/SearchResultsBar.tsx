@@ -13,7 +13,7 @@ import SearchResultsCard from "./components/SearchResultsCard";
 interface props {
   isLoading: boolean;
   searchResults: Result[];
-  setSearchResults: Dispatch<SetStateAction<Result[] | undefined>>;
+  setSearchResults: Dispatch<SetStateAction<Result[]>>;
 }
 
 export interface MediaType {

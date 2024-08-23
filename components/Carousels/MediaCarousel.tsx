@@ -27,6 +27,7 @@ interface props {
 export default function MediaCarousel({ id, videos, type, setVideos }: props) {
   const [isLoading, setIsLoading] = useState(videos ? false : true);
   const [images, setImages] = useState<ImageType[]>([]);
+  const [fetched, setFetched] = useState(false);
   const [playTrailer, setPlayTrailer] = useState(false);
   const [trailerToDisplay, setTrailerToDisplay] = useState("");
 
@@ -38,8 +39,9 @@ export default function MediaCarousel({ id, videos, type, setVideos }: props) {
   });
 
   useEffect(() => {
-    if (mediaEntry?.isIntersecting && videos.length === 0) {
+    if (mediaEntry?.isIntersecting && videos.length === 0 && !fetched) {
       fetchVideos(type, Number(id), setVideos, setIsLoading);
+      setFetched(true);
     }
   }, [mediaEntry?.isIntersecting]);
 
@@ -89,57 +91,67 @@ export default function MediaCarousel({ id, videos, type, setVideos }: props) {
             </TabsList>
           </div>
           <TabsContent value="videos">
-            <Carousel>
-              <CarouselContent>
-                {videos?.length === 0 && <p className="pl-10"> No videos</p>}
-                {videos?.map((video) => (
-                  <CarouselItem key={video.id} className="flex-centered group">
-                    <button
-                      className="w-full h-full relative"
-                      onClick={() => handleShowTrailer(video.key)}
+            {videos?.length === 0 ? (
+              <p>No videos</p>
+            ) : (
+              <Carousel className="pr-6">
+                <CarouselContent>
+                  {videos?.map((video) => (
+                    <CarouselItem
+                      key={video.id}
+                      className="flex-centered group"
                     >
-                      <Image
-                        src={`https://img.youtube.com/vi/${video.key}/hqdefault.jpg`}
-                        alt={video.name}
-                        width={320}
-                        height={180}
-                        className="rounded-lg"
-                      />
-                      <div className="size-12 bg-black/60 rounded-full absolute top-[45%] left-[45%] flex-centered">
-                        <FaPlay
-                          size={18}
-                          className="text-white group-hover:text-white/80 duration-300"
+                      <button
+                        className="w-full h-full relative"
+                        onClick={() => handleShowTrailer(video.key)}
+                      >
+                        <Image
+                          src={`https://img.youtube.com/vi/${video.key}/hqdefault.jpg`}
+                          alt={video.name}
+                          width={320}
+                          height={180}
+                          className="rounded-lg"
                         />
-                      </div>
-                    </button>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext className="max-md:mr-5" />
-            </Carousel>
+                        <div className="size-12 bg-black/60 rounded-full absolute top-[45%] left-[45%] flex-centered">
+                          <FaPlay
+                            size={18}
+                            className="text-white group-hover:text-white/80 duration-300"
+                          />
+                        </div>
+                      </button>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext className="max-md:mr-5" />
+              </Carousel>
+            )}
           </TabsContent>
           <TabsContent value="images">
-            <Carousel>
-              <CarouselContent>
-                {imagesToDisplay?.length === 0 && (
-                  <p className="pl-10"> No images</p>
-                )}
-                {imagesToDisplay?.map((image) => (
-                  <CarouselItem key={image.file_path} className="flex-centered">
-                    <Image
-                      src={`https://media.themoviedb.org/t/p/w220_and_h330_face${image.file_path}`}
-                      alt="Poster"
-                      width={150}
-                      height={100}
-                      className="rounded"
-                    />
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext className="max-md:mr-5" />
-            </Carousel>
+            {images?.length === 0 ? (
+              <p> No images</p>
+            ) : (
+              <Carousel className="pr-6">
+                <CarouselContent>
+                  {imagesToDisplay?.map((image) => (
+                    <CarouselItem
+                      key={image.file_path}
+                      className="flex-centered"
+                    >
+                      <Image
+                        src={`https://media.themoviedb.org/t/p/w220_and_h330_face${image.file_path}`}
+                        alt="Poster"
+                        width={150}
+                        height={100}
+                        className="rounded"
+                      />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext className="max-md:mr-5" />
+              </Carousel>
+            )}
           </TabsContent>
         </div>
       </Tabs>
