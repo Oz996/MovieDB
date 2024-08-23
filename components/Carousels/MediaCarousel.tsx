@@ -110,7 +110,7 @@ export default function MediaCarousel({ id, videos, type, setVideos }: props) {
                           alt={video.name}
                           width={320}
                           height={180}
-                          className="rounded-lg"
+                          className="rounded-lg object-cover"
                         />
                         <div className="size-12 bg-black/60 rounded-full absolute top-[45%] left-[45%] flex-centered">
                           <FaPlay
@@ -143,7 +143,7 @@ export default function MediaCarousel({ id, videos, type, setVideos }: props) {
                         alt="Poster"
                         width={150}
                         height={100}
-                        className="rounded"
+                        className="rounded object-cover"
                       />
                     </CarouselItem>
                   ))}

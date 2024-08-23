@@ -50,7 +50,13 @@ export default function SearchListCard({
           </>
         ) : (
           <>
-            <Image src={image} width={30} height={30} alt="" />
+            <Image
+              src={image}
+              width={30}
+              height={30}
+              alt=""
+              className="object-cover"
+            />
             <div>
               <p>{title}</p>
             </div>

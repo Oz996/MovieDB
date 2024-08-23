@@ -22,7 +22,7 @@ export const MediaCard = ({
 export const MediaCardImage = ({ image }: { image: string }) => {
   return (
     <Image
-      className="rounded-t-lg"
+      className="rounded-t-lg object-cover"
       src={handleDisplayImage("w342", image)}
       width={180}
       height={180}

@@ -14,6 +14,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import LoaderCarousel from "./LoaderCarousel";
 import { getTvShowSimilar } from "@/services/tvShows";
+import classNames from "classnames";
 
 interface props {
   id: string;
@@ -79,10 +80,13 @@ export default function SimilarCarousel({ id, type, rating }: props) {
     <section ref={similarRef} className="pb-10">
       <h2 className="text-title font-semibold pb-8 pr-5">Similar</h2>
       <Carousel>
-        <CarouselContent className="h-[12rem]">
+        <CarouselContent className="">
           {similarsToDisplay.map((item) => (
-            <CarouselItem key={item.id} className="flex-col gap-2">
-              <Link href={getBaseUrl() + `/movie/${item.id}`}>
+            <CarouselItem key={item.id} className="flex flex-col gap-2">
+              <Link
+                href={getBaseUrl() + `/movie/${item.id}`}
+                className="place-self-center aspect-[2/1.15]"
+              >
                 <Image
                   src={handleDisplayImage(
                     "w250_and_h141_face",
@@ -91,7 +95,10 @@ export default function SimilarCarousel({ id, type, rating }: props) {
                   width={270}
                   height={270}
                   alt=""
-                  className="rounded-lg"
+                  className={classNames({
+                    "rounded-lg object-cover aspect-[2/1.15]": true,
+                    "": !item.poster_path,
+                  })}
                 />
               </Link>
               <div className="flex justify-between">

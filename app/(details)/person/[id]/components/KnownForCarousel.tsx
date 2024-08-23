@@ -51,7 +51,7 @@ export default function KnownForCarousel({ cast, crew }: props) {
                         src={handleDisplayImage("w342", item.poster_path!)}
                         width={150}
                         height={150}
-                        className="rounded-lg"
+                        className="rounded-lg object-cover"
                       />
                     </div>
                     <div className="text-center">

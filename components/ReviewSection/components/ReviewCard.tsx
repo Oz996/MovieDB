@@ -14,13 +14,13 @@ interface props {
 export default function ReviewCard({ review }: props) {
   const [expanded, setExpanded] = useState(false);
 
-  const username = review?.author_details?.username ?? "Unknown";
-  const rating = review?.author_details?.rating
-    ? Math.ceil(review?.author_details?.rating) * 10
+  const username = review.author_details.username ?? "Unknown";
+  const rating = review.author_details.rating
+    ? Math.ceil(review.author_details.rating) * 10
     : null;
-  const image = review?.author_details?.avatar_path;
+  const image = review.author_details?.avatar_path;
 
-  const longReview = review?.content.length > 677;
+  const longReview = review.content.length > 677;
 
   const handleExpandCard = () => {
     setExpanded(true);
@@ -36,7 +36,7 @@ export default function ReviewCard({ review }: props) {
         <div className="flex gap-5">
           <div>
             <Image
-              src={handleDisplayImage("w45_and_h45_face", image!)}
+              src={handleDisplayImage("w45_and_h45_face", image)}
               height={50}
               width={50}
               alt=""
@@ -53,7 +53,7 @@ export default function ReviewCard({ review }: props) {
               )}
               <span>
                 Written by <span className="font-semibold">{username}</span> on{" "}
-                {formatDate(review?.created_at!)}
+                {formatDate(review.created_at)}
               </span>
             </div>
           </div>
@@ -62,7 +62,7 @@ export default function ReviewCard({ review }: props) {
       <CardContent>
         {expanded ? (
           <>
-            <p>{review?.content}</p>
+            <p>{review.content}</p>
             <Button
               onClick={handleCloseCard}
               className="bg-transparent border-none p-0 hover:bg-transparent text-black"
@@ -73,7 +73,7 @@ export default function ReviewCard({ review }: props) {
           </>
         ) : (
           <>
-            <p className="line-clamp-5">{review?.content}</p>
+            <p className="line-clamp-5">{review.content}</p>
             {longReview && (
               <Button
                 onClick={handleExpandCard}

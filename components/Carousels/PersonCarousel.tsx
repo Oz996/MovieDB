@@ -33,11 +33,11 @@ export default function PersonCarousel({ cast }: props) {
                 key={person.id}
                 className="pl-1 basis-1/1 sm:basis-1/3 md:basis-1/3 lg:basis-1/6"
               >
-                <motion.div>
-                  <div className="space-y-5 border flex flex-col items-center w-[8.95rem] rounded-lg pb-2">
-                    <Link href={`/person/${person.id}`}>
+                <div className="border w-[8.95rem] rounded-lg pb-2">
+                  <Link href={`/person/${person.id}`}>
+                    <div className="flex items-center aspect-[3/4.5]">
                       <Image
-                        className="rounded-t-lg"
+                        className="rounded-t-lg object-cover aspect-[3/4.5]"
                         src={handleDisplayImage(
                           "original",
                           person.profile_path!
@@ -46,15 +46,15 @@ export default function PersonCarousel({ cast }: props) {
                         height={140}
                         alt=""
                       />
-                      <div className="p-2">
-                        <p className="font-bold max-w-[10rem] line-clamp-2">
-                          {person.name}
-                        </p>
-                        <p>{person.character}</p>
-                      </div>
-                    </Link>
-                  </div>
-                </motion.div>
+                    </div>
+                    <div className="p-2">
+                      <p className="font-bold max-w-[10rem] line-clamp-2">
+                        {person.name}
+                      </p>
+                      <p>{person.character}</p>
+                    </div>
+                  </Link>
+                </div>
               </CarouselItem>
             );
           })}

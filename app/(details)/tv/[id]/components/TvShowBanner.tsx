@@ -41,7 +41,7 @@ export default function TvShowBanner({ tvShow, videos, setVideos }: props) {
           height={isMobile ? 400 : 300}
           src={handleDisplayImage("w1280", tvShow.poster_path)}
           alt="Tv show poster"
-          className="z-20 rounded lg:rounded-lg w-full max-md:max-w-[20rem] max-sm:mx-auto"
+          className="z-20 rounded lg:rounded-lg w-full max-md:max-w-[20rem] max-sm:mx-auto object-cover"
         />
       </div>
       <TvShowDetails tvShow={tvShow} handleShowTrailer={handleShowTrailer} />

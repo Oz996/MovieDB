@@ -32,6 +32,7 @@ export default function TvShowAside({ tvShow }: props) {
                     height={100}
                     src={handleDisplayImage("w342", network.logo_path)}
                     alt=""
+                    className="object-cover"
                   />
                 </Link>
               </li>

@@ -50,7 +50,7 @@ export default function Person({ params }: { params: { id: string } }) {
             height={isMobile ? 400 : 300}
             src={handleDisplayImage("w1280", person.profile_path)}
             alt={`Image of ${person.name}`}
-            className="z-20 rounded lg:rounded-lg w-full max-md:max-w-[20rem] max-sm:mx-auto"
+            className="z-20 rounded lg:rounded-lg w-full max-md:max-w-[20rem] max-sm:mx-auto object-cover"
           />
         </div>
         {!isMobile && <PersonAside person={person} />}
