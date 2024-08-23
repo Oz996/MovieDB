@@ -67,7 +67,7 @@ export default function Filmography({ cast, crew }: props) {
     );
     const writing = sorted.filter((item) => item.job === "Writer");
     const creator = sorted.filter((item) => item.department === "Creator");
-    console.log("writing", writing);
+
     setProduction(production);
     setWriting(writing);
     setCreator(creator);

@@ -207,6 +207,7 @@ export interface Crew {
   title: string;
   release_date?: string;
   first_air_date?: string;
+  vote_average: number;
 }
 
 export interface Cast {
@@ -224,6 +225,7 @@ export interface Cast {
   title: string;
   release_date?: string;
   first_air_date?: string;
+  vote_average: number;
 }
 
 export interface Trailer {

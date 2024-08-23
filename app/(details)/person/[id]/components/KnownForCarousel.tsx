@@ -24,14 +24,18 @@ export default function KnownForCarousel({ cast, crew }: props) {
       // filtering to make sure we dont display duplicates of a show/movie
       const combined = [...cast, ...crew];
 
-      const sorted = combined.sort((a, b) => b.popularity - a.popularity);
+      const sorted = combined.sort((a, b) => b.vote_average - a.vote_average);
       const results = sorted.filter((media, index, array) => {
-        return array.findIndex((item) => item.id === media.id) === index;
+        if (media.vote_count >= 100)
+          return array.findIndex((item) => item.id === media.id) === index;
       });
+      console.log("ressul", results);
       setKnownFor(results.slice(0, 8));
     };
     mostPopular();
   }, [cast, crew]);
+
+  console.log("knownFor", knownFor);
 
   return (
     <section>
