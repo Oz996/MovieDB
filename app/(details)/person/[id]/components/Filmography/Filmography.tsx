@@ -1,17 +1,17 @@
-import { Cast, Crew, Person } from "@/types";
+import { PersonCast, PersonCrew } from "@/types";
 import { useEffect, useState } from "react";
 import FilmographyCard from "./FilmographyCard";
 
 interface props {
-  cast: Cast[];
-  crew: Crew[];
+  cast: PersonCast[];
+  crew: PersonCrew[];
 }
 
 export default function Filmography({ cast, crew }: props) {
-  const [acting, setActing] = useState<Cast[]>([]);
-  const [production, setProduction] = useState<Crew[]>([]);
-  const [writing, setWriting] = useState<Crew[]>([]);
-  const [creator, setCreator] = useState<Crew[]>([]);
+  const [acting, setActing] = useState<PersonCast[]>([]);
+  const [production, setProduction] = useState<PersonCrew[]>([]);
+  const [writing, setWriting] = useState<PersonCrew[]>([]);
+  const [creator, setCreator] = useState<PersonCrew[]>([]);
 
   useEffect(() => {
     const uniqueMedia = new Map();

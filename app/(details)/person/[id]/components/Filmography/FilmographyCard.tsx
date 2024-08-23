@@ -1,5 +1,5 @@
 import { getBaseUrl } from "@/lib/utils";
-import { Cast, Crew } from "@/types";
+import { PersonCast, PersonCrew } from "@/types";
 import classNames from "classnames";
 import Link from "next/link";
 
@@ -11,7 +11,7 @@ interface props {
   episode_count?: number | null;
   character?: string;
   job?: string;
-  array: Crew[] | Cast[];
+  array: PersonCrew[] | PersonCast[];
   i: number;
 }
 

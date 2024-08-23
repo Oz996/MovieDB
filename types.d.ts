@@ -1,10 +1,12 @@
+export type MediaType = "movie" | "tv";
+
 export interface Result {
   adult: boolean;
   first_air_date?: string;
   release_date?: string;
   genre_ids: number[];
   id: number;
-  media_type: string;
+  media_type: MediaType;
   name?: string;
   title?: string;
   origin_country: string[];
@@ -62,7 +64,7 @@ export interface Overview {
   backdrop_path: string;
   genre_ids: number[];
   id: number;
-  media_type: string;
+  media_type: MediaType;
   original_language: string;
   original_title: string;
   overview: string;
@@ -193,39 +195,62 @@ export interface Keyword {
   name: string;
 }
 
-export interface Crew {
+export interface PersonTeamInterface {
+  adult: boolean;
+  backdrop_path: string;
+  credit_id: string;
+  genre_ids: number[];
   id: number;
-  job: string;
-  media_type: string;
+  media_type: MediaType;
+  original_language: string;
+  original_title: string;
+  origin_country: string[];
+  overview: string;
   popularity: number;
-  poster_path?: string;
-  title?: string;
-  name?: string;
-  episode_count?: number;
-  media_type: "movie" | "tv";
-  name?: string;
-  title: string;
+  poster_path: string;
   release_date?: string;
   first_air_date?: string;
+  episode_count: number;
+  title?: string;
+  name?: string;
+  video: boolean;
   vote_average: number;
+  vote_count: number;
 }
 
-export interface Cast {
+export interface PersonCast extends PersonTeamInterface {
   character: string;
-  episode_count: number;
-  id: number;
-  media_type: string;
-  title?: string;
-  name?: string;
-  popularity: number;
-  poster_path?: string;
-  profile_path: string;
-  media_type: "movie" | "tv";
-  name?: string;
-  title: string;
-  release_date?: string;
-  first_air_date?: string;
+  order: number;
   vote_average: number;
+  vote_count: number;
+}
+
+export interface PersonCrew extends PersonTeamInterface {
+  department: string;
+  job: string;
+}
+
+export interface MediaTeamInterface {
+  adult: boolean;
+  credit_id: string;
+  id: number;
+  gender: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string;
+}
+
+export interface MediaCast extends MediaTeamInterface {
+  cast_id: number;
+  character: string;
+  order: number;
+}
+
+export interface MediaCrew extends MediaTeamInterface {
+  department: string;
+  job: string;
 }
 
 export interface Trailer {

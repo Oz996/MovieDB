@@ -8,11 +8,11 @@ import {
 } from "@/components/ui/carousel";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Cast } from "@/types";
+import { MediaCast } from "@/types";
 import { handleDisplayImage } from "@/lib/utils";
 
 interface props {
-  cast: Cast[];
+  cast: MediaCast[];
 }
 
 export default function PersonCarousel({ cast }: props) {
@@ -40,7 +40,7 @@ export default function PersonCarousel({ cast }: props) {
                         className="rounded-t-lg"
                         src={handleDisplayImage(
                           "original",
-                          person.profile_path
+                          person.profile_path!
                         )}
                         width={140}
                         height={140}

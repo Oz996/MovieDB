@@ -6,18 +6,18 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { handleDisplayImage } from "@/lib/utils";
-import { Cast, Crew } from "@/types";
+import { PersonCast, PersonCrew } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 interface props {
-  cast: Cast[];
-  crew: Crew[];
+  cast: PersonCast[];
+  crew: PersonCrew[];
 }
 
 export default function KnownForCarousel({ cast, crew }: props) {
-  const [knownFor, setKnownFor] = useState<(Cast | Crew)[]>([]);
+  const [knownFor, setKnownFor] = useState<(PersonCast | PersonCrew)[]>([]);
 
   useEffect(() => {
     const mostPopular = () => {
@@ -29,13 +29,10 @@ export default function KnownForCarousel({ cast, crew }: props) {
         if (media.vote_count >= 100)
           return array.findIndex((item) => item.id === media.id) === index;
       });
-      console.log("ressul", results);
       setKnownFor(results.slice(0, 8));
     };
     mostPopular();
   }, [cast, crew]);
-
-  console.log("knownFor", knownFor);
 
   return (
     <section>
