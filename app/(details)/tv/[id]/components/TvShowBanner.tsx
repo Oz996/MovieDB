@@ -26,7 +26,7 @@ export default function TvShowBanner({ tvShow, videos, setVideos }: props) {
   const handleShowTrailer = () => {
     setPlayTrailer(true);
     if (videos.length === 0) {
-      fetchVideos("movie", tvShow?.id, setVideos);
+      fetchVideos("tv", tvShow?.id, setVideos);
     }
   };
   const handleCloseTrailer = () => {

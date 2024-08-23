@@ -59,7 +59,9 @@ export default function SimilarCarousel({ id, type, rating }: props) {
 
   console.log("similar", similar);
 
-  const similarsToDisplay = similar.slice(0, 19);
+  const mediaType = (item: Similar) => {
+    return item.release_date ? "movie" : "tv";
+  };
 
   if (isLoading)
     return (
@@ -81,10 +83,10 @@ export default function SimilarCarousel({ id, type, rating }: props) {
       <h2 className="text-title font-semibold pb-8 pr-5">Similar</h2>
       <Carousel>
         <CarouselContent className="">
-          {similarsToDisplay.map((item) => (
+          {similar.map((item) => (
             <CarouselItem key={item.id} className="flex flex-col gap-2">
               <Link
-                href={getBaseUrl() + `/movie/${item.id}`}
+                href={getBaseUrl() + `/${mediaType(item)}/${item.id}`}
                 className="place-self-center aspect-[2/1.15]"
               >
                 <Image

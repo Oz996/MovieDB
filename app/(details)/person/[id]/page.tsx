@@ -66,13 +66,15 @@ export default function Person({ params }: { params: { id: string } }) {
           ) : (
             <>
               <p className="line-clamp-6">{person.biography}</p>
-              <Button
-                onClick={handleExpanded}
-                className="bg-transparent border-none p-0 hover:bg-transparent text-black text-lg place-self-end"
-              >
-                Read More
-                <ChevronDown size={20} />
-              </Button>
+              {person.biography.length > 864 && (
+                <Button
+                  onClick={handleExpanded}
+                  className="bg-transparent border-none p-0 hover:bg-transparent text-black text-lg place-self-end"
+                >
+                  Read More
+                  <ChevronDown size={20} />
+                </Button>
+              )}
             </>
           )}
         </div>

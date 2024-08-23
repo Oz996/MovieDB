@@ -141,7 +141,8 @@ export interface Similar {
   overview: string;
   popularity: number;
   poster_path: string;
-  release_date: string;
+  first_air_date?: string;
+  release_date?: string;
   title?: string;
   name?: string;
   video: boolean;
