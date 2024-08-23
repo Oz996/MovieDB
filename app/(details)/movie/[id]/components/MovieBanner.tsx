@@ -5,9 +5,9 @@ import Image from "next/image";
 import "react-circular-progressbar/dist/styles.css";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { fetchVideos, handleDisplayImage } from "@/lib/utils";
-import MovieDetails from "./components/MovieDetails";
-import BannerContainer from "./Banner";
-import TrailerModal from "../TrailerModal";
+import MovieDetails from "./MovieDetails";
+import BannerContainer from "../../../../../components/Banner/Banner";
+import TrailerModal from "../../../../../components/TrailerModal";
 
 interface props {
   movie: Movie;
@@ -33,14 +33,16 @@ export default function MovieBanner({ movie, videos, setVideos }: props) {
   };
 
   return (
-    <BannerContainer backdrop_path={movie.backdrop_path}>
-      <Image
-        width={isMobile ? 400 : 300}
-        height={isMobile ? 400 : 300}
-        src={handleDisplayImage("w1280", movie.poster_path)}
-        alt="Movie poster"
-        className="z-20 lg:rounded-lg max-sm:object-cover max-sm:w-full max-md:self-center"
-      />
+    <BannerContainer background={movie.backdrop_path}>
+      <div className="w-full col-span-1">
+        <Image
+          width={isMobile ? 400 : 300}
+          height={isMobile ? 400 : 300}
+          src={handleDisplayImage("w1280", movie.poster_path)}
+          alt="Movie poster"
+          className="z-20 rounded lg:rounded-lg w-full max-md:max-w-[20rem] max-sm:mx-auto"
+        />
+      </div>
       <MovieDetails movie={movie} handleShowTrailer={handleShowTrailer} />
       <TrailerModal
         play={playTrailer}

@@ -1,6 +1,6 @@
 "use client";
 import BannerLoader from "@/components/Banner/components/BannerLoader";
-import TvShowBanner from "@/components/Banner/TvShowBanner";
+import TvShowBanner from "./components/TvShowBanner";
 import LoaderCarousel from "@/components/Carousels/LoaderCarousel";
 import MediaCarousel from "@/components/Carousels/MediaCarousel";
 import PersonCarousel from "@/components/Carousels/PersonCarousel";

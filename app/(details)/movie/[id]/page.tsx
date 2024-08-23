@@ -6,7 +6,7 @@ import PersonCarousel from "@/components/Carousels/PersonCarousel";
 import MediaCarousel from "@/components/Carousels/MediaCarousel";
 import SimilarCarousel from "@/components/Carousels/SimilarCarousel";
 import ReviewSection from "@/components/ReviewSection/ReviewSection";
-import MovieBanner from "@/components/Banner/MovieBanner";
+import MovieBanner from "./components/MovieBanner";
 import MovieAside from "./components/MovieAside";
 import BannerLoader from "@/components/Banner/components/BannerLoader";
 import LoaderCarousel from "@/components/Carousels/LoaderCarousel";

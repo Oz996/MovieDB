@@ -3,8 +3,8 @@ import { Movie } from "@/types";
 import classNames from "classnames";
 import { Play } from "lucide-react";
 import Link from "next/link";
-import CircleRatingBar from "./CircleRatingBar";
-import CrewList from "./CrewList";
+import CircleRatingBar from "../../../../../components/Banner/components/CircleRatingBar";
+import CrewList from "../../../../../components/Banner/components/CrewList";
 
 interface props {
   movie: Movie;
@@ -25,7 +25,7 @@ export default function MovieDetails({ movie, handleShowTrailer }: props) {
   };
 
   return (
-    <div className="flex flex-col justify-center md:pr-10">
+    <div className="flex flex-col justify-center md:pr-10 col-span-3">
       <div className="z-20 flex gap-2 text-2xl md:text-4xl">
         <h2 className="font-bold">{movie.title}</h2>
         <span className="opacity-80 max-md:hidden">
@@ -67,7 +67,7 @@ export default function MovieDetails({ movie, handleShowTrailer }: props) {
       )}
       <div className="flex flex-col gap-2">
         <button
-          className="flex gap-1 cursor-pointer pt-2 pb-3"
+          className="flex gap-1 cursor-pointer pt-2 pb-3 w-[7rem]"
           onClick={handleShowTrailer}
         >
           <Play size={22} aria-hidden="true" />

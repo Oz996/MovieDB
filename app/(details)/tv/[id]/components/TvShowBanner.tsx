@@ -5,9 +5,9 @@ import Image from "next/image";
 import "react-circular-progressbar/dist/styles.css";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { fetchVideos, handleDisplayImage } from "@/lib/utils";
-import BannerContainer from "./Banner";
-import TvShowDetails from "./components/TvShowDetails";
-import TrailerModal from "../TrailerModal";
+import BannerContainer from "../../../../../components/Banner/Banner";
+import TvShowDetails from "./TvShowDetails";
+import TrailerModal from "../../../../../components/TrailerModal";
 
 interface props {
   tvShow: TvShow;
@@ -34,14 +34,16 @@ export default function TvShowBanner({ tvShow, videos, setVideos }: props) {
   };
 
   return (
-    <BannerContainer backdrop_path={tvShow.backdrop_path}>
-      <Image
-        width={isMobile ? 400 : 300}
-        height={isMobile ? 400 : 300}
-        src={handleDisplayImage("w1280", tvShow.poster_path)}
-        alt="Movie poster"
-        className="z-20 lg:rounded-lg max-sm:object-cover max-sm:w-full max-md:self-center"
-      />
+    <BannerContainer background={tvShow.backdrop_path}>
+      <div className="w-full col-span-1">
+        <Image
+          width={isMobile ? 400 : 300}
+          height={isMobile ? 400 : 300}
+          src={handleDisplayImage("w1280", tvShow.poster_path)}
+          alt="Tv show poster"
+          className="z-20 rounded lg:rounded-lg w-full max-md:max-w-[20rem] max-sm:mx-auto"
+        />
+      </div>
       <TvShowDetails tvShow={tvShow} handleShowTrailer={handleShowTrailer} />
       <TrailerModal
         play={playTrailer}

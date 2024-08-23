@@ -1,9 +1,9 @@
 import { TvShow } from "@/types";
 import classNames from "classnames";
 import Link from "next/link";
-import CircleRatingBar from "./CircleRatingBar";
+import CircleRatingBar from "../../../../../components/Banner/components/CircleRatingBar";
 import { Play } from "lucide-react";
-import CrewList from "./CrewList";
+import CrewList from "../../../../../components/Banner/components/CrewList";
 
 interface props {
   tvShow: TvShow;
@@ -23,7 +23,7 @@ export default function TvShowDetails({ tvShow, handleShowTrailer }: props) {
   };
 
   return (
-    <div className="flex flex-col justify-center md:pr-10">
+    <div className="flex flex-col justify-center md:pr-10 col-span-3">
       <div className="z-20 flex gap-2 text-2xl md:text-4xl">
         <h2 className="font-bold">{tvShow.name}</h2>
         <span className="opacity-80 max-md:hidden">({getTvShowDate()})</span>
@@ -33,7 +33,7 @@ export default function TvShowDetails({ tvShow, handleShowTrailer }: props) {
           className={classNames({
             "pl-3 relative": true,
             "before:absolute before:content-['•'] before:left-0":
-              tvShow.genres?.length! > 0,
+              tvShow.genres?.length > 0,
           })}
         >
           {tvShow.genres?.map((genre) => (
@@ -54,7 +54,7 @@ export default function TvShowDetails({ tvShow, handleShowTrailer }: props) {
       )}
       <div className="flex flex-col gap-2">
         <button
-          className="flex gap-1 cursor-pointer pt-2 pb-3"
+          className="flex gap-1 cursor-pointer pt-2 pb-3 w-[7rem"
           onClick={handleShowTrailer}
         >
           <Play size={22} aria-hidden="true" />
