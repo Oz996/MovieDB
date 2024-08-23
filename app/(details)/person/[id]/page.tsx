@@ -9,9 +9,12 @@ import { useEffect, useState } from "react";
 import PersonLoader from "./components/PersonLoader";
 import Filmography from "./components/Filmography/Filmography";
 import PersonAside from "./components/PersonAside";
+import { Button } from "@/components/ui/button";
+import { ChevronDown } from "lucide-react";
 
 export default function Person({ params }: { params: { id: string } }) {
   const [isLoading, setIsLoading] = useState(false);
+  const [expanded, setExpanded] = useState(false);
   const [person, setPerson] = useState<IPerson | null>(null);
 
   useEffect(() => {
@@ -31,6 +34,10 @@ export default function Person({ params }: { params: { id: string } }) {
 
   console.log(person);
   const isMobile = useMediaQuery("only screen and (max-width: 768px)");
+
+  const handleExpanded = () => {
+    setExpanded(true);
+  };
 
   if (isLoading || !person) return <PersonLoader />;
 
@@ -52,9 +59,22 @@ export default function Person({ params }: { params: { id: string } }) {
         <h1 className="font-bold text-2xl md:text-4xl max-sm:pt-5">
           {person.name}
         </h1>
-        <div className="space-y-2">
+        <div className="flex flex-col gap-2">
           <h3 className="text-xl font-semibold">Biography</h3>
-          <p>{person.biography}</p>
+          {expanded ? (
+            <p>{person.biography}</p>
+          ) : (
+            <>
+              <p className="line-clamp-6">{person.biography}</p>
+              <Button
+                onClick={handleExpanded}
+                className="bg-transparent border-none p-0 hover:bg-transparent text-black text-lg place-self-end"
+              >
+                Read More
+                <ChevronDown size={20} />
+              </Button>
+            </>
+          )}
         </div>
         {isMobile && <PersonAside person={person} />}
         <KnownForCarousel
