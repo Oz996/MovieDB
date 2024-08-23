@@ -41,7 +41,7 @@ export default function PersonAside({ person }: props) {
 
   return (
     <aside>
-      <div className="flex flex-col gap-4 pt-8">
+      <div className="flex flex-col gap-4 md:pt-8">
         <ExternalLinks links={person.external_ids} homepage={person.homepage} />
         <p className="text-xl pt-4 font-semibold">Personal Info</p>
         <div className="flex flex-col gap-1">

@@ -41,22 +41,20 @@ export default function KnownForCarousel({ cast, crew }: props) {
           {knownFor?.map((item) => {
             const title = item.title || item.name;
             return (
-              <CarouselItem key={item.id} className="flex-centered">
+              <CarouselItem key={item.id}>
                 <Link href={`/${item.media_type}/${item.id}`}>
-                  <div className="flex-centered">
-                    <div className="space-y-5">
-                      <div className="flex-centered">
-                        <Image
-                          alt=""
-                          src={handleDisplayImage("w342", item.poster_path!)}
-                          width={150}
-                          height={150}
-                          className="rounded-lg"
-                        />
-                      </div>
-                      <div>
-                        <p className="line-clamp-2">{title}</p>
-                      </div>
+                  <div className="flex-centered flex-col gap-2">
+                    <div>
+                      <Image
+                        alt=""
+                        src={handleDisplayImage("w342", item.poster_path!)}
+                        width={150}
+                        height={150}
+                        className="rounded-lg"
+                      />
+                    </div>
+                    <div className="text-center">
+                      <p className="line-clamp-2 max-w-[10rem]">{title}</p>
                     </div>
                   </div>
                 </Link>

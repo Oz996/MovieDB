@@ -27,7 +27,7 @@ export default function MovieDetails({ movie, handleShowTrailer }: props) {
   return (
     <div className="flex flex-col justify-center md:pr-10 col-span-3">
       <div className="z-20 flex gap-2 text-2xl md:text-4xl">
-        <h2 className="font-bold">{movie.title}</h2>
+        <h1 className="font-bold">{movie.title}</h1>
         <span className="opacity-80 max-md:hidden">
           ({new Date(movie.release_date).getFullYear()})
         </span>

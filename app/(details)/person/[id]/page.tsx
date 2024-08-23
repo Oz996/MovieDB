@@ -35,21 +35,23 @@ export default function Person({ params }: { params: { id: string } }) {
   if (isLoading || !person) return <PersonLoader />;
 
   return (
-    <section className="pt-24 grid grid-cols-1 md:grid-cols-4 container">
+    <section className="pt-24 grid grid-cols-1 md:grid-cols-4 gap-y-5 md:gap-10 container">
       <div className="col-span-1">
-        <div className="md:h-[28rem]">
+        <div className="w-full">
           <Image
             width={isMobile ? 400 : 300}
             height={isMobile ? 400 : 300}
             src={handleDisplayImage("w1280", person.profile_path)}
             alt={`Image of ${person.name}`}
-            className="z-20 lg:rounded-lg max-sm:object-cover max-sm:w-full max-md:self-center"
+            className="z-20 rounded lg:rounded-lg w-full max-md:max-w-[20rem] max-sm:mx-auto"
           />
         </div>
         {!isMobile && <PersonAside person={person} />}
       </div>
       <div className="col-span-3 flex flex-col gap-5">
-        <h2 className="font-bold text-4xl max-sm:pt-5">{person.name}</h2>
+        <h1 className="font-bold text-2xl md:text-4xl max-sm:pt-5">
+          {person.name}
+        </h1>
         <div className="space-y-2">
           <h3 className="text-xl font-semibold">Biography</h3>
           <p>{person.biography}</p>
