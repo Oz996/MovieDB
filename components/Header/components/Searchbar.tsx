@@ -96,7 +96,7 @@ export default function Searchbar() {
   };
 
   return (
-    <div className="ml-auto flex gap-1 items-center w-full justify-end relative max-md:absolute max-md:left-0 max-md:right-0 max-md:top-[4.2rem]">
+    <div className="ml-auto flex gap-1 items-center w-full justify-end relative max-md:absolute max-md:left-0 max-md:right-0 max-md:top-[4.2rem] z-50">
       <AnimatePresence>
         {showInput ? (
           <>

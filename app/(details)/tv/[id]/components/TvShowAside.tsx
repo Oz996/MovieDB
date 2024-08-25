@@ -10,8 +10,8 @@ interface props {
 
 export default function TvShowAside({ tvShow }: props) {
   return (
-    <aside>
-      <div className="flex flex-col gap-4 pt-12 w-[15rem]">
+    <aside className="lg:ml-10 lg:w-[15rem] pt-12 pb-10">
+      <div className="flex flex-col gap-4">
         <ExternalLinks links={tvShow.external_ids} homepage={tvShow.homepage} />
         <div className="flex flex-col gap-1">
           <p className="font-semibold">Status</p>

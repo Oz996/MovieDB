@@ -32,7 +32,7 @@ export default function MovieDetails({ movie, handleShowTrailer }: props) {
           ({new Date(movie.release_date).getFullYear()})
         </span>
       </div>
-      <div className="flex max-md:flex-col lg:items-center max-md:pt-3 gap-3">
+      <div className="flex flex-wrap lg:items-center max-md:pt-3 gap-3">
         <span>{formatDate(movie.release_date)}</span>
         <div
           className={classNames({

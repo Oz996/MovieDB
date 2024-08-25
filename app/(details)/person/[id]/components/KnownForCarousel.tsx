@@ -34,6 +34,10 @@ export default function KnownForCarousel({ cast, crew }: props) {
     mostPopular();
   }, [cast, crew]);
 
+  if (knownFor.length === 0) {
+    return <p>Nothing to display</p>;
+  }
+
   return (
     <section>
       <h2 className="text-xl font-semibold pb-2">Known For</h2>

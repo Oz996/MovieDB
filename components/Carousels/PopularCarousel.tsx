@@ -91,7 +91,7 @@ export default function PopularCarousel() {
           </TabsList>
         </div>
         <TabsContent value="now_playing">
-          <Carousel className="bg-slate-100 rounded-xl pl-2">
+          <Carousel className="rounded-xl pl-2">
             <CarouselContent className="-ml-1">
               {popular.map((movie) => (
                 <CarouselCard

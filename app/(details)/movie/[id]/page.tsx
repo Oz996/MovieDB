@@ -46,7 +46,7 @@ export default function Movie({ params }: { params: { id: string } }) {
     <DetailsContainer>
       <MovieBanner movie={movie} videos={videos} setVideos={setVideos} />
       <DetailsGridDiv>
-        <div className="col-span-3 space-y-5">
+        <div className="col-span-3 space-y-5 lg:-mr-8">
           <PersonCarousel cast={movie.credits.cast.slice(0, 8)} />
           <ReviewSection reviews={movie.reviews.results} />
           <MediaCarousel

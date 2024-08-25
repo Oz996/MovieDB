@@ -26,13 +26,10 @@ export default function PersonCarousel({ cast }: props) {
   return (
     <SectionContainer>
       <Carousel className="rounded-xl pl-2 pr-6">
-        <CarouselContent className="-ml-1">
+        <CarouselContent className="-ml-1 lg:space-x-3">
           {cast.map((person) => {
             return (
-              <CarouselItem
-                key={person.id}
-                className="pl-1 basis-1/1 sm:basis-1/3 md:basis-1/3 lg:basis-1/6"
-              >
+              <CarouselItem key={person.id} className="pl-1 flex">
                 <div className="border w-[8.95rem] rounded-lg pb-2">
                   <Link href={`/person/${person.id}`}>
                     <div className="flex items-center aspect-[3/4.5]">

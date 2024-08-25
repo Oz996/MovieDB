@@ -8,8 +8,8 @@ interface props {
 
 export default function MovieAside({ movie }: props) {
   return (
-    <aside>
-      <div className="flex flex-col gap-4 pt-12 w-[15rem]">
+    <aside className="lg:ml-10 lg:w-[15rem] pt-12 pb-10">
+      <div className="flex flex-col gap-4">
         <ExternalLinks links={movie.external_ids} homepage={movie.homepage} />
         <div className="flex flex-col gap-1">
           <p className="font-semibold">Status</p>
@@ -30,7 +30,7 @@ export default function MovieAside({ movie }: props) {
         </div>
         <div className="flex flex-col gap-2">
           <p className="font-semibold">Keywords</p>
-          <div className="flex flex-wrap gap-2 text-sm">
+          <div className="flex flex-wrap max-w-[10rem] gap-2 text-sm">
             {movie.keywords?.keywords?.map((keyword) => (
               <div
                 key={keyword.id}
