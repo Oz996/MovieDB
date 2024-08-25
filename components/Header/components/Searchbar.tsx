@@ -108,7 +108,7 @@ export default function Searchbar() {
               value={value}
               onChange={handleQueryChange}
               type="text"
-              className="h-full w-full text-black"
+              className="h-full w-full text-black lg:rounded-full"
             />
           </form>
 
@@ -128,6 +128,7 @@ export default function Searchbar() {
       {showInput && (
         <SearchList
           title={value ? "Search" : "Trending"}
+          inputRef={inputRef}
           isLoading={isLoading}
           searchList={searchList}
           setShowInput={setShowInput}
