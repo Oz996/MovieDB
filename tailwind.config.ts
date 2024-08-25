@@ -73,10 +73,20 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "expand-down": {
+          from: { height: "0rem" },
+          to: { height: "40rem" },
+        },
+        "expand-searchbar": {
+          from: { width: "0%" },
+          to: { width: "100%" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "expand-down": "expand-down 0.2s ease-out",
+        "expand-searchbar": "expand-searchbar 0.2s ease-in-out",
       },
     },
   },

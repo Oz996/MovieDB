@@ -97,40 +97,34 @@ export default function Searchbar() {
 
   return (
     <div className="ml-auto flex gap-1 items-center w-full justify-end relative max-md:absolute max-md:left-0 max-md:right-0 max-md:top-[4.2rem] z-50">
-      <AnimatePresence>
-        {showInput ? (
-          <>
-            <motion.form
-              onSubmit={handleMultiSearch}
-              key="search-input"
-              initial={{ width: "0%" }}
-              animate={{ width: "100%" }}
-              exit={{ width: "0%" }}
-              transition={{ duration: 0.3 }}
-              className="h-9 flex items-center max-md:px-1"
-            >
-              <Input
-                ref={inputRef}
-                value={value}
-                onChange={handleQueryChange}
-                type="text"
-                className="h-full w-full text-black"
-              />
-            </motion.form>
+      {showInput ? (
+        <>
+          <form
+            onSubmit={handleMultiSearch}
+            className="h-9 flex items-center max-md:px-1 animate-expand-searchbar w-full"
+          >
+            <Input
+              ref={inputRef}
+              value={value}
+              onChange={handleQueryChange}
+              type="text"
+              className="h-full w-full text-black"
+            />
+          </form>
 
-            <button onClick={handleCloseInput}>
-              <X
-                size={28}
-                className="cursor-pointer max-md:absolute max-md:-top-[3rem] max-md:right-4"
-              />
-            </button>
-          </>
-        ) : (
-          <button onClick={handleOpenInput}>
-            <Search className="cursor-pointer max-md:absolute max-md:-top-[3rem] max-md:right-4" />
+          <button onClick={handleCloseInput}>
+            <X
+              size={28}
+              className="cursor-pointer max-md:absolute max-md:-top-[3rem] max-md:right-4"
+            />
           </button>
-        )}
-      </AnimatePresence>
+        </>
+      ) : (
+        <button onClick={handleOpenInput}>
+          <Search className="cursor-pointer max-md:absolute max-md:-top-[3rem] max-md:right-4" />
+        </button>
+      )}
+
       {showInput && (
         <SearchList
           title={value ? "Search" : "Trending"}
