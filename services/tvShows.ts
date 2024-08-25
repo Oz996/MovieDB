@@ -9,7 +9,10 @@ import {
 } from "@/types";
 import options from "./options";
 
-export const getTvShows = async (queryData: QueryData): Promise<TvShow[]> => {
+export const getTvShows = async (
+  queryData: QueryData,
+  page: number = 1
+): Promise<TvShow[]> => {
   const {
     sort,
     fromDate,
@@ -26,7 +29,7 @@ export const getTvShows = async (queryData: QueryData): Promise<TvShow[]> => {
 
   try {
     const url = new URL(
-      "https://api.themoviedb.org/3/discover/tv?include_adult=false&region=US"
+      `https://api.themoviedb.org/3/discover/tv?include_adult=false&region=US&page=${page}`
     );
     if (sort) url.searchParams.append("sort_by", sort);
     if (fromDate) url.searchParams.append("first_air_date.gte", fromDate);

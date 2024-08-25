@@ -9,7 +9,10 @@ import {
 } from "@/types";
 import options from "./options";
 
-export const getMovies = async (queryData: QueryData): Promise<Movie[]> => {
+export const getMovies = async (
+  queryData: QueryData,
+  page: number = 1
+): Promise<Movie[]> => {
   const {
     sort,
     fromDate,
@@ -26,7 +29,7 @@ export const getMovies = async (queryData: QueryData): Promise<Movie[]> => {
   const joinedMonetizations = monetizations?.join("|");
   try {
     const url = new URL(
-      "https://api.themoviedb.org/3/discover/movie?include_adult=false&region=US"
+      `https://api.themoviedb.org/3/discover/movie?include_adult=false&region=US&page=${page}`
     );
     if (sort) url.searchParams.append("sort_by", sort);
     if (fromDate) url.searchParams.append("primary_release_date.gte", fromDate);
@@ -51,6 +54,7 @@ export const getMovies = async (queryData: QueryData): Promise<Movie[]> => {
     const res = await fetch(url.toString(), options);
     const data = await res.json();
     const results = data.results;
+    console.log("movvdata", data);
     return results;
   } catch (error: any) {
     throw Error(error.message);

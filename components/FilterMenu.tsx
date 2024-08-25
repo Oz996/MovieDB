@@ -50,8 +50,6 @@ export default function FilterMenu({
   const [isLoading, setIsLoading] = useState(true);
   const [genreList, setGenreList] = useState<Genre[]>([]);
 
-  console.log("list", genreList);
-
   const voteNumbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const userVoteNumbers = [0, 100, 200, 300, 400, 500];
 

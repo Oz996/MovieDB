@@ -32,7 +32,6 @@ export default function SearchListCard({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.2, delay: index * 0.03 }}
-      key={item.id}
       className={classNames({
         "py-2 px-4 duration-200 cursor-pointer hover:text-slate-500": true,
         "bg-slate-100": index % 2 === 1,

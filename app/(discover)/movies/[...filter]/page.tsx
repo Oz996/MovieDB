@@ -12,6 +12,18 @@ import {
 } from "../../components/DiscoverContainer";
 import NoResults from "@/components/NoResults";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+} from "@/components/ui/pagination";
+import { useSearchParams } from "next/navigation";
+import { getBaseUrl } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import DiscoverPagination from "../../components/DiscoverPagination";
 
 export default function Movies({ params }: { params: { filter: string[] } }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -29,10 +41,14 @@ export default function Movies({ params }: { params: { filter: string[] } }) {
   };
   const [queryData, setQueryData] = useState<QueryData>(initialData);
 
+  const searchParams = useSearchParams();
+  const pageParam = searchParams.get("page");
+  const currentPage = pageParam ? parseInt(pageParam, 10) : 1;
+
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const res = await getMovies(queryData);
+        const res = await getMovies(queryData, currentPage);
         setMovies(res);
       } catch (error: any) {
         console.error(error.message);
@@ -41,7 +57,7 @@ export default function Movies({ params }: { params: { filter: string[] } }) {
       }
     };
     fetchMovies();
-  }, [queryData]);
+  }, [queryData, currentPage]);
 
   const isMobile = useMediaQuery("only screen and (max-width: 768px)");
 
@@ -78,7 +94,16 @@ export default function Movies({ params }: { params: { filter: string[] } }) {
             <NoResults />
           </div>
         ) : (
-          movies.map((movie) => <MovieCard key={movie.id} movie={movie} />)
+          <>
+            {movies.map((movie) => (
+              <MovieCard key={movie.id} movie={movie} />
+            ))}
+            <DiscoverPagination
+              type="movies"
+              params={params}
+              currentPage={currentPage}
+            />
+          </>
         )}
       </DiscoverMediaDiv>
     </>

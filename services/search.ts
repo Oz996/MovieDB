@@ -1,4 +1,4 @@
-import { Result, ResultObject } from "@/types";
+import { ResultObject } from "@/types";
 import options from "./options";
 
 export const getSearchResults = async (

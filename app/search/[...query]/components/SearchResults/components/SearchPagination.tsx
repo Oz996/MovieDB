@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/pagination";
 import { useSearch } from "@/hooks/useSearch";
 import classNames from "classnames";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 
 interface props {
@@ -43,7 +44,7 @@ export default function SearchPagination({ isLoading, currentPage }: props) {
             disabled={currentPage === 1}
           >
             <Link href={paginationLink(currentPage - 1)}>
-              <PaginationPrevious />
+              <ChevronLeft className="h-4 w-4" />
             </Link>
           </Button>
         </PaginationItem>
@@ -102,7 +103,7 @@ export default function SearchPagination({ isLoading, currentPage }: props) {
             disabled={currentPage === lastPage}
           >
             <Link href={paginationLink(currentPage + 1)}>
-              <PaginationNext />
+              <ChevronRight className="h-4 w-4" />
             </Link>
           </Button>
         </PaginationItem>

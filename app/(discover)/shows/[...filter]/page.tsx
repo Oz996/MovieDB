@@ -12,6 +12,8 @@ import {
 } from "../../components/DiscoverContainer";
 import NoResults from "@/components/NoResults";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import DiscoverPagination from "../../components/DiscoverPagination";
+import { useSearchParams } from "next/navigation";
 
 export default function Shows({ params }: { params: { filter: string[] } }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -29,10 +31,14 @@ export default function Shows({ params }: { params: { filter: string[] } }) {
   };
   const [queryData, setQueryData] = useState<QueryData>(initialData);
 
+  const searchParams = useSearchParams();
+  const pageParam = searchParams.get("page");
+  const currentPage = pageParam ? parseInt(pageParam, 10) : 1;
+
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const res = await getTvShows(queryData);
+        const res = await getTvShows(queryData, currentPage);
         setTvShows(res);
       } catch (error: any) {
         console.error(error.message);
@@ -41,7 +47,7 @@ export default function Shows({ params }: { params: { filter: string[] } }) {
       }
     };
     fetchMovies();
-  }, [queryData]);
+  }, [queryData, currentPage]);
 
   const isMobile = useMediaQuery("only screen and (max-width: 768px)");
 
@@ -78,9 +84,16 @@ export default function Shows({ params }: { params: { filter: string[] } }) {
             <NoResults />
           </div>
         ) : (
-          tvShows?.map((tvShow) => (
-            <TvShowCard key={tvShow.id} tvShow={tvShow} />
-          ))
+          <>
+            {tvShows?.map((tvShow) => (
+              <TvShowCard key={tvShow.id} tvShow={tvShow} />
+            ))}
+            <DiscoverPagination
+              type="shows"
+              params={params}
+              currentPage={currentPage}
+            />
+          </>
         )}
       </DiscoverMediaDiv>
     </>
