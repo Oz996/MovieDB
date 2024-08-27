@@ -39,7 +39,7 @@ export default function TvShowsCarousel() {
   }, []);
 
   useEffect(() => {
-    if (showsEntry?.isIntersecting && hasRendered) {
+    if (showsEntry?.isIntersecting && shows.length === 0 && hasRendered) {
       const fetchShows = async () => {
         setIsLoading(true);
         try {

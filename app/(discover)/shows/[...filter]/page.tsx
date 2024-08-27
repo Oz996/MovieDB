@@ -5,12 +5,10 @@ import { getTvShows } from "@/services/tvShows";
 import { QueryData, TvShow } from "@/types";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { useEffect, useState } from "react";
-import MediaLoader from "@/components/Banner/components/MediaLoader";
 import {
   DiscoverMediaDiv,
   FilterMenuButton,
 } from "../../components/DiscoverContainer";
-import NoResults from "@/components/NoResults";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import DiscoverPagination from "../../components/DiscoverPagination";
 import { useSearchParams } from "next/navigation";
