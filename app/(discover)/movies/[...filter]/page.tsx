@@ -77,25 +77,15 @@ export default function Movies({ params }: { params: { filter: string[] } }) {
           </DialogContent>
         </Dialog>
       )}
-      <DiscoverMediaDiv>
-        {isLoading ? (
-          <MediaLoader />
-        ) : movies.length === 0 ? (
-          <div className="col-span-2">
-            <NoResults />
-          </div>
-        ) : (
-          <>
-            {movies.map((movie) => (
-              <MovieCard key={movie.id} movie={movie} />
-            ))}
-            <DiscoverPagination
-              type="movies"
-              params={params}
-              currentPage={currentPage}
-            />
-          </>
-        )}
+      <DiscoverMediaDiv isLoading={isLoading} isEmpty={movies.length === 0}>
+        {movies.map((movie) => (
+          <MovieCard key={movie.id} movie={movie} />
+        ))}
+        <DiscoverPagination
+          type="movies"
+          params={params}
+          currentPage={currentPage}
+        />
       </DiscoverMediaDiv>
     </>
   );

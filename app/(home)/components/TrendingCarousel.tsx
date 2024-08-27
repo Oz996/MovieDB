@@ -17,8 +17,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import LoaderCarousel from "./LoaderCarousel";
-import CarouselCard from "./CarouselCard";
+import LoaderCarousel from "@/components/Carousels/LoaderCarousel";
+import CarouselCard from "@/components/Carousels/CarouselCard";
 
 export default function TrendingCarousel() {
   const [isLoading, setIsLoading] = useState(true);

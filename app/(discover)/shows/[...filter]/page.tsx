@@ -77,25 +77,15 @@ export default function Shows({ params }: { params: { filter: string[] } }) {
           </DialogContent>
         </Dialog>
       )}
-      <DiscoverMediaDiv>
-        {isLoading ? (
-          <MediaLoader />
-        ) : tvShows.length == 0 ? (
-          <div className="col-span-2">
-            <NoResults />
-          </div>
-        ) : (
-          <>
-            {tvShows?.map((tvShow) => (
-              <TvShowCard key={tvShow.id} tvShow={tvShow} />
-            ))}
-            <DiscoverPagination
-              type="shows"
-              params={params}
-              currentPage={currentPage}
-            />
-          </>
-        )}
+      <DiscoverMediaDiv isLoading={isLoading} isEmpty={tvShows.length === 0}>
+        {tvShows?.map((tvShow) => (
+          <TvShowCard key={tvShow.id} tvShow={tvShow} />
+        ))}
+        <DiscoverPagination
+          type="shows"
+          params={params}
+          currentPage={currentPage}
+        />
       </DiscoverMediaDiv>
     </>
   );

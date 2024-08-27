@@ -17,8 +17,8 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { getMovieList } from "@/services/movies";
-import LoaderCarousel from "./LoaderCarousel";
-import CarouselCard from "./CarouselCard";
+import LoaderCarousel from "@/components/Carousels/LoaderCarousel";
+import CarouselCard from "@/components/Carousels/CarouselCard";
 
 export default function PopularCarousel() {
   const [isLoading, setIsLoading] = useState(true);

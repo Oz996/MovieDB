@@ -18,8 +18,8 @@ import {
 } from "@/components/ui/carousel";
 import { useIntersectionObserver } from "@uidotdev/usehooks";
 import { getTvShowsDiscover } from "@/services/tvShows";
-import LoaderCarousel from "./LoaderCarousel";
-import CarouselCard from "./CarouselCard";
+import LoaderCarousel from "@/components/Carousels/LoaderCarousel";
+import CarouselCard from "@/components/Carousels/CarouselCard";
 export default function TvShowsCarousel() {
   const [isLoading, setIsLoading] = useState(false);
   const [shows, setShows] = useState<TvShow[]>([]);

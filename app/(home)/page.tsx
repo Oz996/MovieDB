@@ -1,6 +1,6 @@
-import TrendingCarousel from "@/components/Carousels/TrendingCarousel";
-import PopularCarousel from "@/components/Carousels/PopularCarousel";
-import TvShowsCarousel from "@/components/Carousels/TvShowsCarousel";
+import TrendingCarousel from "./components/TrendingCarousel";
+import PopularCarousel from "./components/PopularCarousel";
+import TvShowsCarousel from "./components/TvShowsCarousel";
 
 export default function Home() {
   return (
