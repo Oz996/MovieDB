@@ -34,17 +34,17 @@ export default function SearchResults({
       {searchResults?.length === 0 && <NoResults />}
       {searchResults?.map((item) => {
         const person = item?.known_for_department;
-        const title = item?.name || item?.title;
-        const date = item?.first_air_date || item?.release_date;
-        const imageToDisplay = item?.poster_path || item?.profile_path;
+        const title = item?.name ?? item?.title;
+        const date = item?.first_air_date ?? item?.release_date;
+        const imageToDisplay = item?.poster_path ?? item?.profile_path;
         const image = handleDisplayImage("w342", imageToDisplay!);
 
         // checking if the title or name has a value before displaying it
         const personKnownFor = () => {
           const knownForList = [
-            item?.known_for?.[0]?.title || item?.known_for?.[0]?.name,
-            item?.known_for?.[1]?.title || item?.known_for?.[1]?.name,
-            item?.known_for?.[2]?.title || item?.known_for?.[2]?.name,
+            item?.known_for?.[0]?.title ?? item?.known_for?.[0]?.name,
+            item?.known_for?.[1]?.title ?? item?.known_for?.[1]?.name,
+            item?.known_for?.[2]?.title ?? item?.known_for?.[2]?.name,
           ];
 
           const hasValue = knownForList.filter(Boolean);
@@ -68,7 +68,7 @@ export default function SearchResults({
             <Link
               href={
                 getBaseUrl() +
-                `/${item.media_type || handleNavigation()}/${item.id}`
+                `/${item.media_type ?? handleNavigation()}/${item.id}`
               }
               className="w-[5.5rem] h-32 lg:w-28 lg:h-40 flex-shrink-0"
             >
@@ -85,7 +85,7 @@ export default function SearchResults({
                 <Link
                   href={
                     getBaseUrl() +
-                    `/${item.media_type || handleNavigation()}/${item.id}`
+                    `/${item.media_type ?? handleNavigation()}/${item.id}`
                   }
                 >
                   <h2 className="text-lg font-semibold">{title}</h2>

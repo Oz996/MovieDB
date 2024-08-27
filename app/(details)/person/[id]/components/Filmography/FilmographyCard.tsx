@@ -29,11 +29,11 @@ export default function FilmographyCard({
   const dateToDisplay = (year: number) => year ?? "TBA";
 
   const getYear = (date: any) =>
-    new Date(date || date?.release_date || date?.first_air_date).getFullYear();
+    new Date(date ?? date?.release_date ?? date?.first_air_date).getFullYear();
 
   const currentDate = getYear(date);
   const nextDate = array[i + 1]
-    ? getYear(array[i + 1].release_date || array[i + 1].first_air_date)
+    ? getYear(array[i + 1].release_date ?? array[i + 1].first_air_date)
     : null;
   const lastIndex = array.length - 1;
 

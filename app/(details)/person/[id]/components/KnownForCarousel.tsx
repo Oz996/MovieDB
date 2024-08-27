@@ -43,29 +43,28 @@ export default function KnownForCarousel({ cast, crew }: props) {
       <h2 className="text-xl font-semibold pb-2">Known For</h2>
       <Carousel>
         <CarouselContent>
-          {knownFor?.map((item) => {
-            const title = item.title || item.name;
-            return (
-              <CarouselItem key={item.id}>
-                <Link href={`/${item.media_type}/${item.id}`}>
-                  <div className="flex-centered flex-col gap-2">
-                    <div>
-                      <Image
-                        alt=""
-                        src={handleDisplayImage("w342", item.poster_path!)}
-                        width={150}
-                        height={150}
-                        className="rounded-lg object-cover"
-                      />
-                    </div>
-                    <div className="text-center">
-                      <p className="line-clamp-2 max-w-[10rem]">{title}</p>
-                    </div>
+          {knownFor?.map((item) => (
+            <CarouselItem key={item.id}>
+              <Link href={`/${item.media_type}/${item.id}`}>
+                <div className="flex-centered flex-col gap-2">
+                  <div>
+                    <Image
+                      alt=""
+                      src={handleDisplayImage("w342", item.poster_path)}
+                      width={150}
+                      height={150}
+                      className="rounded-lg object-cover"
+                    />
                   </div>
-                </Link>
-              </CarouselItem>
-            );
-          })}
+                  <div className="text-center">
+                    <p className="line-clamp-2 max-w-[10rem]">
+                      {item.title ?? item.name}
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            </CarouselItem>
+          ))}
         </CarouselContent>
         <CarouselPrevious className="ml-3" />
         <CarouselNext className="max-md:mr-5" />

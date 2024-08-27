@@ -1,3 +1,4 @@
+import { rolesToList } from "@/lib/constants/mediaFilters";
 import { getBaseUrl } from "@/lib/utils";
 import { MediaCrew } from "@/types";
 import Link from "next/link";
@@ -10,8 +11,6 @@ interface props {
 
 export default function CrewList({ crew, type }: props) {
   const [crewList, setCrewList] = useState<MediaCrew[]>([]);
-
-  const rolesToList = ["Director", "Writer", "Screenplay", "Story", "Creator"];
   const crewToList = crew?.filter((crew) => rolesToList.includes(crew.job));
 
   // making sure that no person gets duplicated and turning persons job property to an array of all jobs

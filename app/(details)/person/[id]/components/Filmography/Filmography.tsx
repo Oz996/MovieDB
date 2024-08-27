@@ -16,7 +16,7 @@ export default function Filmography({ cast, crew }: props) {
   useEffect(() => {
     const uniqueMedia = new Map();
     for (const media of cast) {
-      const title = media.title || media.name;
+      const title = media.title ?? media.name;
       if (!uniqueMedia.has(title)) {
         uniqueMedia.set(title, media);
       }
@@ -24,8 +24,8 @@ export default function Filmography({ cast, crew }: props) {
 
     const filtered = Array.from(uniqueMedia.values());
     const sorted = filtered.sort((a, b) => {
-      const dateA = new Date(a.release_date || a.first_air_date!).getFullYear();
-      const dateB = new Date(b.release_date || b.first_air_date!).getFullYear();
+      const dateA = new Date(a.release_date ?? a.first_air_date!).getFullYear();
+      const dateB = new Date(b.release_date ?? b.first_air_date!).getFullYear();
 
       // NaN values caused issues with sorting, here is a solution I found:
       if (isNaN(dateA) && isNaN(dateB)) return 0;
@@ -42,7 +42,7 @@ export default function Filmography({ cast, crew }: props) {
     for (const media of crew) {
       // creating a title-job key combination in order to keep track of unique items based on those instead of just title
       // because some titles exist under different jobs
-      const title = media.title || media.name;
+      const title = media.title ?? media.name;
       const key = `${title}-${media.job}`;
       if (!uniqueMedia.has(key)) {
         uniqueMedia.set(key, media);
@@ -51,8 +51,8 @@ export default function Filmography({ cast, crew }: props) {
 
     const filtered = Array.from(uniqueMedia.values());
     const sorted = filtered.sort((a, b) => {
-      const dateA = new Date(a.release_date || a.first_air_date!).getFullYear();
-      const dateB = new Date(b.release_date || b.first_air_date!).getFullYear();
+      const dateA = new Date(a.release_date ?? a.first_air_date!).getFullYear();
+      const dateB = new Date(b.release_date ?? b.first_air_date!).getFullYear();
 
       // NaN values caused issues with sorting, here is a solution I found:
       if (isNaN(dateA) && isNaN(dateB)) return 0;
@@ -83,9 +83,9 @@ export default function Filmography({ cast, crew }: props) {
               <FilmographyCard
                 key={item.id}
                 id={item.id}
-                title={item.title || item.name!}
+                title={item.title ?? item.name!}
                 character={item.character}
-                date={item.release_date || item.first_air_date!}
+                date={item.release_date ?? item.first_air_date!}
                 media_type={item.media_type}
                 episode_count={item.episode_count ?? null}
                 array={acting}
@@ -103,9 +103,9 @@ export default function Filmography({ cast, crew }: props) {
               <FilmographyCard
                 key={item.id}
                 id={item.id}
-                title={item.title || item.name!}
+                title={item.title ?? item.name!}
                 job={item.job}
-                date={item.release_date || item.first_air_date!}
+                date={item.release_date ?? item.first_air_date!}
                 media_type={item.media_type}
                 episode_count={item.episode_count ?? null}
                 array={production}
@@ -123,9 +123,9 @@ export default function Filmography({ cast, crew }: props) {
               <FilmographyCard
                 key={item.id}
                 id={item.id}
-                title={item.title || item.name!}
+                title={item.title ?? item.name!}
                 job={item.job}
-                date={item.release_date || item.first_air_date!}
+                date={item.release_date ?? item.first_air_date!}
                 media_type={item.media_type}
                 episode_count={item.episode_count ?? null}
                 array={writing}
@@ -143,9 +143,9 @@ export default function Filmography({ cast, crew }: props) {
               <FilmographyCard
                 key={item.id}
                 id={item.id}
-                title={item.title || item.name!}
+                title={item.title ?? item.name!}
                 job={item.job}
-                date={item.release_date || item.first_air_date!}
+                date={item.release_date ?? item.first_air_date!}
                 media_type={item.media_type}
                 episode_count={item.episode_count ?? null}
                 array={creator}

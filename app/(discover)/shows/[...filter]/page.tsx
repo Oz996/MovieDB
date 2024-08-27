@@ -1,5 +1,5 @@
 "use client";
-import FilterMenu from "@/components/FilterMenu";
+import FilterMenu from "../../components/FilterMenu";
 import TvShowCard from "@/components/Cards/TvShowCard";
 import { getTvShows } from "@/services/tvShows";
 import { QueryData, TvShow } from "@/types";

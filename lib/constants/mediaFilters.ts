@@ -36,3 +36,11 @@ export const monetizationOptions: FilterOptions[] = [
   { name: "Buy", value: "buy" },
   { name: "Rent", value: "rent" },
 ];
+
+export const rolesToList = [
+  "Director",
+  "Writer",
+  "Screenplay",
+  "Story",
+  "Creator",
+];

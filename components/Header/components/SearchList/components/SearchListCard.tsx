@@ -20,9 +20,9 @@ export default function SearchListCard({
   index,
   setShowInput,
 }: props) {
-  const imageToDisplay = item?.poster_path || item?.profile_path;
+  const imageToDisplay = item?.poster_path ?? item?.profile_path;
   const image = handleDisplayImage("w185", imageToDisplay!);
-  const title = item?.name || item?.title;
+  const title = item?.name ?? item?.title;
 
   const handleCloseList = () => {
     setShowInput(false);

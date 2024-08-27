@@ -108,7 +108,7 @@ export default function SimilarCarousel({ id, type, rating }: props) {
                   href={getBaseUrl() + `/movie/${item.id}`}
                   className="truncate pr-3 max-w-[15rem]"
                 >
-                  <span>{item.title || item.name}</span>
+                  <span>{item.title ?? item.name}</span>
                 </Link>
                 <span>{rating}%</span>
               </div>

@@ -1,5 +1,5 @@
 "use client";
-import FilterMenu from "@/components/FilterMenu";
+import FilterMenu from "../../components/FilterMenu";
 import MovieCard from "@/components/Cards/MovieCard";
 import { getMovies } from "@/services/movies";
 import { Movie, QueryData } from "@/types";

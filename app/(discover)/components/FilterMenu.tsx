@@ -27,7 +27,7 @@ import { Genre, QueryData } from "@/types";
 import classNames from "classnames";
 import { Calendar as CalendarIcon, X } from "lucide-react";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import GenresLoader from "./GenresLoader";
+import GenresLoader from "@/components/GenresLoader";
 import {
   languages,
   monetizationOptions,
