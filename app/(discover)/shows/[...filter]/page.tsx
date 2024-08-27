@@ -6,6 +6,7 @@ import { QueryData, TvShow } from "@/types";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { useEffect, useState } from "react";
 import {
+  DiscoverContainer,
   DiscoverMediaDiv,
   FilterMenuButton,
 } from "../../components/DiscoverContainer";
@@ -52,39 +53,41 @@ export default function Shows({ params }: { params: { filter: string[] } }) {
 
   return (
     <>
-      {!isMobile && (
-        <FilterMenu
-          type="tv"
-          params={params}
-          queryData={queryData}
-          setQueryData={setQueryData}
-        />
-      )}
-      {isMobile && (
-        <Dialog>
-          <DialogTrigger asChild>
-            <FilterMenuButton>Filters</FilterMenuButton>
-          </DialogTrigger>
-          <DialogContent>
-            <FilterMenu
-              type="tv"
-              params={params}
-              queryData={queryData}
-              setQueryData={setQueryData}
-            />
-          </DialogContent>
-        </Dialog>
-      )}
-      <DiscoverMediaDiv isLoading={isLoading} isEmpty={tvShows.length === 0}>
-        {tvShows?.map((tvShow) => (
-          <TvShowCard key={tvShow.id} tvShow={tvShow} />
-        ))}
-        <DiscoverPagination
-          type="shows"
-          params={params}
-          currentPage={currentPage}
-        />
-      </DiscoverMediaDiv>
+      <DiscoverContainer>
+        {!isMobile && (
+          <FilterMenu
+            type="tv"
+            params={params}
+            queryData={queryData}
+            setQueryData={setQueryData}
+          />
+        )}
+        {isMobile && (
+          <Dialog>
+            <DialogTrigger asChild>
+              <FilterMenuButton>Filters</FilterMenuButton>
+            </DialogTrigger>
+            <DialogContent>
+              <FilterMenu
+                type="tv"
+                params={params}
+                queryData={queryData}
+                setQueryData={setQueryData}
+              />
+            </DialogContent>
+          </Dialog>
+        )}
+        <DiscoverMediaDiv isLoading={isLoading} isEmpty={tvShows.length === 0}>
+          {tvShows?.map((tvShow) => (
+            <TvShowCard key={tvShow.id} tvShow={tvShow} />
+          ))}
+        </DiscoverMediaDiv>
+      </DiscoverContainer>
+      <DiscoverPagination
+        type="shows"
+        params={params}
+        currentPage={currentPage}
+      />
     </>
   );
 }

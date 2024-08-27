@@ -6,6 +6,7 @@ import { Movie, QueryData } from "@/types";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { useEffect, useState } from "react";
 import {
+  DiscoverContainer,
   DiscoverMediaDiv,
   FilterMenuButton,
 } from "../../components/DiscoverContainer";
@@ -52,39 +53,41 @@ export default function Movies({ params }: { params: { filter: string[] } }) {
 
   return (
     <>
-      {!isMobile && (
-        <FilterMenu
-          type="movie"
-          params={params}
-          queryData={queryData}
-          setQueryData={setQueryData}
-        />
-      )}
-      {isMobile && (
-        <Dialog>
-          <DialogTrigger asChild>
-            <FilterMenuButton>Filters</FilterMenuButton>
-          </DialogTrigger>
-          <DialogContent>
-            <FilterMenu
-              type="movie"
-              params={params}
-              queryData={queryData}
-              setQueryData={setQueryData}
-            />
-          </DialogContent>
-        </Dialog>
-      )}
-      <DiscoverMediaDiv isLoading={isLoading} isEmpty={movies.length === 0}>
-        {movies.map((movie) => (
-          <MovieCard key={movie.id} movie={movie} />
-        ))}
-        <DiscoverPagination
-          type="movies"
-          params={params}
-          currentPage={currentPage}
-        />
-      </DiscoverMediaDiv>
+      <DiscoverContainer>
+        {!isMobile && (
+          <FilterMenu
+            type="movie"
+            params={params}
+            queryData={queryData}
+            setQueryData={setQueryData}
+          />
+        )}
+        {isMobile && (
+          <Dialog>
+            <DialogTrigger asChild>
+              <FilterMenuButton>Filters</FilterMenuButton>
+            </DialogTrigger>
+            <DialogContent>
+              <FilterMenu
+                type="movie"
+                params={params}
+                queryData={queryData}
+                setQueryData={setQueryData}
+              />
+            </DialogContent>
+          </Dialog>
+        )}
+        <DiscoverMediaDiv isLoading={isLoading} isEmpty={movies.length === 0}>
+          {movies.map((movie) => (
+            <MovieCard key={movie.id} movie={movie} />
+          ))}
+        </DiscoverMediaDiv>
+      </DiscoverContainer>
+      <DiscoverPagination
+        type="movies"
+        params={params}
+        currentPage={currentPage}
+      />
     </>
   );
 }

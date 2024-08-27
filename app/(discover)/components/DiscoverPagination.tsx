@@ -22,7 +22,7 @@ export default function DiscoverPagination({
     return `/${type}/${params.filter}?page=${page}`;
   };
   return (
-    <div className="col-span-5">
+    <div className="p-10">
       <Pagination>
         <PaginationContent>
           <PaginationItem>
