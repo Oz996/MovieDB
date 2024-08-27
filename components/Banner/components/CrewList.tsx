@@ -26,13 +26,7 @@ export default function CrewList({ crew, type }: props) {
           nameMap.set(item.name, { ...item, job: [item.job] });
         }
       }
-      const result: MediaCrew[] = [];
-      for (const item of crewToList) {
-        const person = nameMap.get(item.name);
-        if (!result.some((p) => p.name === person.name)) {
-          result.push(person);
-        }
-      }
+      const result = Array.from(nameMap.values()) as MediaCrew[];
       setCrewList(result);
     };
     getCrewRoles();

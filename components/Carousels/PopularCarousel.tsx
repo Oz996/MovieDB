@@ -26,17 +26,18 @@ export default function PopularCarousel() {
   const [popularType, setPopularType] = useState("now_playing");
 
   useEffect(() => {
-    try {
-      const fetchPopular = async () => {
+    const fetchPopular = async () => {
+      setIsLoading(true);
+      try {
         const data = await getMovieList(popularType);
         setPopular(data);
-      };
-      fetchPopular();
-    } catch (error: any) {
-      console.error(error.message);
-    } finally {
-      setIsLoading(false);
-    }
+      } catch (error: any) {
+        console.error(error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchPopular();
   }, [popularType]);
 
   const handleSelectChange = (type: string) => {

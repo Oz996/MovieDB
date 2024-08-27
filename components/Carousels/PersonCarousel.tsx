@@ -6,7 +6,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { motion } from "framer-motion";
 import Link from "next/link";
 import { MediaCast } from "@/types";
 import { handleDisplayImage } from "@/lib/utils";

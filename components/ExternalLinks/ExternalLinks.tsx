@@ -1,5 +1,5 @@
-import { ExternalLinks as ILinks, Movie, Person, TvShow } from "@/types";
-import ExternalLink from "./ExternalLink";
+import { ExternalLinks as ILinks } from "@/types";
+import ExternalLink from "./components/ExternalLink";
 
 interface props {
   links: ILinks;

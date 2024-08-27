@@ -8,6 +8,7 @@ import {
   Trailer,
 } from "@/types";
 import options from "./options";
+import { tmdbURL } from "./options";
 
 export const getMovies = async (
   queryData: QueryData,
@@ -29,7 +30,7 @@ export const getMovies = async (
   const joinedMonetizations = monetizations?.join("|");
   try {
     const url = new URL(
-      `https://api.themoviedb.org/3/discover/movie?include_adult=false&region=US&page=${page}`
+      tmdbURL + `discover/movie?include_adult=false&region=US&page=${page}`
     );
     if (sort) url.searchParams.append("sort_by", sort);
     if (fromDate) url.searchParams.append("primary_release_date.gte", fromDate);
@@ -63,10 +64,7 @@ export const getMovies = async (
 
 export const getMovieGenres = async (): Promise<Genre[]> => {
   try {
-    const res = await fetch(
-      `https://api.themoviedb.org/3/genre/movie/list`,
-      options
-    );
+    const res = await fetch(tmdbURL + `genre/movie/list`, options);
     const data = await res.json();
     const results = data.genres;
     return results;
@@ -79,10 +77,7 @@ export const getMovieList = async (
   type: string = "now_playing"
 ): Promise<Movie[]> => {
   try {
-    const res = await fetch(
-      `https://api.themoviedb.org/3/movie/${type}`,
-      options
-    );
+    const res = await fetch(tmdbURL + `movie/${type}`, options);
     const data = await res.json();
     const results = data.results;
     return results;
@@ -95,10 +90,7 @@ export const getMovieTrending = async (
   time: string = "week"
 ): Promise<Result[]> => {
   try {
-    const res = await fetch(
-      `https://api.themoviedb.org/3/trending/movie/${time}`,
-      options
-    );
+    const res = await fetch(tmdbURL + `trending/movie/${time}`, options);
     const data = await res.json();
     const results = data.results;
     return results;
@@ -110,7 +102,8 @@ export const getMovieTrending = async (
 export const getMovieDetails = async (id: string | number): Promise<Movie> => {
   try {
     const res = await fetch(
-      `https://api.themoviedb.org/3/movie/${id}?append_to_response=credits,keywords,external_ids,reviews`,
+      tmdbURL +
+        `movie/${id}?append_to_response=credits,keywords,external_ids,reviews`,
       options
     );
     const result = await res.json();
@@ -124,10 +117,7 @@ export const getMovieVideos = async (
   id: string | number
 ): Promise<Trailer[]> => {
   try {
-    const res = await fetch(
-      `https://api.themoviedb.org/3/movie/${id}/videos`,
-      options
-    );
+    const res = await fetch(tmdbURL + `movie/${id}/videos`, options);
     const data = await res.json();
     const results = data.results;
     return results;
@@ -138,10 +128,7 @@ export const getMovieVideos = async (
 
 export const getMovieImages = async (id: string | number): Promise<Image[]> => {
   try {
-    const res = await fetch(
-      `https://api.themoviedb.org/3/movie/${id}/images`,
-      options
-    );
+    const res = await fetch(tmdbURL + `movie/${id}/images`, options);
     const data = await res.json();
     const results = data.posters;
     return results;
@@ -154,10 +141,7 @@ export const getMovieSimilar = async (
   id: string | number
 ): Promise<Similar[]> => {
   try {
-    const res = await fetch(
-      `https://api.themoviedb.org/3/movie/${id}/similar`,
-      options
-    );
+    const res = await fetch(tmdbURL + `movie/${id}/similar`, options);
     const data = await res.json();
     const results = data.results;
     return results;

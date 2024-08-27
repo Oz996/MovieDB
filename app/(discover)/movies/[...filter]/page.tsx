@@ -12,17 +12,7 @@ import {
 } from "../../components/DiscoverContainer";
 import NoResults from "@/components/NoResults";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-} from "@/components/ui/pagination";
 import { useSearchParams } from "next/navigation";
-import { getBaseUrl } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import DiscoverPagination from "../../components/DiscoverPagination";
 
 export default function Movies({ params }: { params: { filter: string[] } }) {
@@ -43,10 +33,11 @@ export default function Movies({ params }: { params: { filter: string[] } }) {
 
   const searchParams = useSearchParams();
   const pageParam = searchParams.get("page");
-  const currentPage = pageParam ? parseInt(pageParam, 10) : 1;
+  const currentPage = pageParam ? parseInt(pageParam) : 1;
 
   useEffect(() => {
     const fetchMovies = async () => {
+      setIsLoading(true);
       try {
         const res = await getMovies(queryData, currentPage);
         setMovies(res);

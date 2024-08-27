@@ -7,7 +7,7 @@ import {
   Trailer,
   TvShow,
 } from "@/types";
-import options from "./options";
+import options, { tmdbURL } from "./options";
 
 export const getTvShows = async (
   queryData: QueryData,
@@ -29,7 +29,7 @@ export const getTvShows = async (
 
   try {
     const url = new URL(
-      `https://api.themoviedb.org/3/discover/tv?include_adult=false&region=US&page=${page}`
+      tmdbURL + `discover/tv?include_adult=false&region=US&page=${page}`
     );
     if (sort) url.searchParams.append("sort_by", sort);
     if (fromDate) url.searchParams.append("first_air_date.gte", fromDate);
@@ -62,10 +62,7 @@ export const getTvShows = async (
 
 export const getTvShowGenres = async (): Promise<Genre[]> => {
   try {
-    const res = await fetch(
-      `https://api.themoviedb.org/3/genre/tv/list`,
-      options
-    );
+    const res = await fetch(tmdbURL + `genre/tv/list`, options);
     const data = await res.json();
     const results = data.genres;
     return results;
@@ -78,10 +75,7 @@ export const getTvShowTrending = async (
   time: string = "week"
 ): Promise<Result[]> => {
   try {
-    const res = await fetch(
-      `https://api.themoviedb.org/3/trending/tv/${time}`,
-      options
-    );
+    const res = await fetch(tmdbURL + `trending/tv/${time}`, options);
     const data = await res.json();
     const results = data.results;
     console.log(results);
@@ -96,7 +90,8 @@ export const getTvShowsDiscover = async (
 ): Promise<TvShow[]> => {
   try {
     const res = await fetch(
-      `https://api.themoviedb.org/3/discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&page=1&sort_by=popularity.desc&watch_region=DK&with_watch_monetization_types=${type}`,
+      tmdbURL +
+        `discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&page=1&sort_by=popularity.desc&watch_region=DK&with_watch_monetization_types=${type}`,
       options
     );
     const data = await res.json();
@@ -112,7 +107,8 @@ export const getTvShowDetails = async (
 ): Promise<TvShow> => {
   try {
     const res = await fetch(
-      `https://api.themoviedb.org/3/tv/${id}?append_to_response=credits,keywords,external_ids,reviews`,
+      tmdbURL +
+        `tv/${id}?append_to_response=credits,keywords,external_ids,reviews`,
       options
     );
     const result = await res.json();
@@ -127,10 +123,7 @@ export const getTvShowVideos = async (
   id: string | number
 ): Promise<Trailer[]> => {
   try {
-    const res = await fetch(
-      `https://api.themoviedb.org/3/tv/${id}/videos`,
-      options
-    );
+    const res = await fetch(tmdbURL + `tv/${id}/videos`, options);
     const data = await res.json();
     const results = data.results;
     return results;
@@ -143,10 +136,7 @@ export const getTvShowImages = async (
   id: string | number
 ): Promise<Image[]> => {
   try {
-    const res = await fetch(
-      `https://api.themoviedb.org/3/tv/${id}/images`,
-      options
-    );
+    const res = await fetch(tmdbURL + `tv/${id}/images`, options);
     const data = await res.json();
     const results = data.posters;
     console.log("res res res", data);
@@ -160,10 +150,7 @@ export const getTvShowSimilar = async (
   id: string | number
 ): Promise<Similar[]> => {
   try {
-    const res = await fetch(
-      `https://api.themoviedb.org/3/tv/${id}/similar`,
-      options
-    );
+    const res = await fetch(tmdbURL + `tv/${id}/similar`, options);
     const data = await res.json();
     const results = data.results;
     return results;

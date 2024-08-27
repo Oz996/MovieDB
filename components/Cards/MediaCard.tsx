@@ -13,7 +13,7 @@ export const MediaCard = ({
   id: number;
 }) => {
   return (
-    <Card className="border rounded-lg shadow-md w-[11rem]">
+    <Card className="border rounded-lg shadow-md w-[11rem] h-[22rem]">
       <Link href={getBaseUrl() + `/${type}/${id}`}>{children}</Link>
     </Card>
   );

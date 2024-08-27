@@ -40,18 +40,18 @@ export default function TvShowsCarousel() {
 
   useEffect(() => {
     if (showsEntry?.isIntersecting && hasRendered) {
-      setIsLoading(true);
-      try {
-        const fetchShows = async () => {
+      const fetchShows = async () => {
+        setIsLoading(true);
+        try {
           const data = await getTvShowsDiscover(showsType);
           setShows(data);
-        };
-        fetchShows();
-      } catch (error: any) {
-        console.error(error.message);
-      } finally {
-        setIsLoading(false);
-      }
+        } catch (error: any) {
+          console.error(error.message);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+      fetchShows();
     }
   }, [showsType, showsEntry?.isIntersecting, hasRendered]);
 

@@ -1,12 +1,12 @@
 import { Result } from "@/types";
-import options from "./options";
+import options, { tmdbURL } from "./options";
 
 export const getAllTrending = async (
   time: string = "day"
 ): Promise<Result[]> => {
   try {
     const res = await fetch(
-      `https://api.themoviedb.org/3/trending/all/${time}?language=en-US`,
+      tmdbURL + `trending/all/${time}?language=en-US`,
       options
     );
     const data = await res.json();

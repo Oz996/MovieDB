@@ -167,8 +167,7 @@ export default function FilterMenu({
   const handleSelectGenre = (id: number) => {
     if (query.genres.includes(id)) {
       const removedGenre = query.genres.filter((prevId) => prevId !== id);
-      setQueryData((data) => ({ ...data, genres: removedGenre }));
-      return;
+      return setQueryData((data) => ({ ...data, genres: removedGenre }));
     }
     setQueryData((data) => ({ ...data, genres: [...query.genres, id] }));
   };
@@ -190,8 +189,10 @@ export default function FilterMenu({
       const removedMonetization = query.monetizations.filter(
         (val) => val !== value
       );
-      setQueryData((data) => ({ ...data, monetizations: removedMonetization }));
-      return;
+      return setQueryData((data) => ({
+        ...data,
+        monetizations: removedMonetization,
+      }));
     }
     setQueryData((data) => ({
       ...data,
@@ -202,13 +203,13 @@ export default function FilterMenu({
   return (
     <div className="w-[90%] md:w-[17rem] md:border md:shadow-lg rounded-lg p-5">
       <div className="relative">
-        <h2 className="text-2xl">{displayHeading()}</h2>
+        <h1 className="text-2xl">{displayHeading()}</h1>
       </div>
       <Accordion type="multiple" className="w-full" defaultValue={["item-2"]}>
         <AccordionItem value="item-1">
           <AccordionTrigger>Sort</AccordionTrigger>
           <AccordionContent>
-            <p className="">Sort Results By</p>
+            <p className="py-2">Sort Results By</p>
             <Select value={sort} onValueChange={handleSortChange}>
               <SelectTrigger>
                 <SelectValue placeholder={sort} />
@@ -228,7 +229,7 @@ export default function FilterMenu({
         <AccordionItem value="item-2">
           <AccordionTrigger>Filters</AccordionTrigger>
           <AccordionContent className="flex flex-col gap-2">
-            <p className="text-md">Availabilities</p>
+            <p className="text-md py-2">Availabilities</p>
             <div className="space-y-5">
               {monetizationOptions.map((option) => (
                 <div key={option.name} className="flex items-center gap-1">
@@ -248,7 +249,7 @@ export default function FilterMenu({
                 </div>
               ))}
             </div>
-            <p className="text-md">Release Dates</p>
+            <p className="text-md py-2">Release Dates</p>
             <Popover>
               <PopoverTrigger asChild>
                 <div className="flex items-center gap-5">
@@ -293,7 +294,7 @@ export default function FilterMenu({
                 />
               </PopoverContent>
             </Popover>
-            <p className="text-md">Genres</p>
+            <p className="text-md py-2">Genres</p>
             <div>
               <ul className="flex flex-wrap gap-2 items-center">
                 {isLoading ? (
@@ -316,7 +317,7 @@ export default function FilterMenu({
               </ul>
             </div>
             <div className="flex flex-col gap-2">
-              <p className="text-md">User Score</p>
+              <p className="text-md py-2">User Score</p>
               <p>From:</p>
               <Slider
                 value={[voteAvgFrom!]}
@@ -358,7 +359,7 @@ export default function FilterMenu({
                 ))}
               </div>
             </div>
-            <p>Minimum User Votes</p>
+            <p className="py-2">Minimum User Votes</p>
             <Slider
               value={[userVotes!]}
               onValueChange={(value) => handleUserScore(value)}
@@ -379,7 +380,7 @@ export default function FilterMenu({
               ))}
             </div>
             <div>
-              <p className="text-md">Language</p>
+              <p className="text-md py-2">Language</p>
               <Select value={language} onValueChange={handleLangChange}>
                 <SelectTrigger>
                   <SelectValue placeholder={language} />

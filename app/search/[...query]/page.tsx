@@ -19,7 +19,7 @@ export default function Search() {
   setType(searchType);
   setQuery(query!);
 
-  const currentPage = pageParam ? parseInt(pageParam, 10) : 1;
+  const currentPage = pageParam ? parseInt(pageParam) : 1;
 
   useEffect(() => {
     const fetchData = async () => {

@@ -33,10 +33,11 @@ export default function Shows({ params }: { params: { filter: string[] } }) {
 
   const searchParams = useSearchParams();
   const pageParam = searchParams.get("page");
-  const currentPage = pageParam ? parseInt(pageParam, 10) : 1;
+  const currentPage = pageParam ? parseInt(pageParam) : 1;
 
   useEffect(() => {
     const fetchMovies = async () => {
+      setIsLoading(true);
       try {
         const res = await getTvShows(queryData, currentPage);
         setTvShows(res);

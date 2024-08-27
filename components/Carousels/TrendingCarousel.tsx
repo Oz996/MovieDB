@@ -27,6 +27,7 @@ export default function TrendingCarousel() {
 
   useEffect(() => {
     const fetchTrending = async () => {
+      setIsLoading(true);
       try {
         const data = await getAllTrending(trendingTime);
         setTrending(data);

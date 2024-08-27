@@ -7,3 +7,5 @@ const options = {
 };
 
 export default options;
+
+export const tmdbURL = `https://api.themoviedb.org/3/`;
