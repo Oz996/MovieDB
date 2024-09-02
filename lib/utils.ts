@@ -38,6 +38,15 @@ export const formatDate = (date: string) => {
   return formattedDate;
 };
 
+export const formatQueryDate = (date: Date) => {
+  const formattedDate = date.toLocaleString("en-CA", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+  return formattedDate;
+};
+
 export const handleDisplayImage = (width: string, path: string) => {
   if (path) {
     return `https://image.tmdb.org/t/p/${width}/${path}`;

@@ -33,6 +33,7 @@ import {
   monetizationOptions,
   sortOptions,
 } from "@/lib/constants/mediaFilters";
+import { formatQueryDate } from "@/lib/utils";
 
 interface props {
   type: "movie" | "tv";
@@ -70,32 +71,6 @@ export default function FilterMenu({
   } = query;
 
   useEffect(() => {
-    if (topRatedPage) {
-      setQueryData((data) => ({
-        ...data,
-        sort: "vote_average.desc",
-        userVotes: 300,
-      }));
-    } else if (upcomingPage) {
-      const date = new Date();
-      const todaysDate = formatQueryDate(date);
-      const toDate = new Date(date);
-      toDate.setMonth(toDate.getMonth() + 1);
-      const untilDate = formatQueryDate(toDate);
-      setQueryData((data) => ({
-        ...data,
-        fromDate: todaysDate,
-        toDate: untilDate,
-      }));
-    } else if (popularPage) {
-      setQueryData((data) => ({
-        ...data,
-        userVotes: 100,
-      }));
-    }
-  }, [params]);
-
-  useEffect(() => {
     const fetchGenres = async () => {
       try {
         if (moviesPage) {
@@ -126,15 +101,6 @@ export default function FilterMenu({
       ...data,
       language: value,
     }));
-  };
-
-  const formatQueryDate = (date: Date) => {
-    const formattedDate = date.toLocaleString("en-CA", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    });
-    return formattedDate;
   };
 
   const handleFromDate = (date: Date) => {

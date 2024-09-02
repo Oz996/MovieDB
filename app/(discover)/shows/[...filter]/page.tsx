@@ -62,6 +62,7 @@ export default function Shows({ params }: { params: { filter: string[] } }) {
             setQueryData={setQueryData}
           />
         )}
+
         {isMobile && (
           <Dialog>
             <DialogTrigger asChild>
@@ -77,12 +78,14 @@ export default function Shows({ params }: { params: { filter: string[] } }) {
             </DialogContent>
           </Dialog>
         )}
+
         <DiscoverMediaDiv isLoading={isLoading} isEmpty={tvShows.length === 0}>
           {tvShows?.map((tvShow) => (
             <TvShowCard key={tvShow.id} tvShow={tvShow} />
           ))}
         </DiscoverMediaDiv>
       </DiscoverContainer>
+
       <DiscoverPagination
         type="shows"
         params={params}

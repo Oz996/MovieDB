@@ -3,6 +3,13 @@ interface FilterOptions {
   value: string;
 }
 
+export type CrewRole =
+  | "Director"
+  | "Writer"
+  | "Screenplay"
+  | "Story"
+  | "Creator";
+
 export const sortOptions: FilterOptions[] = [
   { name: "Popularity Descending", value: "popularity.desc" },
   { name: "Popularity Ascending", value: "popularity.asc" },
@@ -37,7 +44,7 @@ export const monetizationOptions: FilterOptions[] = [
   { name: "Rent", value: "rent" },
 ];
 
-export const rolesToList = [
+export const rolesToList: CrewRole[] = [
   "Director",
   "Writer",
   "Screenplay",

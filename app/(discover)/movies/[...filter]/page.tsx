@@ -13,6 +13,7 @@ import {
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { useSearchParams } from "next/navigation";
 import DiscoverPagination from "../../components/DiscoverPagination";
+import { formatQueryDate } from "@/lib/utils";
 
 export default function Movies({ params }: { params: { filter: string[] } }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -29,10 +30,15 @@ export default function Movies({ params }: { params: { filter: string[] } }) {
     monetizations: [],
   };
   const [queryData, setQueryData] = useState<QueryData>(initialData);
+  const isMobile = useMediaQuery("only screen and (max-width: 768px)");
 
   const searchParams = useSearchParams();
   const pageParam = searchParams.get("page");
   const currentPage = pageParam ? parseInt(pageParam) : 1;
+
+  const topRatedPage = params.filter.includes("top-rated");
+  const upcomingPage = params.filter.includes("upcoming");
+  const popularPage = params.filter.includes("popular");
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -49,7 +55,31 @@ export default function Movies({ params }: { params: { filter: string[] } }) {
     fetchMovies();
   }, [queryData, currentPage]);
 
-  const isMobile = useMediaQuery("only screen and (max-width: 768px)");
+  useEffect(() => {
+    if (topRatedPage) {
+      setQueryData((data) => ({
+        ...data,
+        sort: "vote_average.desc",
+        userVotes: 300,
+      }));
+    } else if (upcomingPage) {
+      const date = new Date();
+      const todaysDate = formatQueryDate(date);
+      const toDate = new Date(date);
+      toDate.setMonth(toDate.getMonth() + 1);
+      const untilDate = formatQueryDate(toDate);
+      setQueryData((data) => ({
+        ...data,
+        fromDate: todaysDate,
+        toDate: untilDate,
+      }));
+    } else if (popularPage) {
+      setQueryData((data) => ({
+        ...data,
+        userVotes: 100,
+      }));
+    }
+  }, [params]);
 
   return (
     <>
@@ -62,6 +92,7 @@ export default function Movies({ params }: { params: { filter: string[] } }) {
             setQueryData={setQueryData}
           />
         )}
+
         {isMobile && (
           <Dialog>
             <DialogTrigger asChild>
@@ -77,12 +108,14 @@ export default function Movies({ params }: { params: { filter: string[] } }) {
             </DialogContent>
           </Dialog>
         )}
+
         <DiscoverMediaDiv isLoading={isLoading} isEmpty={movies.length === 0}>
           {movies.map((movie) => (
             <MovieCard key={movie.id} movie={movie} />
           ))}
         </DiscoverMediaDiv>
       </DiscoverContainer>
+
       <DiscoverPagination
         type="movies"
         params={params}
