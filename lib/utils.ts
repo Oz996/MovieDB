@@ -77,3 +77,13 @@ export const fetchVideos = async (
     setIsLoading && setIsLoading(false);
   }
 };
+
+export const handleUpcomingDates = () => {
+  const date = new Date();
+  const todaysDate = formatQueryDate(date);
+  const toDate = new Date(date);
+  toDate.setMonth(toDate.getMonth() + 1);
+  const untilDate = formatQueryDate(toDate);
+
+  return { todaysDate, untilDate };
+};

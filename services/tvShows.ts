@@ -1,57 +1,12 @@
-import {
-  Genre,
-  Image,
-  QueryData,
-  Result,
-  Similar,
-  Trailer,
-  TvShow,
-} from "@/types";
+import { Genre, Image, Result, Similar, Trailer, TvShow } from "@/types";
 import options, { tmdbURL } from "./options";
 
-export const getTvShows = async (
-  queryData: QueryData,
-  page: number = 1
-): Promise<TvShow[]> => {
-  const {
-    sort,
-    fromDate,
-    toDate,
-    genres,
-    voteAvgFrom,
-    voteAvgTo,
-    userVotes,
-    language,
-    monetizations,
-  } = queryData;
-  const joinedGenres = genres?.join(",");
-  const joinedMonetizations = monetizations?.join("|");
-
+export const getTvShows = async (query: string): Promise<TvShow[]> => {
   try {
-    const url = new URL(
-      tmdbURL + `discover/tv?include_adult=false&region=US&page=${page}`
+    const res = await fetch(
+      tmdbURL + `discover/tv?include_adult=false&region=US&${query}`,
+      options
     );
-    if (sort) url.searchParams.append("sort_by", sort);
-    if (fromDate) url.searchParams.append("first_air_date.gte", fromDate);
-    if (toDate) url.searchParams.append("first_air_date.lte", toDate);
-    if (joinedGenres) url.searchParams.append("with_genres", joinedGenres);
-    if (voteAvgFrom)
-      url.searchParams.append("vote_average.gte", voteAvgFrom.toString());
-    if (voteAvgTo)
-      url.searchParams.append("vote_average.lte", voteAvgTo.toString());
-    if (language)
-      url.searchParams.append("with_original_language", language.toString());
-    if (joinedMonetizations) {
-      url.searchParams.append("watch_region", "US");
-      url.searchParams.append(
-        "with_watch_monetization_types",
-        joinedMonetizations
-      );
-    }
-    if (userVotes)
-      url.searchParams.append("vote_count.gte", userVotes.toString());
-
-    const res = await fetch(url.toString(), options);
     const data = await res.json();
     const results = data.results;
     return results;

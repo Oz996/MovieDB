@@ -23,9 +23,9 @@ import {
 import { Slider } from "@/components/ui/slider";
 import { getMovieGenres } from "@/services/movies";
 import { getTvShowGenres } from "@/services/tvShows";
-import { Genre, QueryData } from "@/types";
+import { Genre } from "@/types";
 import classNames from "classnames";
-import { Calendar as CalendarIcon, X } from "lucide-react";
+import { Calendar as CalendarIcon } from "lucide-react";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import GenresLoader from "@/components/GenresLoader";
 import {
@@ -34,20 +34,16 @@ import {
   sortOptions,
 } from "@/lib/constants/mediaFilters";
 import { formatQueryDate } from "@/lib/utils";
+import { useRouter } from "next/navigation";
+import useQueries from "@/hooks/useQueries";
 
 interface props {
   type: "movie" | "tv";
   params: { filter: string[] };
-  queryData: QueryData;
-  setQueryData: Dispatch<SetStateAction<QueryData>>;
+  url: URL;
 }
 
-export default function FilterMenu({
-  type,
-  params,
-  queryData,
-  setQueryData,
-}: props) {
+export default function FilterMenu({ type, params, url }: props) {
   const [isLoading, setIsLoading] = useState(true);
   const [genreList, setGenreList] = useState<Genre[]>([]);
 
@@ -59,16 +55,20 @@ export default function FilterMenu({
   const popularPage = params.filter.includes("popular");
   const moviesPage = type === "movie";
 
-  const query = queryData;
+  const router = useRouter();
+
   const {
-    fromDate,
-    toDate,
+    currentGenres,
+    currentMonetizations,
     voteAvgFrom,
     voteAvgTo,
     userVotes,
-    sort,
+    fromDate,
+    toDate,
     language,
-  } = query;
+    sortBy,
+    resetPage,
+  } = useQueries();
 
   useEffect(() => {
     const fetchGenres = async () => {
@@ -89,32 +89,35 @@ export default function FilterMenu({
     fetchGenres();
   }, []);
 
+  const handleRoute = () => {
+    resetPage(url);
+    return router.push(url?.toString()!, { scroll: false });
+  };
+
   const handleSortChange = (value: string) => {
-    setQueryData((data) => ({
-      ...data,
-      sort: value,
-    }));
+    url?.searchParams.set("sort_by", value);
+    handleRoute();
   };
 
   const handleLangChange = (value: string) => {
-    setQueryData((data) => ({
-      ...data,
-      language: value,
-    }));
+    url?.searchParams.set("with_original_language", value);
+    handleRoute();
   };
 
   const handleFromDate = (date: Date) => {
     const format = formatQueryDate(date);
-    setQueryData((data) => ({ ...data, fromDate: format }));
+    url?.searchParams.set("primary_release_date.gte", format);
+    handleRoute();
   };
 
   const handleToDate = (date: Date) => {
     const format = formatQueryDate(date);
-    setQueryData((data) => ({ ...data, toDate: format }));
+    url?.searchParams.set("primary_release_date.lte", format);
+    handleRoute();
   };
 
-  const displayFromDate = query.fromDate ? query.fromDate : "Choose Date";
-  const displayToDate = query.toDate ? query.toDate : "Choose Date";
+  const displayFromDate = fromDate ?? "Choose Date";
+  const displayToDate = toDate ?? "Choose Date";
 
   const displayHeading = () => {
     if (moviesPage && topRatedPage) {
@@ -131,39 +134,66 @@ export default function FilterMenu({
   };
 
   const handleSelectGenre = (id: number) => {
-    if (query.genres.includes(id)) {
-      const removedGenre = query.genres.filter((prevId) => prevId !== id);
-      return setQueryData((data) => ({ ...data, genres: removedGenre }));
+    const stringId = id.toString();
+
+    if (currentGenres.includes(stringId)) {
+      const newGenres = currentGenres.filter((genre) => genre !== stringId);
+      if (newGenres.length > 0) {
+        url?.searchParams.set("with_genres", newGenres.join(","));
+      } else {
+        url?.searchParams.delete("with_genres");
+      }
+    } else {
+      currentGenres.push(stringId);
+      url?.searchParams.set("with_genres", currentGenres.join(","));
     }
-    setQueryData((data) => ({ ...data, genres: [...query.genres, id] }));
+    handleRoute();
   };
 
   const handleScoreFrom = (value: any) => {
-    setQueryData((data) => ({ ...data, voteAvgFrom: value[0] }));
+    if (value[0] === 0) {
+      url?.searchParams.delete("vote_average.gte");
+    } else {
+      url?.searchParams.set("vote_average.gte", value);
+    }
+    handleRoute();
   };
 
   const handleScoreTo = (value: any) => {
-    setQueryData((data) => ({ ...data, voteAvgTo: value[0] }));
+    if (value[0] === 0) {
+      url?.searchParams.delete("vote_average.lte");
+    } else {
+      url?.searchParams.set("vote_average.lte", value);
+    }
+    handleRoute();
   };
 
   const handleUserScore = (value: any) => {
-    setQueryData((data) => ({ ...data, userVotes: value[0] }));
+    url?.searchParams.set("vote_count.gte", value);
+    handleRoute();
   };
 
   const handleSelectMonetization = (value: string) => {
-    if (query.monetizations.includes(value)) {
-      const removedMonetization = query.monetizations.filter(
-        (val) => val !== value
+    if (currentMonetizations.includes(value)) {
+      const newMonetizations = currentMonetizations.filter(
+        (monetization) => monetization !== value
       );
-      return setQueryData((data) => ({
-        ...data,
-        monetizations: removedMonetization,
-      }));
+      if (newMonetizations.length > 0) {
+        url?.searchParams.set(
+          "with_watch_monetization_types",
+          newMonetizations.join(",")
+        );
+      } else {
+        url?.searchParams.delete("with_watch_monetization_types");
+      }
+    } else {
+      currentMonetizations.push(value);
+      url?.searchParams.set(
+        "with_watch_monetization_types",
+        currentMonetizations.join(",")
+      );
     }
-    setQueryData((data) => ({
-      ...data,
-      monetizations: [...query.monetizations, value],
-    }));
+    handleRoute();
   };
 
   return (
@@ -176,9 +206,9 @@ export default function FilterMenu({
           <AccordionTrigger>Sort</AccordionTrigger>
           <AccordionContent>
             <p className="py-2">Sort Results By</p>
-            <Select value={sort} onValueChange={handleSortChange}>
+            <Select value={sortBy} onValueChange={handleSortChange}>
               <SelectTrigger>
-                <SelectValue placeholder={sort} />
+                <SelectValue placeholder={sortBy} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
@@ -201,7 +231,7 @@ export default function FilterMenu({
                 <div key={option.name} className="flex items-center gap-1">
                   <Checkbox
                     id={option.name}
-                    defaultChecked={query.monetizations.includes(option.value)}
+                    defaultChecked={currentMonetizations.includes(option.value)}
                     onCheckedChange={() =>
                       handleSelectMonetization(option.value)
                     }
@@ -233,7 +263,7 @@ export default function FilterMenu({
                 <Calendar
                   mode="single"
                   selected={fromDate as any}
-                  onSelect={handleFromDate as any}
+                  onSelect={(date) => handleFromDate(date!)}
                   className="rounded-md border"
                 />
               </PopoverContent>
@@ -255,7 +285,7 @@ export default function FilterMenu({
                 <Calendar
                   mode="single"
                   selected={toDate as any}
-                  onSelect={handleToDate as any}
+                  onSelect={(date) => handleToDate(date!)}
                   className="rounded-md border"
                 />
               </PopoverContent>
@@ -273,7 +303,9 @@ export default function FilterMenu({
                       className={classNames({
                         "rounded-full border border-gray-300 px-3 py-1 cursor-pointer duration-200":
                           true,
-                        "bg-black text-white": query.genres.includes(genre.id),
+                        "bg-black text-white": currentGenres?.includes(
+                          genre.id.toString()
+                        ),
                       })}
                     >
                       {genre.name}
@@ -286,7 +318,7 @@ export default function FilterMenu({
               <p className="text-md py-2">User Score</p>
               <p>From:</p>
               <Slider
-                value={[voteAvgFrom!]}
+                value={[Number(voteAvgFrom)!]}
                 onValueChange={(value) => handleScoreFrom(value)}
                 max={10}
                 step={1}
@@ -297,7 +329,7 @@ export default function FilterMenu({
                   <span
                     key={num}
                     className={classNames({
-                      "text-blue-600": voteAvgFrom === num,
+                      "text-blue-600": Number(voteAvgFrom) === num,
                     })}
                   >
                     {num}
@@ -306,7 +338,7 @@ export default function FilterMenu({
               </div>
               <p>To:</p>
               <Slider
-                value={[voteAvgTo!]}
+                value={[Number(voteAvgTo)!]}
                 onValueChange={(value) => handleScoreTo(value)}
                 max={10}
                 step={1}
@@ -317,7 +349,7 @@ export default function FilterMenu({
                   <span
                     key={num}
                     className={classNames({
-                      "text-blue-600": voteAvgTo === num,
+                      "text-blue-600": Number(voteAvgTo) === num,
                     })}
                   >
                     {num}
@@ -327,7 +359,7 @@ export default function FilterMenu({
             </div>
             <p className="py-2">Minimum User Votes</p>
             <Slider
-              value={[userVotes!]}
+              value={[Number(userVotes)!]}
               onValueChange={(value) => handleUserScore(value)}
               max={500}
               step={100}
@@ -338,7 +370,7 @@ export default function FilterMenu({
                 <span
                   key={num}
                   className={classNames({
-                    "text-blue-600": userVotes === num,
+                    "text-blue-600": Number(userVotes) === num,
                   })}
                 >
                   {num}

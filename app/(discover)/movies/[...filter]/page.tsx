@@ -2,7 +2,7 @@
 import FilterMenu from "../../components/FilterMenu";
 import MovieCard from "@/components/Cards/MovieCard";
 import { getMovies } from "@/services/movies";
-import { Movie, QueryData } from "@/types";
+import { Movie } from "@/types";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { useEffect, useState } from "react";
 import {
@@ -13,38 +13,24 @@ import {
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { useSearchParams } from "next/navigation";
 import DiscoverPagination from "../../components/DiscoverPagination";
-import { formatQueryDate } from "@/lib/utils";
 
 export default function Movies({ params }: { params: { filter: string[] } }) {
   const [isLoading, setIsLoading] = useState(true);
   const [movies, setMovies] = useState<Movie[]>([]);
-  const initialData: QueryData = {
-    sort: "popularity.desc",
-    fromDate: "",
-    toDate: "",
-    genres: [],
-    voteAvgFrom: null,
-    voteAvgTo: null,
-    userVotes: null,
-    language: "en",
-    monetizations: [],
-  };
-  const [queryData, setQueryData] = useState<QueryData>(initialData);
+  const [url, setUrl] = useState<URL>();
   const isMobile = useMediaQuery("only screen and (max-width: 768px)");
 
   const searchParams = useSearchParams();
   const pageParam = searchParams.get("page");
   const currentPage = pageParam ? parseInt(pageParam) : 1;
 
-  const topRatedPage = params.filter.includes("top-rated");
-  const upcomingPage = params.filter.includes("upcoming");
-  const popularPage = params.filter.includes("popular");
+  const query = searchParams.toString();
 
   useEffect(() => {
     const fetchMovies = async () => {
       setIsLoading(true);
       try {
-        const res = await getMovies(queryData, currentPage);
+        const res = await getMovies(query);
         setMovies(res);
       } catch (error: any) {
         console.error(error.message);
@@ -53,45 +39,19 @@ export default function Movies({ params }: { params: { filter: string[] } }) {
       }
     };
     fetchMovies();
-  }, [queryData, currentPage]);
+  }, [query]);
 
   useEffect(() => {
-    if (topRatedPage) {
-      setQueryData((data) => ({
-        ...data,
-        sort: "vote_average.desc",
-        userVotes: 300,
-      }));
-    } else if (upcomingPage) {
-      const date = new Date();
-      const todaysDate = formatQueryDate(date);
-      const toDate = new Date(date);
-      toDate.setMonth(toDate.getMonth() + 1);
-      const untilDate = formatQueryDate(toDate);
-      setQueryData((data) => ({
-        ...data,
-        fromDate: todaysDate,
-        toDate: untilDate,
-      }));
-    } else if (popularPage) {
-      setQueryData((data) => ({
-        ...data,
-        userVotes: 100,
-      }));
+    if (typeof window !== "undefined") {
+      const currentUrl = new URL(window.location.href);
+      setUrl(currentUrl);
     }
-  }, [params]);
+  }, []);
 
   return (
     <>
       <DiscoverContainer>
-        {!isMobile && (
-          <FilterMenu
-            type="movie"
-            params={params}
-            queryData={queryData}
-            setQueryData={setQueryData}
-          />
-        )}
+        {!isMobile && <FilterMenu type="movie" url={url!} params={params} />}
 
         {isMobile && (
           <Dialog>
@@ -99,12 +59,7 @@ export default function Movies({ params }: { params: { filter: string[] } }) {
               <FilterMenuButton>Filters</FilterMenuButton>
             </DialogTrigger>
             <DialogContent>
-              <FilterMenu
-                type="movie"
-                params={params}
-                queryData={queryData}
-                setQueryData={setQueryData}
-              />
+              <FilterMenu type="movie" url={url!} params={params} />
             </DialogContent>
           </Dialog>
         )}
@@ -116,11 +71,7 @@ export default function Movies({ params }: { params: { filter: string[] } }) {
         </DiscoverMediaDiv>
       </DiscoverContainer>
 
-      <DiscoverPagination
-        type="movies"
-        params={params}
-        currentPage={currentPage}
-      />
+      <DiscoverPagination url={url!} currentPage={currentPage} />
     </>
   );
 }

@@ -6,20 +6,21 @@ import {
 } from "@/components/ui/pagination";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Dispatch, SetStateAction } from "react";
 
 interface props {
-  type: "movies" | "shows";
   currentPage: number;
-  params: { filter: string[] };
+  url: URL;
 }
 
-export default function DiscoverPagination({
-  type,
-  params,
-  currentPage,
-}: props) {
+export default function DiscoverPagination({ currentPage, url }: props) {
+  const router = useRouter();
+
   const paginationLink = (page: number) => {
-    return `/${type}/${params.filter}?page=${page}`;
+    if (!url) return "/";
+    url?.searchParams.set("page", page.toString());
+    return url?.toString();
   };
   return (
     <div className="p-10">

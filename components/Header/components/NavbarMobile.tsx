@@ -3,10 +3,11 @@ import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import Searchbar from "./Searchbar";
-import { getBaseUrl } from "@/lib/utils";
+import { getBaseUrl, handleUpcomingDates } from "@/lib/utils";
 
 export default function NavbarMobile() {
   const [navbar, setNavbar] = useState(false);
+  const { todaysDate, untilDate } = handleUpcomingDates();
 
   const handleToggleNavbar = () => {
     setNavbar(!navbar);
@@ -41,17 +42,35 @@ export default function NavbarMobile() {
           >
             <p className="text-lg font-semibold">Movies</p>
             <li onClick={handleToggleNavbar} className="dropdown-list-item">
-              <Link href={getBaseUrl() + "/movies/popular"}>Popular</Link>
+              <Link href={getBaseUrl() + "/movies/popular?vote_count.gte=100"}>
+                Popular
+              </Link>
             </li>
             <li onClick={handleToggleNavbar} className="dropdown-list-item">
-              <Link href={getBaseUrl() + "/movies/upcoming"}>Upcoming</Link>
+              <Link
+                href={
+                  getBaseUrl() +
+                  "/movies/upcoming?primary_release_date.gte=${todaysDate}&primary_release_date.lte=${untilDate}`"
+                }
+              >
+                Upcoming
+              </Link>
             </li>
             <li onClick={handleToggleNavbar} className="dropdown-list-item">
-              <Link href={getBaseUrl() + "/movies/top-rated"}>Top Rated</Link>
+              <Link
+                href={
+                  getBaseUrl() +
+                  "/movies/top-rated?sort_by=vote_average.desc&vote_count.gte=300"
+                }
+              >
+                Top Rated
+              </Link>
             </li>
             <p className="text-lg font-semibold">Tv Shows</p>
             <li onClick={handleToggleNavbar} className="dropdown-list-item">
-              <Link href={getBaseUrl() + "/shows/popular"}>Popular</Link>
+              <Link href={getBaseUrl() + "/shows/popular?vote_count.gte=100"}>
+                Popular
+              </Link>
             </li>
             <li className="dropdown-list-item">
               <Link href="/">Airing Today</Link>
@@ -60,7 +79,14 @@ export default function NavbarMobile() {
               <Link href="/">On Tv</Link>
             </li>
             <li className="dropdown-list-item">
-              <Link href={getBaseUrl() + "/shows/top-rated"}>Top Rated</Link>
+              <Link
+                href={
+                  getBaseUrl() +
+                  "/shows/top-rated?sort_by=vote_average.desc&vote_count.gte=300"
+                }
+              >
+                Top Rated
+              </Link>
             </li>
             <p className="text-lg font-semibold">People</p>
             <li className="dropdown-list-item">

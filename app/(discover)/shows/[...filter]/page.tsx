@@ -2,7 +2,7 @@
 import FilterMenu from "../../components/FilterMenu";
 import TvShowCard from "@/components/Cards/TvShowCard";
 import { getTvShows } from "@/services/tvShows";
-import { QueryData, TvShow } from "@/types";
+import { TvShow } from "@/types";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { useEffect, useState } from "react";
 import {
@@ -17,28 +17,19 @@ import { useSearchParams } from "next/navigation";
 export default function Shows({ params }: { params: { filter: string[] } }) {
   const [isLoading, setIsLoading] = useState(true);
   const [tvShows, setTvShows] = useState<TvShow[]>([]);
-  const initialData: QueryData = {
-    sort: "popularity.desc",
-    fromDate: "",
-    toDate: "",
-    genres: [],
-    voteAvgFrom: null,
-    voteAvgTo: null,
-    userVotes: null,
-    language: "en",
-    monetizations: [],
-  };
-  const [queryData, setQueryData] = useState<QueryData>(initialData);
+  const [url, setUrl] = useState<URL>();
 
   const searchParams = useSearchParams();
   const pageParam = searchParams.get("page");
   const currentPage = pageParam ? parseInt(pageParam) : 1;
 
+  const query = searchParams.toString();
+
   useEffect(() => {
     const fetchMovies = async () => {
       setIsLoading(true);
       try {
-        const res = await getTvShows(queryData, currentPage);
+        const res = await getTvShows(query);
         setTvShows(res);
       } catch (error: any) {
         console.error(error.message);
@@ -47,21 +38,21 @@ export default function Shows({ params }: { params: { filter: string[] } }) {
       }
     };
     fetchMovies();
-  }, [queryData, currentPage]);
+  }, [query]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const currentUrl = new URL(window.location.href);
+      setUrl(currentUrl);
+    }
+  }, []);
 
   const isMobile = useMediaQuery("only screen and (max-width: 768px)");
 
   return (
     <>
       <DiscoverContainer>
-        {!isMobile && (
-          <FilterMenu
-            type="tv"
-            params={params}
-            queryData={queryData}
-            setQueryData={setQueryData}
-          />
-        )}
+        {!isMobile && <FilterMenu type="tv" url={url!} params={params} />}
 
         {isMobile && (
           <Dialog>
@@ -69,12 +60,7 @@ export default function Shows({ params }: { params: { filter: string[] } }) {
               <FilterMenuButton>Filters</FilterMenuButton>
             </DialogTrigger>
             <DialogContent>
-              <FilterMenu
-                type="tv"
-                params={params}
-                queryData={queryData}
-                setQueryData={setQueryData}
-              />
+              <FilterMenu type="tv" url={url!} params={params} />
             </DialogContent>
           </Dialog>
         )}
@@ -86,11 +72,7 @@ export default function Shows({ params }: { params: { filter: string[] } }) {
         </DiscoverMediaDiv>
       </DiscoverContainer>
 
-      <DiscoverPagination
-        type="shows"
-        params={params}
-        currentPage={currentPage}
-      />
+      <DiscoverPagination url={url!} currentPage={currentPage} />
     </>
   );
 }

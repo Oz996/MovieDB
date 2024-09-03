@@ -265,15 +265,3 @@ export interface Genre {
   id: number;
   name: string;
 }
-
-export interface QueryData {
-  sort: string;
-  fromDate: string;
-  toDate: string;
-  genres: number[];
-  voteAvgFrom: number | null;
-  voteAvgTo: number | null;
-  userVotes: number | null;
-  language: string;
-  monetizations: string[];
-}

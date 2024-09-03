@@ -8,9 +8,11 @@ import {
 } from "@/components/ui/navigation-menu";
 import Link from "next/link";
 import Searchbar from "./Searchbar";
-import { getBaseUrl } from "@/lib/utils";
+import { getBaseUrl, handleUpcomingDates } from "@/lib/utils";
 
 export default function NavbarDesktop() {
+  const { todaysDate, untilDate } = handleUpcomingDates();
+
   return (
     <header className="absolute inset-0 h-[4rem] bg-black flex items-center md:px-6 text-white max-md:hidden">
       <div className="container flex items-center gap-5 ">
@@ -26,7 +28,9 @@ export default function NavbarDesktop() {
                   <li className="dropdown-list-item">
                     <NavigationMenuLink asChild>
                       <Link
-                        href={getBaseUrl() + "/movies/popular"}
+                        href={
+                          getBaseUrl() + "/movies/popular?vote_count.gte=100"
+                        }
                         className="block w-full h-full"
                       >
                         Popular
@@ -36,7 +40,10 @@ export default function NavbarDesktop() {
                   <li className="dropdown-list-item">
                     <NavigationMenuLink asChild>
                       <Link
-                        href={getBaseUrl() + "/movies/upcoming"}
+                        href={
+                          getBaseUrl() +
+                          `/movies/upcoming?primary_release_date.gte=${todaysDate}&primary_release_date.lte=${untilDate}`
+                        }
                         className="block w-full h-full"
                       >
                         Upcoming
@@ -46,7 +53,10 @@ export default function NavbarDesktop() {
                   <li className="dropdown-list-item">
                     <NavigationMenuLink asChild>
                       <Link
-                        href={getBaseUrl() + "/movies/top-rated"}
+                        href={
+                          getBaseUrl() +
+                          "/movies/top-rated?sort_by=vote_average.desc&vote_count.gte=300"
+                        }
                         className="block w-full h-full"
                       >
                         Top Rated
@@ -63,7 +73,9 @@ export default function NavbarDesktop() {
                   <li className="dropdown-list-item">
                     <NavigationMenuLink asChild>
                       <Link
-                        href={getBaseUrl() + "/shows/popular"}
+                        href={
+                          getBaseUrl() + "/shows/popular?vote_count.gte=100"
+                        }
                         className="block w-full h-full"
                       >
                         Popular
@@ -87,7 +99,10 @@ export default function NavbarDesktop() {
                   <li className="dropdown-list-item">
                     <NavigationMenuLink asChild>
                       <Link
-                        href={getBaseUrl() + "/shows/top-rated"}
+                        href={
+                          getBaseUrl() +
+                          "/shows/top-rated?sort_by=vote_average.desc&vote_count.gte=300"
+                        }
                         className="block w-full h-full"
                       >
                         Top Rated
