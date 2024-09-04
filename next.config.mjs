@@ -1,11 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: [
-      "image.tmdb.org",
-      "upload.wikimedia.org",
-      "media.themoviedb.org",
-      "img.youtube.com",
+    remotePatterns: [
+      { hostname: "image.tmdb.org" },
+      { hostname: "upload.wikimedia.org" },
+      { hostname: "media.themoviedb.org" },
+      { hostname: "img.youtube.com" },
     ],
   },
 };
