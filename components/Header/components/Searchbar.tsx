@@ -47,14 +47,14 @@ export default function Searchbar() {
   }, [value]);
 
   useEffect(() => {
-    if (value === "") {
+    if (value === "" && showInput && searchList.length === 0) {
       const handleFetchTrending = async () => {
         const data = await getAllTrending();
         setSearchList(data);
       };
       handleFetchTrending();
     }
-  }, [value]);
+  }, [value, showInput]);
 
   useEffect(() => {
     if (debouncedValue) {
