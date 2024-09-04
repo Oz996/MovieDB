@@ -48,7 +48,10 @@ export default function TrendingCarousel() {
 
   return (
     <section className="pt-12 px-5 container">
-      <Tabs defaultValue="today">
+      <Tabs
+        value={trendingTime}
+        onValueChange={(value) => setTrendingTime(value)}
+      >
         <div className="w-full flex max-sm:flex-col items-center gap-5">
           <h2 className="text-xl font-semibold">Trending</h2>
 
@@ -67,23 +70,15 @@ export default function TrendingCarousel() {
           </div>
 
           <TabsList className="hidden md:inline">
-            <TabsTrigger
-              value="today"
-              className="text-md"
-              onClick={() => setTrendingTime("day")}
-            >
+            <TabsTrigger value="day" className="text-md">
               Today
             </TabsTrigger>
-            <TabsTrigger
-              value="week"
-              className="text-md"
-              onClick={() => setTrendingTime("week")}
-            >
+            <TabsTrigger value="week" className="text-md">
               This Week
             </TabsTrigger>
           </TabsList>
         </div>
-        <TabsContent value="today">
+        <TabsContent value="day">
           <Carousel>
             <CarouselContent className="-ml-1">
               {trending.map((item) => (

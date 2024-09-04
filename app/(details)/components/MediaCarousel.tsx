@@ -12,10 +12,10 @@ import Image from "next/image";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { getMovieImages } from "@/services/movies";
 import { FaPlay } from "react-icons/fa6";
-import LoaderCarousel from "./LoaderCarousel";
+import LoaderCarousel from "../../../components/Carousels/LoaderCarousel";
 import { getTvShowImages } from "@/services/tvShows";
 import { fetchVideos } from "@/lib/utils";
-import TrailerModal from "../TrailerModal";
+import TrailerModal from "../../../components/TrailerModal";
 
 interface props {
   id: string;
@@ -28,6 +28,7 @@ export default function MediaCarousel({ id, videos, type, setVideos }: props) {
   const [isLoading, setIsLoading] = useState(videos ? false : true);
   const [images, setImages] = useState<ImageType[]>([]);
   const [fetched, setFetched] = useState(false);
+  const [mediaValue, setMediaValue] = useState("videos");
   const [playTrailer, setPlayTrailer] = useState(false);
   const [trailerToDisplay, setTrailerToDisplay] = useState("");
 
@@ -79,7 +80,7 @@ export default function MediaCarousel({ id, videos, type, setVideos }: props) {
 
   return (
     <section ref={mediaRef} className="py-10">
-      <Tabs defaultValue="videos">
+      <Tabs value={mediaValue} onValueChange={(value) => setMediaValue(value)}>
         <div className="w-full flex flex-col gap-5">
           <div className="flex items-center">
             <h2 className="text-title font-semibold pr-5">Media</h2>

@@ -3,7 +3,7 @@ import { getMovieDetails } from "@/services/movies";
 import { useEffect, useState } from "react";
 import { Movie as IMovie, Trailer } from "@/types";
 import PersonCarousel from "@/components/Carousels/PersonCarousel";
-import MediaCarousel from "@/components/Carousels/MediaCarousel";
+import MediaCarousel from "../../components/MediaCarousel";
 import SimilarCarousel from "@/components/Carousels/SimilarCarousel";
 import ReviewSection from "@/components/ReviewSection/ReviewSection";
 import MovieBanner from "./components/MovieBanner";

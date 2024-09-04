@@ -48,7 +48,10 @@ export default function PopularCarousel() {
 
   return (
     <section className="pt-12 px-5 container">
-      <Tabs defaultValue="now_playing">
+      <Tabs
+        value={popularType}
+        onValueChange={(value) => setPopularType(value)}
+      >
         <div className="w-full flex max-sm:flex-col items-center gap-5">
           <h2 className="text-xl font-semibold">What&apos;s Popular</h2>
 
@@ -68,25 +71,13 @@ export default function PopularCarousel() {
           </div>
 
           <TabsList className="hidden md:inline">
-            <TabsTrigger
-              value="now_playing"
-              className="text-md"
-              onClick={() => setPopularType("now_playing")}
-            >
+            <TabsTrigger value="now_playing" className="text-md">
               Now Playing
             </TabsTrigger>
-            <TabsTrigger
-              value="top_rated"
-              className="text-md"
-              onClick={() => setPopularType("top_rated")}
-            >
+            <TabsTrigger value="top_rated" className="text-md">
               Top Rated
             </TabsTrigger>
-            <TabsTrigger
-              value="upcoming"
-              className="text-md"
-              onClick={() => setPopularType("upcoming")}
-            >
+            <TabsTrigger value="upcoming" className="text-md">
               Upcoming
             </TabsTrigger>
           </TabsList>

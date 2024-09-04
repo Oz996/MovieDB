@@ -63,7 +63,7 @@ export default function TvShowsCarousel() {
 
   return (
     <section className="pt-12 px-5 pb-5 container" ref={showsRef}>
-      <Tabs defaultValue="free">
+      <Tabs value={showsType} onValueChange={(value) => setshowsType(value)}>
         <div className="w-full flex max-sm:flex-col items-center gap-5">
           <h2 className="text-xl font-semibold">Discover Shows</h2>
 
@@ -83,25 +83,13 @@ export default function TvShowsCarousel() {
           </div>
 
           <TabsList className="hidden md:inline">
-            <TabsTrigger
-              value="free"
-              className="text-md"
-              onClick={() => setshowsType("free")}
-            >
+            <TabsTrigger value="free" className="text-md">
               Free
             </TabsTrigger>
-            <TabsTrigger
-              value="rent"
-              className="text-md"
-              onClick={() => setshowsType("rent")}
-            >
+            <TabsTrigger value="rent" className="text-md">
               Rent
             </TabsTrigger>
-            <TabsTrigger
-              value="buy"
-              className="text-md"
-              onClick={() => setshowsType("buy")}
-            >
+            <TabsTrigger value="buy" className="text-md">
               Buy
             </TabsTrigger>
           </TabsList>
