@@ -20,20 +20,29 @@ import { getMovieList } from "@/services/movies";
 import LoaderCarousel from "@/components/Carousels/LoaderCarousel";
 import CarouselCard from "@/components/Carousels/CarouselCard";
 
-export default function PopularCarousel() {
+interface props {
+  initialData: Movie[];
+}
+
+export default function PopularCarousel({ initialData }: props) {
   const [isLoading, setIsLoading] = useState(true);
   const [popular, setPopular] = useState<Movie[]>([]);
   const [popularType, setPopularType] = useState("now_playing");
 
   useEffect(() => {
     const fetchPopular = async () => {
-      setIsLoading(true);
-      try {
-        const data = await getMovieList(popularType);
-        setPopular(data);
-      } catch (error: any) {
-        console.error(error.message);
-      } finally {
+      if (popularType !== "now_playing") {
+        setIsLoading(true);
+        try {
+          const data = await getMovieList(popularType);
+          setPopular(data);
+        } catch (error: any) {
+          console.error(error.message);
+        } finally {
+          setIsLoading(false);
+        }
+      } else {
+        setPopular(initialData);
         setIsLoading(false);
       }
     };

@@ -1,8 +1,15 @@
 import TrendingCarousel from "./components/TrendingCarousel";
 import PopularCarousel from "./components/PopularCarousel";
 import TvShowsCarousel from "./components/TvShowsCarousel";
+import { getAllTrending } from "@/services/all";
+import { getMovieList } from "@/services/movies";
 
-export default function Home() {
+export default async function Home() {
+  const [trending, popular] = await Promise.all([
+    getAllTrending(),
+    getMovieList(),
+  ]);
+
   return (
     <>
       <section className="pt-24 container">
@@ -14,8 +21,8 @@ export default function Home() {
         </div>
       </section>
 
-      <TrendingCarousel />
-      <PopularCarousel />
+      <TrendingCarousel initialData={trending} />
+      <PopularCarousel initialData={popular} />
       <TvShowsCarousel />
     </>
   );

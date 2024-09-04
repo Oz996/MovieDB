@@ -20,20 +20,29 @@ import {
 import LoaderCarousel from "@/components/Carousels/LoaderCarousel";
 import CarouselCard from "@/components/Carousels/CarouselCard";
 
-export default function TrendingCarousel() {
+interface props {
+  initialData: Result[];
+}
+
+export default function TrendingCarousel({ initialData }: props) {
   const [isLoading, setIsLoading] = useState(true);
-  const [trending, setTrending] = useState<Result[]>([]);
+  const [trending, setTrending] = useState<Result[]>(initialData);
   const [trendingTime, setTrendingTime] = useState("day");
 
   useEffect(() => {
     const fetchTrending = async () => {
-      setIsLoading(true);
-      try {
-        const data = await getAllTrending(trendingTime);
-        setTrending(data);
-      } catch (error: any) {
-        console.error(error.message);
-      } finally {
+      if (trendingTime !== "day") {
+        setIsLoading(true);
+        try {
+          const data = await getAllTrending(trendingTime);
+          setTrending(data);
+        } catch (error: any) {
+          console.error(error.message);
+        } finally {
+          setIsLoading(false);
+        }
+      } else {
+        setTrending(initialData);
         setIsLoading(false);
       }
     };
