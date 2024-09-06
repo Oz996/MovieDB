@@ -1,70 +1,12 @@
-"use client";
-import BannerLoader from "@/components/Banner/components/BannerLoader";
-import TvShowBanner from "./components/TvShowBanner";
-import LoaderCarousel from "@/components/Carousels/LoaderCarousel";
-import MediaCarousel from "../../components/MediaCarousel";
-import PersonCarousel from "@/components/Carousels/PersonCarousel";
-import SimilarCarousel from "@/components/Carousels/SimilarCarousel";
-import ReviewSection from "@/components/ReviewSection/ReviewSection";
-import TvShowAside from "./components/TvShowAside";
 import { getTvShowDetails } from "@/services/tvShows";
-import { Trailer, TvShow } from "@/types";
-import { useEffect, useState } from "react";
-import {
-  DetailsContainer,
-  DetailsGridDiv,
-} from "../../components/DetailsContainer";
+import TvShow from "./components/TvShow";
 
-export default function Movie({ params }: { params: { id: string } }) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [tvShow, setTvShow] = useState<TvShow>();
-  const [videos, setVideos] = useState<Trailer[]>([]);
+export default async function TvShowPage({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const tvShow = await getTvShowDetails(params.id);
 
-  useEffect(() => {
-    const fetchMovieDetails = async () => {
-      try {
-        const res = await getTvShowDetails(params.id);
-        setTvShow(res);
-      } catch (error: any) {
-        console.error(error.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchMovieDetails();
-  }, [params.id]);
-
-  if (isLoading || !tvShow)
-    return (
-      <>
-        <BannerLoader />
-        <div className="container pt-20">
-          <LoaderCarousel />
-        </div>
-      </>
-    );
-
-  return (
-    <DetailsContainer>
-      <TvShowBanner tvShow={tvShow} videos={videos} setVideos={setVideos} />
-      <DetailsGridDiv>
-        <div className="col-span-3 space-y-5 lg:-mr-8">
-          <PersonCarousel cast={tvShow.credits.cast.slice(0, 8)} />
-          <ReviewSection reviews={tvShow.reviews.results} />
-          <MediaCarousel
-            type="tv"
-            id={params.id}
-            videos={videos}
-            setVideos={setVideos}
-          />
-          <SimilarCarousel
-            type="tv"
-            id={params.id}
-            rating={Math.ceil(tvShow.vote_average * 10)}
-          />
-        </div>
-        <TvShowAside tvShow={tvShow} />
-      </DetailsGridDiv>
-    </DetailsContainer>
-  );
+  return <TvShow tvShow={tvShow} params={params} />;
 }

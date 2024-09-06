@@ -17,7 +17,7 @@ export default function TrailerModal({ play, trailer, handleClose }: props) {
       {play && (
         <motion.div
           key="video-player"
-          className="fixed inset-0 z-40 flex-centered"
+          className="fixed inset-0 z-50 flex-centered"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

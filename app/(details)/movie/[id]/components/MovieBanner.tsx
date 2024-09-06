@@ -7,7 +7,7 @@ import { useMediaQuery } from "@uidotdev/usehooks";
 import { fetchVideos, handleDisplayImage } from "@/lib/utils";
 import MovieDetails from "./MovieDetails";
 import BannerContainer from "../../../../../components/Banner/Banner";
-import TrailerModal from "../../../../../components/TrailerModal";
+import TrailerModal from "../../../components/TrailerModal";
 
 interface props {
   movie: Movie;

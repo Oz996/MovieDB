@@ -15,7 +15,7 @@ import { FaPlay } from "react-icons/fa6";
 import LoaderCarousel from "../../../components/Carousels/LoaderCarousel";
 import { getTvShowImages } from "@/services/tvShows";
 import { fetchVideos } from "@/lib/utils";
-import TrailerModal from "../../../components/TrailerModal";
+import TrailerModal from "./TrailerModal";
 
 interface props {
   id: string;
