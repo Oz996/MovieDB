@@ -59,8 +59,6 @@ export default function TvShowsCarousel() {
     setshowsType(type);
   };
 
-  if (isLoading) return <LoaderCarousel />;
-
   return (
     <section className="pt-12 px-5 pb-5 container" ref={showsRef}>
       <Tabs value={showsType} onValueChange={(value) => setshowsType(value)}>
@@ -94,60 +92,67 @@ export default function TvShowsCarousel() {
             </TabsTrigger>
           </TabsList>
         </div>
-        <TabsContent value="free">
-          <Carousel>
-            <CarouselContent className="-ml-1">
-              {shows.map((tvShow) => (
-                <CarouselCard
-                  type="tv"
-                  key={tvShow.id}
-                  id={tvShow.id}
-                  title={tvShow.name}
-                  date={tvShow.first_air_date}
-                  image={tvShow.poster_path}
-                />
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
-        </TabsContent>
-        <TabsContent value="rent">
-          <Carousel>
-            <CarouselContent className="-ml-1">
-              {shows?.map((tvShow) => (
-                <CarouselCard
-                  type="tv"
-                  key={tvShow.id}
-                  id={tvShow.id}
-                  title={tvShow.name}
-                  date={tvShow.first_air_date}
-                  image={tvShow.poster_path}
-                />
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
-        </TabsContent>
-        <TabsContent value="buy">
-          <Carousel>
-            <CarouselContent className="-ml-1">
-              {shows.map((tvShow) => (
-                <CarouselCard
-                  type="tv"
-                  key={tvShow.id}
-                  id={tvShow.id}
-                  title={tvShow.name}
-                  date={tvShow.first_air_date}
-                  image={tvShow.poster_path}
-                />
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
-        </TabsContent>
+
+        {isLoading ? (
+          <LoaderCarousel />
+        ) : (
+          <>
+            <TabsContent value="free">
+              <Carousel>
+                <CarouselContent className="-ml-1">
+                  {shows.map((tvShow) => (
+                    <CarouselCard
+                      type="tv"
+                      key={tvShow.id}
+                      id={tvShow.id}
+                      title={tvShow.name}
+                      date={tvShow.first_air_date}
+                      image={tvShow.poster_path}
+                    />
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+              </Carousel>
+            </TabsContent>
+            <TabsContent value="rent">
+              <Carousel>
+                <CarouselContent className="-ml-1">
+                  {shows?.map((tvShow) => (
+                    <CarouselCard
+                      type="tv"
+                      key={tvShow.id}
+                      id={tvShow.id}
+                      title={tvShow.name}
+                      date={tvShow.first_air_date}
+                      image={tvShow.poster_path}
+                    />
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+              </Carousel>
+            </TabsContent>
+            <TabsContent value="buy">
+              <Carousel>
+                <CarouselContent className="-ml-1">
+                  {shows.map((tvShow) => (
+                    <CarouselCard
+                      type="tv"
+                      key={tvShow.id}
+                      id={tvShow.id}
+                      title={tvShow.name}
+                      date={tvShow.first_air_date}
+                      image={tvShow.poster_path}
+                    />
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+              </Carousel>
+            </TabsContent>
+          </>
+        )}
       </Tabs>
     </section>
   );

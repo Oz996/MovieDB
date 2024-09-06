@@ -9,7 +9,7 @@ import { Skeleton } from "../ui/skeleton";
 
 export default function LoaderCarousel() {
   return (
-    <Carousel className="pt-20 container">
+    <Carousel>
       <CarouselContent className="-ml-1">
         {new Array(20).fill(0).map((_, index) => (
           <CarouselItem key={index} className="flex-centered">

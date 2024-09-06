@@ -38,7 +38,9 @@ export default function Movie({ params }: { params: { id: string } }) {
     return (
       <>
         <BannerLoader />
-        <LoaderCarousel />
+        <div className="container pt-20">
+          <LoaderCarousel />
+        </div>
       </>
     );
 

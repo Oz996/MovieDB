@@ -53,8 +53,6 @@ export default function TrendingCarousel({ initialData }: props) {
     setTrendingTime(type);
   };
 
-  if (isLoading) return <LoaderCarousel />;
-
   return (
     <section className="pt-12 px-5 container">
       <Tabs
@@ -87,42 +85,49 @@ export default function TrendingCarousel({ initialData }: props) {
             </TabsTrigger>
           </TabsList>
         </div>
-        <TabsContent value="day">
-          <Carousel>
-            <CarouselContent className="-ml-1">
-              {trending.map((item) => (
-                <CarouselCard
-                  type={item.media_type}
-                  key={item.id}
-                  id={item.id}
-                  title={item.title ?? item.name!}
-                  date={item.release_date ?? item.first_air_date!}
-                  image={item.poster_path!}
-                />
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
-        </TabsContent>
-        <TabsContent value="week">
-          <Carousel>
-            <CarouselContent className="-ml-1">
-              {trending.map((item) => (
-                <CarouselCard
-                  type={item.media_type}
-                  key={item.id}
-                  id={item.id}
-                  title={item.title ?? item.name!}
-                  date={item.release_date ?? item.first_air_date!}
-                  image={item.poster_path!}
-                />
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
-        </TabsContent>
+
+        {isLoading ? (
+          <LoaderCarousel />
+        ) : (
+          <>
+            <TabsContent value="day">
+              <Carousel>
+                <CarouselContent className="-ml-1">
+                  {trending.map((item) => (
+                    <CarouselCard
+                      type={item.media_type}
+                      key={item.id}
+                      id={item.id}
+                      title={item.title ?? item.name!}
+                      date={item.release_date ?? item.first_air_date!}
+                      image={item.poster_path!}
+                    />
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+              </Carousel>
+            </TabsContent>
+            <TabsContent value="week">
+              <Carousel>
+                <CarouselContent className="-ml-1">
+                  {trending.map((item) => (
+                    <CarouselCard
+                      type={item.media_type}
+                      key={item.id}
+                      id={item.id}
+                      title={item.title ?? item.name!}
+                      date={item.release_date ?? item.first_air_date!}
+                      image={item.poster_path!}
+                    />
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+              </Carousel>
+            </TabsContent>
+          </>
+        )}
       </Tabs>
     </section>
   );

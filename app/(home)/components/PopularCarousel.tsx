@@ -53,8 +53,6 @@ export default function PopularCarousel({ initialData }: props) {
     setPopularType(type);
   };
 
-  if (isLoading) return <LoaderCarousel />;
-
   return (
     <section className="pt-12 px-5 container">
       <Tabs
@@ -91,60 +89,67 @@ export default function PopularCarousel({ initialData }: props) {
             </TabsTrigger>
           </TabsList>
         </div>
-        <TabsContent value="now_playing">
-          <Carousel className="rounded-xl pl-2">
-            <CarouselContent className="-ml-1">
-              {popular.map((movie) => (
-                <CarouselCard
-                  type="movie"
-                  key={movie.id}
-                  id={movie.id}
-                  title={movie.title}
-                  date={movie.release_date}
-                  image={movie.poster_path}
-                />
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
-        </TabsContent>
-        <TabsContent value="top_rated">
-          <Carousel>
-            <CarouselContent className="-ml-1">
-              {popular.map((movie) => (
-                <CarouselCard
-                  type="movie"
-                  key={movie.id}
-                  id={movie.id}
-                  title={movie.title}
-                  date={movie.release_date}
-                  image={movie.poster_path}
-                />
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
-        </TabsContent>
-        <TabsContent value="upcoming">
-          <Carousel>
-            <CarouselContent className="-ml-1">
-              {popular.map((movie) => (
-                <CarouselCard
-                  type="movie"
-                  key={movie.id}
-                  id={movie.id}
-                  title={movie.title}
-                  date={movie.release_date}
-                  image={movie.poster_path}
-                />
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
-        </TabsContent>
+
+        {isLoading ? (
+          <LoaderCarousel />
+        ) : (
+          <>
+            <TabsContent value="now_playing">
+              <Carousel className="rounded-xl pl-2">
+                <CarouselContent className="-ml-1">
+                  {popular.map((movie) => (
+                    <CarouselCard
+                      type="movie"
+                      key={movie.id}
+                      id={movie.id}
+                      title={movie.title}
+                      date={movie.release_date}
+                      image={movie.poster_path}
+                    />
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+              </Carousel>
+            </TabsContent>
+            <TabsContent value="top_rated">
+              <Carousel>
+                <CarouselContent className="-ml-1">
+                  {popular.map((movie) => (
+                    <CarouselCard
+                      type="movie"
+                      key={movie.id}
+                      id={movie.id}
+                      title={movie.title}
+                      date={movie.release_date}
+                      image={movie.poster_path}
+                    />
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+              </Carousel>
+            </TabsContent>
+            <TabsContent value="upcoming">
+              <Carousel>
+                <CarouselContent className="-ml-1">
+                  {popular.map((movie) => (
+                    <CarouselCard
+                      type="movie"
+                      key={movie.id}
+                      id={movie.id}
+                      title={movie.title}
+                      date={movie.release_date}
+                      image={movie.poster_path}
+                    />
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+              </Carousel>
+            </TabsContent>
+          </>
+        )}
       </Tabs>
     </section>
   );
