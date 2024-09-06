@@ -26,7 +26,7 @@ import { getTvShowGenres } from "@/services/tvShows";
 import { Genre } from "@/types";
 import classNames from "classnames";
 import { Calendar as CalendarIcon } from "lucide-react";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import GenresLoader from "@/components/GenresLoader";
 import {
   languages,
