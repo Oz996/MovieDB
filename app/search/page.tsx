@@ -46,20 +46,20 @@ export default function Search() {
   }, [query, currentPage, searchType]);
 
   return (
-    <section className="pt-28 grid grid-cols-1 lg:grid-cols-3 container">
-      <SearchResultsBar
-        isLoading={isLoading}
-        searchResults={searchResults}
-        setSearchResults={setSearchResults}
-      />
-      <Suspense fallback={<ResultSkeleton />}>
+    <Suspense fallback={<ResultSkeleton />}>
+      <section className="pt-28 grid grid-cols-1 lg:grid-cols-3 container">
+        <SearchResultsBar
+          isLoading={isLoading}
+          searchResults={searchResults}
+          setSearchResults={setSearchResults}
+        />
         <SearchResults
           isLoading={isLoading}
           currentPage={currentPage}
           searchParams={searchParams}
           searchResults={searchResults}
         />
-      </Suspense>
-    </section>
+      </section>
+    </Suspense>
   );
 }
