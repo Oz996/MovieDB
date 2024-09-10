@@ -13,7 +13,7 @@ export default function Search() {
   const { setQuery, setPageAmount, setType } = useSearch();
 
   const searchParams = useSearchParams();
-  const query = searchParams.get("search");
+  const query = searchParams.get("query");
   const pageParam = searchParams.get("page");
   const searchType = searchParams.get("type");
   setType(searchType);
