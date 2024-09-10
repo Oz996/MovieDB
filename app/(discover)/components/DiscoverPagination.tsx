@@ -22,7 +22,7 @@ export default function DiscoverPagination({ currentPage, url }: props) {
     return url?.toString();
   };
   return (
-    <div className="p-10">
+    <div className="max-md:pb-16 max-md:pt-6 lg:p-10">
       <Pagination>
         <PaginationContent>
           <PaginationItem>
