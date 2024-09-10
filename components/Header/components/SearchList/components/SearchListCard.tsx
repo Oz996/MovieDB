@@ -11,22 +11,13 @@ interface props {
   item: Result;
   index: number;
   isLoading: boolean;
-  setShowInput: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function SearchListCard({
-  isLoading,
-  item,
-  index,
-  setShowInput,
-}: props) {
+export default function SearchListCard({ isLoading, item, index }: props) {
   const imageToDisplay = item?.poster_path ?? item?.profile_path;
   const image = handleDisplayImage("w185", imageToDisplay!);
   const title = item?.name ?? item?.title;
 
-  const handleCloseList = () => {
-    setShowInput(false);
-  };
   return (
     <motion.li
       initial={{ opacity: 0 }}
@@ -40,7 +31,6 @@ export default function SearchListCard({
       <Link
         href={`/${item.media_type}/${item.id}`}
         className="flex gap-3 items-center"
-        onClick={handleCloseList}
       >
         {isLoading ? (
           <>

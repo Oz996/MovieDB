@@ -10,7 +10,7 @@ interface props {
   inputRef: RefObject<HTMLInputElement>;
   isLoading: boolean;
   searchList: Result[];
-  setShowInput: Dispatch<SetStateAction<boolean>>;
+  handleCloseInput: () => void;
 }
 
 export default function SearchList({
@@ -18,7 +18,7 @@ export default function SearchList({
   inputRef,
   searchList,
   isLoading,
-  setShowInput,
+  handleCloseInput,
 }: props) {
   const listRef = useRef<HTMLDivElement>(null);
 
@@ -30,7 +30,7 @@ export default function SearchList({
         !listRef.current.contains(e.target as Node) &&
         !inputRef.current.contains(e.target as Node)
       )
-        setShowInput(false);
+        handleCloseInput();
     };
 
     document.addEventListener("mousedown", handleClickOutside);
@@ -71,7 +71,6 @@ export default function SearchList({
               item={item}
               index={index}
               isLoading={isLoading}
-              setShowInput={setShowInput}
             />
           ))}
         </ul>

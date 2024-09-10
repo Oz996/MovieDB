@@ -2,7 +2,6 @@
 
 import { Input } from "@/components/ui/input";
 import { getAllTrending } from "@/services/all";
-import { AnimatePresence, motion } from "framer-motion";
 import { Search, X } from "lucide-react";
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import SearchList from "./SearchList/SearchList";
@@ -32,7 +31,7 @@ export default function Searchbar() {
   }, [showInput]);
 
   useEffect(() => {
-    setShowInput(false);
+    reset();
   }, [pathname]);
 
   // resetting these states so that the caching logic works
@@ -81,8 +80,7 @@ export default function Searchbar() {
   };
 
   const handleCloseInput = () => {
-    setShowInput(false);
-    setValue("");
+    reset();
   };
 
   const handleQueryChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -93,6 +91,11 @@ export default function Searchbar() {
     e.preventDefault();
     setQuery(value);
     router.push(`/search/query?search=${value}`);
+  };
+
+  const reset = () => {
+    setShowInput(false);
+    setValue("");
   };
 
   return (
@@ -131,7 +134,7 @@ export default function Searchbar() {
           inputRef={inputRef}
           isLoading={isLoading}
           searchList={searchList}
-          setShowInput={setShowInput}
+          handleCloseInput={handleCloseInput}
         />
       )}
     </div>
