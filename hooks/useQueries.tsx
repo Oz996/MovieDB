@@ -19,6 +19,9 @@ export default function useQueries() {
   const fromDate = searchParams.get("primary_release_date.gte");
   const toDate = searchParams.get("primary_release_date.lte");
 
+  const airFromDate = searchParams.get("air_date.gte");
+  const airToDate = searchParams.get("air_date.lte");
+
   const language =
     searchParams.get("with_original_language") ?? languages[0].value;
   const sortBy = searchParams.get("sort_by") ?? sortOptions[0].value;
@@ -27,7 +30,9 @@ export default function useQueries() {
     currentGenres,
     currentMonetizations,
     voteAvgFrom,
+    airFromDate,
     voteAvgTo,
+    airToDate,
     userVotes,
     fromDate,
     toDate,

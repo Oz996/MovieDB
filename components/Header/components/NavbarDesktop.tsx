@@ -12,7 +12,8 @@ import Searchbar from "./Searchbar";
 import { getBaseUrl, handleUpcomingDates } from "@/lib/utils";
 
 export default function NavbarDesktop() {
-  const { todaysDate, untilDate } = handleUpcomingDates();
+  const { todaysDate, oneMonthFromToday, oneWeekFromToday } =
+    handleUpcomingDates();
 
   return (
     <header className="absolute inset-0 h-[4rem] bg-black flex items-center md:px-6 text-white max-md:hidden">
@@ -43,7 +44,7 @@ export default function NavbarDesktop() {
                       <Link
                         href={
                           getBaseUrl() +
-                          `/movies/upcoming?primary_release_date.gte=${todaysDate}&primary_release_date.lte=${untilDate}`
+                          `/movies/upcoming?primary_release_date.gte=${todaysDate}&primary_release_date.lte=${oneMonthFromToday}`
                         }
                         className="block w-full h-full"
                       >
@@ -85,14 +86,20 @@ export default function NavbarDesktop() {
                   </li>
                   <li className="dropdown-list-item">
                     <NavigationMenuLink asChild>
-                      <Link href="/" className="block w-full h-full">
+                      <Link
+                        href={`/shows/airing_today?air_date.lte=${todaysDate}&air_date.gte=${todaysDate}`}
+                        className="block w-full h-full"
+                      >
                         Airing Today
                       </Link>
                     </NavigationMenuLink>
                   </li>
                   <li className="dropdown-list-item">
                     <NavigationMenuLink asChild>
-                      <Link href="/" className="block w-full h-full">
+                      <Link
+                        href={`/shows/airing_today?air_date.lte=${oneWeekFromToday}&air_date.gte=${todaysDate}`}
+                        className="block w-full h-full"
+                      >
                         On Tv
                       </Link>
                     </NavigationMenuLink>

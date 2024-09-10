@@ -61,7 +61,9 @@ export default function FilterMenu({ type, params, url }: props) {
     currentGenres,
     currentMonetizations,
     voteAvgFrom,
+    airFromDate,
     voteAvgTo,
+    airToDate,
     userVotes,
     fromDate,
     toDate,
@@ -116,8 +118,8 @@ export default function FilterMenu({ type, params, url }: props) {
     handleRoute();
   };
 
-  const displayFromDate = fromDate ?? "Choose Date";
-  const displayToDate = toDate ?? "Choose Date";
+  const displayFromDate = fromDate ?? airFromDate ?? "Choose Date";
+  const displayToDate = toDate ?? airToDate ?? "Choose Date";
 
   const displayHeading = () => {
     if (moviesPage && topRatedPage) {

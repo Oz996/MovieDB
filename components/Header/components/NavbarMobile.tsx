@@ -8,7 +8,8 @@ import { getBaseUrl, handleUpcomingDates } from "@/lib/utils";
 
 export default function NavbarMobile() {
   const [navbar, setNavbar] = useState(false);
-  const { todaysDate, untilDate } = handleUpcomingDates();
+  const { todaysDate, oneMonthFromToday, oneWeekFromToday } =
+    handleUpcomingDates();
 
   const handleToggleNavbar = () => {
     setNavbar(!navbar);
@@ -51,7 +52,7 @@ export default function NavbarMobile() {
               <Link
                 href={
                   getBaseUrl() +
-                  "/movies/upcoming?primary_release_date.gte=${todaysDate}&primary_release_date.lte=${untilDate}`"
+                  "/movies/upcoming?primary_release_date.gte=${todaysDate}&primary_release_date.lte=${oneMonthFromToday }`"
                 }
               >
                 Upcoming
@@ -74,10 +75,18 @@ export default function NavbarMobile() {
               </Link>
             </li>
             <li className="dropdown-list-item">
-              <Link href="/">Airing Today</Link>
+              <Link
+                href={`/shows/airing_today?air_date.lte=${todaysDate}&air_date.gte=${todaysDate}`}
+              >
+                Airing Today
+              </Link>
             </li>
             <li className="dropdown-list-item">
-              <Link href="/">On Tv</Link>
+              <Link
+                href={`/shows/airing_today?air_date.lte=${oneWeekFromToday}&air_date.gte=${todaysDate}`}
+              >
+                On Tv
+              </Link>
             </li>
             <li className="dropdown-list-item">
               <Link

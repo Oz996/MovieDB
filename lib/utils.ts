@@ -81,9 +81,14 @@ export const fetchVideos = async (
 export const handleUpcomingDates = () => {
   const date = new Date();
   const todaysDate = formatQueryDate(date);
-  const toDate = new Date(date);
-  toDate.setMonth(toDate.getMonth() + 1);
-  const untilDate = formatQueryDate(toDate);
 
-  return { todaysDate, untilDate };
+  const monthDate = new Date();
+  monthDate.setMonth(monthDate.getMonth() + 1);
+  const oneMonthFromToday = formatQueryDate(monthDate);
+
+  const weekDate = new Date();
+  weekDate.setDate(weekDate.getDate() + 7);
+  const oneWeekFromToday = formatQueryDate(weekDate);
+
+  return { todaysDate, oneMonthFromToday, oneWeekFromToday };
 };
