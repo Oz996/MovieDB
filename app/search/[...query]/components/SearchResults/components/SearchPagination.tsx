@@ -5,8 +5,6 @@ import {
   PaginationEllipsis,
   PaginationItem,
   PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
 } from "@/components/ui/pagination";
 import { useSearch } from "@/hooks/useSearch";
 import classNames from "classnames";
@@ -19,13 +17,11 @@ interface props {
 }
 
 export default function SearchPagination({ isLoading, currentPage }: props) {
-  const { query, pageAmount, type } = useSearch();
+  const { query, type, pageAmount } = useSearch();
   const lastPage = pageAmount;
 
   const paginationLink = (page: number) => {
-    return `/search/query?search=${query}${
-      type ? `&type=${type}` : ""
-    }&page=${page}`;
+    return `/search/${type}?query=${query}&page=${page}`;
   };
 
   const hidePagination = isLoading || pageAmount <= 1;

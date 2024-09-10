@@ -7,6 +7,7 @@ import { getBaseUrl, handleDisplayImage } from "@/lib/utils";
 import NoResults from "@/components/NoResults";
 
 interface props {
+  mediaType: string;
   isLoading: boolean;
   currentPage: number;
   searchParams: any;
@@ -14,6 +15,7 @@ interface props {
 }
 
 export default function SearchResults({
+  mediaType,
   currentPage,
   searchParams,
   searchResults,
@@ -22,12 +24,6 @@ export default function SearchResults({
   if (isLoading) return <ResultSkeleton />;
 
   const searchType = searchParams.get("type");
-
-  const handleNavigation = () => {
-    if (searchType === "tv") return "tv";
-    else if (searchType === "movie") return "movie";
-    else if (searchType === "person") return "person";
-  };
 
   return (
     <section className="lg:col-span-2 lg:-ml-20 max-lg:pt-5 space-y-5">
@@ -67,8 +63,7 @@ export default function SearchResults({
           <div key={item.id} className="flex gap-3 rounded-lg border">
             <Link
               href={
-                getBaseUrl() +
-                `/${item.media_type ?? handleNavigation()}/${item.id}`
+                getBaseUrl() + `/${item.media_type ?? mediaType}/${item.id}`
               }
               className="w-[5.5rem] h-32 lg:w-28 lg:h-40 flex-shrink-0"
             >
@@ -84,8 +79,7 @@ export default function SearchResults({
               <div className="w-full">
                 <Link
                   href={
-                    getBaseUrl() +
-                    `/${item.media_type ?? handleNavigation()}/${item.id}`
+                    getBaseUrl() + `/${item.media_type ?? mediaType}/${item.id}`
                   }
                 >
                   <h2 className="text-lg font-semibold">{title}</h2>

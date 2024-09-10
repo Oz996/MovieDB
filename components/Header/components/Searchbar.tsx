@@ -90,7 +90,7 @@ export default function Searchbar() {
   const handleMultiSearch = (e: FormEvent) => {
     e.preventDefault();
     setQuery(value);
-    router.push(`/search/query?search=${value}`);
+    router.push(`/search/multi?query=${value}`);
   };
 
   const reset = () => {

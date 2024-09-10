@@ -1,12 +1,11 @@
 "use client";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import SearchResultsBar from "./components/SearchResultsBar/SearchResultsBar";
 import { getSearchResults } from "@/services/search";
 import SearchResults from "./components/SearchResults/SearchResults";
 import { Result } from "@/types";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useSearch } from "@/hooks/useSearch";
-import ResultSkeleton from "./components/ResultsSkeleton";
 
 export default function Search() {
   const [searchResults, setSearchResults] = useState<Result[]>([]);
@@ -14,11 +13,11 @@ export default function Search() {
   const { setQuery, setPageAmount, setType } = useSearch();
 
   const searchParams = useSearchParams();
-  const query = searchParams.get("search");
+  const query = searchParams.get("query");
   const pageParam = searchParams.get("page");
-  const searchType = searchParams.get("type");
-  setType(searchType);
-  setQuery(query!);
+
+  const pathname = usePathname();
+  const mediaType = pathname.split("/")[2];
 
   const currentPage = pageParam ? parseInt(pageParam) : 1;
 
@@ -27,8 +26,8 @@ export default function Search() {
       setIsLoading(true);
       try {
         const data = await getSearchResults(
-          query!,
-          searchType ?? "multi",
+          query as string,
+          mediaType,
           currentPage
         );
         const results = data?.results;
@@ -36,6 +35,8 @@ export default function Search() {
         console.log("current results", results);
         setSearchResults(results);
         setPageAmount(pageAmount);
+        setType(mediaType);
+        setQuery(query as string);
       } catch (error: any) {
         console.error(error.message);
       } finally {
@@ -43,23 +44,22 @@ export default function Search() {
       }
     };
     fetchData();
-  }, [query, currentPage, searchType]);
+  }, [query, currentPage, mediaType]);
 
   return (
-    <Suspense fallback={<ResultSkeleton />}>
-      <section className="pt-28 grid grid-cols-1 lg:grid-cols-3 container">
-        <SearchResultsBar
-          isLoading={isLoading}
-          searchResults={searchResults}
-          setSearchResults={setSearchResults}
-        />
-        <SearchResults
-          isLoading={isLoading}
-          currentPage={currentPage}
-          searchParams={searchParams}
-          searchResults={searchResults}
-        />
-      </section>
-    </Suspense>
+    <section className="pt-28 grid grid-cols-1 lg:grid-cols-3 container">
+      <SearchResultsBar
+        isLoading={isLoading}
+        searchResults={searchResults}
+        setSearchResults={setSearchResults}
+      />
+      <SearchResults
+        isLoading={isLoading}
+        mediaType={mediaType}
+        currentPage={currentPage}
+        searchParams={searchParams}
+        searchResults={searchResults}
+      />
+    </section>
   );
 }

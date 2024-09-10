@@ -17,7 +17,7 @@ export default function SearchResultsCard({ type, setType, isLoading }: props) {
   const handleTypeClick = async (type: MediaType) => {
     const searchType = type.value;
     setType(searchType);
-    router.push(`/search/query?search=${query}&type=${type.value}`);
+    router.push(`/search/${searchType}?query=${query}`);
   };
 
   return (
