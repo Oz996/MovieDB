@@ -1,3 +1,4 @@
+"use client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Image as ImageType, Trailer } from "@/types";
 import {
@@ -7,44 +8,26 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { useIntersectionObserver } from "@uidotdev/usehooks";
 import Image from "next/image";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useState } from "react";
 import { getMovieImages } from "@/services/movies";
 import { FaPlay } from "react-icons/fa6";
-import LoaderCarousel from "../../../components/Carousels/LoaderCarousel";
 import { getTvShowImages } from "@/services/tvShows";
-import { fetchVideos } from "@/lib/utils";
 import TrailerModal from "./TrailerModal";
 
 interface props {
   id: string;
   type: "movie" | "tv";
   videos: Trailer[];
-  setVideos: Dispatch<SetStateAction<Trailer[]>>;
 }
 
-export default function MediaCarousel({ id, videos, type, setVideos }: props) {
-  const [isLoading, setIsLoading] = useState(videos ? false : true);
+export default function MediaCarousel({ id, type, videos }: props) {
   const [images, setImages] = useState<ImageType[]>([]);
-  const [fetched, setFetched] = useState(false);
   const [mediaValue, setMediaValue] = useState("videos");
   const [playTrailer, setPlayTrailer] = useState(false);
   const [trailerToDisplay, setTrailerToDisplay] = useState("");
 
   const movie = type === "movie";
-  const [mediaRef, mediaEntry] = useIntersectionObserver({
-    threshold: 0.5,
-    root: null,
-    rootMargin: "0px",
-  });
-
-  useEffect(() => {
-    if (mediaEntry?.isIntersecting && videos.length === 0 && !fetched) {
-      fetchVideos(type, Number(id), setVideos, setIsLoading);
-      setFetched(true);
-    }
-  }, [mediaEntry?.isIntersecting]);
 
   const fetchImages = async () => {
     if (images.length > 0) return;
@@ -71,15 +54,8 @@ export default function MediaCarousel({ id, videos, type, setVideos }: props) {
   };
   const imagesToDisplay = images?.slice(0, 20);
 
-  if (isLoading)
-    return (
-      <section ref={mediaRef}>
-        <LoaderCarousel />
-      </section>
-    );
-
   return (
-    <section ref={mediaRef} className="py-10">
+    <section className="py-10">
       <Tabs value={mediaValue} onValueChange={(value) => setMediaValue(value)}>
         <div className="w-full flex flex-col gap-5">
           <div className="flex items-center">

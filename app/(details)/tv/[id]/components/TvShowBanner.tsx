@@ -1,33 +1,31 @@
 "use client";
-import { Dispatch, SetStateAction, useState } from "react";
-import { Trailer, TvShow } from "@/types";
+import { useState } from "react";
+import { TvShow } from "@/types";
 import Image from "next/image";
 import "react-circular-progressbar/dist/styles.css";
 import { useMediaQuery } from "@uidotdev/usehooks";
-import { fetchVideos, handleDisplayImage } from "@/lib/utils";
+import { filterByTrailers, handleDisplayImage } from "@/lib/utils";
 import BannerContainer from "../../../../../components/Banner/Banner";
 import TvShowDetails from "./TvShowDetails";
 import TrailerModal from "../../../components/TrailerModal";
+import { toast } from "sonner";
 
 interface props {
   tvShow: TvShow;
-  videos: Trailer[];
-  setVideos: Dispatch<SetStateAction<Trailer[]>>;
 }
 
-export default function TvShowBanner({ tvShow, videos, setVideos }: props) {
+export default function TvShowBanner({ tvShow }: props) {
   const [playTrailer, setPlayTrailer] = useState(false);
 
-  console.log("vidsz", videos);
   console.log("current tvShow", tvShow);
 
   const isMobile = useMediaQuery("only screen and (max-width: 768px)");
 
   const handleShowTrailer = () => {
-    setPlayTrailer(true);
-    if (videos.length === 0) {
-      fetchVideos("tv", tvShow?.id, setVideos);
+    if (tvShow.videos.results.length === 0) {
+      return toast.error("No trailer found");
     }
+    setPlayTrailer(true);
   };
   const handleCloseTrailer = () => {
     setPlayTrailer(false);
@@ -60,7 +58,7 @@ export default function TvShowBanner({ tvShow, videos, setVideos }: props) {
       <TvShowDetails tvShow={tvShow} handleShowTrailer={handleShowTrailer} />
       <TrailerModal
         play={playTrailer}
-        trailer={videos[0]?.key}
+        trailer={filterByTrailers(tvShow.videos.results)[0]?.key}
         handleClose={handleCloseTrailer}
       />
     </BannerContainer>

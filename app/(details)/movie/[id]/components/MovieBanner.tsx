@@ -1,21 +1,20 @@
 "use client";
-import { Dispatch, SetStateAction, useState } from "react";
-import { Movie, Trailer } from "@/types";
+import { useState } from "react";
+import { Movie } from "@/types";
 import Image from "next/image";
 import "react-circular-progressbar/dist/styles.css";
 import { useMediaQuery } from "@uidotdev/usehooks";
-import { fetchVideos, handleDisplayImage } from "@/lib/utils";
+import { filterByTrailers, handleDisplayImage } from "@/lib/utils";
 import MovieDetails from "./MovieDetails";
 import BannerContainer from "../../../../../components/Banner/Banner";
 import TrailerModal from "../../../components/TrailerModal";
+import { toast } from "sonner";
 
 interface props {
   movie: Movie;
-  videos: Trailer[];
-  setVideos: Dispatch<SetStateAction<Trailer[]>>;
 }
 
-export default function MovieBanner({ movie, videos, setVideos }: props) {
+export default function MovieBanner({ movie }: props) {
   const [playTrailer, setPlayTrailer] = useState(false);
 
   console.log("current movie", movie);
@@ -23,10 +22,10 @@ export default function MovieBanner({ movie, videos, setVideos }: props) {
   const isMobile = useMediaQuery("only screen and (max-width: 768px)");
 
   const handleShowTrailer = () => {
-    setPlayTrailer(true);
-    if (videos.length === 0) {
-      fetchVideos("movie", movie?.id, setVideos);
+    if (movie.videos.results.length === 0) {
+      return toast.error("No trailer found");
     }
+    setPlayTrailer(true);
   };
   const handleCloseTrailer = () => {
     setPlayTrailer(false);
@@ -59,7 +58,7 @@ export default function MovieBanner({ movie, videos, setVideos }: props) {
       <MovieDetails movie={movie} handleShowTrailer={handleShowTrailer} />
       <TrailerModal
         play={playTrailer}
-        trailer={videos[0]?.key}
+        trailer={filterByTrailers(movie.videos.results)[0]?.key}
         handleClose={handleCloseTrailer}
       />
     </BannerContainer>

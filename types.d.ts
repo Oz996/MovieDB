@@ -99,15 +99,14 @@ export interface MediaInterface {
   vote_average: number;
   vote_count: number;
   reviews: ReviewObject;
+  videos: { results: Trailer[] };
 }
 
 export interface TvShow extends MediaInterface {
   created_by: Crew[];
   first_air_date: string;
   in_production: boolean;
-  keywords: {
-    results: Keyword[];
-  };
+  keywords: { results: Keyword[] };
   last_air_date: string;
   name: string;
   networks: Network[];

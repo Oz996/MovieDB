@@ -63,25 +63,12 @@ export const getTvShowDetails = async (
   try {
     const res = await fetch(
       tmdbURL +
-        `tv/${id}?append_to_response=credits,keywords,external_ids,reviews`,
+        `tv/${id}?append_to_response=credits,keywords,external_ids,reviews,videos`,
       options
     );
     const result = await res.json();
     console.log("tvdata", result);
     return result;
-  } catch (error: any) {
-    throw Error(error.message);
-  }
-};
-
-export const getTvShowVideos = async (
-  id: string | number
-): Promise<Trailer[]> => {
-  try {
-    const res = await fetch(tmdbURL + `tv/${id}/videos`, options);
-    const data = await res.json();
-    const results = data.results;
-    return results;
   } catch (error: any) {
     throw Error(error.message);
   }

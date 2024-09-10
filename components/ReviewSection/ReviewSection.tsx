@@ -1,3 +1,4 @@
+"use client";
 import { Review } from "@/types";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useEffect, useState } from "react";

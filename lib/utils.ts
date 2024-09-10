@@ -1,5 +1,3 @@
-import { getMovieVideos } from "@/services/movies";
-import { getTvShowVideos } from "@/services/tvShows";
 import { Trailer } from "@/types";
 import { type ClassValue, clsx } from "clsx";
 import { Dispatch, SetStateAction } from "react";
@@ -58,24 +56,6 @@ export const handleDisplayImage = (width: string, path: string) => {
 export const filterByTrailers = (arr: Trailer[]) => {
   const trailers = arr?.filter((item) => item.type === "Trailer");
   return trailers;
-};
-
-export const fetchVideos = async (
-  type: "movie" | "tv",
-  id: number,
-  setState: Dispatch<SetStateAction<Trailer[]>>,
-  setIsLoading?: Dispatch<SetStateAction<boolean>>
-) => {
-  const getVideos = type === "movie" ? getMovieVideos : getTvShowVideos;
-  try {
-    const res = await getVideos(id);
-    const trailers = filterByTrailers(res);
-    setState(trailers);
-  } catch (error: any) {
-    console.error(error.message);
-  } finally {
-    setIsLoading && setIsLoading(false);
-  }
 };
 
 export const handleUpcomingDates = () => {

@@ -1,4 +1,4 @@
-import { Genre, Image, Movie, Result, Similar, Trailer } from "@/types";
+import { Genre, Image, Movie, Result, Similar } from "@/types";
 import options from "./options";
 import { tmdbURL } from "./options";
 
@@ -59,24 +59,11 @@ export const getMovieDetails = async (id: string | number): Promise<Movie> => {
   try {
     const res = await fetch(
       tmdbURL +
-        `movie/${id}?append_to_response=credits,keywords,external_ids,reviews`,
+        `movie/${id}?append_to_response=credits,keywords,external_ids,reviews,videos`,
       options
     );
     const result = await res.json();
     return result;
-  } catch (error: any) {
-    throw Error(error.message);
-  }
-};
-
-export const getMovieVideos = async (
-  id: string | number
-): Promise<Trailer[]> => {
-  try {
-    const res = await fetch(tmdbURL + `movie/${id}/videos`, options);
-    const data = await res.json();
-    const results = data.results;
-    return results;
   } catch (error: any) {
     throw Error(error.message);
   }
