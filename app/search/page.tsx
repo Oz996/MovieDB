@@ -1,11 +1,12 @@
 "use client";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import SearchResultsBar from "./components/SearchResultsBar/SearchResultsBar";
 import { getSearchResults } from "@/services/search";
 import SearchResults from "./components/SearchResults/SearchResults";
 import { Result } from "@/types";
 import { useSearchParams } from "next/navigation";
 import { useSearch } from "@/hooks/useSearch";
+import ResultSkeleton from "./components/ResultsSkeleton";
 
 export default function Search() {
   const [searchResults, setSearchResults] = useState<Result[]>([]);
@@ -51,13 +52,14 @@ export default function Search() {
         searchResults={searchResults}
         setSearchResults={setSearchResults}
       />
-
-      <SearchResults
-        isLoading={isLoading}
-        currentPage={currentPage}
-        searchParams={searchParams}
-        searchResults={searchResults}
-      />
+      <Suspense fallback={<ResultSkeleton />}>
+        <SearchResults
+          isLoading={isLoading}
+          currentPage={currentPage}
+          searchParams={searchParams}
+          searchResults={searchResults}
+        />
+      </Suspense>
     </section>
   );
 }
