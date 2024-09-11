@@ -20,9 +20,10 @@ export default function MovieBanner({ movie }: props) {
   console.log("current movie", movie);
 
   const isMobile = useMediaQuery("only screen and (max-width: 768px)");
+  const trailers = filterByTrailers(movie.videos.results);
 
   const handleShowTrailer = () => {
-    if (movie.videos.results.length === 0) {
+    if (trailers.length === 0) {
       return toast.error("No trailer found");
     }
     setPlayTrailer(true);
@@ -58,7 +59,7 @@ export default function MovieBanner({ movie }: props) {
       <MovieDetails movie={movie} handleShowTrailer={handleShowTrailer} />
       <TrailerModal
         play={playTrailer}
-        trailer={filterByTrailers(movie.videos.results)[0]?.key}
+        trailer={trailers[0]?.key}
         handleClose={handleCloseTrailer}
       />
     </BannerContainer>
