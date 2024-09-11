@@ -1,4 +1,4 @@
-import { formatDate } from "@/lib/utils";
+import { formatDate, getBaseUrl } from "@/lib/utils";
 import { Movie } from "@/types";
 import classNames from "classnames";
 import { Play } from "lucide-react";
@@ -44,7 +44,10 @@ export default function MovieDetails({ movie, handleShowTrailer }: props) {
           {movie.genres?.map((genre) => (
             <Link
               key={genre.id}
-              href=""
+              href={
+                getBaseUrl() +
+                `/movies/popular?vote_count.gte=100&with_genres=${genre.id}`
+              }
               className="after:content-[',_'] last:after:content-['']"
             >
               {genre.name}

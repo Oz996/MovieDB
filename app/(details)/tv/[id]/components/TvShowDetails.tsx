@@ -4,6 +4,7 @@ import Link from "next/link";
 import CircleRatingBar from "../../../../../components/Banner/components/CircleRatingBar";
 import { Play } from "lucide-react";
 import CrewList from "../../../../../components/Banner/components/CrewList";
+import { getBaseUrl } from "@/lib/utils";
 
 interface props {
   tvShow: TvShow;
@@ -39,7 +40,10 @@ export default function TvShowDetails({ tvShow, handleShowTrailer }: props) {
           {tvShow.genres?.map((genre) => (
             <Link
               key={genre.id}
-              href=""
+              href={
+                getBaseUrl() +
+                `/shows/popular?vote_count.gte=100&with_genres=${genre.id}`
+              }
               className="after:content-[',_'] last:after:content-['']"
             >
               {genre.name}

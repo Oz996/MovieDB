@@ -340,7 +340,7 @@ export default function FilterMenu({ type, params, url }: props) {
               </div>
               <p>To:</p>
               <Slider
-                value={[Number(voteAvgTo)!]}
+                value={[Number(voteAvgTo)]}
                 onValueChange={(value) => handleScoreTo(value)}
                 max={10}
                 step={1}
@@ -361,7 +361,7 @@ export default function FilterMenu({ type, params, url }: props) {
             </div>
             <p className="py-2">Minimum User Votes</p>
             <Slider
-              value={[Number(userVotes)!]}
+              value={[Number(userVotes)]}
               onValueChange={(value) => handleUserScore(value)}
               max={500}
               step={100}
