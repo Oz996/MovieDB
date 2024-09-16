@@ -2,7 +2,7 @@
 import { Review } from "@/types";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Button } from "../ui/button";
+import { Button } from "../../../../components/ui/button";
 import {
   Pagination,
   PaginationContent,

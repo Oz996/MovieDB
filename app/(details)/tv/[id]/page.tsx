@@ -2,7 +2,7 @@ import TvShowBanner from "./components/TvShowBanner";
 import MediaCarousel from "../../components/MediaCarousel";
 import PersonCarousel from "@/components/Carousels/PersonCarousel";
 import SimilarCarousel from "@/components/Carousels/SimilarCarousel";
-import ReviewSection from "@/components/ReviewSection/ReviewSection";
+import ReviewSection from "../../components/ReviewSection/ReviewSection";
 import TvShowAside from "./components/TvShowAside";
 import {
   DetailsContainer,

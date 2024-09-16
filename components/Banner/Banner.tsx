@@ -12,7 +12,7 @@ export default function BannerContainer({ background, children }: props) {
         }}
         className="md:min-h-[35rem] flex-centered w-full relative before:bg-black/60 bg-no-repeat bg-cover before:absolute before:inset-0"
       >
-        <div className="z-20 grid grid-cols-4 max-md:flex max-md:flex-col gap-10 text-white container max-md:pb-5 max-md:p-2">
+        <div className="z-10 grid grid-cols-4 max-md:flex max-md:flex-col gap-10 text-white container max-md:pb-5 max-md:p-2">
           {children}
         </div>
       </div>

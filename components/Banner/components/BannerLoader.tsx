@@ -4,11 +4,11 @@ export default function BannerLoader() {
   return (
     <section className="pt-24">
       <div className="h-[32rem] flex-centered w-full relative before:bg-black/65 bg-no-repeat bg-cover before:absolute before:inset-0">
-        <div className="z-20 flex gap-10 text-white container w-full">
+        <div className="flex gap-10 text-white container w-full">
           <Skeleton className="w-[19rem] h-[27rem] rounded-lg" />
 
           <div className="flex flex-col justify-center pr-10">
-            <div className="z-20 flex gap-2 text-4xl">
+            <div className="flex gap-2 text-4xl">
               <Skeleton className="w-[30rem] h-8" />
             </div>
             <div className="flex items-center gap-3">

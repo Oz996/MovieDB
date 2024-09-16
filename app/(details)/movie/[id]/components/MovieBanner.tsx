@@ -40,7 +40,7 @@ export default function MovieBanner({ movie }: props) {
           height={isMobile ? 400 : 300}
           src={handleDisplayImage("w1280", movie.poster_path)}
           alt="Movie poster"
-          className="z-20 rounded lg:rounded-lg w-full max-md:max-w-[20rem] max-sm:mx-auto object-cover hidden md:block"
+          className="rounded lg:rounded-lg w-full max-md:max-w-[20rem] max-sm:mx-auto object-cover hidden md:block"
         />
         <div className="w-full relative md:hidden">
           <Image
@@ -51,9 +51,9 @@ export default function MovieBanner({ movie }: props) {
             alt="Movie poster"
             width={1000}
             height={450}
-            className="rounded z-50"
+            className="rounded"
           />
-          {/* <div className="absolute -left-2 -top-3 -bottom-2 -right-2 bg-black/80 rounded z-40" /> */}
+          {/* <div className="absolute -left-2 -top-3 -bottom-2 -right-2 bg-black/80 rounded " /> */}
         </div>
       </div>
       <MovieDetails movie={movie} handleShowTrailer={handleShowTrailer} />

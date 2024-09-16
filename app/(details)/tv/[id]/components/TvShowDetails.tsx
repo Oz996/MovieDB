@@ -25,7 +25,7 @@ export default function TvShowDetails({ tvShow, handleShowTrailer }: props) {
 
   return (
     <div className="flex flex-col justify-center md:pr-10 col-span-3">
-      <div className="z-20 flex gap-2 text-2xl md:text-4xl">
+      <div className="flex gap-2 text-2xl md:text-4xl">
         <h1 className="font-bold">{tvShow.name}</h1>
         <span className="opacity-80 max-md:hidden">({getTvShowDate()})</span>
       </div>

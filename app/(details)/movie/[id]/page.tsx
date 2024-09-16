@@ -1,8 +1,7 @@
-import { Movie as IMovie, Trailer } from "@/types";
 import PersonCarousel from "@/components/Carousels/PersonCarousel";
 import MediaCarousel from "../../components/MediaCarousel";
 import SimilarCarousel from "@/components/Carousels/SimilarCarousel";
-import ReviewSection from "@/components/ReviewSection/ReviewSection";
+import ReviewSection from "../../components/ReviewSection/ReviewSection";
 import MovieBanner from "./components/MovieBanner";
 import MovieAside from "./components/MovieAside";
 import {
