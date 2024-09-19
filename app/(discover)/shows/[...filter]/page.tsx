@@ -69,7 +69,11 @@ export default function Shows({ params }: { params: { filter: string[] } }) {
         </DiscoverMediaDiv>
       </DiscoverContainer>
 
-      <DiscoverShowsPagination query={query} setTvShows={setTvShows} />
+      <DiscoverShowsPagination
+        query={query}
+        setTvShows={setTvShows}
+        resultLength={tvShows.length}
+      />
     </>
   );
 }

@@ -68,7 +68,11 @@ export default function Movies({ params }: { params: { filter: string[] } }) {
         </DiscoverMediaDiv>
       </DiscoverContainer>
 
-      <DiscoverMoviesPagination query={query} setMovies={setMovies} />
+      <DiscoverMoviesPagination
+        query={query}
+        setMovies={setMovies}
+        resultLength={movies.length}
+      />
     </>
   );
 }

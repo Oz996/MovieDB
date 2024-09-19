@@ -6,11 +6,16 @@ import { ArrowUp, Loader2 } from "lucide-react";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 interface props {
+  resultLength: number;
   setTvShows: Dispatch<SetStateAction<TvShow[]>>;
   query: string;
 }
 
-export default function DiscoverShowsPagination({ query, setTvShows }: props) {
+export default function DiscoverShowsPagination({
+  query,
+  setTvShows,
+  resultLength,
+}: props) {
   const [isLoading, setIsLoading] = useState(true);
   const [fetchMore, setFetchMore] = useState(false);
   const [{ y }, scrollTo] = useWindowScroll();
@@ -24,7 +29,7 @@ export default function DiscoverShowsPagination({ query, setTvShows }: props) {
 
   useEffect(() => {
     if (refEntry?.isIntersecting && fetchMore) {
-      fetchMoreMovies();
+      fetchMoreShows();
     }
   }, [refEntry?.isIntersecting, fetchMore]);
 
@@ -33,7 +38,7 @@ export default function DiscoverShowsPagination({ query, setTvShows }: props) {
     setFetchMore(false);
   }, [query]);
 
-  const fetchMoreMovies = async () => {
+  const fetchMoreShows = async () => {
     setIsLoading(true);
     try {
       const data = await getTvShows(query + `&page=${page}`);
@@ -48,7 +53,7 @@ export default function DiscoverShowsPagination({ query, setTvShows }: props) {
 
   return (
     <div className="max-md:pb-16 max-md:pt-6 lg:p-10 relative flex-centered flex-col">
-      {!fetchMore && (
+      {!fetchMore && resultLength > 19 && (
         <Button
           onClick={() => setFetchMore(true)}
           className="text-2xl bg black"
@@ -56,8 +61,6 @@ export default function DiscoverShowsPagination({ query, setTvShows }: props) {
           Load more
         </Button>
       )}
-      <div ref={ref} className="absolute bottom-0 size-10 bg-transparent" />
-      {isLoading && fetchMore && <Loader2 size={40} className="animate-spin" />}
       {(y as number) > 2000 && (
         <Button
           className="fixed bottom-16 left-6 md:left-[35%] bg-black p-2 rounded-full"
@@ -66,6 +69,8 @@ export default function DiscoverShowsPagination({ query, setTvShows }: props) {
           <ArrowUp />
         </Button>
       )}
+      {isLoading && fetchMore && <Loader2 size={40} className="animate-spin" />}
+      <div ref={ref} className="absolute bottom-0 size-10 bg-transparent" />
     </div>
   );
 }
