@@ -28,6 +28,11 @@ export default function DiscoverShowsPagination({ query, setTvShows }: props) {
     }
   }, [refEntry?.isIntersecting, fetchMore]);
 
+  // displaying load more button if user applies a filter/sort
+  useEffect(() => {
+    setFetchMore(false);
+  }, [query]);
+
   const fetchMoreMovies = async () => {
     setIsLoading(true);
     try {
