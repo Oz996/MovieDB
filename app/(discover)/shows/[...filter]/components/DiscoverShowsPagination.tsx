@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { getTvShows } from "@/services/tvShows";
 import { TvShow } from "@/types";
-import { useIntersectionObserver } from "@uidotdev/usehooks";
-import { Loader2 } from "lucide-react";
+import { useIntersectionObserver, useWindowScroll } from "@uidotdev/usehooks";
+import { ArrowUp, Loader2 } from "lucide-react";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 interface props {
@@ -13,6 +13,7 @@ interface props {
 export default function DiscoverShowsPagination({ query, setTvShows }: props) {
   const [isLoading, setIsLoading] = useState(true);
   const [fetchMore, setFetchMore] = useState(false);
+  const [{ y }, scrollTo] = useWindowScroll();
   const [page, setPage] = useState(2);
 
   const [ref, refEntry] = useIntersectionObserver({
@@ -52,6 +53,14 @@ export default function DiscoverShowsPagination({ query, setTvShows }: props) {
       )}
       <div ref={ref} className="absolute bottom-0 size-10 bg-transparent" />
       {isLoading && fetchMore && <Loader2 size={40} className="animate-spin" />}
+      {(y as number) > 2000 && (
+        <Button
+          className="fixed bottom-16 left-6 md:left-[35%] bg-black p-2 rounded-full"
+          onClick={() => scrollTo({ left: 0, top: 0, behavior: "smooth" })}
+        >
+          <ArrowUp />
+        </Button>
+      )}
     </div>
   );
 }
