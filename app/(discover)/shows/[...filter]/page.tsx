@@ -11,8 +11,8 @@ import {
   FilterMenuButton,
 } from "../../components/DiscoverContainer";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import DiscoverPagination from "../../components/DiscoverPagination";
 import { useSearchParams } from "next/navigation";
+import DiscoverShowsPagination from "./components/DiscoverShowsPagination";
 
 export default function Shows({ params }: { params: { filter: string[] } }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -20,9 +20,6 @@ export default function Shows({ params }: { params: { filter: string[] } }) {
   const [url, setUrl] = useState<URL>();
 
   const searchParams = useSearchParams();
-  const pageParam = searchParams.get("page");
-  const currentPage = pageParam ? parseInt(pageParam) : 1;
-
   const query = searchParams.toString();
 
   useEffect(() => {
@@ -72,7 +69,7 @@ export default function Shows({ params }: { params: { filter: string[] } }) {
         </DiscoverMediaDiv>
       </DiscoverContainer>
 
-      <DiscoverPagination url={url!} currentPage={currentPage} />
+      <DiscoverShowsPagination query={query} setTvShows={setTvShows} />
     </>
   );
 }

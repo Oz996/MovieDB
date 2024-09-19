@@ -12,7 +12,7 @@ import {
 } from "../../components/DiscoverContainer";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { useSearchParams } from "next/navigation";
-import DiscoverPagination from "../../components/DiscoverPagination";
+import DiscoverMoviesPagination from "./components/DiscoverMoviesPagination";
 
 export default function Movies({ params }: { params: { filter: string[] } }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -21,9 +21,6 @@ export default function Movies({ params }: { params: { filter: string[] } }) {
   const isMobile = useMediaQuery("only screen and (max-width: 768px)");
 
   const searchParams = useSearchParams();
-  const pageParam = searchParams.get("page");
-  const currentPage = pageParam ? parseInt(pageParam) : 1;
-
   const query = searchParams.toString();
 
   useEffect(() => {
@@ -71,7 +68,7 @@ export default function Movies({ params }: { params: { filter: string[] } }) {
         </DiscoverMediaDiv>
       </DiscoverContainer>
 
-      <DiscoverPagination url={url!} currentPage={currentPage} />
+      <DiscoverMoviesPagination query={query} setMovies={setMovies} />
     </>
   );
 }
