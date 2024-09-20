@@ -1,12 +1,13 @@
 import { Result } from "@/types";
 import { Search, TrendingUp } from "lucide-react";
 import SearchListCard from "./components/SearchListCard";
-import { Dispatch, RefObject, SetStateAction, useEffect, useRef } from "react";
+import { RefObject, useEffect, useRef } from "react";
 import NoResults from "@/components/NoResults";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import Link from "next/link";
 
 interface props {
-  title: "Search" | "Trending";
+  value: string;
   inputRef: RefObject<HTMLInputElement>;
   isLoading: boolean;
   searchList: Result[];
@@ -14,13 +15,14 @@ interface props {
 }
 
 export default function SearchList({
-  title,
+  value,
   inputRef,
   searchList,
   isLoading,
   handleCloseInput,
 }: props) {
   const listRef = useRef<HTMLDivElement>(null);
+  const title = value ? "Search" : "Trending";
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -46,7 +48,7 @@ export default function SearchList({
       className="absolute border border-gray-300 w-full max-h-[calc(100vh-6.8rem)] lg:max-h-[40rem] top-[2.4rem] lg:top-[3.1rem] rounded-b bg-white text-black overflow-auto z-50 animate-expand-down"
     >
       <div className="flex gap-2 ml-5 py-2 border-b">
-        {title === "Search" ? (
+        {value ? (
           <>
             <Search />
             <h2 className="text-xl font-bold">{title}</h2>
@@ -63,6 +65,14 @@ export default function SearchList({
           {searchList?.length === 0 && (
             <div className="py-5 px-4">
               <NoResults />
+            </div>
+          )}
+          {value && searchList?.length !== 0 && (
+            <div className="py-2 px-4 flex gap-2">
+              <Link href={`/search/multi?query=${value}`}>
+                Search for <span className="font-bold">{value}</span> in a
+                multi-search
+              </Link>
             </div>
           )}
           {searchList?.map((item, index) => (

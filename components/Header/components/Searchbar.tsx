@@ -46,7 +46,7 @@ export default function Searchbar() {
   }, [value]);
 
   useEffect(() => {
-    if (value === "" && showInput && searchList.length === 0) {
+    if (value === "" && showInput) {
       const handleFetchTrending = async () => {
         const data = await getAllTrending();
         setSearchList(data);
@@ -130,7 +130,7 @@ export default function Searchbar() {
 
       {showInput && (
         <SearchList
-          title={value ? "Search" : "Trending"}
+          value={value}
           inputRef={inputRef}
           isLoading={isLoading}
           searchList={searchList}
