@@ -58,7 +58,7 @@ export default function TvShowDetails({ tvShow, handleShowTrailer }: props) {
       )}
       <div className="flex flex-col gap-2">
         <button
-          className="flex gap-1 cursor-pointer pt-2 pb-3 w-[7rem"
+          className="flex gap-1 cursor-pointer pt-2 pb-3 place-self-start"
           onClick={handleShowTrailer}
         >
           <Play size={22} aria-hidden="true" />

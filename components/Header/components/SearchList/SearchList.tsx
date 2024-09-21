@@ -1,5 +1,5 @@
 import { Result } from "@/types";
-import { Search, TrendingUp } from "lucide-react";
+import { ArrowRight, Search, TrendingUp } from "lucide-react";
 import SearchListCard from "./components/SearchListCard";
 import { RefObject, useEffect, useRef } from "react";
 import NoResults from "@/components/NoResults";
@@ -68,12 +68,14 @@ export default function SearchList({
             </div>
           )}
           {value && searchList?.length !== 0 && (
-            <div className="py-2 px-4 flex gap-2">
-              <Link href={`/search/multi?query=${value}`}>
-                Search for <span className="font-bold">{value}</span> in a
-                multi-search
-              </Link>
-            </div>
+            <Link
+              href={`/search/multi?query=${value}`}
+              className="py-2 px-4 flex items-center gap-1"
+            >
+              Search for <span className="font-bold">{value}</span> in a
+              multi-search
+              <ArrowRight size={15} />
+            </Link>
           )}
           {searchList?.map((item, index) => (
             <SearchListCard

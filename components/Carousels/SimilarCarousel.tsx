@@ -28,7 +28,6 @@ export default function SimilarCarousel({ id, type, rating }: props) {
   const [similar, setSimilar] = useState<Similar[]>([]);
 
   const movie = type === "movie";
-  const tvShow = type === "tv";
 
   const [similarRef, similarEntry] = useIntersectionObserver({
     threshold: 0.5,
@@ -57,8 +56,6 @@ export default function SimilarCarousel({ id, type, rating }: props) {
       fetchSimilar();
     }
   }, [similarEntry?.isIntersecting]);
-
-  console.log("similar", similar);
 
   const mediaType = (item: Similar) => {
     return item.release_date ? "movie" : "tv";
