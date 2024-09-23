@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Movie } from "@/types";
 import Image from "next/image";
 import "react-circular-progressbar/dist/styles.css";
-import { useMediaQuery } from "@uidotdev/usehooks";
 import { filterByTrailers, handleDisplayImage } from "@/lib/utils";
 import MovieDetails from "./MovieDetails";
 import BannerContainer from "../../../../../components/Banner/Banner";
@@ -19,7 +18,6 @@ export default function MovieBanner({ movie }: props) {
 
   console.log("current movie", movie);
 
-  const isMobile = useMediaQuery("only screen and (max-width: 768px)");
   const trailers = filterByTrailers(movie.videos.results);
 
   const handleShowTrailer = () => {
@@ -36,14 +34,16 @@ export default function MovieBanner({ movie }: props) {
     <BannerContainer background={movie.backdrop_path}>
       <div className="w-full col-span-1">
         <Image
-          width={isMobile ? 400 : 300}
-          height={isMobile ? 400 : 300}
+          priority
+          width={300}
+          height={300}
           src={handleDisplayImage("w1280", movie.poster_path)}
           alt="Movie poster"
           className="rounded lg:rounded-lg w-full max-md:max-w-[20rem] max-sm:mx-auto object-cover hidden md:block"
         />
         <div className="w-full relative md:hidden">
           <Image
+            priority
             src={handleDisplayImage(
               "w1000_and_h450_multi_faces",
               movie.backdrop_path

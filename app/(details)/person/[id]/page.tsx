@@ -46,8 +46,9 @@ export default function Person({ params }: { params: { id: string } }) {
       <div className="col-span-1">
         <div className="w-full">
           <Image
-            width={isMobile ? 400 : 300}
-            height={isMobile ? 400 : 300}
+            priority
+            width={300}
+            height={300}
             src={handleDisplayImage("w1280", person.profile_path)}
             alt={`Image of ${person.name}`}
             className="rounded lg:rounded-lg w-full max-md:max-w-[20rem] max-sm:mx-auto object-cover"

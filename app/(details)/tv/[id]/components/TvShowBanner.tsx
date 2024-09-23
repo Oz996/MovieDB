@@ -3,7 +3,6 @@ import { useState } from "react";
 import { TvShow } from "@/types";
 import Image from "next/image";
 import "react-circular-progressbar/dist/styles.css";
-import { useMediaQuery } from "@uidotdev/usehooks";
 import { filterByTrailers, handleDisplayImage } from "@/lib/utils";
 import BannerContainer from "../../../../../components/Banner/Banner";
 import TvShowDetails from "./TvShowDetails";
@@ -19,7 +18,6 @@ export default function TvShowBanner({ tvShow }: props) {
 
   console.log("current tvShow", tvShow);
 
-  const isMobile = useMediaQuery("only screen and (max-width: 768px)");
   const trailers = filterByTrailers(tvShow.videos.results);
 
   const handleShowTrailer = () => {
@@ -36,14 +34,16 @@ export default function TvShowBanner({ tvShow }: props) {
     <BannerContainer background={tvShow.backdrop_path}>
       <div className="w-full col-span-1">
         <Image
-          width={isMobile ? 400 : 300}
-          height={isMobile ? 400 : 300}
+          priority
+          width={300}
+          height={300}
           src={handleDisplayImage("w1280", tvShow.poster_path)}
           alt="Tv show poster"
           className="rounded lg:rounded-lg w-full max-md:max-w-[20rem] max-sm:mx-auto object-cover hidden md:block"
         />
         <div className="w-full relative md:hidden">
           <Image
+            priority
             src={handleDisplayImage(
               "w1000_and_h450_multi_faces",
               tvShow.backdrop_path
