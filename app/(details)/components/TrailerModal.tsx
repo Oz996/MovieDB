@@ -25,8 +25,8 @@ export default function TrailerModal({ play, trailer, handleClose }: props) {
             transition={{ duration: 0.4 }}
           >
             <div className="fixed inset-0 w-full h-full bg-black/80" />
-            <div className="w-screen flex-centered flex-col">
-              <div className="relative top-0 py-1 px-4 flex justify-end w-[90%] max-w-[1387px] h-[2.5rem] text-white bg-black rounded-t">
+            <div className="w-screen flex-centered flex-col aspect-video md:aspect-[16/7]">
+              <div className="relative top-0 py-1 px-4 flex justify-end w-[90%] max-w-[1387px] h-[2.5rem] text-white bg-black rounded-t-lg">
                 <button
                   onClick={handleClose}
                   className="flex-centered p-2 bg-transparent hover:bg-white/20 duration-300 cursor-pointer group rounded-full"
@@ -36,11 +36,10 @@ export default function TrailerModal({ play, trailer, handleClose }: props) {
                 </button>
               </div>
               <iframe
-                className="relative w-[90%] max-w-[1387px] rounded-b"
-                width={isMobile ? "800" : "1387"}
-                height={isMobile ? "400" : "780"}
+                className="relative w-[90%] max-w-[1387px] rounded-b-lg h-full"
                 src={`https://www.youtube.com/embed/${trailer}?autoplay=1`}
                 allow="autoplay"
+                allowFullScreen
               ></iframe>
             </div>
           </motion.div>

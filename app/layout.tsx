@@ -5,7 +5,7 @@ import Header from "@/components/Header/Header";
 import { Providers } from "./providers";
 import { Toaster } from "@/components/ui/sonner";
 
-const source = Source_Sans_3({ subsets: ["latin"] });
+const source = Source_Sans_3({ subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
   title: "MovieDB",
