@@ -143,13 +143,18 @@ export default function ReviewSection({ reviews }: props) {
       )}
     </ReviewsContainer>
   );
-}
 
-function ReviewsContainer({ children }: { children: React.ReactNode }) {
-  return (
-    <section>
-      <h2 className="text-title font-semibold py-5">Reviews</h2>
-      {children}
-    </section>
-  );
+  function ReviewsContainer({ children }: { children: React.ReactNode }) {
+    return (
+      <section>
+        <h2 className="text-title font-semibold py-5">
+          Reviews{" "}
+          {reviews.length > 0 && (
+            <span className="text-[18px]">({reviews.length})</span>
+          )}
+        </h2>
+        {children}
+      </section>
+    );
+  }
 }
