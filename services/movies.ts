@@ -3,7 +3,6 @@ import options from "./options";
 import { tmdbURL } from "./options";
 
 export const getMovies = async (query: string): Promise<Movie[]> => {
-  console.log("current querry", query);
   try {
     const res = await fetch(
       tmdbURL + `discover/movie?include_adult=false&region=US&${query}`,
@@ -11,7 +10,6 @@ export const getMovies = async (query: string): Promise<Movie[]> => {
     );
     const data = await res.json();
     const results = data.results;
-    console.log("movvdata", data);
     return results;
   } catch (error: any) {
     throw Error(error.message);

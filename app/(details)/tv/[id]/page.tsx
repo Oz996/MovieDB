@@ -11,6 +11,22 @@ import {
 import { filterByTrailers } from "@/lib/utils";
 import { getTvShowDetails } from "@/services/tvShows";
 
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const tvShow = await getTvShowDetails(params.id);
+  const startYear = new Date(tvShow.first_air_date).getFullYear();
+  const endYear = new Date(tvShow?.last_air_date).getFullYear();
+
+  const date =
+    tvShow.status === "Ended"
+      ? `(${startYear} - ${endYear})`
+      : `(${startYear}-)`;
+
+  return {
+    title: `${tvShow.name} ${date} - MovieDB`,
+    description: tvShow.overview,
+  };
+}
+
 export default async function TvShow({ params }: { params: { id: string } }) {
   const tvShow = await getTvShowDetails(params.id);
 

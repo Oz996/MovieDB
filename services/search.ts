@@ -13,7 +13,6 @@ export const getSearchResults = async (
     );
     const data = await res.json();
     const results = data.results;
-    console.log("search", data);
     return data;
   } catch (error: any) {
     throw Error(error.message);

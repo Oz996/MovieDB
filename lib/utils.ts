@@ -1,6 +1,5 @@
 import { Trailer } from "@/types";
 import { type ClassValue, clsx } from "clsx";
-import { Dispatch, SetStateAction } from "react";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {

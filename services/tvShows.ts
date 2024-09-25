@@ -33,7 +33,6 @@ export const getTvShowTrending = async (
     const res = await fetch(tmdbURL + `trending/tv/${time}`, options);
     const data = await res.json();
     const results = data.results;
-    console.log(results);
     return results;
   } catch (error: any) {
     throw Error(error.message);
@@ -67,7 +66,6 @@ export const getTvShowDetails = async (
       options
     );
     const result = await res.json();
-    console.log("tvdata", result);
     return result;
   } catch (error: any) {
     throw Error(error.message);
@@ -81,7 +79,6 @@ export const getTvShowImages = async (
     const res = await fetch(tmdbURL + `tv/${id}/images`, options);
     const data = await res.json();
     const results = data.posters;
-    console.log("res res res", data);
     return results;
   } catch (error: any) {
     throw Error(error.message);

@@ -11,6 +11,16 @@ import {
 import { filterByTrailers } from "@/lib/utils";
 import { getMovieDetails } from "@/services/movies";
 
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const movie = await getMovieDetails(params.id);
+  const year = new Date(movie.release_date).getFullYear();
+
+  return {
+    title: `${movie.title} (${year}) - MovieDB`,
+    description: movie.overview,
+  };
+}
+
 export default async function Movie({ params }: { params: { id: string } }) {
   const movie = await getMovieDetails(params.id);
 
