@@ -87,7 +87,7 @@ export default function NavbarDesktop() {
                   <li className="dropdown-list-item">
                     <NavigationMenuLink asChild>
                       <Link
-                        href={`/shows/airing_today?air_date.lte=${todaysDate}&air_date.gte=${todaysDate}`}
+                        href={`/shows/airing-today?air_date.lte=${todaysDate}&air_date.gte=${todaysDate}`}
                         className="block w-full h-full"
                       >
                         Airing Today
@@ -97,7 +97,7 @@ export default function NavbarDesktop() {
                   <li className="dropdown-list-item">
                     <NavigationMenuLink asChild>
                       <Link
-                        href={`/shows/airing_today?air_date.lte=${oneWeekFromToday}&air_date.gte=${todaysDate}`}
+                        href={`/shows/airing-today?air_date.lte=${oneWeekFromToday}&air_date.gte=${todaysDate}`}
                         className="block w-full h-full"
                       >
                         On Tv

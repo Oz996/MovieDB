@@ -33,8 +33,9 @@ export default function DiscoverShowsPagination({
     }
   }, [refEntry?.isIntersecting, fetchMore]);
 
-  // displaying load more button if user applies a filter/sort
+  // displaying load more button if user applies a filter/sort and resetting page state
   useEffect(() => {
+    setPage(2);
     setFetchMore(false);
   }, [query]);
 
