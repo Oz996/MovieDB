@@ -52,8 +52,11 @@ export default function FilterMenu({ type, params, url }: props) {
 
   const topRatedPage = params.filter.includes("top-rated");
   const upcomingPage = params.filter.includes("upcoming");
+  const airingToday = params.filter.includes("airing-today");
+  const onTvPage = params.filter.includes("on-tv");
   const popularPage = params.filter.includes("popular");
-  const moviesPage = type === "movie";
+
+  const pageType = type === "movie" ? "Movies" : "TV Shows";
 
   const router = useRouter();
 
@@ -75,7 +78,7 @@ export default function FilterMenu({ type, params, url }: props) {
   useEffect(() => {
     const fetchGenres = async () => {
       try {
-        if (moviesPage) {
+        if (type === "movie") {
           const res = await getMovieGenres();
           setGenreList(res);
         } else {
@@ -122,16 +125,16 @@ export default function FilterMenu({ type, params, url }: props) {
   const displayToDate = toDate ?? airToDate ?? "Choose Date";
 
   const displayHeading = () => {
-    if (moviesPage && topRatedPage) {
-      return "Top Rated Movies";
-    } else if (moviesPage && upcomingPage) {
-      return "Upcoming Movies";
-    } else if (moviesPage) {
-      return "Popular Movies";
-    } else if (topRatedPage) {
-      return "Top Rated TV Shows";
-    } else {
-      return "Popular TV Shows";
+    if (topRatedPage) {
+      return `Top Rated ${pageType}`;
+    } else if (upcomingPage) {
+      return `Upcoming ${pageType}`;
+    } else if (popularPage) {
+      return `Popular ${pageType}`;
+    } else if (airingToday) {
+      return `${pageType} Airing Today`;
+    } else if (onTvPage) {
+      return `Currently Airing ${pageType}`;
     }
   };
 

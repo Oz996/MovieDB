@@ -97,7 +97,7 @@ export default function NavbarDesktop() {
                   <li className="dropdown-list-item">
                     <NavigationMenuLink asChild>
                       <Link
-                        href={`/shows/airing-today?air_date.lte=${oneWeekFromToday}&air_date.gte=${todaysDate}`}
+                        href={`/shows/on-tv?air_date.lte=${oneWeekFromToday}&air_date.gte=${todaysDate}`}
                         className="block w-full h-full"
                       >
                         On Tv
@@ -114,20 +114,6 @@ export default function NavbarDesktop() {
                         className="block w-full h-full"
                       >
                         Top Rated
-                      </Link>
-                    </NavigationMenuLink>
-                  </li>
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>People</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="flex flex-col w-[14rem]">
-                  <li className="dropdown-list-item">
-                    <NavigationMenuLink asChild>
-                      <Link href="/" className="block w-full h-full">
-                        Popular
                       </Link>
                     </NavigationMenuLink>
                   </li>
