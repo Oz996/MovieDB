@@ -12,11 +12,10 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 
 interface props {
-  isLoading: boolean;
   currentPage: number;
 }
 
-export default function SearchPagination({ isLoading, currentPage }: props) {
+export default function SearchPagination({ currentPage }: props) {
   const { query, type, pageAmount } = useSearch();
   const lastPage = pageAmount;
 
@@ -24,7 +23,7 @@ export default function SearchPagination({ isLoading, currentPage }: props) {
     return `/search/${type ?? "multi"}?query=${query}&page=${page}`;
   };
 
-  const hidePagination = isLoading || pageAmount <= 1;
+  const hidePagination = pageAmount <= 1;
 
   return (
     <Pagination

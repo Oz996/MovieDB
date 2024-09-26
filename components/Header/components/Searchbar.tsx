@@ -5,7 +5,7 @@ import { getAllTrending } from "@/services/all";
 import { Search, X } from "lucide-react";
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import SearchList from "./SearchList/SearchList";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useSearch } from "@/hooks/useSearch";
 import { getSearchResults } from "@/services/search";
 import { useDebounce } from "@uidotdev/usehooks";
@@ -20,8 +20,6 @@ export default function Searchbar() {
   const { setQuery, setCached, setType } = useSearch();
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const pathname = usePathname();
-
   // using debounce to add a delay when user types in the input, less api calls made
   const debouncedValue = useDebounce(value, 300);
   useEffect(() => {
@@ -29,10 +27,6 @@ export default function Searchbar() {
       inputRef.current.focus();
     }
   }, [showInput]);
-
-  useEffect(() => {
-    reset();
-  }, [pathname]);
 
   // resetting these states so that the caching logic works
   useEffect(() => {
@@ -91,6 +85,7 @@ export default function Searchbar() {
     e.preventDefault();
     setQuery(value);
     router.push(`/search/multi?query=${value}`);
+    reset();
   };
 
   const reset = () => {

@@ -1,20 +1,17 @@
+"use client";
 import { useRouter } from "next/navigation";
-import { MediaType } from "../SearchResultsBar";
-import { Dispatch, SetStateAction } from "react";
+import { MediaDisplay } from "../SearchResultsBar";
 import { useSearch } from "@/hooks/useSearch";
-import { Skeleton } from "@/components/ui/skeleton";
 
 interface props {
-  type: MediaType;
-  setType: Dispatch<SetStateAction<string | null>>;
-  isLoading: boolean;
+  type: MediaDisplay;
 }
 
-export default function SearchResultsCard({ type, setType, isLoading }: props) {
-  const { query } = useSearch();
+export default function SearchResultsCard({ type }: props) {
+  const { query, setType } = useSearch();
   const router = useRouter();
 
-  const handleTypeClick = async (type: MediaType) => {
+  const handleTypeClick = async (type: MediaDisplay) => {
     const searchType = type.value;
     setType(searchType);
     router.push(`/search/${searchType}?query=${query}`);
@@ -27,11 +24,7 @@ export default function SearchResultsCard({ type, setType, isLoading }: props) {
       className="dropdown-list-item flex justify-between items-center"
     >
       <p>{type.name}</p>
-      {isLoading ? (
-        <Skeleton className="w-9 h-8" />
-      ) : (
-        <span className="bg-gray-200 p-1 px-4 rounded">{type?.results}</span>
-      )}
+      <span className="bg-gray-200 p-1 px-4 rounded">{type?.results}</span>
     </li>
   );
 }

@@ -26,15 +26,16 @@ export default async function SearchPage({
   const search = searchParams.query;
   const mediaType = params.query[0];
   const currentPage = searchParams.page ? parseInt(searchParams.page) : 1;
+
   const data = await getSearchResults(search, mediaType, currentPage);
   const pageAmount = data.total_pages;
-  console.log("dataa", data);
 
   return (
     <Search
-      params={params}
       searchParams={searchParams}
+      currentPage={currentPage}
       pageAmount={pageAmount}
+      mediaType={mediaType}
       data={data.results}
     />
   );

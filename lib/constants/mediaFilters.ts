@@ -1,3 +1,5 @@
+import { MediaDisplay } from "@/app/search/[...query]/components/SearchResultsBar/SearchResultsBar";
+
 interface FilterOptions {
   name: string;
   value: string;
@@ -42,6 +44,12 @@ export const monetizationOptions: FilterOptions[] = [
   { name: "Ads", value: "ads" },
   { name: "Buy", value: "buy" },
   { name: "Rent", value: "rent" },
+];
+
+export const typesToDisplay: Omit<MediaDisplay, "results">[] = [
+  { name: "Movies", value: "movie" },
+  { name: "TV Shows", value: "tv" },
+  { name: "People", value: "person" },
 ];
 
 export const rolesToList: CrewRole[] = [

@@ -7,21 +7,20 @@ import {
 import { useSearch } from "@/hooks/useSearch";
 import { Result } from "@/types";
 import { CircleHelp } from "lucide-react";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import SearchResultsCard from "./components/SearchResultsCard";
 
 interface props {
-  isLoading: boolean;
   searchResults: Result[];
 }
 
-export interface MediaType {
+export interface MediaDisplay {
   name: string;
   value: string;
   results: number;
 }
 
-export default function SearchResultsBar({ isLoading, searchResults }: props) {
+export default function SearchResultsBar({ searchResults }: props) {
   const storedMediaCounts = sessionStorage.getItem("cached");
   const initalMediaState = storedMediaCounts
     ? JSON.parse(storedMediaCounts)
@@ -31,10 +30,10 @@ export default function SearchResultsBar({ isLoading, searchResults }: props) {
         people: 0,
       };
 
-  const { setType, setCached } = useSearch();
+  const { setCached } = useSearch();
   const [mediaCounts, setMediaCounts] = useState(initalMediaState);
 
-  const TypesToDisplay: MediaType[] = [
+  const typesToDisplay: MediaDisplay[] = [
     { name: "Movies", value: "movie", results: mediaCounts.movies },
     { name: "TV Shows", value: "tv", results: mediaCounts.tvShows },
     { name: "People", value: "person", results: mediaCounts.people },
@@ -80,13 +79,8 @@ export default function SearchResultsBar({ isLoading, searchResults }: props) {
         </TooltipProvider>
       </div>
       <ul className="pb-2">
-        {TypesToDisplay.map((type) => (
-          <SearchResultsCard
-            key={type.value}
-            type={type}
-            setType={setType}
-            isLoading={isLoading}
-          />
+        {typesToDisplay.map((type) => (
+          <SearchResultsCard key={type.value} type={type} />
         ))}
       </ul>
     </div>

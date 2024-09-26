@@ -1,14 +1,12 @@
 import { Result } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
-import ResultSkeleton from "../ResultsSkeleton";
 import SearchPagination from "./components/SearchPagination";
 import { getBaseUrl, handleDisplayImage } from "@/lib/utils";
 import NoResults from "@/components/NoResults";
 
 interface props {
   mediaType: string;
-  isLoading: boolean;
   currentPage: number;
   searchResults: Result[];
 }
@@ -17,10 +15,7 @@ export default function SearchResults({
   mediaType,
   currentPage,
   searchResults,
-  isLoading,
 }: props) {
-  if (isLoading) return <ResultSkeleton />;
-
   return (
     <section className="lg:col-span-2 lg:-ml-20 max-lg:pt-5 space-y-5">
       {searchResults?.length === 0 && <NoResults />}
@@ -98,7 +93,7 @@ export default function SearchResults({
         );
       })}
       {searchResults?.length > 0 && (
-        <SearchPagination isLoading={isLoading} currentPage={currentPage} />
+        <SearchPagination currentPage={currentPage} />
       )}
     </section>
   );
