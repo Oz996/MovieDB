@@ -21,7 +21,7 @@ export default function SearchPagination({ isLoading, currentPage }: props) {
   const lastPage = pageAmount;
 
   const paginationLink = (page: number) => {
-    return `/search/${type}?query=${query}&page=${page}`;
+    return `/search/${type ?? "multi"}?query=${query}&page=${page}`;
   };
 
   const hidePagination = isLoading || pageAmount <= 1;

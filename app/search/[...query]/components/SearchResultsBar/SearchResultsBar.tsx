@@ -13,7 +13,6 @@ import SearchResultsCard from "./components/SearchResultsCard";
 interface props {
   isLoading: boolean;
   searchResults: Result[];
-  setSearchResults: Dispatch<SetStateAction<Result[]>>;
 }
 
 export interface MediaType {
@@ -22,11 +21,7 @@ export interface MediaType {
   results: number;
 }
 
-export default function SearchResultsBar({
-  isLoading,
-  searchResults,
-  setSearchResults,
-}: props) {
+export default function SearchResultsBar({ isLoading, searchResults }: props) {
   const storedMediaCounts = sessionStorage.getItem("cached");
   const initalMediaState = storedMediaCounts
     ? JSON.parse(storedMediaCounts)

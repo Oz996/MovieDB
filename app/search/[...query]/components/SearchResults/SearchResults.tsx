@@ -10,20 +10,16 @@ interface props {
   mediaType: string;
   isLoading: boolean;
   currentPage: number;
-  searchParams: any;
   searchResults: Result[];
 }
 
 export default function SearchResults({
   mediaType,
   currentPage,
-  searchParams,
   searchResults,
   isLoading,
 }: props) {
   if (isLoading) return <ResultSkeleton />;
-
-  const searchType = searchParams.get("type");
 
   return (
     <section className="lg:col-span-2 lg:-ml-20 max-lg:pt-5 space-y-5">

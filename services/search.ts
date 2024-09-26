@@ -12,7 +12,6 @@ export const getSearchResults = async (
       options
     );
     const data = await res.json();
-    const results = data.results;
     return data;
   } catch (error: any) {
     throw Error(error.message);
