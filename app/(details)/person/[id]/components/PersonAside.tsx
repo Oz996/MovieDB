@@ -40,7 +40,7 @@ export default function PersonAside({ person }: props) {
   const personGender = person.gender === 1 ? "Female" : "Male";
 
   return (
-    <aside>
+    <>
       <div className="flex flex-col gap-4 md:pt-8">
         <ExternalLinks links={person.external_ids} homepage={person.homepage} />
         <p className="text-xl pt-4 font-semibold">Personal Info</p>
@@ -86,6 +86,6 @@ export default function PersonAside({ person }: props) {
           </div>
         )}
       </div>
-    </aside>
+    </>
   );
 }

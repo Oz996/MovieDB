@@ -1,3 +1,4 @@
+"use client";
 import { PersonCast, PersonCrew } from "@/types";
 import { useEffect, useState } from "react";
 import FilmographyCard from "./FilmographyCard";
