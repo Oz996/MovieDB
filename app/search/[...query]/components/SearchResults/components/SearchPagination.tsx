@@ -4,23 +4,29 @@ import {
   PaginationContent,
   PaginationEllipsis,
   PaginationItem,
-  PaginationLink,
 } from "@/components/ui/pagination";
-import { useSearch } from "@/hooks/useSearch";
 import classNames from "classnames";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import PaginationButton from "./PaginationButton";
 
 interface props {
+  search: string;
   currentPage: number;
+  pageAmount: number;
+  mediaType: string;
 }
 
-export default function SearchPagination({ currentPage }: props) {
-  const { query, type, pageAmount } = useSearch();
+export default function SearchPagination({
+  search,
+  currentPage,
+  pageAmount,
+  mediaType,
+}: props) {
   const lastPage = pageAmount;
 
   const paginationLink = (page: number) => {
-    return `/search/${type ?? "multi"}?query=${query}&page=${page}`;
+    return `/search/${mediaType}?query=${search}&page=${page}`;
   };
 
   const hidePagination = pageAmount <= 1;
@@ -46,33 +52,31 @@ export default function SearchPagination({ currentPage }: props) {
         {currentPage > 2 && (
           <PaginationItem>
             <Link href={paginationLink(currentPage - 2)}>
-              <PaginationLink>{currentPage - 2}</PaginationLink>
+              <PaginationButton>{currentPage - 2}</PaginationButton>
             </Link>
           </PaginationItem>
         )}
         {currentPage > 1 && (
           <PaginationItem>
             <Link href={paginationLink(currentPage - 1)}>
-              <PaginationLink>{currentPage - 1}</PaginationLink>
+              <PaginationButton>{currentPage - 1}</PaginationButton>
             </Link>
           </PaginationItem>
         )}
         <PaginationItem>
-          <PaginationLink className="bg-slate-200">
-            {currentPage}
-          </PaginationLink>
+          <PaginationButton active>{currentPage}</PaginationButton>
         </PaginationItem>
         {currentPage === lastPage ? null : (
           <PaginationItem>
             <Link href={paginationLink(currentPage + 1)}>
-              <PaginationLink>{currentPage + 1}</PaginationLink>
+              <PaginationButton>{currentPage + 1}</PaginationButton>
             </Link>
           </PaginationItem>
         )}
         {currentPage === lastPage || currentPage === lastPage - 1 ? null : (
           <PaginationItem>
             <Link href={paginationLink(currentPage + 2)}>
-              <PaginationLink>{currentPage + 2}</PaginationLink>
+              <PaginationButton>{currentPage + 2}</PaginationButton>
             </Link>
           </PaginationItem>
         )}
@@ -88,7 +92,7 @@ export default function SearchPagination({ currentPage }: props) {
         currentPage === lastPage ? null : (
           <PaginationItem className="max-sm:hidden">
             <Link href={paginationLink(lastPage)}>
-              <PaginationLink>{lastPage}</PaginationLink>
+              <PaginationButton>{lastPage}</PaginationButton>
             </Link>
           </PaginationItem>
         )}

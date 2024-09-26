@@ -2,17 +2,22 @@ import { Result } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import SearchPagination from "./components/SearchPagination";
-import { getBaseUrl, handleDisplayImage } from "@/lib/utils";
+import { handleDisplayImage } from "@/lib/utils";
 import NoResults from "@/components/NoResults";
+import SearchLink from "./components/SearchLink";
 
 interface props {
+  search: string;
   mediaType: string;
+  pageAmount: number;
   currentPage: number;
   searchResults: Result[];
 }
 
 export default function SearchResults({
+  search,
   mediaType,
+  pageAmount,
   currentPage,
   searchResults,
 }: props) {
@@ -52,12 +57,7 @@ export default function SearchResults({
 
         return (
           <div key={item.id} className="flex gap-3 rounded-lg border">
-            <Link
-              href={
-                getBaseUrl() + `/${item.media_type ?? mediaType}/${item.id}`
-              }
-              className="w-[5.5rem] h-32 lg:w-28 lg:h-40 flex-shrink-0"
-            >
+            <SearchLink type={item.media_type ?? mediaType} id={item.id} main>
               <Image
                 className="rounded-l-lg object-cover w-full h-full"
                 src={image}
@@ -65,16 +65,12 @@ export default function SearchResults({
                 height={100}
                 alt=""
               />
-            </Link>
-            <div className="flex flex-col justify-center gap-4 px-1">
+            </SearchLink>
+            <div className="flex flex-col gap-4 px-1 py-5">
               <div className="w-full">
-                <Link
-                  href={
-                    getBaseUrl() + `/${item.media_type ?? mediaType}/${item.id}`
-                  }
-                >
+                <SearchLink type={item.media_type ?? mediaType} id={item.id}>
                   <h2 className="text-lg font-semibold">{title}</h2>
-                </Link>
+                </SearchLink>
                 <span className="text-gray-500">{date}</span>
                 {person && (
                   <div className="flex gap-2 items-center truncate">
@@ -93,7 +89,12 @@ export default function SearchResults({
         );
       })}
       {searchResults?.length > 0 && (
-        <SearchPagination currentPage={currentPage} />
+        <SearchPagination
+          search={search}
+          currentPage={currentPage}
+          mediaType={mediaType}
+          pageAmount={pageAmount}
+        />
       )}
     </section>
   );

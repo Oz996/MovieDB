@@ -1,5 +1,6 @@
 import { getSearchResults } from "@/services/search";
-import Search from "./components/Search";
+import SearchResultsBar from "./components/SearchResultsBar/SearchResultsBar";
+import SearchResults from "./components/SearchResults/SearchResults";
 
 type SearchType = Record<"query" | "page", string>;
 
@@ -31,12 +32,15 @@ export default async function SearchPage({
   const pageAmount = data.total_pages;
 
   return (
-    <Search
-      searchParams={searchParams}
-      currentPage={currentPage}
-      pageAmount={pageAmount}
-      mediaType={mediaType}
-      data={data.results}
-    />
+    <section className="pt-28 grid grid-cols-1 lg:grid-cols-3 container">
+      <SearchResultsBar searchResults={data.results} search={search} />
+      <SearchResults
+        search={search}
+        mediaType={mediaType}
+        pageAmount={pageAmount}
+        currentPage={currentPage}
+        searchResults={data.results}
+      />
+    </section>
   );
 }

@@ -1,20 +1,17 @@
-"use client";
 import { useRouter } from "next/navigation";
 import { MediaDisplay } from "../SearchResultsBar";
-import { useSearch } from "@/hooks/useSearch";
 
 interface props {
   type: MediaDisplay;
+  search: string;
 }
 
-export default function SearchResultsCard({ type }: props) {
-  const { query, setType } = useSearch();
+export default function SearchResultsCard({ type, search }: props) {
   const router = useRouter();
 
   const handleTypeClick = async (type: MediaDisplay) => {
     const searchType = type.value;
-    setType(searchType);
-    router.push(`/search/${searchType}?query=${query}`);
+    router.push(`/search/${searchType}?query=${search}`);
   };
 
   return (

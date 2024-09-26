@@ -1,3 +1,4 @@
+"use client";
 import {
   Tooltip,
   TooltipContent,
@@ -12,6 +13,7 @@ import SearchResultsCard from "./components/SearchResultsCard";
 
 interface props {
   searchResults: Result[];
+  search: string;
 }
 
 export interface MediaDisplay {
@@ -20,7 +22,7 @@ export interface MediaDisplay {
   results: number;
 }
 
-export default function SearchResultsBar({ searchResults }: props) {
+export default function SearchResultsBar({ searchResults, search }: props) {
   const storedMediaCounts = sessionStorage.getItem("cached");
   const initalMediaState = storedMediaCounts
     ? JSON.parse(storedMediaCounts)
@@ -80,7 +82,7 @@ export default function SearchResultsBar({ searchResults }: props) {
       </div>
       <ul className="pb-2">
         {typesToDisplay.map((type) => (
-          <SearchResultsCard key={type.value} type={type} />
+          <SearchResultsCard key={type.value} type={type} search={search} />
         ))}
       </ul>
     </div>
