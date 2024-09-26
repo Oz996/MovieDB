@@ -5,7 +5,7 @@ import { getAllTrending } from "@/services/all";
 import { Search, X } from "lucide-react";
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import SearchList from "./SearchList/SearchList";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useSearch } from "@/hooks/useSearch";
 import { getSearchResults } from "@/services/search";
 import { useDebounce } from "@uidotdev/usehooks";
@@ -17,6 +17,7 @@ export default function Searchbar() {
   const [showInput, setShowInput] = useState(false);
   const [searchList, setSearchList] = useState<Result[]>([]);
 
+  const pathname = usePathname();
   const { setQuery, setCached, setType } = useSearch();
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -27,6 +28,10 @@ export default function Searchbar() {
       inputRef.current.focus();
     }
   }, [showInput]);
+
+  useEffect(() => {
+    reset();
+  }, [pathname]);
 
   // resetting these states so that the caching logic works
   useEffect(() => {
