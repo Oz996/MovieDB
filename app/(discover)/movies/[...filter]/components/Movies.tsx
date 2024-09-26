@@ -15,7 +15,7 @@ import DiscoverMoviesPagination from "./../components/DiscoverMoviesPagination";
 
 interface props {
   params: { filter: string[] };
-  searchParams: URLSearchParams;
+  searchParams: Record<string, string>;
 }
 
 export default function Movies({ params, searchParams }: props) {

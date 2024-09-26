@@ -15,7 +15,7 @@ export default async function MoviesPage({
   searchParams,
 }: {
   params: { filter: string[] };
-  searchParams: URLSearchParams;
+  searchParams: Record<string, string>;
 }) {
   return <Movies params={params} searchParams={searchParams} />;
 }

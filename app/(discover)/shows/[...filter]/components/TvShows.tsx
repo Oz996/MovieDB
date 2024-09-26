@@ -11,12 +11,11 @@ import {
   FilterMenuButton,
 } from "../../../components/DiscoverContainer";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { useSearchParams } from "next/navigation";
 import DiscoverShowsPagination from "./../components/DiscoverShowsPagination";
 
 interface props {
   params: { filter: string[] };
-  searchParams: URLSearchParams;
+  searchParams: Record<string, string>;
 }
 
 export default function TvShows({ params, searchParams }: props) {

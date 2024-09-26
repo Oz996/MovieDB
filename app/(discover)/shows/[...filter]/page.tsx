@@ -15,7 +15,7 @@ export default async function TvShowsPage({
   searchParams,
 }: {
   params: { filter: string[] };
-  searchParams: URLSearchParams;
+  searchParams: Record<string, string>;
 }) {
   return <TvShows params={params} searchParams={searchParams} />;
 }
