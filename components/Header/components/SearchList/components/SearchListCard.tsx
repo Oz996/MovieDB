@@ -15,7 +15,7 @@ interface props {
 
 export default function SearchListCard({ isLoading, item, index }: props) {
   const imageToDisplay = item?.poster_path ?? item?.profile_path;
-  const image = handleDisplayImage("w185", imageToDisplay!);
+  const image = handleDisplayImage("w92", imageToDisplay!);
   const title = item?.name ?? item?.title;
 
   return (

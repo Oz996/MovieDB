@@ -17,7 +17,7 @@ export default async function Person({ params }: { params: { id: string } }) {
             priority
             width={300}
             height={300}
-            src={handleDisplayImage("w1280", person.profile_path)}
+            src={handleDisplayImage("w500", person.profile_path)}
             alt={`Image of ${person.name}`}
             className="rounded lg:rounded-lg w-full max-md:max-w-[20rem] max-sm:mx-auto object-cover"
           />

@@ -34,10 +34,7 @@ export default function PersonCarousel({ cast }: props) {
                     <div className="flex items-center aspect-[3/4.5]">
                       <Image
                         className="rounded-t-lg object-cover aspect-[3/4.5]"
-                        src={handleDisplayImage(
-                          "original",
-                          person.profile_path!
-                        )}
+                        src={handleDisplayImage("w185", person.profile_path!)}
                         width={140}
                         height={140}
                         alt=""

@@ -51,7 +51,7 @@ export default function KnownForCarousel({ cast, crew }: props) {
                   <div>
                     <Image
                       alt=""
-                      src={handleDisplayImage("w342", item.poster_path)}
+                      src={handleDisplayImage("w185", item.poster_path)}
                       width={150}
                       height={150}
                       className="rounded-lg object-cover"

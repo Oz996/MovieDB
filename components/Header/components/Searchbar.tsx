@@ -104,7 +104,7 @@ export default function Searchbar() {
         <>
           <form
             onSubmit={handleMultiSearch}
-            className="h-9 flex items-center max-md:px-1 animate-expand-searchbar w-full"
+            className="h-9 flex items-center max-md:px-1 animate-expand-searchbar w-full z-30"
           >
             <Input
               ref={inputRef}

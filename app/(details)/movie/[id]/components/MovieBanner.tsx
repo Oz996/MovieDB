@@ -37,7 +37,7 @@ export default function MovieBanner({ movie }: props) {
           priority
           width={300}
           height={300}
-          src={handleDisplayImage("w1280", movie.poster_path)}
+          src={handleDisplayImage("w500", movie.poster_path)}
           alt="Movie poster"
           className="rounded lg:rounded-lg w-full max-md:max-w-[20rem] max-sm:mx-auto object-cover hidden md:block"
         />

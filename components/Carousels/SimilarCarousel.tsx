@@ -85,19 +85,19 @@ export default function SimilarCarousel({ id, type, rating }: props) {
             <CarouselItem key={item.id} className="flex flex-col gap-2">
               <Link
                 href={getBaseUrl() + `/${mediaType(item)}/${item.id}`}
-                className="place-self-center aspect-[2/1.15]"
+                className="place-self-center"
               >
                 <Image
                   src={handleDisplayImage(
                     "w250_and_h141_face",
-                    item.poster_path
+                    item.backdrop_path
                   )}
                   width={270}
                   height={270}
                   alt=""
                   className={classNames({
-                    "rounded-lg object-cover aspect-[2/1.15]": true,
-                    "": !item.poster_path,
+                    "rounded-lg aspect-[2/1.15]": true,
+                    "": !item.backdrop_path,
                   })}
                 />
               </Link>
