@@ -123,7 +123,7 @@ export default function Searchbar() {
           </button>
         </>
       ) : (
-        <button onClick={handleOpenInput}>
+        <button onClick={handleOpenInput} aria-label="Open search input">
           <Search className="cursor-pointer max-md:absolute max-md:-top-[3rem] max-md:right-4" />
         </button>
       )}

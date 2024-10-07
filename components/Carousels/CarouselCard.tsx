@@ -25,6 +25,7 @@ export default function CarouselCard({ id, type, title, date, image }: props) {
           <div className="space-y-5">
             <div className="flex-centered">
               <Image
+                priority
                 className="rounded-lg object-cover"
                 src={handleDisplayImage("w342", image)}
                 width={150}
