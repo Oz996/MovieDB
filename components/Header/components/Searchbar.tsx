@@ -13,7 +13,7 @@ import { Result } from "@/types";
 
 export default function Searchbar() {
   const [value, setValue] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [showInput, setShowInput] = useState(false);
   const [searchList, setSearchList] = useState<Result[]>([]);
 
@@ -47,8 +47,15 @@ export default function Searchbar() {
   useEffect(() => {
     if (value === "" && showInput) {
       const handleFetchTrending = async () => {
-        const data = await getAllTrending();
-        setSearchList(data);
+        setIsLoading(true);
+        try {
+          const data = await getAllTrending();
+          setSearchList(data);
+        } catch (error: any) {
+          console.error(error.message);
+        } finally {
+          setIsLoading(false);
+        }
       };
       handleFetchTrending();
     }

@@ -62,7 +62,7 @@ export default function SearchList({
       </div>
       <ScrollArea>
         <ul>
-          {searchList?.length === 0 && (
+          {searchList?.length === 0 && !isLoading && (
             <div className="py-5 px-4">
               <NoResults />
             </div>
