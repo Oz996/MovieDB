@@ -6,13 +6,13 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useSearch } from "@/hooks/useSearch";
-import { Result } from "@/types";
+import { Media } from "@/types";
 import { CircleHelp } from "lucide-react";
 import { useEffect, useState } from "react";
 import SearchResultsCard from "./components/SearchResultsCard";
 
 interface props {
-  searchResults: Result[];
+  searchResults: Media[];
   search: string;
 }
 

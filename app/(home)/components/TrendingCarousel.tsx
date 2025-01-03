@@ -1,6 +1,6 @@
 "use client";
 import { getAllTrending } from "@/services/all";
-import { Result } from "@/types";
+import { Media } from "@/types";
 import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -19,14 +19,15 @@ import {
 } from "@/components/ui/carousel";
 import LoaderCarousel from "@/components/Carousels/LoaderCarousel";
 import CarouselCard from "@/components/Carousels/CarouselCard";
+import { dateToDisplay, imageToDisplay, titleToDisplay } from "@/lib/utils";
 
 interface props {
-  initialData: Result[];
+  initialData: Media[];
 }
 
 export default function TrendingCarousel({ initialData }: props) {
   const [isLoading, setIsLoading] = useState(true);
-  const [trending, setTrending] = useState<Result[]>(initialData);
+  const [trending, setTrending] = useState<Media[]>(initialData);
   const [trendingTime, setTrendingTime] = useState("day");
 
   useEffect(() => {
@@ -95,12 +96,12 @@ export default function TrendingCarousel({ initialData }: props) {
                 <CarouselContent className="-ml-1">
                   {trending.map((item) => (
                     <CarouselCard
-                      type={item.media_type}
+                      type={item.media_type!}
                       key={item.id}
                       id={item.id}
-                      title={item.title ?? item.name!}
-                      date={item.release_date ?? item.first_air_date!}
-                      image={item.poster_path!}
+                      title={titleToDisplay(item)}
+                      date={dateToDisplay(item)!}
+                      image={imageToDisplay(item)}
                     />
                   ))}
                 </CarouselContent>
@@ -113,12 +114,12 @@ export default function TrendingCarousel({ initialData }: props) {
                 <CarouselContent className="-ml-1">
                   {trending.map((item) => (
                     <CarouselCard
-                      type={item.media_type}
+                      type={item.media_type!}
                       key={item.id}
                       id={item.id}
-                      title={item.title ?? item.name!}
-                      date={item.release_date ?? item.first_air_date!}
-                      image={item.poster_path!}
+                      title={titleToDisplay(item)}
+                      date={dateToDisplay(item)!}
+                      image={imageToDisplay(item)}
                     />
                   ))}
                 </CarouselContent>

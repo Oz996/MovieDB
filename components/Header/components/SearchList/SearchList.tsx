@@ -1,4 +1,4 @@
-import { Result } from "@/types";
+import { Media } from "@/types";
 import { ArrowRight, Search, TrendingUp } from "lucide-react";
 import SearchListCard from "./components/SearchListCard";
 import { RefObject, useEffect, useRef } from "react";
@@ -10,7 +10,7 @@ interface props {
   value: string;
   inputRef: RefObject<HTMLInputElement>;
   isLoading: boolean;
-  searchList: Result[];
+  searchList: Media[];
   handleCloseInput: () => void;
 }
 

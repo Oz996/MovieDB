@@ -1,23 +1,22 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { handleDisplayImage } from "@/lib/utils";
-import { Result } from "@/types";
+import {
+  handleDisplayImage,
+  imageToDisplay,
+  titleToDisplay,
+} from "@/lib/utils";
+import { Media } from "@/types";
 import classNames from "classnames";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { Dispatch, SetStateAction } from "react";
 
 interface props {
-  item: Result;
+  item: Media;
   index: number;
   isLoading: boolean;
 }
 
 export default function SearchListCard({ isLoading, item, index }: props) {
-  const imageToDisplay = item?.poster_path ?? item?.profile_path;
-  const image = handleDisplayImage("w92", imageToDisplay!);
-  const title = item?.name ?? item?.title;
-
   return (
     <motion.li
       initial={{ opacity: 0 }}
@@ -40,14 +39,14 @@ export default function SearchListCard({ isLoading, item, index }: props) {
         ) : (
           <>
             <Image
-              src={image}
+              src={handleDisplayImage("w92", imageToDisplay(item))}
               width={30}
               height={30}
               alt=""
               className="object-cover"
             />
             <div>
-              <p>{title}</p>
+              <p>{titleToDisplay(item)}</p>
             </div>
           </>
         )}{" "}

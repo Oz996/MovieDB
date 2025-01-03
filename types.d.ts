@@ -1,28 +1,6 @@
 export type MediaType = "movie" | "tv" | "person";
 
-export interface Result {
-  adult: boolean;
-  first_air_date?: string;
-  release_date?: string;
-  genre_ids: number[];
-  id: number;
-  media_type: MediaType;
-  name?: string;
-  title?: string;
-  origin_country: string[];
-  original_language: string;
-  original_name?: string;
-  original_title?: string;
-  overview: string;
-  popularity: number;
-  backdrop_path?: string;
-  poster_path?: string;
-  profile_path?: string;
-  vote_average: number;
-  vote_count: number;
-  known_for_department?: string;
-  known_for: Overview[];
-}
+export type Media = Movie | TvShow | Person;
 
 export interface Person {
   adult: boolean;
@@ -44,11 +22,13 @@ export interface Person {
     cast: PersonCast[];
     crew: PersonCrew[];
   };
+  media_type?: MediaType;
+  known_for?: Overview[];
 }
 
 export interface ResultObject {
   page: number;
-  results: Result[];
+  results: Media[];
   total_pages: number;
   total_results: number;
 }
@@ -100,6 +80,7 @@ export interface MediaInterface {
   vote_count: number;
   reviews: ReviewObject;
   videos: { results: Trailer[] };
+  media_type?: MediaType;
 }
 
 export interface TvShow extends MediaInterface {

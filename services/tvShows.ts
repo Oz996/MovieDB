@@ -1,4 +1,4 @@
-import { Genre, Image, Result, Similar, Trailer, TvShow } from "@/types";
+import { Genre, Image, Media, Similar, TvShow } from "@/types";
 import options, { tmdbURL } from "./options";
 
 export const getTvShows = async (query: string): Promise<TvShow[]> => {
@@ -28,7 +28,7 @@ export const getTvShowGenres = async (): Promise<Genre[]> => {
 
 export const getTvShowTrending = async (
   time: string = "week"
-): Promise<Result[]> => {
+): Promise<Media[]> => {
   try {
     const res = await fetch(tmdbURL + `trending/tv/${time}`, options);
     const data = await res.json();

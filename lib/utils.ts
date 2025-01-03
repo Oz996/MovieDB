@@ -1,4 +1,4 @@
-import { Trailer } from "@/types";
+import { Media, Trailer } from "@/types";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -44,7 +44,7 @@ export const formatQueryDate = (date: Date) => {
   return formattedDate;
 };
 
-export const handleDisplayImage = (width: string, path: string) => {
+export const handleDisplayImage = (width: string, path: string | undefined) => {
   if (path) {
     return `https://image.tmdb.org/t/p/${width}/${path}`;
   } else {
@@ -56,6 +56,27 @@ export const filterByTrailers = (arr: Trailer[]) => {
   const trailers = arr?.filter((item) => item.type === "Trailer");
   return trailers;
 };
+
+// type guard utilities
+
+export const imageToDisplay = (item: Media) => {
+  if ("title" in item) return item.poster_path;
+  else if ("first_air_date" in item) return item.poster_path;
+  else return item.profile_path;
+};
+
+export const titleToDisplay = (item: Media) => {
+  if ("title" in item) return item.title;
+  else return item.name;
+};
+
+export const dateToDisplay = (item: Media) => {
+  if ("title" in item) return item.release_date;
+  else if ("first_air_date" in item) return item.first_air_date;
+  else return null;
+};
+
+// --------------------
 
 export const handleUpcomingDates = () => {
   const date = new Date();

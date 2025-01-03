@@ -1,6 +1,7 @@
 import { getSearchResults } from "@/services/search";
 import SearchResultsBar from "./components/SearchResultsBar/SearchResultsBar";
 import SearchResults from "./components/SearchResults/SearchResults";
+import { MediaType } from "@/types";
 
 type SearchType = Record<"query" | "page", string>;
 
@@ -25,7 +26,7 @@ export default async function Search({
   searchParams: SearchType;
 }) {
   const search = searchParams.query;
-  const mediaType = params.query[0];
+  const mediaType = params.query[0] as MediaType;
   const currentPage = searchParams.page ? parseInt(searchParams.page) : 1;
 
   const data = await getSearchResults(search, mediaType, currentPage);

@@ -1,9 +1,9 @@
-import { Result } from "@/types";
+import { Media } from "@/types";
 import options, { tmdbURL } from "./options";
 
 export const getAllTrending = async (
   time: string = "day"
-): Promise<Result[]> => {
+): Promise<Media[]> => {
   try {
     const res = await fetch(
       tmdbURL + `trending/all/${time}?language=en-US`,
